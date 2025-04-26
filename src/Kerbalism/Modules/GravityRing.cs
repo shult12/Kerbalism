@@ -3,7 +3,7 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public class GravityRing : PartModule, ISpecifics
+	class GravityRing : PartModule, ISpecifics
 	{
 		// config
 		[KSPField] public double ec_rate;                                  // ec consumed per-second when deployed
@@ -25,16 +25,16 @@ namespace KERBALISM
 		[KSPField] public float counterWeightSpinRate = 40.0f;
 		[KSPField] public float counterWeightSpinAccelerationRate = 2.0f;
 
-		private bool waitRotation = false;
-		public bool isHabitat = false;
+		bool waitRotation = false;
+		internal bool isHabitat = false;
 
 		// animations
-		public Animator deploy_anim;
-		private Animator rotate_anim;
-		private Animator counterWeightRotate_anim;
+		internal Animator deploy_anim;
+		Animator rotate_anim;
+		Animator counterWeightRotate_anim;
 
-		public Transformator rotate_transf;
-		public Transformator counterWeightRotate_transf;
+		Transformator rotate_transf;
+		Transformator counterWeightRotate_transf;
 
 		// pseudo-ctor
 		public override void OnStart(StartState state)
@@ -58,7 +58,7 @@ namespace KERBALISM
 			Update();
 		}
 
-		public bool Is_rotating()
+		internal bool Is_rotating()
 		{
 			if (rotateIsTransform)
 			{
@@ -67,7 +67,7 @@ namespace KERBALISM
 			return rotate_anim.Playing();
 		}
 
-		private void Set_rotation(bool rotation)
+		void Set_rotation(bool rotation)
 		{
 			if (rotation)
 			{
@@ -156,7 +156,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void Update()
+		void Update()
 		{
 			// update RMB ui
 			if (part.IsPAWVisible())
@@ -220,7 +220,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void FixedUpdate()
+		void FixedUpdate()
 		{
 			// do nothing in the editor
 			if (Lib.IsEditor()) return;
@@ -236,7 +236,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void BackgroundUpdate(Vessel vessel, ProtoPartSnapshot p, ProtoPartModuleSnapshot m, GravityRing ring, ResourceInfo ec, double elapsed_s)
+		internal static void BackgroundUpdate(Vessel vessel, ProtoPartSnapshot p, ProtoPartModuleSnapshot m, GravityRing ring, ResourceInfo ec, double elapsed_s)
 		{
 			// if the module is either non-deployable or deployed
 			if (ring.deploy.Length == 0 || Lib.Proto.GetBool(m, "deployed"))

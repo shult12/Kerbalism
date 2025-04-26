@@ -6,9 +6,9 @@ using KSP.Localization;
 namespace KERBALISM
 {
 
-	public sealed class Drive
+	sealed class Drive
 	{
-		public Drive(string name, double dataCapacity, int sampleCapacity, bool is_private = false)
+		internal Drive(string name, double dataCapacity, int sampleCapacity, bool is_private = false)
 		{
 			this.files = new Dictionary<SubjectData, File>();
 			this.samples = new Dictionary<SubjectData, Sample>();
@@ -19,7 +19,7 @@ namespace KERBALISM
 			this.is_private = is_private;
 		}
 
-		public Drive(ConfigNode node)
+		internal Drive(ConfigNode node)
 		{
 			// parse science  files
 			files = new Dictionary<SubjectData, File>();
@@ -104,7 +104,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			// save science files
 			var files_node = node.AddNode("files");
@@ -136,7 +136,7 @@ namespace KERBALISM
 
 
 
-		public static double StoreFile(Vessel vessel, SubjectData subjectData, double size, bool include_private = false)
+		internal static double StoreFile(Vessel vessel, SubjectData subjectData, double size, bool include_private = false)
 		{
 			if (size < double.Epsilon)
 				return 0;
@@ -162,7 +162,7 @@ namespace KERBALISM
 		}
 
 		// add science data, creating new file or incrementing existing one
-		public bool Record_file(SubjectData subjectData, double amount, bool allowImmediateTransmission = true, bool useStockCrediting = false)
+		internal bool Record_file(SubjectData subjectData, double amount, bool allowImmediateTransmission = true, bool useStockCrediting = false)
 		{
 			if (dataCapacity >= 0 && FilesSize() + amount > dataCapacity)
 				return false;
@@ -186,20 +186,20 @@ namespace KERBALISM
 			return true;
 		}
 
-		public void Send(string subjectId, bool send)
+		internal void Send(string subjectId, bool send)
 		{
 			if (!fileSendFlags.ContainsKey(subjectId)) fileSendFlags.Add(subjectId, send);
 			else fileSendFlags[subjectId] = send;
 		}
 
-		public bool GetFileSend(string subjectId)
+		internal bool GetFileSend(string subjectId)
 		{
 			if (!fileSendFlags.ContainsKey(subjectId)) return PreferencesScience.Instance.transmitScience;
 			return fileSendFlags[subjectId];
 		}
 
 		// add science sample, creating new sample or incrementing existing one
-		public bool Record_sample(SubjectData subjectData, double amount, double mass, bool useStockCrediting = false)
+		internal bool Record_sample(SubjectData subjectData, double amount, double mass, bool useStockCrediting = false)
 		{
 			int currentSampleSlots = SamplesSize();
 			if (sampleCapacity >= 0)
@@ -242,7 +242,7 @@ namespace KERBALISM
 		}
 
 		// remove science data, deleting the file when it is empty
-		public void Delete_file(SubjectData subjectData, double amount = 0.0)
+		internal void Delete_file(SubjectData subjectData, double amount = 0.0)
 		{
 			// get data
 			File file;
@@ -265,7 +265,7 @@ namespace KERBALISM
 		}
 
 		// remove science sample, deleting the sample when it is empty
-		public double Delete_sample(SubjectData subjectData, double amount = 0.0)
+		internal double Delete_sample(SubjectData subjectData, double amount = 0.0)
 		{
 			// get data
 			Sample sample;
@@ -293,7 +293,7 @@ namespace KERBALISM
 		}
 
 		// set analyze flag for a sample
-		public void Analyze(SubjectData subjectData, bool b)
+		void Analyze(SubjectData subjectData, bool b)
 		{
 			Sample sample;
 			if (samples.TryGetValue(subjectData, out sample))
@@ -303,7 +303,7 @@ namespace KERBALISM
 		}
 
 		// move all data to another drive
-		public bool Move(Drive destination, bool moveSamples)
+		internal bool Move(Drive destination, bool moveSamples)
 		{
 			bool result = true;
 
@@ -375,13 +375,13 @@ namespace KERBALISM
 			return result; // true if everything was moved, false otherwise
 		}
 
-		public double FileCapacityAvailable()
+		internal double FileCapacityAvailable()
 		{
 			if (dataCapacity < 0) return double.MaxValue;
 			return Math.Max(dataCapacity - FilesSize(), 0.0); // clamp to 0 due to fp precision in FilesSize()
 		}
 
-		public double FilesSize()
+		internal double FilesSize()
 		{
 			double amount = 0.0;
 			foreach (var p in files)
@@ -391,7 +391,7 @@ namespace KERBALISM
 			return amount;
 		}
 
-		public double SampleCapacityAvailable(SubjectData subject = null)
+		internal double SampleCapacityAvailable(SubjectData subject = null)
 		{
 			if (sampleCapacity < 0) return double.MaxValue;
 
@@ -405,7 +405,7 @@ namespace KERBALISM
 			return result;
 		}
 
-		public int SamplesSize()
+		internal int SamplesSize()
 		{
 			int amount = 0;
 			foreach (var p in samples)
@@ -416,7 +416,7 @@ namespace KERBALISM
 		}
 
 		// return size of data stored in Mb (including samples)
-		public string Size()
+		internal string Size()
 		{
 			var f = FilesSize();
 			var s = SamplesSize();
@@ -426,13 +426,13 @@ namespace KERBALISM
 			return result;
 		}
 
-		public bool Empty()
+		internal bool Empty()
 		{
 			return files.Count + samples.Count == 0;
 		}
 
 		// transfer data from a vessel to a drive
-		public static bool Transfer(Vessel src, Drive dst, bool samples)
+		internal static bool Transfer(Vessel src, Drive dst, bool samples)
 		{
 			double dataAmount = 0.0;
 			int sampleSlots = 0;
@@ -462,7 +462,7 @@ namespace KERBALISM
 		}
 
 		// transfer data from a drive to a vessel
-		public static bool Transfer(Drive drive, Vessel dst, bool samples)
+		internal static bool Transfer(Drive drive, Vessel dst, bool samples)
 		{
 			double dataAmount = drive.FilesSize();
 			int sampleSlots = drive.SamplesSize();
@@ -487,7 +487,7 @@ namespace KERBALISM
 		}
 
 		// transfer data between two vessels
-		public static void Transfer(Vessel src, Vessel dst, bool samples)
+		internal static void Transfer(Vessel src, Vessel dst, bool samples)
 		{
 			double dataAmount = 0.0;
 			int sampleSlots = 0;
@@ -527,7 +527,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> delete all files/samples in the drive</summary>
-		public void DeleteDriveData()
+		internal void DeleteDriveData()
 		{
 			foreach (File file in files.Values)
 				file.subjectData.RemoveDataCollectedInFlight(file.size);
@@ -540,7 +540,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> delete all files/samples in the vessel drives</summary>
-		public static void DeleteDrivesData(Vessel vessel)
+		internal static void DeleteDrivesData(Vessel vessel)
 		{
 			foreach (PartData partData in vessel.KerbalismData().PartDatas)
 			{
@@ -551,7 +551,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static List<Drive> GetDrives (VesselData vd, bool includePrivate = false)
+		internal static List<Drive> GetDrives (VesselData vd, bool includePrivate = false)
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.Drive.GetDrives");
 			List<Drive> drives = new List<Drive>();
@@ -568,17 +568,17 @@ namespace KERBALISM
 			return drives;
 		}
 
-		public static List<Drive> GetDrives(Vessel v, bool includePrivate = false)
+		internal static List<Drive> GetDrives(Vessel v, bool includePrivate = false)
 		{
 			return GetDrives(v.KerbalismData(), includePrivate);
 		}
 
-		public static List<Drive> GetDrives(ProtoVessel pv, bool includePrivate = false)
+		internal static List<Drive> GetDrives(ProtoVessel pv, bool includePrivate = false)
 		{
 			return GetDrives(pv.KerbalismData(), includePrivate);
 		}
 
-		public static void GetCapacity(VesselData vesseldata, out double free_capacity, out double total_capacity)
+		internal static void GetCapacity(VesselData vesseldata, out double free_capacity, out double total_capacity)
 		{
 			free_capacity = 0;
 			total_capacity = 0;
@@ -606,7 +606,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> Get a drive for storing files. Will return null if there are no drives on the vessel </summary>
-		public static Drive FileDrive(VesselData vesselData, double size = 0.0)
+		internal static Drive FileDrive(VesselData vesselData, double size = 0.0)
 		{
 			Drive result = null;
 			foreach (var drive in GetDrives(vesselData))
@@ -634,7 +634,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> Get a drive for storing samples. Will return null if there are no drives on the vessel </summary>
-		public static Drive SampleDrive(VesselData vesselData, double size = 0, SubjectData subject = null)
+		internal static Drive SampleDrive(VesselData vesselData, double size = 0, SubjectData subject = null)
 		{
 			Drive result = null;
 			foreach (var drive in GetDrives(vesselData))
@@ -654,13 +654,13 @@ namespace KERBALISM
 			return result;
 		}
 
-		public Dictionary<SubjectData, File> files;      // science files
-		public Dictionary<SubjectData, Sample> samples;  // science samples
-		public Dictionary<string, bool> fileSendFlags; // file send flags
-		public double dataCapacity;
-		public int sampleCapacity;
-		public string name = String.Empty;
-		public bool is_private = false;
+		internal Dictionary<SubjectData, File> files;      // science files
+		internal Dictionary<SubjectData, Sample> samples;  // science samples
+		Dictionary<string, bool> fileSendFlags; // file send flags
+		internal double dataCapacity;
+		internal int sampleCapacity;
+		string name = String.Empty;
+		internal bool is_private = false;
 	}
 
 

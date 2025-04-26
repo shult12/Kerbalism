@@ -7,7 +7,7 @@ namespace KERBALISM
 {
 
 
-	public class Harvester : PartModule, IAnimatedModule, IModuleInfo, ISpecifics, IContractObjectiveModule
+	class Harvester : PartModule, IAnimatedModule, IModuleInfo, ISpecifics, IContractObjectiveModule
 	{
 		// config
 		[KSPField] public string title = string.Empty;            // name to show on ui
@@ -54,7 +54,7 @@ namespace KERBALISM
 		}
 
 
-		public void Update()
+		void Update()
 		{
 			// in editor, merely update ui button label
 			if (Lib.IsEditor())
@@ -91,7 +91,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static double AdjustedRate(Harvester harvester, CrewSpecs engineer_cs, List<ProtoCrewMember> crew, double abundance)
+		internal static double AdjustedRate(Harvester harvester, CrewSpecs engineer_cs, List<ProtoCrewMember> crew, double abundance)
 		{
 			// Bonus(..., -2): a level 0 engineer will alreaday add 2 bonus points jsut because he's there,
 			// regardless of level. efficiency will raise further with higher levels.
@@ -102,7 +102,7 @@ namespace KERBALISM
 			return harvester.rate * crew_gain * (abundance / harvester.abundance_rate);
 		}
 
-		private static void ResourceUpdate(Vessel v, Harvester harvester, double min_abundance, double elapsed_s)
+		static void ResourceUpdate(Vessel v, Harvester harvester, double min_abundance, double elapsed_s)
 		{
 			double abundance = SampleAbundance(v, harvester);
 			if (abundance > min_abundance)
@@ -117,7 +117,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void FixedUpdate()
+		void FixedUpdate()
 		{
 			if (Lib.IsEditor()) return;
 
@@ -128,7 +128,7 @@ namespace KERBALISM
 		}
 
 
-		public static void BackgroundUpdate(Vessel v, ProtoPartModuleSnapshot m, Harvester harvester, double elapsed_s)
+		internal static void BackgroundUpdate(Vessel v, ProtoPartModuleSnapshot m, Harvester harvester, double elapsed_s)
 		{
 			if (Lib.Proto.GetBool(m, "deployed") && Lib.Proto.GetBool(m, "running") && Lib.Proto.GetString(m, "issue").Length == 0)
 			{
@@ -147,7 +147,7 @@ namespace KERBALISM
 		}
 
 		// return resource abundance at vessel position
-		private static double SampleAbundance(Vessel v, Harvester harvester)
+		static double SampleAbundance(Vessel v, Harvester harvester)
 		{
 			// get abundance
 			AbundanceRequest request = new AbundanceRequest
@@ -274,7 +274,7 @@ namespace KERBALISM
 		public bool CheckContractObjectiveValidity() { return true; }
 		public string GetContractObjectiveType() { return "Harvester"; }
 
-		private static CrewSpecs engineer_cs = new CrewSpecs("Engineer@0");
+		static CrewSpecs engineer_cs = new CrewSpecs("Engineer@0");
 	}
 
 

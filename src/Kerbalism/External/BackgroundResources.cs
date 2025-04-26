@@ -4,15 +4,15 @@ using UnityEngine;
 
 namespace KERBALISM
 {
-	public static class BackgroundResources
+	static class BackgroundResources
 	{
-		private static Type deepFreezeParamsType;
-		private static bool deepFreezeIsInstalled = false;
-		private static Type taclsParamsType;
-		private static bool taclsIsInstalled = false;
+		static Type deepFreezeParamsType;
+		static bool deepFreezeIsInstalled = false;
+		static Type taclsParamsType;
+		static bool taclsIsInstalled = false;
 
-		private static bool? isInstalled;
-		private static bool IsInstalled
+		static bool? isInstalled;
+		static bool IsInstalled
 		{
 			get
 			{
@@ -60,7 +60,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void DisableBackgroundResources()
+		internal static void DisableBackgroundResources()
 		{
 			if (IsInstalled)
 			{
@@ -106,7 +106,7 @@ namespace KERBALISM
 			}
 		}
 
-		private static void ShowPopup(string modName)
+		static void ShowPopup(string modName)
 		{
 			string title = "Kerbalism compatibility notice";
 			string msg = Lib.Color($"{modName} has been detected in your game.\n\nFor it to be compatible with Kerbalism, the \"Unloaded Vessel Processing\" {modName} difficulty setting option has been automatically disabled.", Lib.Kolor.Yellow, true);

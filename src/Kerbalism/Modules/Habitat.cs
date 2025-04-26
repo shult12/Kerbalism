@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace KERBALISM
 {
-    public class Habitat : PartModule, ISpecifics, IModuleInfo, IPartCostModifier
+    class Habitat : PartModule, ISpecifics, IModuleInfo, IPartCostModifier
 	{
         // config
         [KSPField] public double volume = 0.0;                      // habitable volume in m^3, deduced from bounding box if not specified
@@ -23,7 +23,7 @@ namespace KERBALISM
 
 		// persistence
 		[KSPField(isPersistant = true)] public State state = State.enabled;
-        [KSPField(isPersistant = true)] private double perctDeployed = 0;
+        [KSPField(isPersistant = true)] double perctDeployed = 0;
 
         // rmb ui status strings
         [KSPField(guiActive = false, guiActiveEditor = true, guiName = "#KERBALISM_Habitat_Volume", groupName = "Habitat", groupDisplayName = "#KERBALISM_Group_Habitat")]//Habitat
@@ -35,21 +35,21 @@ namespace KERBALISM
         Animator inflate_anim;
 
         [KSPField] public bool animBackwards;  // invert animation (case state is deployed but it is showing the part retracted)
-        public bool needEqualize = false;      // Used to trigger the ResourceBalance
+		internal bool needEqualize = false;      // Used to trigger the ResourceBalance
 
-        private bool hasCLS;                   // Has CLS mod?
-        private bool FixIVA = false;           // Used only CrewTransferred event, CrewTrans occur after FixedUpdate, then FixedUpdate needs to know to fix it
-        private bool hasGravityRing;
-        private GravityRing gravityRing;
+        bool hasCLS;                   // Has CLS mod?
+        bool FixIVA = false;           // Used only CrewTransferred event, CrewTrans occur after FixedUpdate, then FixedUpdate needs to know to fix it
+        bool hasGravityRing;
+        GravityRing gravityRing;
 
         State prev_state;                      // State during previous GPU frame update
-        private bool configured = false;       // true if configure method has been executed
-		private float shieldingCost;
+        bool configured = false;       // true if configure method has been executed
+		float shieldingCost;
 
 		// volume / surface cache
-		public static Dictionary<string, Lib.PartVolumeAndSurfaceInfo> habitatDatabase;
-		public const string habitatDataCacheNodeName = "KERBALISM_HABITAT_INFO";
-		public static string HabitatDataCachePath => Path.Combine(Lib.KerbalismRootPath, "HabitatData.cache");
+		internal static Dictionary<string, Lib.PartVolumeAndSurfaceInfo> habitatDatabase;
+		internal const string habitatDataCacheNodeName = "KERBALISM_HABITAT_INFO";
+		internal static string HabitatDataCachePath => Path.Combine(Lib.KerbalismRootPath, "HabitatData.cache");
 
 		// volume / surface evaluation at prefab compilation
 		public override void OnLoad(ConfigNode node)
@@ -210,7 +210,7 @@ namespace KERBALISM
             }
         }
 
-        public void OnDestroy()
+        void OnDestroy()
         {
             GameEvents.onCrewTransferred.Remove(UpdateCrew);
         }
@@ -251,7 +251,7 @@ namespace KERBALISM
             }
         }
 
-        public void Configure()
+        void Configure()
         {
             // if never set, this is the case if:
             // - part is added in the editor
@@ -346,7 +346,7 @@ namespace KERBALISM
             }
         }
 
-        public void Update()
+        void Update()
         {
             // The first time an existing save game is loaded with Kerbalism installed,
             // MM will to any existing vessels add Nitrogen with the correct capacities as set in default.cfg but they will have zero amounts,
@@ -417,7 +417,7 @@ namespace KERBALISM
             prev_state = state;
         }
 
-        public void FixedUpdate()
+        void FixedUpdate()
         {
             // if part is manned (even in the editor), force enabled
             if (Lib.IsCrewed(part) && state != State.enabled)
@@ -481,7 +481,7 @@ namespace KERBALISM
             }
         }
 
-        private void Set_inflation()
+        void Set_inflation()
         {
             // if there is an inflate animation, set still animation from pressure
             if (Get_inflate_anim_backwards()) Get_inflate_anim().Still(Math.Abs(Lib.Level(part, "Atmosphere", true) - 1));
@@ -549,63 +549,63 @@ namespace KERBALISM
             return specs;
         }
 
-        // return habitat volume in a vessel in m^3
-        public static double Tot_volume(Vessel v)
+		// return habitat volume in a vessel in m^3
+		internal static double Tot_volume(Vessel v)
         {
             // we use capacity: this mean that partially pressurized parts will still count,
             return ResourceCache.GetResource(v, "Atmosphere").Capacity / 1e3;
         }
 
-        // return habitat surface in a vessel in m^2
-        public static double Tot_surface(Vessel v)
+		// return habitat surface in a vessel in m^2
+		internal static double Tot_surface(Vessel v)
         {
             // we use capacity: this mean that partially pressurized parts will still count,
             return ResourceCache.GetResource(v, "Shielding").Capacity;
         }
 
-        // return normalized pressure in a vessel
-        public static double Pressure(Vessel v)
+		// return normalized pressure in a vessel
+		internal static double Pressure(Vessel v)
         {
             // the pressure is simply the atmosphere level
             return ResourceCache.GetResource(v, "Atmosphere").Level;
         }
 
-        // return waste level in a vessel atmosphere
-        public static double Poisoning(Vessel v)
+		// return waste level in a vessel atmosphere
+		internal static double Poisoning(Vessel v)
         {
             // the proportion of co2 in the atmosphere is simply the level of WasteAtmo
             return ResourceCache.GetResource(v, "WasteAtmosphere").Level;
         }
 
-        /// <summary>
-        /// Return vessel shielding factor.
-        /// </summary>
-        public static double Shielding(Vessel v)
+		/// <summary>
+		/// Return vessel shielding factor.
+		/// </summary>
+		internal static double Shielding(Vessel v)
         {
             return Radiation.ShieldingEfficiency(ResourceCache.GetResource(v, "Shielding").Level);
         }
 
-        // return living space factor in a vessel
-        public static double Living_space(Vessel v)
+		// return living space factor in a vessel
+		internal static double Living_space(Vessel v)
         {
             // living space is the volume per-capita normalized against an 'ideal living space' and clamped in an acceptable range
             return Lib.Clamp(Volume_per_crew(v) / PreferencesComfort.Instance.livingSpace, 0.1, 1.0);
         }
 
-        public static double Volume_per_crew(Vessel v)
+		internal static double Volume_per_crew(Vessel v)
         {
             // living space is the volume per-capita normalized against an 'ideal living space' and clamped in an acceptable range
             return Tot_volume(v) / Math.Max(1, Lib.CrewCount(v));
         }
 
-        // return a verbose description of shielding capability
-        public static string Shielding_to_string(double v)
+		// return a verbose description of shielding capability
+		internal static string Shielding_to_string(double v)
         {
             return v <= double.Epsilon ? Local.Habitat_none : Lib.BuildString((20.0 * v / PreferencesRadiation.Instance.shieldingEfficiency).ToString("F2"), " mm");//"none"
         }
 
-        // traduce living space value to string
-        public static string Living_space_to_string(double v)
+		// traduce living space value to string
+		internal static string Living_space_to_string(double v)
         {
             if (v >= 0.99) return Local.Habitat_Summary1;//"ideal"
             else if (v >= 0.75) return Local.Habitat_Summary2;//"good"
@@ -615,7 +615,7 @@ namespace KERBALISM
         }
 
         // enable/disable dialog "Transfer crew" on UI
-        public void RefreshDialog()
+        void RefreshDialog()
         {
             if (HighLogic.LoadedSceneIsEditor)
             {
@@ -652,7 +652,7 @@ namespace KERBALISM
             part.crewTransferAvailable = isPassable;
         }
 
-        public ModifierChangeWhen GetModuleMassChangeWhen() { return ModifierChangeWhen.CONSTANTLY; }
+        ModifierChangeWhen GetModuleMassChangeWhen() { return ModifierChangeWhen.CONSTANTLY; }
 
         // Enable/Disable IVA
         void UpdateIVA(bool ative)
@@ -691,8 +691,8 @@ namespace KERBALISM
             FixIVA = vessel.isActiveVessel;
         }
 
-        // habitat state
-        public enum State
+		// habitat state
+		internal enum State
         {
             disabled,        // hab is disabled
             enabled,         // hab is enabled

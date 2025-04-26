@@ -8,13 +8,13 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiToggleList<T> : KsmGuiVerticalLayout
+	class KsmGuiToggleList<T> : KsmGuiVerticalLayout
 	{
-		public ToggleGroup ToggleGroupComponent { get; private set; }
-		public UnityAction<T> OnChildToggleActivated { get; set; }
-		public List<KsmGuiToggleListElement<T>> ChildToggles { get; private set; } = new List<KsmGuiToggleListElement<T>>();
+		internal ToggleGroup ToggleGroupComponent { get; private set; }
+		internal UnityAction<T> OnChildToggleActivated { get; private set; }
+		internal List<KsmGuiToggleListElement<T>> ChildToggles { get; private set; } = new List<KsmGuiToggleListElement<T>>();
 
-		public KsmGuiToggleList(KsmGuiBase parent, UnityAction<T> onChildToggleActivated)
+		internal KsmGuiToggleList(KsmGuiBase parent, UnityAction<T> onChildToggleActivated)
 			: base(parent, 2, 0, 0, 0, 0, TextAnchor.UpperLeft)
 		{
 			ToggleGroupComponent = TopObject.AddComponent<ToggleGroup>();
@@ -22,14 +22,14 @@ namespace KERBALISM.KsmGui
 		}
 	}
 
-	public class KsmGuiToggleListElement<T> : KsmGuiHorizontalLayout, IKsmGuiInteractable, IKsmGuiText, IKsmGuiToggle
+	class KsmGuiToggleListElement<T> : KsmGuiHorizontalLayout, IKsmGuiInteractable, IKsmGuiText, IKsmGuiToggle
 	{
-		public KsmGuiText TextObject { get; private set; }
-		public Toggle ToggleComponent { get; private set; }
-		public T ToggleId { get; private set; }
-		private KsmGuiToggleList<T> parent;
+		KsmGuiText TextObject { get; set; }
+		internal Toggle ToggleComponent { get; private set; }
+		internal T ToggleId { get; private set; }
+		KsmGuiToggleList<T> parent;
 
-		public KsmGuiToggleListElement(KsmGuiToggleList<T> parent, T toggleId, string text) : base(parent)
+		internal KsmGuiToggleListElement(KsmGuiToggleList<T> parent, T toggleId, string text) : base(parent)
 		{
 			ToggleComponent = TopObject.AddComponent<Toggle>();
 			ToggleComponent.transition = Selectable.Transition.None;
@@ -58,7 +58,7 @@ namespace KERBALISM.KsmGui
 			TextObject.SetLayoutElement(true);
 		}
 
-		private void NotifyParent(bool enabled)
+		void NotifyParent(bool enabled)
 		{
 			if (enabled && parent.OnChildToggleActivated != null)
 			{

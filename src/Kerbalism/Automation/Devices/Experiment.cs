@@ -6,27 +6,27 @@ using System.Text;
 
 namespace KERBALISM
 {
-	public sealed class ExperimentDevice : LoadedDevice<Experiment>
+	sealed class ExperimentDevice : LoadedDevice<Experiment>
 	{
-		private readonly DeviceIcon icon;
-		private StringBuilder sb;
-		private string scienceValue;
+		readonly DeviceIcon icon;
+		StringBuilder sb;
+		string scienceValue;
 
-		public ExperimentDevice(Experiment module) : base(module)
+		internal ExperimentDevice(Experiment module) : base(module)
 		{
 			icon = new DeviceIcon(module.ExpInfo.SampleMass > 0.0 ? Textures.sample_scicolor : Textures.file_scicolor, "open experiment window", () => new ExperimentPopup(module.vessel, module, PartId, PartName));
 			sb = new StringBuilder();
 			OnUpdate();
 		}
 
-		public override void OnUpdate()
+		internal override void OnUpdate()
 		{
 			scienceValue = Experiment.ScienceValue(module.Subject);
 		}
 
-		public override string Name => module.experiment_id;
+		internal override string Name => module.experiment_id;
 
-		public override string DisplayName
+		internal override string DisplayName
 		{
 			get
 			{
@@ -49,9 +49,9 @@ namespace KERBALISM
 			}
 		}
 
-		public override string Status => Experiment.StatusInfo(module.Status, module.issue);
+		internal override string Status => Experiment.StatusInfo(module.Status, module.issue);
 
-		public override string Tooltip
+		internal override string Tooltip
 		{
 			get
 			{
@@ -100,37 +100,37 @@ namespace KERBALISM
 			}
 		}
 
-		public override DeviceIcon Icon => icon;
+		internal override DeviceIcon Icon => icon;
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			if (value != module.Running) Toggle();
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			module.Toggle();
 		}
 
-		public override string PartName => module.part.partInfo.title;
+		internal override string PartName => module.part.partInfo.title;
 	}
 
-	public sealed class ProtoExperimentDevice : ProtoDevice<Experiment>
+	sealed class ProtoExperimentDevice : ProtoDevice<Experiment>
 	{
-		private readonly Vessel vessel;
+		readonly Vessel vessel;
 
-		private readonly DeviceIcon icon;
+		readonly DeviceIcon icon;
 
-		private string issue;
-		private ExperimentInfo expInfo;
-		private Experiment.ExpStatus status;
-		private SubjectData subject;
-		private string scienceValue;
-		private double prodFactor;
+		string issue;
+		ExperimentInfo expInfo;
+		Experiment.ExpStatus status;
+		SubjectData subject;
+		string scienceValue;
+		double prodFactor;
 
-		private StringBuilder sb;
+		StringBuilder sb;
 
-		public ProtoExperimentDevice(Experiment prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule, Vessel vessel)
+		internal ProtoExperimentDevice(Experiment prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule, Vessel vessel)
 			: base(prefab, protoPart, protoModule)
 		{
 			this.vessel = vessel;
@@ -141,7 +141,7 @@ namespace KERBALISM
 			OnUpdate();
 		}
 
-		public override void OnUpdate()
+		internal override void OnUpdate()
 		{
 			issue = Lib.Proto.GetString(protoModule, "issue");
 			status = Lib.Proto.GetEnum(protoModule, "status", Experiment.ExpStatus.Stopped);
@@ -150,9 +150,9 @@ namespace KERBALISM
 			prodFactor = Lib.Proto.GetDouble(protoModule, "prodFactor");
 		}
 
-		public override string Name => prefab.experiment_id;
+		internal override string Name => prefab.experiment_id;
 
-		public override string DisplayName
+		internal override string DisplayName
 		{
 			get
 			{
@@ -175,9 +175,9 @@ namespace KERBALISM
 			}
 		}
 
-		public override string Status => Experiment.StatusInfo(status, issue);
+		internal override string Status => Experiment.StatusInfo(status, issue);
 
-		public override string Tooltip
+		internal override string Tooltip
 		{
 			get
 			{
@@ -226,14 +226,14 @@ namespace KERBALISM
 			}
 		}
 
-		public override DeviceIcon Icon => icon;
+		internal override DeviceIcon Icon => icon;
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			if (value != Experiment.IsRunning(status)) Experiment.ProtoToggle(vessel, prefab, protoModule);
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			Experiment.ProtoToggle(vessel, prefab, protoModule);
 		}

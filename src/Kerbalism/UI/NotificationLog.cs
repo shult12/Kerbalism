@@ -3,9 +3,9 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public static class NotificationLog
+	static class NotificationLog
 	{
-		public static void Logman(this Panel p, Vessel v)
+		internal static void Logman(this Panel p, Vessel v)
 		{
 			p.Title(Lib.BuildString(Lib.Ellipsis(v.vesselName, Styles.ScaleStringLength(40)), " ", Lib.Color(Local.LogMan_ALLLOGS, Lib.Kolor.LightGrey)));//"ALL LOGS"
 			p.Width(Styles.ScaleWidthFloat(465.0f));

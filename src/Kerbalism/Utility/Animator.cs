@@ -4,15 +4,15 @@ using System.Collections;
 
 namespace KERBALISM
 {
-	public sealed class Animator
+	sealed class Animator
 	{
-		private Animation anim;
-		private readonly string name;
-		public bool reversed = false;
+		Animation anim;
+		readonly string name;
+		internal bool reversed = false;
 
-		public bool IsDefined => anim != null;
+		internal bool IsDefined => anim != null;
 
-		public Animator(Part p, string anim_name)
+		internal Animator(Part p, string anim_name)
 		{
 			anim = null;
 			name = string.Empty;
@@ -29,7 +29,7 @@ namespace KERBALISM
 		}
 
 		// Note: This function resets animation to the beginning
-		public void Play(bool reverse, bool loop, Action callback = null)
+		internal void Play(bool reverse, bool loop, Action callback = null)
 		{
 			if(anim == null)
 			{
@@ -56,7 +56,7 @@ namespace KERBALISM
 			if (!reverse && callback != null) callback();
 		}
 
-		public void Stop(Action callback = null)
+		internal void Stop(Action callback = null)
 		{
 			if (anim == null)
 			{
@@ -74,7 +74,7 @@ namespace KERBALISM
 			callback?.Invoke();
 		}
 
-		public void Pause()
+		internal void Pause()
 		{
 			if (anim != null)
 			{
@@ -82,7 +82,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void Resume(bool reverse)
+		internal void Resume(bool reverse)
 		{
 			if (anim != null)
 			{
@@ -91,7 +91,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void Still(double t)
+		internal void Still(double t)
 		{
 			if (anim != null)
 			{
@@ -102,7 +102,7 @@ namespace KERBALISM
 			}
 		}
 
-		public bool Playing()
+		internal bool Playing()
 		{
 			if (anim != null)
 			{

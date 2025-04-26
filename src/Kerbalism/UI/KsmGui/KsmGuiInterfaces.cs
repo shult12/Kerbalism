@@ -5,23 +5,23 @@ using UnityEngine.Events;
 
 namespace KERBALISM.KsmGui
 {
-	public interface IKsmGuiText
+	interface IKsmGuiText
 	{
 		string Text { get; set; }
 	}
 
-	public interface IKsmGuiInteractable
+	interface IKsmGuiInteractable
 	{
 		bool Interactable { get; set; }
 	}
 
-	public interface IKsmGuiButton
+	interface IKsmGuiButton
 	{
 		void SetButtonOnClick(UnityAction action);
 	}
 
 
-	public interface IKsmGuiIcon
+	interface IKsmGuiIcon
 	{
 		void SetIconTexture(Texture2D texture, int width = 16, int height = 16);
 
@@ -30,7 +30,7 @@ namespace KERBALISM.KsmGui
 		void SetIconColor(Lib.Kolor kColor);
 	}
 
-	public interface IKsmGuiToggle
+	interface IKsmGuiToggle
 	{
 		void SetToggleOnChange(UnityAction<bool> action);
 	}

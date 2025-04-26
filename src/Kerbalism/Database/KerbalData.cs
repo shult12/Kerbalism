@@ -7,9 +7,9 @@ namespace KERBALISM
 {
 
 
-	public class KerbalData
+	class KerbalData
 	{
-		public KerbalData()
+		internal KerbalData()
 		{
 			rescue = true;
 			disabled = false;
@@ -18,7 +18,7 @@ namespace KERBALISM
 			rules = new Dictionary<string, RuleData>();
 		}
 
-		public KerbalData(ConfigNode node)
+		internal KerbalData(ConfigNode node)
 		{
 			rescue = Lib.ConfigValue(node, "rescue", Lib.ConfigValue(node, "resque", true)); //< support pre 1.1.9 typo
 			disabled = Lib.ConfigValue(node, "disabled", false);
@@ -32,7 +32,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			node.AddValue("rescue", rescue);
 			node.AddValue("disabled", disabled);
@@ -50,7 +50,7 @@ namespace KERBALISM
 		/// <summary>
 		/// Reset all process values
 		/// </summary>
-		public void Recover()
+		internal void Recover()
 		{
 			// just retain the lifetime values to keep the save file small
 			Dictionary<string, RuleData> cleaned = new Dictionary<string, RuleData>();
@@ -64,7 +64,7 @@ namespace KERBALISM
 			rules = cleaned;
 		}
 
-		public RuleData Rule(string name)
+		internal RuleData Rule(string name)
 		{
 			if (!rules.ContainsKey(name))
 			{
@@ -73,11 +73,11 @@ namespace KERBALISM
 			return rules[name];
 		}
 
-		public bool rescue;         // used to deal with rescue mission kerbals
-		public bool disabled;       // a generic flag to disable resource consumption, for use by other mods
-		public bool eva_dead;       // the eva kerbal died, and is now a floating body
-		public string sickbay;		// comma-separated list of sickbay resources active for this kerbal
-		public Dictionary<string, RuleData> rules; // rules data
+		internal bool rescue;         // used to deal with rescue mission kerbals
+		internal bool disabled;       // a generic flag to disable resource consumption, for use by other mods
+		internal bool eva_dead;       // the eva kerbal died, and is now a floating body
+		internal string sickbay;        // comma-separated list of sickbay resources active for this kerbal
+		internal Dictionary<string, RuleData> rules; // rules data
 	}
 
 

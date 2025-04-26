@@ -6,9 +6,9 @@ using UnityEngine;
 namespace KERBALISM
 {
 
-	public class StormData
+	class StormData
 	{
-		public void Reset()
+		internal void Reset()
 		{
 			storm_time = 0.0;
 			storm_duration = 0.0;
@@ -18,7 +18,7 @@ namespace KERBALISM
 			display_warning = true;
 		}
 
-		public StormData(ConfigNode node)
+		internal StormData(ConfigNode node)
 		{
 			if (node == null)
 			{
@@ -45,7 +45,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			node.AddValue("storm_time", storm_time);
 			node.AddValue("storm_duration", storm_duration);
@@ -56,14 +56,14 @@ namespace KERBALISM
 			node.AddValue("display_warning", display_warning);
 		}
 
-		public double storm_time;        // time of next storm
-		public double storm_duration;    // duration of current/next storm
-		public double storm_generation;  // time of next storm generation roll
-		public uint storm_state;         // 0: none, 1: inbound, 2: inprogress
-		public uint msg_storm;           // message flag
+		internal double storm_time;        // time of next storm
+		internal double storm_duration;    // duration of current/next storm
+		internal double storm_generation;  // time of next storm generation roll
+		internal uint storm_state;         // 0: none, 1: inbound, 2: inprogress
+		internal uint msg_storm;           // message flag
 
-		public double displayed_duration;
-		public bool display_warning;
+		internal double displayed_duration;
+		internal bool display_warning;
 
 	}
 

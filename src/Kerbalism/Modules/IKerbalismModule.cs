@@ -9,7 +9,7 @@ namespace KERBALISM
 	/// We're always going to call you for resource handling, You tell us what
 	// to produce or consume.
 	/// </summary>
-	public interface IKerbalismModule
+	interface IKerbalismModule
 	{
 		// For background updates, define the following static method. It will
 		// be called when the vessel is NOT loaded.

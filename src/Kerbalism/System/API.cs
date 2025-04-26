@@ -535,7 +535,7 @@ namespace KERBALISM
 			public void Add(Action<Vessel, string, bool> receiver) { if (!receivers.Contains(receiver)) receivers.Add(receiver); }
 			public void Remove(Action<Vessel, string, bool> receiver) { if (receivers.Contains(receiver)) receivers.Remove(receiver); }
 
-			public void Notify(Vessel vessel, string experiment_id, Experiment.ExpStatus oldStatus, Experiment.ExpStatus newStatus)
+			internal void Notify(Vessel vessel, string experiment_id, Experiment.ExpStatus oldStatus, Experiment.ExpStatus newStatus)
 			{
 				bool wasRunning = oldStatus == Experiment.ExpStatus.Forced || oldStatus == Experiment.ExpStatus.Running;
 				bool isRunning = newStatus == Experiment.ExpStatus.Forced || newStatus == Experiment.ExpStatus.Running;

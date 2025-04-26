@@ -8,13 +8,13 @@ namespace KERBALISM
 {
 
 
-	public static class FileManager
+	static class FileManager
 	{
 
 		/// <summary>
 		/// If short_strings parameter is true then the strings used for display of the data will be shorter when inflight.
 		/// </summary>
-		public static void Fileman(this Panel p, Vessel v, bool short_strings = false)
+		internal static void Fileman(this Panel p, Vessel v, bool short_strings = false)
 		{
 			// avoid corner-case when this is called in a lambda after scene changes
 			v = FlightGlobals.FindVessel(v.id);

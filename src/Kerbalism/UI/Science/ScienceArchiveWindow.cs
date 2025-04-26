@@ -9,16 +9,16 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public class ScienceArchiveWindow
+	class ScienceArchiveWindow
 	{
-		public static ScienceArchiveWindow Instance { get; private set; }
+		static ScienceArchiveWindow Instance { get; set; }
 
-		public ScienceArchiveWindow()
+		internal ScienceArchiveWindow()
 		{
 			Init();
 		}
 
-		public static void Toggle()
+		internal static void Toggle()
 		{
 			if (window.Enabled)
 			{
@@ -35,7 +35,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void Close()
+		static void Close()
 		{
 			foreach (KsmGuiToggleListElement<ExpInfoAndSubjects> exp in experimentsToggleList.ChildToggles)
 			{
@@ -63,7 +63,7 @@ namespace KERBALISM
 		static List<Part> vesselParts = null;
 		static int lastPartCount;
 
-		private void Init()
+		void Init()
 		{
 			Lib.Log("Science Archive init started");
 
@@ -133,7 +133,7 @@ namespace KERBALISM
 			Lib.Log("Science Archive init done");
 		}
 
-		private static void Update()
+		static void Update()
 		{
 			if (Lib.IsEditor())
 				vesselParts = EditorLogic.fetch.ship.Parts;
@@ -170,7 +170,7 @@ namespace KERBALISM
 			lastPartCount = vesselParts != null ? vesselParts.Count : 0;
 		}
 
-		private static void OnToggleExperiment(ExpInfoAndSubjects expInfoAndSubjects)
+		static void OnToggleExperiment(ExpInfoAndSubjects expInfoAndSubjects)
 		{
 			currentExperiment.experimentSubjectList.Enabled = false;
 			expInfoAndSubjects.experimentSubjectList.KnownSubjectsToggle.SetOnState(currentExperiment.experimentSubjectList.KnownSubjectsToggle.IsOn, true);
@@ -180,24 +180,24 @@ namespace KERBALISM
 			window.RebuildLayout();
 		}
 
-		private static void OnToggleResearchedFilter(bool isOn)
+		static void OnToggleResearchedFilter(bool isOn)
 		{
 			if (isOn) UpdateResearchedFilter();
 			UpdateVisibleExperiments();
 		}
 
-		private static void OnToggleVesselFilter(bool isOn)
+		static void OnToggleVesselFilter(bool isOn)
 		{
 			if (isOn) UpdateVesselFilter();
 			UpdateVisibleExperiments();
 		}
 
-		private static void OnToggleROCFilter(bool isOn)
+		static void OnToggleROCFilter(bool isOn)
 		{
 			UpdateVisibleExperiments();
 		}
 
-		private static void UpdateVisibleExperiments()
+		static void UpdateVisibleExperiments()
 		{
 			bool needRebuild = false;
 			foreach (KsmGuiToggleListElement<ExpInfoAndSubjects> exp in experimentsToggleList.ChildToggles)
@@ -225,7 +225,7 @@ namespace KERBALISM
 		}
 
 		
-		private void OnConfigure(Part part, Configure configureModule)
+		void OnConfigure(Part part, Configure configureModule)
 		{
 			if (window.Enabled && vesselFilter.Enabled && vesselFilter.IsOn)
 			{
@@ -234,7 +234,7 @@ namespace KERBALISM
 			}
 		}
 
-		private static void UpdateVesselFilter()
+		static void UpdateVesselFilter()
 		{
 			vesselExpInfos.Clear();
 			bool hasROCScience = false;
@@ -299,7 +299,7 @@ namespace KERBALISM
 			}
 		}
 
-		private static string[] alwaysResearchedExperiments = new string[]
+		static string[] alwaysResearchedExperiments = new string[]
 		{
 			"asteroidSample",
 			"cometSample_short",
@@ -308,7 +308,7 @@ namespace KERBALISM
 			"cometSample_interstellar"
 		};
 
-		private static void UpdateResearchedFilter()
+		static void UpdateResearchedFilter()
 		{
 			researchedExpInfos.Clear();
 
@@ -400,12 +400,12 @@ namespace KERBALISM
 			}
 		}
 
-		private class ExpInfoAndSubjects
+		class ExpInfoAndSubjects
 		{
-			public ExperimentInfo expInfo;
-			public ExperimentSubjectList experimentSubjectList;
+			internal ExperimentInfo expInfo;
+			internal ExperimentSubjectList experimentSubjectList;
 
-			public ExpInfoAndSubjects(ExperimentInfo expInfo, ExperimentSubjectList experimentSubjectList)
+			internal ExpInfoAndSubjects(ExperimentInfo expInfo, ExperimentSubjectList experimentSubjectList)
 			{
 				this.expInfo = expInfo;
 				this.experimentSubjectList = experimentSubjectList;

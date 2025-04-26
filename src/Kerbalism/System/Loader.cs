@@ -9,16 +9,16 @@ using HarmonyLib;
 namespace KERBALISM
 {
 
-	public static class MM40Injector
+	static class MM40Injector
 	{
-		private static List<string> injectors = new List<string>();
+		static List<string> injectors = new List<string>();
 
-		public static void AddInjector(string type, string id)
+		internal static void AddInjector(string type, string id)
 		{
 			injectors.Add(type + id);
 		}
 
-		public static IEnumerable<string> ModuleManagerAddToModList()
+		public static IEnumerable<string> ModuleManagerAddToModList() //needs to be public so it's called by Module Manager
 		{
 			return injectors;
 		}
@@ -30,10 +30,10 @@ namespace KERBALISM
 	[KSPAddon(KSPAddon.Startup.Instantly, false)]
 	public sealed class Loader : MonoBehaviour
 	{
-		public static Harmony HarmonyInstance => harmonyInstance;
-		private static Harmony harmonyInstance;
+		internal static Harmony HarmonyInstance => harmonyInstance;
+		static Harmony harmonyInstance;
 
-		public void Start()
+		void Start()
 		{
 			// log version
 			Lib.Log("Version : " + Lib.KerbalismVersion + " - Build : " + Lib.KerbalismDevBuild);
@@ -106,7 +106,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void ModuleManagerPostLoad()
+		public static void ModuleManagerPostLoad() //needs to be public so it's called by Module Manager
 		{
 			Lib.LoadResourceUnitInfo();
 		}

@@ -8,7 +8,7 @@ namespace KERBALISM
 {
 
 
-	public enum Severity
+	enum Severity
 	{
 		relax,    // something went back to nominal
 		warning,  // the user should start being worried about something
@@ -18,26 +18,26 @@ namespace KERBALISM
 	}
 
 
-	public sealed class Message
+	sealed class Message
 	{
 		// represent an entry in the message list
 		sealed class Entry
 		{
-			public string msg;
-			public float first_seen;
+			internal string msg;
+			internal float first_seen;
 		}
 
-		public sealed class MessageObject
+		internal sealed class MessageObject
 		{
-			public string title;
-			public string msg;
+			internal string title;
+			internal string msg;
 		}
 
-		public static List<MessageObject> all_logs;
+		internal static List<MessageObject> all_logs;
 
 
 		// ctor
-		public Message()
+		internal Message()
 		{
 			// enable global access
 			instance = this;
@@ -53,7 +53,7 @@ namespace KERBALISM
 
 
 		// called every frame
-		public void On_gui()
+		internal void On_gui()
 		{
 			// if queue is empty, do nothing
 			if (entries.Count == 0) return;
@@ -89,7 +89,7 @@ namespace KERBALISM
 
 
 		// add a plain message
-		public static void Post(string msg)
+		internal static void Post(string msg)
 		{
 			// ignore the message if muted
 			if (instance.muted) return;
@@ -117,7 +117,7 @@ namespace KERBALISM
 
 
 		// add a message
-		public static void Post(string text, string subtext)
+		internal static void Post(string text, string subtext)
 		{
 			// ignore the message if muted
 			if (instance.muted) return;
@@ -133,7 +133,7 @@ namespace KERBALISM
 
 
 		// add a message
-		public static void Post(Severity severity, string text, string subtext = "")
+		internal static void Post(Severity severity, string text, string subtext = "")
 		{
 			// ignore the message if muted
 			if (instance.muted) return;
@@ -163,7 +163,7 @@ namespace KERBALISM
 		// impact, so we keep the log length short.
 		// A good solution would have to re-implement the log using the new UI classes,
 		// and while doing that also fix the broken layouting we get with long messages.
-		private static void TruncateLogs()
+		static void TruncateLogs()
 		{
 			while(all_logs.Count > 25)
 			{
@@ -173,46 +173,46 @@ namespace KERBALISM
 		}
 
 		/// <summary> Clear all log lists. Called when a new game is loaded </summary>
-		public static void Clear()
+		internal static void Clear()
 		{
 			all_logs.Clear();
 			instance.entries.Clear();
 		}
 
 		// disable rendering of messages
-		public static void Mute()
+		internal static void Mute()
 		{
 			instance.muted = true;
 		}
 
 
 		// re-enable rendering of messages
-		public static void Unmute()
+		internal static void Unmute()
 		{
 			instance.muted = false;
 		}
 
 
 		// return true if user channel is muted
-		public static bool IsMuted()
+		internal static bool IsMuted()
 		{
 			return instance.muted;
 		}
 
 
-		private readonly float offset = Styles.ScaleFloat(266.0f);
+		readonly float offset = Styles.ScaleFloat(266.0f);
 
 		// store entries
-		private Queue<Entry> entries = new Queue<Entry>();
+		Queue<Entry> entries = new Queue<Entry>();
 
 		// disable message rendering
-		private bool muted;
+		bool muted;
 
 		// styles
-		private GUIStyle style;
+		GUIStyle style;
 
 		// permit global access
-		private static Message instance;
+		static Message instance;
 	}
 
 

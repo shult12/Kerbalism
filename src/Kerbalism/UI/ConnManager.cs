@@ -1,12 +1,12 @@
 using KSP.Localization;
 namespace KERBALISM
 {
-	public static class ConnManager
+	static class ConnManager
 	{
 		/// <summary>
 		/// Shows the Network status, ControlPath, Signal strength
 		/// </summary>
-		public static void ConnMan(this Panel p, Vessel v)
+		internal static void ConnMan(this Panel p, Vessel v)
 		{
 			// avoid corner-case when this is called in a lambda after scene changes
 			v = FlightGlobals.FindVessel(v.id);

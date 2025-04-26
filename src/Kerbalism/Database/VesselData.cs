@@ -4,62 +4,62 @@ using System.Collections.Generic;
 
 namespace KERBALISM
 {
-	public class VesselData
+	class VesselData
 	{
 		// references
-		public Guid VesselId { get; private set; }
-		public Vessel Vessel { get; private set; }
+		internal Guid VesselId { get; private set; }
+		internal Vessel Vessel { get; private set; }
 
 		// validity
 		/// <summary> True if the vessel exists in FlightGlobals. will be false in the editor</summary>
-		public bool ExistsInFlight { get; private set; }
-		public bool is_vessel;              // true if this is a valid vessel
-		public bool is_rescue;              // true if this is a rescue mission vessel
-		public bool is_eva_dead;
+		bool ExistsInFlight { get; set; }
+		internal bool is_vessel;              // true if this is a valid vessel
+		bool is_rescue;              // true if this is a rescue mission vessel
+		bool is_eva_dead;
 
 		/// <summary>False in the following cases : asteroid, debris, flag, deployed ground part, dead eva, rescue</summary>
-		public bool IsSimulated { get; private set; }
+		internal bool IsSimulated { get; private set; }
 
 		/// <summary>Set to true after evaluation has finished. Used to avoid triggering of events from an uninitialized status</summary>
-		private bool Evaluated = false;
+		bool Evaluated = false;
 
 		// time since last update
-		private double secSinceLastEval;
+		double secSinceLastEval;
 
 		/// <summary>
 		/// Comms handler for this vessel, evaluate and expose data about the vessel antennas and comm link
 		/// </summary>
-		public CommHandler CommHandler { get; private set; }
+		internal CommHandler CommHandler { get; private set; }
 
-		public Drive TransmitBufferDrive { get; private set; }
+		internal Drive TransmitBufferDrive { get; private set; }
 
 		#region non-evaluated non-persisted fields
 		// there are probably a lot of candidates for this in the current codebase
 
 		/// <summary>name of last file being transmitted, or empty if nothing is being transmitted</summary>
-		public List<File> filesTransmitted;
+		internal List<File> filesTransmitted;
 
 		#endregion
 
 		#region non-evaluated persisted fields
 		// user defined persisted fields
-		public bool cfg_ec;           // enable/disable message: ec level
-		public bool cfg_supply;       // enable/disable message: supplies level
-		public bool cfg_signal;       // enable/disable message: link status
-		public bool cfg_malfunction;  // enable/disable message: malfunctions
-		public bool cfg_storm;        // enable/disable message: storms
-		public bool cfg_script;       // enable/disable message: scripts
-		public bool cfg_highlights;   // show/hide malfunction highlights
-		public bool cfg_showlink;     // show/hide link line
-		public bool cfg_show;         // show/hide vessel in monitor
-		public Computer computer;     // store scripts
-		public bool deviceTransmit;   // vessel wide automation : enable/disable data transmission
+		internal bool cfg_ec;           // enable/disable message: ec level
+		internal bool cfg_supply;       // enable/disable message: supplies level
+		internal bool cfg_signal;       // enable/disable message: link status
+		internal bool cfg_malfunction;  // enable/disable message: malfunctions
+		internal bool cfg_storm;        // enable/disable message: storms
+		internal bool cfg_script;       // enable/disable message: scripts
+		internal bool cfg_highlights;   // show/hide malfunction highlights
+		bool cfg_showlink;     // show/hide link line
+		internal bool cfg_show;         // show/hide vessel in monitor
+		internal Computer computer;     // store scripts
+		internal bool deviceTransmit;   // vessel wide automation : enable/disable data transmission
 
 		// other persisted fields
-		private List<ResourceUpdateDelegate> resourceUpdateDelegates = null; // all part modules that have a ResourceUpdate method
-		private Dictionary<uint, PartData> parts; // all parts by flightID
-		public Dictionary<uint, PartData>.ValueCollection PartDatas => parts.Values;
-		public PartData GetPartData(uint flightID)
+		List<ResourceUpdateDelegate> resourceUpdateDelegates = null; // all part modules that have a ResourceUpdate method
+		Dictionary<uint, PartData> parts; // all parts by flightID
+		internal Dictionary<uint, PartData>.ValueCollection PartDatas => parts.Values;
+		internal PartData GetPartData(uint flightID)
 		{
 			PartData pd;
 			// in some cases (KIS added parts), we might try to get partdata before it is added by part-adding events
@@ -79,17 +79,17 @@ namespace KERBALISM
 			return pd;
 		}
 
-		public bool msg_signal;       // message flag: link status
-		public bool msg_belt;         // message flag: crossing radiation belt
-		public StormData stormData;
-		private Dictionary<string, SupplyData> supplies; // supplies data
-		public List<uint> scansat_id; // used to remember scansat sensors that were disabled
-		public double scienceTransmitted;
+		internal bool msg_signal;       // message flag: link status
+		internal bool msg_belt;         // message flag: crossing radiation belt
+		internal StormData stormData;
+		Dictionary<string, SupplyData> supplies; // supplies data
+		internal List<uint> scansat_id; // used to remember scansat sensors that were disabled
+		internal double scienceTransmitted;
 
-		public Dictionary<Process, DumpSpecs.ActiveValve> dumpValves;
+		internal Dictionary<Process, DumpSpecs.ActiveValve> dumpValves;
 
 		// persist that so we don't have to do an expensive check every time
-		public bool IsSerenityGroundController => isSerenityGroundController; bool isSerenityGroundController;
+		bool IsSerenityGroundController => isSerenityGroundController; bool isSerenityGroundController;
 		#endregion
 
 		#region evaluated environment properties
@@ -99,125 +99,125 @@ namespace KERBALISM
 		/// [environment] true when timewarping faster at 10000x or faster. When true, some fields are updated more frequently
 		/// and their evaluation is changed to an analytic, timestep-independant and vessel-position-independant mode.
 		/// </summary>
-		public bool EnvIsAnalytic => isAnalytic; bool isAnalytic;
+		internal bool EnvIsAnalytic => isAnalytic; bool isAnalytic;
 
 		/// <summary> [environment] true if inside ocean</summary>
-		public bool EnvUnderwater => underwater; bool underwater;
+		internal bool EnvUnderwater => underwater; bool underwater;
 
 		/// <summary> [environment] true if inside breathable atmosphere</summary>
-		public bool EnvBreathable => breathable; bool breathable;
+		internal bool EnvBreathable => breathable; bool breathable;
 
 		/// <summary> [environment] true if on the surface of a body</summary>
-		public bool EnvLanded => landed; bool landed;
+		internal bool EnvLanded => landed; bool landed;
 
 		/// <summary> Is the vessel inside an atmosphere ?</summary>
-		public bool EnvInAtmosphere => inAtmosphere; bool inAtmosphere;
+		internal bool EnvInAtmosphere => inAtmosphere; bool inAtmosphere;
 
 		/// <summary> [environment] true if in zero g</summary>
-		public bool EnvZeroG => zeroG; bool zeroG;
+		internal bool EnvZeroG => zeroG; bool zeroG;
 
 		/// <summary> [environment] solar flux reflected from the nearest body</summary>
-		public double EnvAlbedoFlux => albedoFlux; double albedoFlux;
+		internal double EnvAlbedoFlux => albedoFlux; double albedoFlux;
 
 		/// <summary> [environment] infrared radiative flux from the nearest body</summary>
-		public double EnvBodyFlux => bodyFlux; double bodyFlux;
+		internal double EnvBodyFlux => bodyFlux; double bodyFlux;
 
 		/// <summary> [environment] total flux at vessel position</summary>
-		public double EnvTotalFlux => totalFlux; double totalFlux;
+		double EnvTotalFlux => totalFlux; double totalFlux;
 
 		/// <summary> [environment] temperature ar vessel position</summary>
-		public double EnvTemperature => temperature; double temperature;
+		internal double EnvTemperature => temperature; double temperature;
 
 		/// <summary> [environment] difference between environment temperature and survival temperature</summary>// 
-		public double EnvTempDiff => tempDiff; double tempDiff;
+		internal double EnvTempDiff => tempDiff; double tempDiff;
 
 		/// <summary> [environment] radiation at vessel position</summary>
-		public double EnvRadiation => radiation; double radiation;
+		internal double EnvRadiation => radiation; double radiation;
 
 		/// <summary> [environment] radiation effective for habitats/EVAs</summary>
-		public double EnvHabitatRadiation => shieldedRadiation; double shieldedRadiation;
+		internal double EnvHabitatRadiation => shieldedRadiation; double shieldedRadiation;
 
 		/// <summary> [environment] true if vessel is inside a magnetopause (except the heliosphere)</summary>
-		public bool EnvMagnetosphere => magnetosphere; bool magnetosphere;
+		internal bool EnvMagnetosphere => magnetosphere; bool magnetosphere;
 
 		/// <summary> [environment] true if vessel is inside a radiation belt</summary>
-		public bool EnvInnerBelt => innerBelt; bool innerBelt;
+		internal bool EnvInnerBelt => innerBelt; bool innerBelt;
 
 		/// <summary> [environment] true if vessel is inside a radiation belt</summary>
-		public bool EnvOuterBelt => outerBelt; bool outerBelt;
+		internal bool EnvOuterBelt => outerBelt; bool outerBelt;
 
 		/// <summary> [environment] true if vessel is outside sun magnetopause</summary>
-		public bool EnvInterstellar => interstellar; bool interstellar;
+		internal bool EnvInterstellar => interstellar; bool interstellar;
 
 		/// <summary> [environment] true if the vessel is inside a magnetopause (except the sun) and under storm</summary>
-		public bool EnvBlackout => blackout; bool blackout;
+		internal bool EnvBlackout => blackout; bool blackout;
 
 		/// <summary> [environment] true if vessel is inside thermosphere</summary>
-		public bool EnvThermosphere => thermosphere; bool thermosphere;
+		bool EnvThermosphere => thermosphere; bool thermosphere;
 
 		/// <summary> [environment] true if vessel is inside exosphere</summary>
-		public bool EnvExosphere => exosphere; bool exosphere;
+		bool EnvExosphere => exosphere; bool exosphere;
 
 		/// <summary> [environment] true if vessel is inside exosphere</summary>
-		public bool EnvStorm => inStorm; bool inStorm;
+		internal bool EnvStorm => inStorm; bool inStorm;
 
 		/// <summary> [environment] true if vessel currently experienced a solar storm</summary>
-		public double EnvStormRadiation => stormRadiation; public double stormRadiation;
+		internal double EnvStormRadiation => stormRadiation; double stormRadiation;
 
 		/// <summary> [environment] proportion of ionizing radiation not blocked by atmosphere</summary>
-		public double EnvGammaTransparency => gammaTransparency; double gammaTransparency;
+		double EnvGammaTransparency => gammaTransparency; double gammaTransparency;
 
 		/// <summary> [environment] gravitation gauge particles detected (joke)</summary>
-		public double EnvGravioli => gravioli; double gravioli;
+		internal double EnvGravioli => gravioli; double gravioli;
 
 		/// <summary> [environment] Bodies whose apparent diameter from the vessel POV is greater than ~10 arcmin (~0.003 radians)</summary>
 		// real apparent diameters at earth : sun/moon =~ 30 arcmin, Venus =~ 1 arcmin
-		public List<CelestialBody> EnvVisibleBodies => visibleBodies; List<CelestialBody> visibleBodies;
+		internal List<CelestialBody> EnvVisibleBodies => visibleBodies; List<CelestialBody> visibleBodies;
 
 		/// <summary> [environment] Sun that send the highest nominal solar flux (in W/m²) at vessel position</summary>
-		public SunInfo EnvMainSun => mainSun; SunInfo mainSun;
+		internal SunInfo EnvMainSun => mainSun; SunInfo mainSun;
 
 		/// <summary> [environment] Angle of the main sun on the surface at vessel position</summary>
-		public double EnvSunBodyAngle => sunBodyAngle; double sunBodyAngle;
+		internal double EnvSunBodyAngle => sunBodyAngle; double sunBodyAngle;
 
 		/// <summary>
 		///  [environment] total solar flux from all stars at vessel position in W/m², include atmospheric absorption if inside an atmosphere (atmo_factor)
 		/// <para/> zero when the vessel is in shadow while evaluation is non-analytic (low timewarp rates)
 		/// <para/> in analytic evaluation, this include fractional sunlight factor
 		/// </summary>
-		public double EnvSolarFluxTotal => solarFluxTotal; double solarFluxTotal;
+		internal double EnvSolarFluxTotal => solarFluxTotal; double solarFluxTotal;
 
 		/// <summary> similar to solar flux total but doesn't account for atmo absorbtion nor occlusion</summary>
-		private double rawSolarFluxTotal;
+		double rawSolarFluxTotal;
 
 		/// <summary> [environment] Average time spend in sunlight, including sunlight from all suns/stars. Each sun/star influence is pondered by its flux intensity</summary>
-		public double EnvSunlightFactor => sunlightFactor; double sunlightFactor;
+		internal double EnvSunlightFactor => sunlightFactor; double sunlightFactor;
 
 		/// <summary> [environment] true if the vessel is currently in sunlight, or at least half the time when in analytic mode</summary>
-		public bool EnvInSunlight => sunlightFactor > 0.49;
+		bool EnvInSunlight => sunlightFactor > 0.49;
 
 		/// <summary> [environment] true if the vessel is currently in shadow, or least 90% of the time when in analytic mode</summary>
 		// this threshold is also used to ignore light coming from distant/weak stars 
-		public bool EnvInFullShadow => sunlightFactor < 0.1;
+		internal bool EnvInFullShadow => sunlightFactor < 0.1;
 
 		/// <summary> List of all habitats and their relevant sun shielding parts </summary>
-		public VesselHabitatInfo EnvHabitatInfo => habitatInfo; VesselHabitatInfo habitatInfo;
+		internal VesselHabitatInfo EnvHabitatInfo => habitatInfo; VesselHabitatInfo habitatInfo;
 
 		/// <summary> [environment] List of all stars/suns and the related data/calculations for the current vessel</summary>
-		public List<SunInfo> EnvSunsInfo => sunsInfo; List<SunInfo> sunsInfo;
+		internal List<SunInfo> EnvSunsInfo => sunsInfo; List<SunInfo> sunsInfo;
 
-		public VesselSituations VesselSituations => vesselSituations; VesselSituations vesselSituations;
+		internal VesselSituations VesselSituations => vesselSituations; VesselSituations vesselSituations;
 
-		public class SunInfo
+		internal class SunInfo
 		{
 			/// <summary> reference to the sun/star</summary>
-			public Sim.SunData SunData => sunData; Sim.SunData sunData;
+			internal Sim.SunData SunData => sunData; Sim.SunData sunData;
 
 			/// <summary> normalized vector from vessel to sun</summary>
-			public Vector3d Direction => direction; Vector3d direction;
+			internal Vector3d Direction => direction; Vector3d direction;
 
 			/// <summary> distance from vessel to sun surface</summary>
-			public double Distance => distance; double distance;
+			internal double Distance => distance; double distance;
 
 			/// <summary>
 			/// return 1.0 when the vessel is in direct sunlight, 0.0 when in shadow
@@ -227,28 +227,28 @@ namespace KERBALISM
 			// - the result is dependant on the vessel altitude at the time of evaluation, 
 			//   consequently it gives inconsistent behavior with highly eccentric orbits
 			// - this totally ignore the orbit inclinaison, polar orbits will be treated as equatorial orbits
-			public double SunlightFactor => sunlightFactor; double sunlightFactor;
+			internal double SunlightFactor => sunlightFactor; double sunlightFactor;
 
 			/// <summary>
 			/// solar flux at vessel position in W/m², include atmospheric absorption if inside an atmosphere (atmo_factor)
 			/// <para/> zero when the vessel is in shadow while evaluation is non-analytic (low timewarp rates)
 			/// <para/> in analytic evaluation, this include fractional sunlight / atmo absorbtion
 			/// </summary>
-			public double SolarFlux => solarFlux; double solarFlux;
+			internal double SolarFlux => solarFlux; double solarFlux;
 
 			/// <summary>
 			/// scalar for solar flux absorbtion by atmosphere at vessel position, not meant to be used directly (use solar_flux instead)
 			/// <para/> if integrated over orbit (analytic evaluation), average atmospheric absorption factor over the daylight period (not the whole day)
 			/// </summary>
-			public double AtmoFactor => atmoFactor; double atmoFactor;
+			double AtmoFactor => atmoFactor; double atmoFactor;
 
 			/// <summary> proportion of this sun flux in the total flux at the vessel position (ignoring atmoshere and occlusion) </summary>
-			public double FluxProportion => fluxProportion; double fluxProportion;
+			internal double FluxProportion => fluxProportion; double fluxProportion;
 
 			/// <summary> similar to solar flux but doesn't account for atmo absorbtion nor occlusion</summary>
-			private double rawSolarFlux;
+			double rawSolarFlux;
 
-			public SunInfo(Sim.SunData sunData)
+			SunInfo(Sim.SunData sunData)
 			{
 				this.sunData = sunData;
 			}
@@ -262,7 +262,7 @@ namespace KERBALISM
 			// the quantization error first became noticeable, and then exceed 100%, to solve this:
 			// - we switch to an analytical estimation of the sunlight/shadow period
 			// - atmo_factor become an average atmospheric absorption factor over the daylight period (not the whole day)
-			public static void UpdateSunsInfo(VesselData vd, Vector3d vesselPosition, double elapsedSeconds)
+			internal static void UpdateSunsInfo(VesselData vd, Vector3d vesselPosition, double elapsedSeconds)
 			{
 				Vessel v = vd.Vessel;
 				double lastSolarFlux = 0.0;
@@ -340,73 +340,73 @@ namespace KERBALISM
 		// things like
 		// TODO : change all those fields to { get; private set; } properties
 		/// <summary>number of crew on the vessel</summary>
-		public int CrewCount => crewCount; int crewCount;
+		internal int CrewCount => crewCount; int crewCount;
 
 		/// <summary>crew capacity of the vessel</summary>
-		public int CrewCapacity => crewCapacity; int crewCapacity;
+		internal int CrewCapacity => crewCapacity; int crewCapacity;
 
 		/// <summary>true if at least a component has malfunctioned or had a critical failure</summary>
-		public bool Malfunction => malfunction; bool malfunction;
+		internal bool Malfunction => malfunction; bool malfunction;
 
 		/// <summary>true if at least a component had a critical failure</summary>
-		public bool Critical => critical; bool critical;
+		internal bool Critical => critical; bool critical;
 
 		/// <summary>connection info</summary>
-		public ConnectionInfo Connection => connection; ConnectionInfo connection;
+		internal ConnectionInfo Connection => connection; ConnectionInfo connection;
 
 		/// <summary>enabled volume in m^3</summary>
-		public double Volume => volume; double volume;
+		internal double Volume => volume; double volume;
 
 		/// <summary>enabled surface in m^2</summary> 
-		public double Surface => surface; double surface;
+		internal double Surface => surface; double surface;
 
 		/// <summary>normalized pressure</summary>
-		public double Pressure => pressure; double pressure;
+		internal double Pressure => pressure; double pressure;
 
 		/// <summary>number of EVA's using available Nitrogen</summary>
-		public uint Evas => evas; uint evas;
+		internal uint Evas => evas; uint evas;
 
 		/// <summary>waste atmosphere amount versus total atmosphere amount</summary>
-		public double Poisoning => poisoning; double poisoning;
+		internal double Poisoning => poisoning; double poisoning;
 
 		/// <summary>shielding level</summary>
-		public double Shielding => shielding; double shielding;
+		internal double Shielding => shielding; double shielding;
 
 		/// <summary>living space factor</summary>
-		public double LivingSpace => livingSpace; double livingSpace;
+		internal double LivingSpace => livingSpace; double livingSpace;
 
 		/// <summary>Available volume per crew</summary>
-		public double VolumePerCrew => volumePerCrew; double volumePerCrew;
+		internal double VolumePerCrew => volumePerCrew; double volumePerCrew;
 
 		/// <summary>comfort info</summary>
-		public Comforts Comforts => comforts; Comforts comforts;
+		internal Comforts Comforts => comforts; Comforts comforts;
 
 		/// <summary>some data about greenhouses</summary>
-		public List<Greenhouse.Data> Greenhouses => greenhouses; List<Greenhouse.Data> greenhouses;
+		internal List<Greenhouse.Data> Greenhouses => greenhouses; List<Greenhouse.Data> greenhouses;
 
 		/// <summary>true if vessel is powered</summary>
-		public bool Powered => powered; bool powered;
+		internal bool Powered => powered; bool powered;
 
 		/// <summary>free data storage available data capacity of all public drives</summary>
-		public double DrivesFreeSpace => drivesFreeSpace; double drivesFreeSpace = 0.0;
+		internal double DrivesFreeSpace => drivesFreeSpace; double drivesFreeSpace = 0.0;
 
 		/// <summary>data capacity of all public drives</summary>
-		public double DrivesCapacity => drivesCapacity; double drivesCapacity = 0.0;
+		internal double DrivesCapacity => drivesCapacity; double drivesCapacity = 0.0;
 
 		/// <summary>evaluated on loaded vessels based on the data pushed by SolarPanelFixer. This doesn't change for unloaded vessel, so the value is persisted</summary>
-		public double SolarPanelsAverageExposure => solarPanelsAverageExposure; double solarPanelsAverageExposure = -1.0;
-		private List<double> solarPanelsExposure = new List<double>(); // values are added by SolarPanelFixer, then cleared by VesselData once solarPanelsAverageExposure has been computed
-		public void SaveSolarPanelExposure(double exposure) => solarPanelsExposure.Add(exposure); // meant to be called by SolarPanelFixer
+		internal double SolarPanelsAverageExposure => solarPanelsAverageExposure; double solarPanelsAverageExposure = -1.0;
+		List<double> solarPanelsExposure = new List<double>(); // values are added by SolarPanelFixer, then cleared by VesselData once solarPanelsAverageExposure has been computed
+		internal void SaveSolarPanelExposure(double exposure) => solarPanelsExposure.Add(exposure); // meant to be called by SolarPanelFixer
 
-		private List<ReliabilityInfo> reliabilityStatus;
-		public List<ReliabilityInfo> ReliabilityStatus()
+		List<ReliabilityInfo> reliabilityStatus;
+		internal List<ReliabilityInfo> ReliabilityStatus()
 		{
 			if (reliabilityStatus != null) return reliabilityStatus;
 			reliabilityStatus = ReliabilityInfo.BuildList(Vessel);
 			return reliabilityStatus;
 		}
 
-		public void ResetReliabilityStatus()
+		internal void ResetReliabilityStatus()
 		{
 			reliabilityStatus = null;
 		}
@@ -416,13 +416,13 @@ namespace KERBALISM
 		#region core update handling
 
 		/// <summary> Garanteed to be called for every VesselData in DB before any other method (FixedUpdate/Evaluate) is called </summary>
-		public void EarlyUpdate()
+		internal void EarlyUpdate()
 		{
 			ExistsInFlight = false;
 		}
 
 		/// <summary>Called every FixedUpdate for all existing flightglobal vessels </summary>
-		public void Update(Vessel v)
+		internal void Update(Vessel v)
 		{
 			bool isInit = Vessel == null; // debug
 
@@ -450,7 +450,7 @@ namespace KERBALISM
 			}
 		}
 
-		private bool CheckIfSimulated()
+		bool CheckIfSimulated()
 		{
 			// determine if this is a valid vessel
 			is_vessel = Lib.IsVessel(Vessel);
@@ -469,7 +469,7 @@ namespace KERBALISM
 		/// <para/> - for loaded vessels : every gametime second 
 		/// <para/> - for unloaded vessels : at the beginning of every background update
 		/// </summary>
-		public void Evaluate(bool forced, double elapsedSeconds)
+		internal void Evaluate(bool forced, double elapsedSeconds)
 		{
 			if (!IsSimulated) return;
 
@@ -489,7 +489,7 @@ namespace KERBALISM
 			Evaluated = true;
 		}
 
-		private void UpdateTransmitBufferDrive(double elapsedSec)
+		void UpdateTransmitBufferDrive(double elapsedSec)
 		{
 			TransmitBufferDrive.dataCapacity = deviceTransmit ? connection.rate * elapsedSec : 0.0;
 		}
@@ -497,7 +497,7 @@ namespace KERBALISM
 		/// <summary>
 		/// Call ResourceUpdate on all part modules that have that method
 		/// </summary>
-		public void ResourceUpdate(VesselResources resources, double elapsed_s)
+		internal void ResourceUpdate(VesselResources resources, double elapsed_s)
 		{
 			// only do this for loaded vessels. unloaded vessels will be handled in Background.cs
 			if (!Vessel.loaded) return;
@@ -542,7 +542,7 @@ namespace KERBALISM
 
 		#region events handling
 
-		public void UpdateOnVesselModified()
+		void UpdateOnVesselModified()
 		{
 			if (!IsSimulated)
 				return;
@@ -640,7 +640,7 @@ namespace KERBALISM
 		#region ctor / init / persistence
 
 		/// <summary> This ctor is to be used for newly created vessels </summary>
-		public VesselData(Vessel vessel)
+		internal VesselData(Vessel vessel)
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.VesselData.Ctor");
 
@@ -671,7 +671,7 @@ namespace KERBALISM
 		/// with a null ConfigNode to create VesselData from a protovessel. 
 		/// The Vessel reference will be acquired in the next fixedupdate
 		/// </summary>
-		public VesselData(ProtoVessel protoVessel, ConfigNode node)
+		internal VesselData(ProtoVessel protoVessel, ConfigNode node)
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.VesselData.Ctor");
 			ExistsInFlight = false;
@@ -700,7 +700,7 @@ namespace KERBALISM
 		}
 
 		// note : this method should work even with a null ProtoVessel
-		private void FieldsDefaultInit(ProtoVessel pv)
+		void FieldsDefaultInit(ProtoVessel pv)
 		{
 			msg_signal = false;
 			msg_belt = false;
@@ -729,14 +729,14 @@ namespace KERBALISM
 
 		}
 
-		private void InitializeCommHandler()
+		void InitializeCommHandler()
 		{
 			connection = new ConnectionInfo();
 			TransmitBufferDrive = new Drive("buffer drive", 0, 0);
 			CommHandler = CommHandler.GetHandler(this, isSerenityGroundController);
 		}
 
-		private void Load(ConfigNode node)
+		void Load(ConfigNode node)
 		{
 			msg_signal = Lib.ConfigValue(node, "msg_signal", false);
 			msg_belt = Lib.ConfigValue(node, "msg_belt", false);
@@ -811,7 +811,7 @@ namespace KERBALISM
 			vesselSituations = new VesselSituations(this);
 		}
 
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			node.AddValue("msg_signal", msg_signal);
 			node.AddValue("msg_belt", msg_belt);
@@ -874,7 +874,7 @@ namespace KERBALISM
 
 		#endregion
 
-		public SupplyData Supply(string name)
+		internal SupplyData Supply(string name)
 		{
 			if (!supplies.ContainsKey(name))
 			{
@@ -884,7 +884,7 @@ namespace KERBALISM
 		}
 
 		#region vessel state evaluation
-		private void EvaluateStatus()
+		void EvaluateStatus()
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.VesselData.EvaluateStatus");
 			// determine if there is enough EC for a powered state
@@ -930,7 +930,7 @@ namespace KERBALISM
 		#endregion
 
 		#region environment evaluation
-		private void EvaluateEnvironment(double elapsedSeconds)
+		void EvaluateEnvironment(double elapsedSeconds)
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.VesselData.EvaluateStatus");
 			// we use analytic mode if more than 2 minutes of game time has passed since last evaluation (~ x6000 timewarp speed)

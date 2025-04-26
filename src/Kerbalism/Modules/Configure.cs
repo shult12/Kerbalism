@@ -13,7 +13,7 @@ namespace KERBALISM
 	/// when enabled/disabled by Configure. This is the case, for example, for
 	/// all those modules that add resources dynamically (like Process or Habitat).
 	/// </summary>
-	public interface IConfigurable
+	interface IConfigurable
 	{
 		// configure the module
 		void Configure(bool enable);
@@ -24,7 +24,7 @@ namespace KERBALISM
 	}
 
 
-	public class Configure : PartModule, IPartCostModifier, IPartMassModifier, IModuleInfo, ISpecifics, IConfigurable
+	class Configure : PartModule, IPartCostModifier, IPartMassModifier, IModuleInfo, ISpecifics, IConfigurable
 	{
 		// config
 		[KSPField] public string title = string.Empty;           // short description
@@ -42,8 +42,8 @@ namespace KERBALISM
 		//   part copy/symmetry serialization can see them
 		List<ConfigureSetup> setups;                              // all setups
 		List<ConfigureSetup> unlocked;                            // unlocked setups
-		public List<string> selected;                             // selected setups names
-		public List<string> prev_selected;                        // previously selected setups names
+		List<string> selected;                             // selected setups names
+		List<string> prev_selected;                        // previously selected setups names
 		double extra_cost;                                        // extra cost for selected setups, including resources
 		double extra_mass;                                        // extra mass for selected setups, excluding resources
 		bool initialized;                                         // keep track of first configuration
@@ -147,7 +147,7 @@ namespace KERBALISM
 
 		void IConfigurable.ModuleIsConfigured() { }
 
-		public List<ConfigureSetup> GetUnlockedSetups()
+		internal List<ConfigureSetup> GetUnlockedSetups()
 		{
 			List<ConfigureSetup> unlockedSetups = new List<ConfigureSetup>();
 			foreach (ConfigureSetup setup in setups)
@@ -162,7 +162,7 @@ namespace KERBALISM
 			return unlockedSetups;
 		}
 
-		public List<IConfigurable> GetIConfigurableModules()
+		internal List<IConfigurable> GetIConfigurableModules()
 		{
 			List<IConfigurable> modules = new List<IConfigurable>();
 			foreach (ConfigureSetup setup in setups)
@@ -179,7 +179,7 @@ namespace KERBALISM
 			return modules;
 		}
 
-		public void DoConfigure()
+		internal void DoConfigure()
 		{
 			// shortcut to resource library
 			var reslib = PartResourceLibrary.Instance.resourceDefinitions;
@@ -345,7 +345,7 @@ namespace KERBALISM
 		// Since 1.7.2, there is an advanced PAW option to remove symmetry from parts. Once we drop support for older versions, the player will
 		// always have the option to break symmetry if it doesn't want the same setup in symmetric parts.
 		// See https://github.com/Kerbalism/Kerbalism/issues/457
-		private void RemoveSymmetryOnVisibleResourceSwitch(string resName)
+		void RemoveSymmetryOnVisibleResourceSwitch(string resName)
 		{
 			// only :
 			// - in the editor
@@ -502,7 +502,7 @@ namespace KERBALISM
 		}
 
 
-		public PartModule Find_module(ConfigureModule cm)
+		internal PartModule Find_module(ConfigureModule cm)
 		{
 			// for each module in the part
 			int index = 0;
@@ -612,7 +612,7 @@ namespace KERBALISM
 		}
 
 		// access setups
-		public List<ConfigureSetup> Setups()
+		internal List<ConfigureSetup> Setups()
 		{
 			return setups;
 		}
@@ -635,9 +635,9 @@ namespace KERBALISM
 	}
 
 
-	public class ConfigureSetup
+	class ConfigureSetup
 	{
-		public ConfigureSetup(ConfigNode node, Configure cfg)
+		internal ConfigureSetup(ConfigNode node, Configure cfg)
 		{
 			// parse basic data
 			name = Lib.ConfigValue(node, "name", string.Empty);
@@ -662,7 +662,7 @@ namespace KERBALISM
 			}
 		}
 
-		public ConfigureSetup(ReadArchive archive)
+		internal ConfigureSetup(ReadArchive archive)
 		{
 			// load basic data
 			archive.Load(out name);
@@ -684,7 +684,7 @@ namespace KERBALISM
 			while (count-- > 0) resources.Add(new ConfigureResource(archive));
 		}
 
-		public void Save(WriteArchive archive)
+		internal void Save(WriteArchive archive)
 		{
 			// save basic data
 			archive.Save(name);
@@ -703,7 +703,7 @@ namespace KERBALISM
 			foreach (ConfigureResource r in resources) r.Save(archive);
 		}
 
-		public void Generate_details(Configure cfg)
+		internal void Generate_details(Configure cfg)
 		{
 			// If a setup component is defined after the Configure module in the ConfigNode,
 			// then it is not present in the part during Configure::OnLoad (at precompilation time)
@@ -768,36 +768,36 @@ namespace KERBALISM
 			}
 		}
 
-		public class Detail
+		internal class Detail
 		{
-			public Detail()
+			Detail()
 			{ }
 
-			public Detail(string label, string value = "")
+			internal Detail(string label, string value = "")
 			{
 				this.label = label;
 				this.value = value;
 			}
 
-			public string label = string.Empty;
-			public string value = string.Empty;
+			internal string label = string.Empty;
+			internal string value = string.Empty;
 		}
 
-		public string name;
-		public string title;
-		public string desc;
-		public string tech;
-		public double cost;
-		public double mass;
-		public List<ConfigureModule> modules;
-		public List<ConfigureResource> resources;
-		public List<Detail> details;
+		internal string name;
+		internal string title;
+		internal string desc;
+		internal string tech;
+		internal double cost;
+		internal double mass;
+		internal List<ConfigureModule> modules;
+		internal List<ConfigureResource> resources;
+		internal List<Detail> details;
 	}
 
 
-	public class ConfigureModule
+	class ConfigureModule
 	{
-		public ConfigureModule(ConfigNode node)
+		internal ConfigureModule(ConfigNode node)
 		{
 			type = Lib.ConfigValue(node, "type", string.Empty);
 			id_field = Lib.ConfigValue(node, "id_field", string.Empty);
@@ -805,7 +805,7 @@ namespace KERBALISM
 			id_index = Lib.ConfigValue(node, "id_index", 0);
 		}
 
-		public ConfigureModule(ReadArchive archive)
+		internal ConfigureModule(ReadArchive archive)
 		{
 			archive.Load(out type);
 			archive.Load(out id_field);
@@ -813,7 +813,7 @@ namespace KERBALISM
 			archive.Load(out id_index);
 		}
 
-		public void Save(WriteArchive archive)
+		internal void Save(WriteArchive archive)
 		{
 			archive.Save(type);
 			archive.Save(id_field);
@@ -821,39 +821,39 @@ namespace KERBALISM
 			archive.Save(id_index);
 		}
 
-		public string type;
-		public string id_field;
-		public string id_value;
-		public int id_index;
+		internal string type;
+		internal string id_field;
+		internal string id_value;
+		internal int id_index;
 	}
 
 
-	public class ConfigureResource
+	class ConfigureResource
 	{
-		public ConfigureResource(ConfigNode node)
+		internal ConfigureResource(ConfigNode node)
 		{
 			name = Lib.ConfigValue(node, "name", string.Empty);
 			amount = Lib.ConfigValue(node, "amount", string.Empty);
 			maxAmount = Lib.ConfigValue(node, "maxAmount", string.Empty);
 		}
 
-		public ConfigureResource(ReadArchive archive)
+		internal ConfigureResource(ReadArchive archive)
 		{
 			archive.Load(out name);
 			archive.Load(out amount);
 			archive.Load(out maxAmount);
 		}
 
-		public void Save(WriteArchive archive)
+		internal void Save(WriteArchive archive)
 		{
 			archive.Save(name);
 			archive.Save(amount);
 			archive.Save(maxAmount);
 		}
 
-		public string name;
-		public string amount;
-		public string maxAmount;
+		internal string name;
+		internal string amount;
+		internal string maxAmount;
 	}
 
 

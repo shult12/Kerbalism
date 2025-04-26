@@ -4,7 +4,7 @@ namespace KERBALISM
 {
 
 	///<summary> Kerbalism's Icons </summary>
-	internal static class Textures
+	static class Textures
 	{
 		///<summary> Path to Kerbalism's textures </summary>
 		internal static string TexturePath;
@@ -28,7 +28,7 @@ namespace KERBALISM
 		internal static Texture2D small_folder;
 		internal static Texture2D small_console;
 		internal static Texture2D small_config;
-		internal static Texture2D small_search;
+		static Texture2D small_search;
 		internal static Texture2D small_notes;
 		internal static Texture2D small_wrench;
 
@@ -118,8 +118,8 @@ namespace KERBALISM
 
 		internal static Texture2D KsmGuiTexCheckmark;
 
-		internal static Texture2D KsmGuiTexHeaderArrowsLeft;
-		internal static Texture2D KsmGuiTexHeaderArrowsRight;
+		static Texture2D KsmGuiTexHeaderArrowsLeft;
+		static Texture2D KsmGuiTexHeaderArrowsRight;
 		internal static Texture2D KsmGuiTexHeaderArrowsUp;
 		internal static Texture2D KsmGuiTexHeaderArrowsDown;
 
@@ -128,22 +128,22 @@ namespace KERBALISM
 		internal static Texture2D KsmGuiTexHeaderRnD;
 
 		// timer controller
-		internal static float nextFlashing = Time.time;
-		internal static bool lastIcon = false;
+		static float nextFlashing = Time.time;
+		static bool lastIcon = false;
 
-		internal static Sprite Get9SlicesSprite(string textureName, int width, int height, int borderSize)
+		static Sprite Get9SlicesSprite(string textureName, int width, int height, int borderSize)
 		{
 			// 9 slice sprites are self extending, they don't need to get scaled manually (I think...)
 			Texture2D tex = Lib.GetTexture(textureName, width, height);
 			return Sprite.Create(tex, new Rect(0f, 0f, width, height), new Vector2(0.5f, 0.5f), 100f, 0u, SpriteMeshType.Tight, new Vector4(borderSize, borderSize, borderSize, borderSize));
 		}
 
-		internal static Texture2D GetTexture(string name)
+		static Texture2D GetTexture(string name)
 		{
 			return Styles.GetUIScaledTexture(name);
 		}
 
-		internal static Texture2D GetTexture(string name, int width = 16, int height = 16, float prescalar = 1.0f)
+		static Texture2D GetTexture(string name, int width = 16, int height = 16, float prescalar = 1.0f)
 		{
 			return Styles.GetUIScaledTexture(name, width, height, prescalar);
 		}

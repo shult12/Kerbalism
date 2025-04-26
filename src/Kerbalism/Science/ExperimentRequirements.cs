@@ -7,11 +7,11 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public class ExperimentRequirements
+	class ExperimentRequirements
 	{
 
 
-		public enum Require
+		internal enum Require
 		{
 			OrbitMinInclination,
 			OrbitMaxInclination,
@@ -77,25 +77,25 @@ namespace KERBALISM
 			AdministrationLevelMax,
 		}
 
-		public class RequireDef
+		internal class RequireDef
 		{
-			public Require require;
-			public object value;
+			internal Require require;
+			internal object value;
 
-			public RequireDef(Require require, object requireValue)
+			internal RequireDef(Require require, object requireValue)
 			{
 				this.require = require;
 				this.value = requireValue;
 			}
 		}
 
-		public class RequireResult
+		internal class RequireResult
 		{
-			public RequireDef requireDef;
-			public object value;
-			public double result;
+			internal RequireDef requireDef;
+			internal object value;
+			internal double result;
 
-			public RequireResult(RequireDef requireDef)
+			internal RequireResult(RequireDef requireDef)
 			{
 				this.requireDef = requireDef;
 				result = 0.0;
@@ -103,14 +103,14 @@ namespace KERBALISM
 		}
 
 		// not ideal because unboxing at but least we won't be parsing strings all the time and the array should be fast
-		public RequireDef[] Requires { get; private set; }
+		internal RequireDef[] Requires { get; private set; }
 
-		public ExperimentRequirements(string requires)
+		internal ExperimentRequirements(string requires)
 		{
 			Requires = ParseRequirements(requires);
 		}
 
-		public double TestRequirements(Vessel v, out RequireResult[] results, bool testAll = false)
+		internal double TestRequirements(Vessel v, out RequireResult[] results, bool testAll = false)
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.ExperimentRequirements.TestRequirements");
 			VesselData vd = v.KerbalismData();
@@ -202,7 +202,7 @@ namespace KERBALISM
 			return result;
 		}
 
-		public bool TestProgressionRequirements()
+		internal bool TestProgressionRequirements()
 		{
 			RequireResult[] results = new RequireResult[Requires.Length];
 
@@ -229,24 +229,24 @@ namespace KERBALISM
 			return true;
 		}
 
-		private void TestReq(Func<bool> Condition, RequireResult result)
+		void TestReq(Func<bool> Condition, RequireResult result)
 		{
 			result.result = Condition() ? 1.0 : 0.0;
 		}
 
-		private void TestReq<T, U>(Func<T, U, bool> Condition, T val, U reqVal, RequireResult result)
+		void TestReq<T, U>(Func<T, U, bool> Condition, T val, U reqVal, RequireResult result)
 		{
 			result.result = Condition(val, reqVal) ? 1.0 : 0.0;
 			result.value = val;
 		}
 
-		private void TestReq(double val, RequireResult result)
+		void TestReq(double val, RequireResult result)
 		{
 			result.result = val;
 			result.value = val;
 		}
 
-		private RequireDef[] ParseRequirements(string requires)
+		RequireDef[] ParseRequirements(string requires)
 		{
 			List<RequireDef> reqList = new List<RequireDef>();
 			if (string.IsNullOrEmpty(requires))
@@ -290,7 +290,7 @@ namespace KERBALISM
 			return reqList.ToArray();
 		}
 
-		private RequireDef ParseRequiresValue(Require req, string value)
+		RequireDef ParseRequiresValue(Require req, string value)
 		{
 			switch (req)
 			{
@@ -346,7 +346,7 @@ namespace KERBALISM
 			}
 		}
 
-		private int GetFacilityLevel(SpaceCenterFacility facility)
+		int GetFacilityLevel(SpaceCenterFacility facility)
 		{
 			if (ScenarioUpgradeableFacilities.Instance == null || !ScenarioUpgradeableFacilities.Instance.enabled)
 				return int.MaxValue;
@@ -357,7 +357,7 @@ namespace KERBALISM
 			return (int)Math.Round(ScenarioUpgradeableFacilities.GetFacilityLevel(facility) * maxlevel + 1); // They start counting at 0
 		}
 
-		private double TestAsteroidDistance(Vessel vessel)
+		double TestAsteroidDistance(Vessel vessel)
 		{
 			var target = vessel.targetObject;
 			var vesselPosition = Lib.VesselPosition(vessel);
@@ -392,7 +392,7 @@ namespace KERBALISM
 			return result;
 		}
 
-		public static string ReqValueFormat(Require req, object reqValue)
+		internal static string ReqValueFormat(Require req, object reqValue)
 		{
 			if (reqValue == null)
 				return string.Empty;
@@ -465,7 +465,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static string ReqName(Require req)
+		internal static string ReqName(Require req)
 		{
 			switch (req)
 			{

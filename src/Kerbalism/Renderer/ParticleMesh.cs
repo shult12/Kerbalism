@@ -8,17 +8,17 @@ namespace KERBALISM
 
 
 	// store an arbitrary number of static particles in a set of meshes
-	public sealed class ParticleMesh
+	sealed class ParticleMesh
 	{
 		// create a particle mesh from a set of points
-		public ParticleMesh(List<Vector3> points)
+		ParticleMesh(List<Vector3> points)
 		{
 			this.points = points;
 		}
 
 
 		// create a particle mesh by fitting points on an implicit surface defined by a signed distance field
-		public ParticleMesh(Func<Vector3, float> dist_func, Vector3 domain_hsize, Vector3 domain_offset, int particle_count, float quality)
+		internal ParticleMesh(Func<Vector3, float> dist_func, Vector3 domain_hsize, Vector3 domain_offset, int particle_count, float quality)
 		{
 			// store stuff
 			Vector3 p;
@@ -95,7 +95,7 @@ namespace KERBALISM
 
 
 		// render all the meshes
-		public void Render(Matrix4x4 m)
+		internal void Render(Matrix4x4 m)
 		{
 			if (meshes == null)
 			{

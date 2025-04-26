@@ -2,9 +2,9 @@
 
 namespace KERBALISM
 {
-	public class CommHandlerCommNetSerenity : CommHandlerCommNetBase
+	class CommHandlerCommNetSerenity : CommHandlerCommNetBase
 	{
-		private DeployedScienceCluster cluster;
+		DeployedScienceCluster cluster;
 
 		protected override void UpdateInputs(ConnectionInfo connection)
 		{

@@ -5,22 +5,22 @@ using UnityEngine;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiUpdateCoroutine : IEnumerable
+	class KsmGuiUpdateCoroutine : IEnumerable
 	{
 		Func<IEnumerator> updateMethod;
-		public KsmGuiUpdateCoroutine(Func<IEnumerator> updateMethod) => this.updateMethod = updateMethod;
+		internal KsmGuiUpdateCoroutine(Func<IEnumerator> updateMethod) => this.updateMethod = updateMethod;
 		public IEnumerator GetEnumerator() => updateMethod();
 	}
 
-	public class KsmGuiUpdateHandler : MonoBehaviour
+	class KsmGuiUpdateHandler : MonoBehaviour
 	{
-		private int updateCounter;
-		public int updateFrequency = 1;
-		public Action updateAction;
-		public KsmGuiUpdateCoroutine coroutineFactory;
-		public IEnumerator currentCoroutine;
+		int updateCounter;
+		internal int updateFrequency = 1;
+		internal Action updateAction;
+		internal KsmGuiUpdateCoroutine coroutineFactory;
+		IEnumerator currentCoroutine;
 
-		public void UpdateASAP() => updateCounter = updateFrequency;
+		internal void UpdateASAP() => updateCounter = updateFrequency;
 
 		void Start()
 		{
@@ -47,7 +47,7 @@ namespace KERBALISM.KsmGui
 			}
 		}
 
-		public void ForceExecuteCoroutine(bool fromStart = false)
+		internal void ForceExecuteCoroutine(bool fromStart = false)
 		{
 			if (coroutineFactory == null)
 				return;

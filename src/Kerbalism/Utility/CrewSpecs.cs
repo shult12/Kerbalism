@@ -6,9 +6,9 @@ namespace KERBALISM
 {
 
 
-	public sealed class CrewSpecs
+	sealed class CrewSpecs
 	{
-		public CrewSpecs(string value)
+		internal CrewSpecs(string value)
 		{
 			// if empty or false: not enabled
 			if (value.Length == 0 || string.Equals(value, "false", StringComparison.OrdinalIgnoreCase))
@@ -53,7 +53,7 @@ namespace KERBALISM
 		/// <summary>
 		/// return true if the crew of active vessel satisfy the specs
 		/// </summary>
-		public bool Check()
+		bool Check()
 		{
 			Vessel v = FlightGlobals.ActiveVessel;
 			return v != null && Check(v);
@@ -62,7 +62,7 @@ namespace KERBALISM
 		/// <summary>
 		/// return true if the crew of specified vessel satisfy the specs
 		/// </summary>
-		public bool Check(Vessel v)
+		internal bool Check(Vessel v)
 		{
 			return Check(Lib.CrewList(v));
 		}
@@ -70,7 +70,7 @@ namespace KERBALISM
 		/// <summary>
 		/// return true if the specified crew satisfy the specs
 		/// </summary>
-		public bool Check(List<ProtoCrewMember> crew)
+		internal bool Check(List<ProtoCrewMember> crew)
 		{
 			for (int i = 0; i < crew.Count; ++i)
 			{
@@ -82,7 +82,7 @@ namespace KERBALISM
 		/// <summary>
 		/// return true if the specified crew member satisfy the specs
 		/// </summary>
-		public bool Check(ProtoCrewMember c)
+		bool Check(ProtoCrewMember c)
 		{
 			if (crewOnly && c.type == ProtoCrewMember.KerbalType.Tourist) return false;
 			return trait.Length == 0 || (c.trait == trait && c.experienceLevel >= level);
@@ -91,7 +91,7 @@ namespace KERBALISM
 		/// <summary>
 		/// Returns the total crew level bonus (= how many levels above required minimum is the crew).
 		/// </summary>
-		public int Bonus(Vessel v, int requiredLevel = Int16.MinValue)
+		internal int Bonus(Vessel v, int requiredLevel = Int16.MinValue)
 		{
 			return Bonus(Lib.CrewList(v), requiredLevel);
 		}
@@ -99,7 +99,7 @@ namespace KERBALISM
 		/// <summary>
 		/// Returns the total crew level bonus of the given list (= how many levels above required minimum is the crew).
 		/// </summary>
-		public int Bonus(List<ProtoCrewMember> crew, int requiredLevel = Int16.MinValue)
+		internal int Bonus(List<ProtoCrewMember> crew, int requiredLevel = Int16.MinValue)
 		{
 			int result = 0;
 			for (int i = 0; i < crew.Count; ++i)
@@ -113,7 +113,7 @@ namespace KERBALISM
 		/// <summary>
 		/// Returns the crew level bonus of the given crew member (= how many levels above required minimum is the crew).
 		/// </summary>
-		public int Bonus(ProtoCrewMember c, int requiredLevel = Int16.MinValue)
+		int Bonus(ProtoCrewMember c, int requiredLevel = Int16.MinValue)
 		{
 			if(requiredLevel == Int16.MinValue) {
 				requiredLevel = (int)level;
@@ -125,7 +125,7 @@ namespace KERBALISM
 		/// <summary>
 		/// generate a string for use in warning messages
 		/// </summary>
-		public string Warning()
+		internal string Warning()
 		{
 			return Lib.BuildString
 			(
@@ -140,7 +140,7 @@ namespace KERBALISM
 		/// <summary>
 		/// generate a string for use in part tooltip
 		/// </summary>
-		public string Info()
+		internal string Info()
 		{
 			if (!enabled) return Local.SCIENCEARCHIVE_info_no;//"no"
 			else if (trait.Length == 0) return Local.SCIENCEARCHIVE_info_anyone;//"anyone"
@@ -153,10 +153,10 @@ namespace KERBALISM
 			return ct.enabled;
 		}
 
-		public string trait;    // trait specified, or empty for any trait
-		public uint level;    // experience level specified
-		public bool enabled;  // can also specify 'disabled' state
-		public bool crewOnly; // whether it has to be type crew, or whether tourists can be used
+		string trait;    // trait specified, or empty for any trait
+		uint level;    // experience level specified
+		bool enabled;  // can also specify 'disabled' state
+		bool crewOnly; // whether it has to be type crew, or whether tourists can be used
 	}
 
 

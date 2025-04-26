@@ -3,22 +3,22 @@ using System.Collections.Generic;
 
 namespace KERBALISM
 {
-	public class CommHandlerCommNetVessel : CommHandlerCommNetBase
+	class CommHandlerCommNetVessel : CommHandlerCommNetBase
 	{
-		private class UnloadedTransmitter
+		class UnloadedTransmitter
 		{
-			public ModuleDataTransmitter prefab;
-			public ProtoPartModuleSnapshot protoTransmitter;
+			internal ModuleDataTransmitter prefab;
+			internal ProtoPartModuleSnapshot protoTransmitter;
 
-			public UnloadedTransmitter(ModuleDataTransmitter prefab, ProtoPartModuleSnapshot protoTransmitter)
+			internal UnloadedTransmitter(ModuleDataTransmitter prefab, ProtoPartModuleSnapshot protoTransmitter)
 			{
 				this.prefab = prefab;
 				this.protoTransmitter = protoTransmitter;
 			}
 		}
 
-		private List<UnloadedTransmitter> unloadedTransmitters;
-		protected List<ModuleDataTransmitter> loadedTransmitters;
+		List<UnloadedTransmitter> unloadedTransmitters;
+		List<ModuleDataTransmitter> loadedTransmitters;
 
 		protected override void UpdateTransmitters(ConnectionInfo connection, bool searchTransmitters)
 		{
@@ -121,7 +121,7 @@ namespace KERBALISM
 			connection.hasActiveAntenna = connection.ec_idle > 0.0;
 		}
 
-		protected void GetTransmittersLoaded(List<Part> vesselParts)
+		void GetTransmittersLoaded(List<Part> vesselParts)
 		{
 			foreach (Part p in vesselParts)
 			{
@@ -141,7 +141,7 @@ namespace KERBALISM
 			}
 		}
 
-		private void GetTransmittersUnloaded(Vessel v)
+		void GetTransmittersUnloaded(Vessel v)
 		{
 			foreach (ProtoPartSnapshot pps in v.protoVessel.protoPartSnapshots)
 			{

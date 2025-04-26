@@ -5,14 +5,14 @@ using UnityEngine;
 namespace KERBALISM
 {
 
-	public sealed class Launcher
+	sealed class Launcher
 	{
 		// click through locks
-		private bool clickThroughLocked = false;
-		private const ControlTypes MainGUILockTypes = ControlTypes.MANNODE_ADDEDIT | ControlTypes.MANNODE_DELETE | ControlTypes.MAP_UI |
+		bool clickThroughLocked = false;
+		const ControlTypes MainGUILockTypes = ControlTypes.MANNODE_ADDEDIT | ControlTypes.MANNODE_DELETE | ControlTypes.MAP_UI |
 			ControlTypes.TARGETING | ControlTypes.VESSEL_SWITCHING | ControlTypes.TWEAKABLES | ControlTypes.EDITOR_UI | ControlTypes.EDITOR_SOFT_LOCK | ControlTypes.UI;
 
-		public Launcher()
+		internal Launcher()
 		{
 			// initialize
 			Planner.Planner.Initialize();
@@ -22,7 +22,7 @@ namespace KERBALISM
 			GameEvents.onGUIApplicationLauncherReady.Add(Create);
 		}
 
-		public void Create()
+		void Create()
 		{
 			// do nothing if button already created
 			if (!ui_initialized)
@@ -70,7 +70,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void Update()
+		internal void Update()
 		{
 			// do nothing if GUI has not been initialized
 			if (!ui_initialized)
@@ -93,7 +93,7 @@ namespace KERBALISM
 
 
 		// called every frame
-		public void On_gui()
+		internal void On_gui()
 		{
 			// do nothing if GUI has not been initialized
 			if (!ui_initialized)

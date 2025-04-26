@@ -4,14 +4,14 @@ using TMPro;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiText : KsmGuiBase, IKsmGuiText
+	class KsmGuiText : KsmGuiBase, IKsmGuiText
 	{
-		public TextMeshProUGUI TextComponent { get; private set; }
+		internal TextMeshProUGUI TextComponent { get; private set; }
 		
 
-		private TextAlignmentOptions savedAlignement;
+		TextAlignmentOptions savedAlignement;
 
-		public KsmGuiText(
+		internal KsmGuiText(
 			KsmGuiBase parent,
 			string text,
 			string tooltipText = null,
@@ -43,7 +43,7 @@ namespace KERBALISM.KsmGui
 
 		// workaround for a textmeshpro bug :
 		// https://forum.unity.com/threads/textmeshprougui-alignment-resets-when-enabling-disabling-gameobject.549784/#post-3901597
-		public override bool Enabled
+		internal override bool Enabled
 		{
 			get => base.Enabled;
 			set

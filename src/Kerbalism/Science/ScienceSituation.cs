@@ -7,7 +7,7 @@ using KSP.Localization;
 namespace KERBALISM
 {
 
-	public enum ScienceSituation : byte
+	enum ScienceSituation : byte
 	{
 		None          = byte.MaxValue,
 		// stock situations
@@ -32,7 +32,7 @@ namespace KERBALISM
 	/// but musn't collide with real CB biomes indexes that start at 0
 	/// </summary>
 	// Note : if you add some virtual biomes, remember to update the related methods in ScienceSituationUtils
-	public enum VirtualBiome : byte
+	enum VirtualBiome : byte
 	{
 		None               = 0,
 		NoBiome            = byte.MaxValue, // if used, will be registered as the global, biome-agnostic situation 
@@ -46,29 +46,29 @@ namespace KERBALISM
 		Storm              = 247
 	}
 
-	public static class ScienceSituationUtils
+	static class ScienceSituationUtils
 	{
-		public static bool IsAvailableForExperiment(this ScienceSituation situation, ExperimentInfo experiment)
+		internal static bool IsAvailableForExperiment(this ScienceSituation situation, ExperimentInfo experiment)
 		{
 			return (experiment.SituationMask & situation.BitValue()) != 0;
 		}
 
-		public static bool IsBiomesRelevantForExperiment(this ScienceSituation situation, ExperimentInfo experiment)
+		internal static bool IsBiomesRelevantForExperiment(this ScienceSituation situation, ExperimentInfo experiment)
 		{
 			return (experiment.BiomeMask & situation.BitValue()) != 0 || (experiment.VirtualBiomeMask & situation.BitValue()) != 0;
 		}
 
-		public static bool IsBodyBiomesRelevantForExperiment(this ScienceSituation situation, ExperimentInfo experiment)
+		internal static bool IsBodyBiomesRelevantForExperiment(this ScienceSituation situation, ExperimentInfo experiment)
 		{
 			return (experiment.BiomeMask & situation.BitValue()) != 0;
 		}
 
-		public static bool IsVirtualBiomesRelevantForExperiment(this ScienceSituation situation, ExperimentInfo experiment)
+		internal static bool IsVirtualBiomesRelevantForExperiment(this ScienceSituation situation, ExperimentInfo experiment)
 		{
 			return (experiment.VirtualBiomeMask & situation.BitValue()) != 0;
 		}
 
-		public static bool IsAvailableOnBody(this ScienceSituation situation, CelestialBody body)
+		internal static bool IsAvailableOnBody(this ScienceSituation situation, CelestialBody body)
 		{
 			switch (situation)
 			{
@@ -90,7 +90,7 @@ namespace KERBALISM
 			return true;
 		}
 
-		public static bool IsAvailableOnBody(this VirtualBiome virtualBiome, CelestialBody body)
+		internal static bool IsAvailableOnBody(this VirtualBiome virtualBiome, CelestialBody body)
 		{
 			switch (virtualBiome)
 			{
@@ -113,7 +113,7 @@ namespace KERBALISM
 			return true;
 		}
 
-		public static float BodyMultiplier(this ScienceSituation situation, CelestialBody body)
+		internal static float BodyMultiplier(this ScienceSituation situation, CelestialBody body)
 		{
 			float result = 0f;
 			switch (situation)
@@ -144,7 +144,7 @@ namespace KERBALISM
 			return result;
 		}
 
-		public static uint BitValue(this ScienceSituation situation)
+		internal static uint BitValue(this ScienceSituation situation)
 		{
 			switch (situation)
 			{
@@ -163,7 +163,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static uint SituationsToBitMask(List<ScienceSituation> scienceSituations)
+		static uint SituationsToBitMask(List<ScienceSituation> scienceSituations)
 		{
 			uint bitMask = 0;
 			foreach (ScienceSituation situation in scienceSituations)
@@ -172,7 +172,7 @@ namespace KERBALISM
 			return bitMask;
 		}
 
-		public static List<ScienceSituation> BitMaskToSituations(uint bitMask)
+		static List<ScienceSituation> BitMaskToSituations(uint bitMask)
 		{
 			List<ScienceSituation> situations = new List<ScienceSituation>();
 			foreach (ScienceSituation situation in validSituations)
@@ -181,7 +181,7 @@ namespace KERBALISM
 			return situations;
 		}
 
-		public static string Title(this ScienceSituation situation)
+		internal static string Title(this ScienceSituation situation)
 		{
 			switch (situation)
 			{
@@ -200,7 +200,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static string Title(this VirtualBiome virtualBiome)
+		internal static string Title(this VirtualBiome virtualBiome)
 		{
 			switch (virtualBiome)
 			{
@@ -217,7 +217,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static string Serialize(this ScienceSituation situation)
+		internal static string Serialize(this ScienceSituation situation)
 		{
 			switch (situation)
 			{
@@ -235,7 +235,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static string Serialize(this VirtualBiome virtualBiome)
+		internal static string Serialize(this VirtualBiome virtualBiome)
 		{
 			switch (virtualBiome)
 			{
@@ -252,7 +252,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static ScienceSituation ScienceSituationDeserialize(string situation)
+		internal static ScienceSituation ScienceSituationDeserialize(string situation)
 		{
 			switch (situation)
 			{
@@ -270,7 +270,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static VirtualBiome VirtualBiomeDeserialize(string virtualBiome)
+		internal static VirtualBiome VirtualBiomeDeserialize(string virtualBiome)
 		{
 			switch (virtualBiome)
 			{
@@ -289,7 +289,7 @@ namespace KERBALISM
 
 		/// <summary> get the stock ExperimentSituation for our ScienceSituation value </summary>
 		// Note: any modification in this should be reflected in ValidateSituationBitMask()
-		public static ScienceSituation ToValidStockSituation(this ScienceSituation situation)
+		internal static ScienceSituation ToValidStockSituation(this ScienceSituation situation)
 		{
 			switch (situation)
 			{
@@ -309,7 +309,7 @@ namespace KERBALISM
 
 		/// <summary> validate and convert our bitmasks to their stock equivalent</summary>
 		// Note: any modification in this should be reflected in ToStockSituation()
-		public static bool ValidateSituationBitMask(ref uint situationMask, uint biomeMask, out uint stockSituationMask, out uint stockBiomeMask, out string errorMessage)
+		internal static bool ValidateSituationBitMask(ref uint situationMask, uint biomeMask, out uint stockSituationMask, out uint stockBiomeMask, out string errorMessage)
 		{
 			errorMessage = string.Empty;
 
@@ -381,7 +381,7 @@ namespace KERBALISM
 			return errorMessage == string.Empty;
 		}
 
-		public static uint GetStockBitMask(uint bitMask)
+		static uint GetStockBitMask(uint bitMask)
 		{
 			uint stockBitMask = 0;
 			foreach (ScienceSituation situation in BitMaskToSituations(bitMask))
@@ -401,7 +401,7 @@ namespace KERBALISM
 			return stockBitMask;
 		}
 
-		private static void SetSituationBitInMask(ref uint mask, ScienceSituation situation, bool value)
+		static void SetSituationBitInMask(ref uint mask, ScienceSituation situation, bool value)
 		{
 			if (value)
 				mask = (uint)((int)mask | (1 << (int)situation));
@@ -409,12 +409,12 @@ namespace KERBALISM
 				mask = (uint)((int)mask & ~(1 << (int)situation));
 		}
 
-		private static bool MaskHasSituation(uint mask, ScienceSituation situation)
+		static bool MaskHasSituation(uint mask, ScienceSituation situation)
 		{
 			return (mask & situation.BitValue()) != 0;
 		}
 
-		public static readonly ScienceSituation[] validSituations = new ScienceSituation[]
+		internal static readonly ScienceSituation[] validSituations = new ScienceSituation[]
 		{
 			ScienceSituation.SrfLanded,
 			ScienceSituation.SrfSplashed,
@@ -428,7 +428,7 @@ namespace KERBALISM
 			ScienceSituation.BodyGlobal
 		};
 
-		public static readonly VirtualBiome[] validVirtualBiomes = new VirtualBiome[]
+		internal static readonly VirtualBiome[] validVirtualBiomes = new VirtualBiome[]
 		{
 			VirtualBiome.NorthernHemisphere,
 			VirtualBiome.SouthernHemisphere,
@@ -440,9 +440,9 @@ namespace KERBALISM
 			VirtualBiome.Storm
 		};
 
-		public const int minVirtualBiome = 247;
+		internal const int minVirtualBiome = 247;
 
-		public static readonly string[] validSituationsStrings = new string[]
+		internal static readonly string[] validSituationsStrings = new string[]
 		{
 			"SrfLanded",
 			"SrfSplashed",

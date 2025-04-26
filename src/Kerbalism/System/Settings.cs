@@ -7,7 +7,7 @@ namespace KERBALISM
 {
 
 
-    public enum UnlinkedCtrl
+    enum UnlinkedCtrl
     {
         none,     // disable all controls
         limited,  // disable all controls except full/zero throttle and staging
@@ -15,13 +15,13 @@ namespace KERBALISM
     }
 
 
-	public static class Settings
+	static class Settings
 	{
-		private static string MODS_INCOMPATIBLE = "TacLifeSupport,Snacks,KolonyTools,USILifeSupport";
-		private static string MODS_WARNING = "RemoteTech,CommNetAntennasInfo";
-		private static string MODS_SCIENCE = "KEI,[x] Science!";
+		static string MODS_INCOMPATIBLE = "TacLifeSupport,Snacks,KolonyTools,USILifeSupport";
+		static string MODS_WARNING = "RemoteTech,CommNetAntennasInfo";
+		static string MODS_SCIENCE = "KEI,[x] Science!";
 
-		public static void Parse()
+		internal static void Parse()
 		{
 			var kerbalismConfigNodes = GameDatabase.Instance.GetConfigs("Kerbalism");
 			if (kerbalismConfigNodes.Length < 1) return;
@@ -117,7 +117,7 @@ namespace KERBALISM
 		}
 
 		// profile used
-		public static string Profile;
+		internal static string Profile;
 
 		internal static List<string> IncompatibleMods()
 		{
@@ -135,91 +135,91 @@ namespace KERBALISM
 		// name of profile to use, if any
 
 		// user-defined features
-		public static bool Reliability;                         // component malfunctions and critical failures
-		public static bool Deploy;                              // add EC cost to keep module working/animation, add EC cost to Extend\Retract
-		public static bool Science;                             // science data storage, transmission and analysis
-		public static bool SpaceWeather;                        // coronal mass ejections
-		public static bool Automation;                          // control vessel components using scripts
+		internal static bool Reliability;                         // component malfunctions and critical failures
+		internal static bool Deploy;                              // add EC cost to keep module working/animation, add EC cost to Extend\Retract
+		internal static bool Science;                             // science data storage, transmission and analysis
+		internal static bool SpaceWeather;                        // coronal mass ejections
+		internal static bool Automation;                          // control vessel components using scripts
 
 		// pressure
-		public static double PressureFactor;                    // pressurized modifier value for vessels below the threshold
-		public static double PressureThreshold;                 // level of atmosphere resource that determine pressurized status
+		internal static double PressureFactor;                    // pressurized modifier value for vessels below the threshold
+		internal static double PressureThreshold;                 // level of atmosphere resource that determine pressurized status
 
 		// poisoning
-		public static double PoisoningFactor;                   // poisoning modifier value for vessels below threshold
-		public static double PoisoningThreshold;                // level of waste atmosphere resource that determine co2 poisoning status
+		internal static double PoisoningFactor;                   // poisoning modifier value for vessels below threshold
+		internal static double PoisoningThreshold;                // level of waste atmosphere resource that determine co2 poisoning status
 
 		// signal
-		public static UnlinkedCtrl UnlinkedControl;             // available control for unlinked vessels: 'none', 'limited' or 'full'
-		public static float DataRateMinimumBitsPerSecond;       // as long as there is a control connection, the science data rate will never go below this.
-		public static float DataRateSurfaceExperiment;          // transmission rate for surface experiments (Serenity DLC)
-		public static double TransmitterActiveEcFactor;         // how much of the configured EC rate is used while transmitter is active
-		public static double TransmitterPassiveEcFactor;        // how much of the configured EC rate is used while transmitter is passive
-		public static double TransmitterActiveEcFactorRT;       // RemoteTech, how much of the configured EC rate is used while transmitter is active, (transmitting)
-		public static double TransmitterPassiveEcFactorRT;      // RemoteTech, how much of the configured EC rate is used while transmitter is passive, (idle)
-		public static double DampingExponentOverride;           // Kerbalism will calculate a damping exponent to achieve good data communication rates (see log file, search for DataRateDampingExponent). If the calculated value is not good for you, you can set your own.
+		internal static UnlinkedCtrl UnlinkedControl;             // available control for unlinked vessels: 'none', 'limited' or 'full'
+		internal static float DataRateMinimumBitsPerSecond;       // as long as there is a control connection, the science data rate will never go below this.
+		internal static float DataRateSurfaceExperiment;          // transmission rate for surface experiments (Serenity DLC)
+		internal static double TransmitterActiveEcFactor;         // how much of the configured EC rate is used while transmitter is active
+		internal static double TransmitterPassiveEcFactor;        // how much of the configured EC rate is used while transmitter is passive
+		internal static double TransmitterActiveEcFactorRT;       // RemoteTech, how much of the configured EC rate is used while transmitter is active, (transmitting)
+		internal static double TransmitterPassiveEcFactorRT;      // RemoteTech, how much of the configured EC rate is used while transmitter is passive, (idle)
+		internal static double DampingExponentOverride;           // Kerbalism will calculate a damping exponent to achieve good data communication rates (see log file, search for DataRateDampingExponent). If the calculated value is not good for you, you can set your own.
 																// science
-		public static bool ScienceDialog;                       // keep showing the stock science dialog
-		public static double AsteroidSampleMassPerMB;           // When taking an asteroid sample, mass (in t) per MB of sample (baseValue * dataScale). default of 0.00002 => 34 Kg in stock
+		internal static bool ScienceDialog;                       // keep showing the stock science dialog
+		internal static double AsteroidSampleMassPerMB;           // When taking an asteroid sample, mass (in t) per MB of sample (baseValue * dataScale). default of 0.00002 => 34 Kg in stock
 
 		// reliability
-		public static double QualityScale;                      // scale applied to MTBF for high-quality components
+		internal static double QualityScale;                      // scale applied to MTBF for high-quality components
 
 
 		// crew level
-		public static double LaboratoryCrewLevelBonus;          // factor for laboratory rate speed gain per crew level above minimum
-		public static double MaxLaborartoryBonus;               // max bonus to be gained by having skilled crew on a laboratory
-		public static double HarvesterCrewLevelBonus;           // factor for harvester speed gain per engineer level above minimum
-		public static double MaxHarvesterBonus;                 // max bonus to be gained by having skilled engineers on a mining rig
+		internal static double LaboratoryCrewLevelBonus;          // factor for laboratory rate speed gain per crew level above minimum
+		internal static double MaxLaborartoryBonus;               // max bonus to be gained by having skilled crew on a laboratory
+		internal static double HarvesterCrewLevelBonus;           // factor for harvester speed gain per engineer level above minimum
+		internal static double MaxHarvesterBonus;                 // max bonus to be gained by having skilled engineers on a mining rig
 
 		// misc
-		public static bool EnforceCoherency;                    // detect and avoid issues at high timewarp in external modules
-		public static double HeadLampsCost;                     // EC/s cost if eva headlamps are on
-		public static bool LowQualityRendering;                 // use less particles to render the magnetic fields
-		public static float UIScale;                            // scale UI elements by this factor, relative to KSP scaling settings, useful for high PPI screens
-		public static float UIPanelWidthScale;                  // scale UI Panel Width by this factor, relative to KSP scaling settings, useful for high PPI screens
-		public static float KerbalDeathReputationPenalty;       // Reputation penalty when Kerbals dies
-		public static float KerbalBreakdownReputationPenalty;   // Reputation removed when Kerbals loose their marbles in space
+		internal static bool EnforceCoherency;                    // detect and avoid issues at high timewarp in external modules
+		internal static double HeadLampsCost;                     // EC/s cost if eva headlamps are on
+		internal static bool LowQualityRendering;                 // use less particles to render the magnetic fields
+		internal static float UIScale;                            // scale UI elements by this factor, relative to KSP scaling settings, useful for high PPI screens
+		internal static float UIPanelWidthScale;                  // scale UI Panel Width by this factor, relative to KSP scaling settings, useful for high PPI screens
+		internal static float KerbalDeathReputationPenalty;       // Reputation penalty when Kerbals dies
+		internal static float KerbalBreakdownReputationPenalty;   // Reputation removed when Kerbals loose their marbles in space
 
 
 		// presets for save game preferences
 
-		public static int LifeSupportAtmoLoss;
-		public static int LifeSupportSurvivalTemperature;
-		public static int LifeSupportSurvivalRange;
-		public static int ComfortLivingSpace;
-		public static float ComfortFirmGround;
-		public static float ComfortExercise;
-		public static float ComfortNotAlone;
-		public static float ComfortCallHome;
-		public static float ComfortPanorama;
-		public static float ComfortPlants;
+		internal static int LifeSupportAtmoLoss;
+		internal static int LifeSupportSurvivalTemperature;
+		internal static int LifeSupportSurvivalRange;
+		internal static int ComfortLivingSpace;
+		internal static float ComfortFirmGround;
+		internal static float ComfortExercise;
+		internal static float ComfortNotAlone;
+		internal static float ComfortCallHome;
+		internal static float ComfortPanorama;
+		internal static float ComfortPlants;
 
-		public static float StormFrequency;
-		public static int StormDurationHours;
-		public static float StormEjectionSpeed;
-		public static float ShieldingEfficiency;
-		public static float ShieldingEfficiencyEasyMult;
-		public static float ShieldingEfficiencyModerateMult;
-		public static float ShieldingEfficiencyHardMult;
-		public static float StormRadiation;
-		public static float ExternRadiation;
-		public static bool RadiationInSievert; // use Sievert iso. rad
-		public static bool UseSIUnits; // use SI units instead of human-readable pretty-printing when available
+		internal static float StormFrequency;
+		internal static int StormDurationHours;
+		internal static float StormEjectionSpeed;
+		internal static float ShieldingEfficiency;
+		internal static float ShieldingEfficiencyEasyMult;
+		internal static float ShieldingEfficiencyModerateMult;
+		internal static float ShieldingEfficiencyHardMult;
+		internal static float StormRadiation;
+		internal static float ExternRadiation;
+		internal static bool RadiationInSievert; // use Sievert iso. rad
+		internal static bool UseSIUnits; // use SI units instead of human-readable pretty-printing when available
 
 		// sanity check settings
-		public static string ModsIncompatible;
-		public static string ModsWarning;
-		public static string ModsScience;
-		public static bool CheckForCRP;
+		static string ModsIncompatible;
+		static string ModsWarning;
+		static string ModsScience;
+		internal static bool CheckForCRP;
 
-		public static bool UseSamplingSunFactor;
-		public static bool UseResourcePriority;
+		internal static bool UseSamplingSunFactor;
+		internal static bool UseResourcePriority;
 
 		// debug / logging
-		public static bool VolumeAndSurfaceLogging;
+		internal static bool VolumeAndSurfaceLogging;
 
-		public static bool loaded { get; private set; } = false;
+		internal static bool loaded { get; private set; } = false;
 	}
 
 

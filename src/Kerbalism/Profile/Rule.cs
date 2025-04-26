@@ -6,9 +6,9 @@ namespace KERBALISM
 {
 
 
-	public sealed class Rule
+	sealed class Rule
 	{
-		public Rule(ConfigNode node)
+		internal Rule(ConfigNode node)
 		{
 			name = Lib.ConfigValue(node, "name", string.Empty);
 			title = Lib.ConfigValue(node, "title", name);
@@ -57,7 +57,7 @@ namespace KERBALISM
 		}
 
 
-		public void Execute(Vessel v, VesselData vd, VesselResources resources, double elapsed_s)
+		internal void Execute(Vessel v, VesselData vd, VesselResources resources, double elapsed_s)
 		{
 			// store list of crew to kill
 			List<ProtoCrewMember> deferred_kills = new List<ProtoCrewMember>();
@@ -274,27 +274,27 @@ namespace KERBALISM
 		}
 
 
-		public string name;               // unique name for the rule
-		public string title;              // UI title
-		public string input;              // resource consumed, if any
-		public string output;             // resource produced, if any
-		public double interval;           // if 0 the rule is executed per-second, else it is executed every 'interval' seconds
-		public double rate;               // amount of input resource to consume at each execution
-		public double ratio;              // ratio of output resource in relation to input consumed
-		public double degeneration;       // amount to add to the degeneration at each execution (when we must degenerate)
-		public double variance;           // variance for degeneration rate, unique per-kerbal and in range [1.0-x, 1.0+x]
-		public double individuality;      // variance for process rate, unique per-kerbal and in range [1.0-x, 1.0+x]
-		public List<string> modifiers;    // if specified, rates are influenced by the product of all environment modifiers
-		public bool breakdown;            // if true, trigger a breakdown instead of killing the kerbal
-		public double warning_threshold;  // threshold of degeneration used to show warning messages and yellow status color
-		public double danger_threshold;   // threshold of degeneration used to show danger messages and red status color
-		public double fatal_threshold;    // threshold of degeneration used to show fatal messages and kill/breakdown the kerbal
-		public string warning_message;    // messages shown on threshold crossings
-		public string danger_message;     // .
-		public string fatal_message;      // .
-		public string relax_message;      // .
-		public bool lifetime;             // does this value accumulate over the lifetime of a kerbal
-		public ResourceBroker broker;
+		internal string name;               // unique name for the rule
+		internal string title;              // UI title
+		internal string input;              // resource consumed, if any
+		internal string output;             // resource produced, if any
+		internal double interval;           // if 0 the rule is executed per-second, else it is executed every 'interval' seconds
+		internal double rate;               // amount of input resource to consume at each execution
+		internal double ratio;              // ratio of output resource in relation to input consumed
+		internal double degeneration;       // amount to add to the degeneration at each execution (when we must degenerate)
+		double variance;           // variance for degeneration rate, unique per-kerbal and in range [1.0-x, 1.0+x]
+		double individuality;      // variance for process rate, unique per-kerbal and in range [1.0-x, 1.0+x]
+		internal List<string> modifiers;    // if specified, rates are influenced by the product of all environment modifiers
+		internal bool breakdown;            // if true, trigger a breakdown instead of killing the kerbal
+		internal double warning_threshold;  // threshold of degeneration used to show warning messages and yellow status color
+		internal double danger_threshold;   // threshold of degeneration used to show danger messages and red status color
+		internal double fatal_threshold;    // threshold of degeneration used to show fatal messages and kill/breakdown the kerbal
+		string warning_message;    // messages shown on threshold crossings
+		string danger_message;     // .
+		string fatal_message;      // .
+		string relax_message;      // .
+		internal bool lifetime;             // does this value accumulate over the lifetime of a kerbal
+		ResourceBroker broker;
 	}
 
 

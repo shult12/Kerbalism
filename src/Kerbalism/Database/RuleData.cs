@@ -7,9 +7,9 @@ namespace KERBALISM
 {
 
 
-	public class RuleData
+	class RuleData
 	{
-		public RuleData()
+		internal RuleData()
 		{
 			problem = 0.0;
 			message = 0;
@@ -17,7 +17,7 @@ namespace KERBALISM
 			lifetime = false;
 		}
 
-		public RuleData(ConfigNode node)
+		internal RuleData(ConfigNode node)
 		{
 			problem = Lib.ConfigValue(node, "problem", 0.0);
 			message = Lib.ConfigValue(node, "message", 0u);
@@ -25,7 +25,7 @@ namespace KERBALISM
 			lifetime = Lib.ConfigValue(node, "lifetime", false);
 		}
 
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			node.AddValue("problem", problem);
 			node.AddValue("message", message);
@@ -36,17 +36,17 @@ namespace KERBALISM
 		/// <summary>
 		/// Reset process value, except lifetime values
 		/// </summary>
-		public void Reset()
+		internal void Reset()
 		{
 			message = 0;
 			time_since = 0;
 			if (!lifetime) problem = 0.0;
 		}
 
-		public double problem;      // accumulator for the rule
-		public uint message;        // used to avoid sending messages multiple times
-		public double time_since;   // time since last execution, if interval > 0
-		public bool lifetime;       // is this a life time value or not
+		internal double problem;      // accumulator for the rule
+		internal uint message;        // used to avoid sending messages multiple times
+		internal double time_since;   // time since last execution, if interval > 0
+		internal bool lifetime;       // is this a life time value or not
 	}
 
 

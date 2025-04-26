@@ -2,9 +2,9 @@ namespace KERBALISM.Planner
 {
 
     ///<summary> Planners simulator for the environment the vessel is presently in, according to the planners environment settings </summary>
-    public sealed class EnvironmentAnalyzer
+    sealed class EnvironmentAnalyzer
     {
-        public void Analyze(CelestialBody body, double altitude_mult, Planner.SunlightState sunlight)
+		internal void Analyze(CelestialBody body, double altitude_mult, Planner.SunlightState sunlight)
         {
             this.body = body;
             CelestialBody mainSun;
@@ -70,30 +70,30 @@ namespace KERBALISM.Planner
 #endif
 		}
 
-		public CelestialBody body;                            // target body
-        public double altitude;                               // target altitude
-        public bool landed;                                   // true if landed
-        public bool breathable;                               // true if inside breathable atmosphere
-        public bool zerog;                                    // true if the vessel is experiencing zero g
-        public double atmo_factor;                            // proportion of sun flux not absorbed by the atmosphere
-        public double sun_dist;                               // distance from the sun
-        public double solar_flux;                             // flux received from the sun (consider atmospheric absorption)
-        public double albedo_flux;                            // solar flux reflected from the body
-        public double body_flux;                              // infrared radiative flux from the body
-        public double total_flux;                             // total flux at vessel position
-        public double temperature;                            // vessel temperature
-        public double temp_diff;                              // average difference from survival temperature
-        public double orbital_period;                         // length of orbit
-        public double shadow_period;                          // length of orbit in shadow
-        public double shadow_time;                            // proportion of orbit that is in shadow
-        public double gamma_transparency;                     // proportion of radiation not blocked by atmosphere
-        public double extern_rad;                             // environment radiation outside the heliopause
-        public double heliopause_rad;                         // environment radiation inside the heliopause
-        public double magnetopause_rad;                       // environment radiation inside the magnetopause
-        public double inner_rad;                              // environment radiation inside the inner belt
-        public double outer_rad;                              // environment radiation inside the outer belt
-        public double surface_rad;                            // environment radiation on the surface of the body
-        public double storm_rad;                              // environment radiation during a solar storm, inside the heliopause
+		internal CelestialBody body;                            // target body
+        internal double altitude;                               // target altitude
+        internal bool landed;                                   // true if landed
+        internal bool breathable;                               // true if inside breathable atmosphere
+        internal bool zerog;                                    // true if the vessel is experiencing zero g
+        internal double atmo_factor;                            // proportion of sun flux not absorbed by the atmosphere
+        internal double sun_dist;                               // distance from the sun
+        internal double solar_flux;                             // flux received from the sun (consider atmospheric absorption)
+        internal double albedo_flux;                            // solar flux reflected from the body
+        internal double body_flux;                              // infrared radiative flux from the body
+        internal double total_flux;                             // total flux at vessel position
+        internal double temperature;                            // vessel temperature
+        internal double temp_diff;                              // average difference from survival temperature
+        internal double orbital_period;                         // length of orbit
+        internal double shadow_period;                          // length of orbit in shadow
+        internal double shadow_time;                            // proportion of orbit that is in shadow
+        double gamma_transparency;                     // proportion of radiation not blocked by atmosphere
+		internal double extern_rad;                             // environment radiation outside the heliopause
+        internal double heliopause_rad;                         // environment radiation inside the heliopause
+        internal double magnetopause_rad;                       // environment radiation inside the magnetopause
+        internal double inner_rad;                              // environment radiation inside the inner belt
+        internal double outer_rad;                              // environment radiation inside the outer belt
+        internal double surface_rad;                            // environment radiation on the surface of the body
+        internal double storm_rad;                              // environment radiation during a solar storm, inside the heliopause
     }
 
 

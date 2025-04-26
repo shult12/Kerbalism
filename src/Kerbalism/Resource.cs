@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace KERBALISM
 {
-	public class ResourceBroker
+	class ResourceBroker
 	{
-		public enum BrokerCategory
+		internal enum BrokerCategory
 		{
 			Unknown,
 			Generator,
@@ -22,40 +22,40 @@ namespace KERBALISM
 			Science
 		}
 
-		private static Dictionary<string, ResourceBroker> brokersDict = new Dictionary<string, ResourceBroker>();
-		private static List<ResourceBroker> brokersList = new List<ResourceBroker>();
+		static Dictionary<string, ResourceBroker> brokersDict = new Dictionary<string, ResourceBroker>();
+		static List<ResourceBroker> brokersList = new List<ResourceBroker>();
 
-		public static ResourceBroker Generic = GetOrCreate("Others", BrokerCategory.Unknown, Local.Brokers_Others);
-		public static ResourceBroker SolarPanel = GetOrCreate("SolarPanel", BrokerCategory.SolarPanel, Local.Brokers_SolarPanel);
-		public static ResourceBroker KSPIEGenerator = GetOrCreate("KSPIEGenerator", BrokerCategory.Generator, Local.Brokers_KSPIEGenerator);
-		public static ResourceBroker FissionReactor = GetOrCreate("FissionReactor", BrokerCategory.Converter, Local.Brokers_FissionReactor);
-		public static ResourceBroker RTG = GetOrCreate("RTG", BrokerCategory.RTG, Local.Brokers_RTG);
-		public static ResourceBroker ScienceLab = GetOrCreate("ScienceLab", BrokerCategory.Science, Local.Brokers_ScienceLab);
-		public static ResourceBroker Light = GetOrCreate("Light", BrokerCategory.VesselSystem, Local.Brokers_Light);
-		public static ResourceBroker Boiloff = GetOrCreate("Boiloff", BrokerCategory.VesselSystem, Local.Brokers_Boiloff);
-		public static ResourceBroker Cryotank = GetOrCreate("Cryotank", BrokerCategory.VesselSystem, Local.Brokers_Cryotank);
-		public static ResourceBroker Greenhouse = GetOrCreate("Greenhouse", BrokerCategory.VesselSystem, Local.Brokers_Greenhouse);
-		public static ResourceBroker Deploy = GetOrCreate("Deploy", BrokerCategory.VesselSystem, Local.Brokers_Deploy);
-		public static ResourceBroker Experiment = GetOrCreate("Experiment", BrokerCategory.Science, Local.Brokers_Experiment);
-		public static ResourceBroker Command = GetOrCreate("Command", BrokerCategory.VesselSystem, Local.Brokers_Command);
-		public static ResourceBroker GravityRing = GetOrCreate("GravityRing", BrokerCategory.RTG, Local.Brokers_GravityRing);
-		public static ResourceBroker Scanner = GetOrCreate("Scanner", BrokerCategory.VesselSystem, Local.Brokers_Scanner);
-		public static ResourceBroker Laboratory = GetOrCreate("Laboratory", BrokerCategory.Science, Local.Brokers_Laboratory);
-		public static ResourceBroker CommsIdle = GetOrCreate("CommsIdle", BrokerCategory.Comms, Local.Brokers_CommsIdle);
-		public static ResourceBroker CommsXmit = GetOrCreate("CommsXmit", BrokerCategory.Comms, Local.Brokers_CommsXmit);
-		public static ResourceBroker StockConverter = GetOrCreate("StockConverter", BrokerCategory.Converter, Local.Brokers_StockConverter);
-		public static ResourceBroker StockDrill = GetOrCreate("Converter", BrokerCategory.Harvester, Local.Brokers_StockDrill);
-		public static ResourceBroker Harvester = GetOrCreate("Harvester", BrokerCategory.Harvester, Local.Brokers_Harvester);
+		internal static ResourceBroker Generic = GetOrCreate("Others", BrokerCategory.Unknown, Local.Brokers_Others);
+		internal static ResourceBroker SolarPanel = GetOrCreate("SolarPanel", BrokerCategory.SolarPanel, Local.Brokers_SolarPanel);
+		internal static ResourceBroker KSPIEGenerator = GetOrCreate("KSPIEGenerator", BrokerCategory.Generator, Local.Brokers_KSPIEGenerator);
+		internal static ResourceBroker FissionReactor = GetOrCreate("FissionReactor", BrokerCategory.Converter, Local.Brokers_FissionReactor);
+		internal static ResourceBroker RTG = GetOrCreate("RTG", BrokerCategory.RTG, Local.Brokers_RTG);
+		internal static ResourceBroker ScienceLab = GetOrCreate("ScienceLab", BrokerCategory.Science, Local.Brokers_ScienceLab);
+		internal static ResourceBroker Light = GetOrCreate("Light", BrokerCategory.VesselSystem, Local.Brokers_Light);
+		internal static ResourceBroker Boiloff = GetOrCreate("Boiloff", BrokerCategory.VesselSystem, Local.Brokers_Boiloff);
+		internal static ResourceBroker Cryotank = GetOrCreate("Cryotank", BrokerCategory.VesselSystem, Local.Brokers_Cryotank);
+		internal static ResourceBroker Greenhouse = GetOrCreate("Greenhouse", BrokerCategory.VesselSystem, Local.Brokers_Greenhouse);
+		internal static ResourceBroker Deploy = GetOrCreate("Deploy", BrokerCategory.VesselSystem, Local.Brokers_Deploy);
+		internal static ResourceBroker Experiment = GetOrCreate("Experiment", BrokerCategory.Science, Local.Brokers_Experiment);
+		internal static ResourceBroker Command = GetOrCreate("Command", BrokerCategory.VesselSystem, Local.Brokers_Command);
+		internal static ResourceBroker GravityRing = GetOrCreate("GravityRing", BrokerCategory.RTG, Local.Brokers_GravityRing);
+		internal static ResourceBroker Scanner = GetOrCreate("Scanner", BrokerCategory.VesselSystem, Local.Brokers_Scanner);
+		internal static ResourceBroker Laboratory = GetOrCreate("Laboratory", BrokerCategory.Science, Local.Brokers_Laboratory);
+		internal static ResourceBroker CommsIdle = GetOrCreate("CommsIdle", BrokerCategory.Comms, Local.Brokers_CommsIdle);
+		internal static ResourceBroker CommsXmit = GetOrCreate("CommsXmit", BrokerCategory.Comms, Local.Brokers_CommsXmit);
+		internal static ResourceBroker StockConverter = GetOrCreate("StockConverter", BrokerCategory.Converter, Local.Brokers_StockConverter);
+		internal static ResourceBroker StockDrill = GetOrCreate("Converter", BrokerCategory.Harvester, Local.Brokers_StockDrill);
+		internal static ResourceBroker Harvester = GetOrCreate("Harvester", BrokerCategory.Harvester, Local.Brokers_Harvester);
 
-		public string Id { get; private set; }
-		public BrokerCategory Category { get; private set; }
-		public string Title { get; private set; }
-		public string[] BrokerInfo { get; private set; }
+		internal string Id { get; private set; }
+		internal BrokerCategory Category { get; private set; }
+		internal string Title { get; private set; }
+		internal string[] BrokerInfo { get; private set; }
 
 		public override int GetHashCode() => hashcode;
-		private int hashcode;
+		int hashcode;
 
-		private ResourceBroker(string id, BrokerCategory category = BrokerCategory.Unknown, string title = null)
+		ResourceBroker(string id, BrokerCategory category = BrokerCategory.Unknown, string title = null)
 		{
 			Id = id;
 			Category = category;
@@ -73,12 +73,12 @@ namespace KERBALISM
 			brokersList.Add(this);
 		}
 
-		public static IEnumerator<ResourceBroker> List()
+		static IEnumerator<ResourceBroker> List()
 		{
 			return brokersList.GetEnumerator();
 		}
 
-		public static ResourceBroker GetOrCreate(string id)
+		internal static ResourceBroker GetOrCreate(string id)
 		{
 			ResourceBroker rb;
 			if (brokersDict.TryGetValue(id, out rb))
@@ -87,7 +87,7 @@ namespace KERBALISM
 			return new ResourceBroker(id, BrokerCategory.Unknown, id);
 		}
 
-		public static ResourceBroker GetOrCreate(string id, BrokerCategory type, string title)
+		internal static ResourceBroker GetOrCreate(string id, BrokerCategory type, string title)
 		{
 			ResourceBroker rb;
 			if (brokersDict.TryGetValue(id, out rb))
@@ -96,7 +96,7 @@ namespace KERBALISM
 			return new ResourceBroker(id, type, title);
 		}
 
-		public static string GetTitle(string id)
+		static string GetTitle(string id)
 		{
 			ResourceBroker rb;
 			if (brokersDict.TryGetValue(id, out rb))
@@ -106,37 +106,37 @@ namespace KERBALISM
 	}
 
 	/// <summary>Global cache for storing and accessing VesselResources (and ResourceInfo) handlers in all vessels, with shortcut for common methods</summary>
-	public static class ResourceCache
+	static class ResourceCache
 	{
 		// resource cache
 		static Dictionary<Guid, VesselResources> entries;
 
 		/// <summary> pseudo-ctor </summary>
-		public static void Init()
+		internal static void Init()
 		{
 			entries = new Dictionary<Guid, VesselResources>();
 		}
 
 		/// <summary> clear all resource information for all vessels </summary>
-		public static void Clear()
+		internal static void Clear()
 		{
 			entries.Clear();
 		}
 
 		/// <summary> Reset the whole resource simulation for the vessel </summary>
-		public static void Purge(Vessel v)
+		internal static void Purge(Vessel v)
 		{
 			entries.Remove(v.id);
 		}
 
 		/// <summary> Reset the whole resource simulation for the vessel </summary>
-		public static void Purge(ProtoVessel pv)
+		internal static void Purge(ProtoVessel pv)
 		{
 			entries.Remove(pv.vesselID);
 		}
 
 		/// <summary> Return the VesselResources handler for this vessel </summary>
-		public static VesselResources Get(Vessel v)
+		internal static VesselResources Get(Vessel v)
 		{
 			// try to get existing entry if any
 			VesselResources entry;
@@ -153,27 +153,27 @@ namespace KERBALISM
 		}
 
 		/// <summary> return a resource handler (shortcut) </summary>
-		public static ResourceInfo GetResource(Vessel v, string resource_name)
+		internal static ResourceInfo GetResource(Vessel v, string resource_name)
 		{
 			return Get(v).GetResource(v, resource_name);
 		}
 
 		/// <summary> record deferred production of a resource (shortcut) </summary>
 		/// <param name="brokerName">short ui-friendly name for the producer</param>
-		public static void Produce(Vessel v, string resource_name, double quantity, ResourceBroker broker)
+		internal static void Produce(Vessel v, string resource_name, double quantity, ResourceBroker broker)
 		{
 			GetResource(v, resource_name).Produce(quantity, broker);
 		}
 
 		/// <summary> record deferred consumption of a resource (shortcut) </summary>
 		/// <param name="brokerName">short ui-friendly name for the consumer</param>
-		public static void Consume(Vessel v, string resource_name, double quantity, ResourceBroker broker)
+		internal static void Consume(Vessel v, string resource_name, double quantity, ResourceBroker broker)
 		{
 			GetResource(v, resource_name).Consume(quantity, broker);
 		}
 
 		/// <summary> register deferred execution of a recipe (shortcut)</summary>
-		public static void AddRecipe(Vessel v, ResourceRecipe recipe)
+		internal static void AddRecipe(Vessel v, ResourceRecipe recipe)
 		{
 			Get(v).AddRecipe(recipe);
 		}
@@ -184,14 +184,14 @@ namespace KERBALISM
 	/// Allow access to the resource handler (ResourceInfo) for all resources on the vessel
 	/// and also stores of all recorded recipes (ResourceRecipe)
 	/// </summary>
-	public sealed class VesselResources
+	sealed class VesselResources
 	{
-		private Dictionary<int, ResourceInfo> resources = new Dictionary<int, ResourceInfo>(32);
-		private ResourceInfo GetResInfo(string resName) { resources.TryGetValue(resName.GetHashCode(), out var ri); return ri; }
-		private List<ResourceRecipe> recipes = new List<ResourceRecipe>(4);
+		Dictionary<int, ResourceInfo> resources = new Dictionary<int, ResourceInfo>(32);
+		ResourceInfo GetResInfo(string resName) { resources.TryGetValue(resName.GetHashCode(), out var ri); return ri; }
+		List<ResourceRecipe> recipes = new List<ResourceRecipe>(4);
 
 		/// <summary> return a VesselResources handler </summary>
-		public ResourceInfo GetResource(Vessel v, string resource_name)
+		internal ResourceInfo GetResource(Vessel v, string resource_name)
 		{
 			// try to get existing entry if any
 			ResourceInfo res = GetResInfo(resource_name);
@@ -207,13 +207,13 @@ namespace KERBALISM
 			return res;
 		}
 
-		
+
 		/// <summary>
 		/// Main vessel resource simulation update method.
 		/// Execute all recipes to get final deferred amounts, then for each resource apply deferred requests, 
 		/// synchronize the new amount in all parts and update ResourceInfo information properties (rates, brokers...)
 		/// </summary>
-		public void Sync(Vessel v, VesselData vd, double elapsed_s)
+		internal void Sync(Vessel v, VesselData vd, double elapsed_s)
 		{
 			// execute all recorded recipes
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.Resource.ExecuteRecipes");
@@ -317,20 +317,20 @@ namespace KERBALISM
 
 		/// <summary> record deferred production of a resource (shortcut) </summary>
 		/// <param name="brokerName">short ui-friendly name for the producer</param>
-		public void Produce(Vessel v, string resource_name, double quantity, ResourceBroker broker)
+		internal void Produce(Vessel v, string resource_name, double quantity, ResourceBroker broker)
 		{
 			GetResource(v, resource_name).Produce(quantity, broker);
 		}
 
 		/// <summary> record deferred consumption of a resource (shortcut) </summary>
 		/// <param name="tag">short ui-friendly name for the consumer</param>
-		public void Consume(Vessel v, string resource_name, double quantity, ResourceBroker broker)
+		internal void Consume(Vessel v, string resource_name, double quantity, ResourceBroker broker)
 		{
 			GetResource(v, resource_name).Consume(quantity, broker);
 		}
 
 		/// <summary> record deferred execution of a recipe (shortcut) </summary>
-		public void AddRecipe(ResourceRecipe recipe)
+		internal void AddRecipe(ResourceRecipe recipe)
 		{
 			recipes.Add(recipe);
 		}
@@ -340,7 +340,7 @@ namespace KERBALISM
 	/// Handler for a single resource on a vessel. Expose vessel-wide information about amounts, rates and brokers (consumers/producers).
 	/// Responsible for synchronization between the resource simulator and the actual resources present on each part. 
 	/// </summary>
-	public sealed class ResourceInfo
+	sealed class ResourceInfo
 	{
 		#region Sync Set classes etc
 
@@ -348,7 +348,7 @@ namespace KERBALISM
 		/// This lets us use CachedObject<T> to
 		/// avoid retyping the caching code
 		/// </summary>
-		public interface IResettable
+		interface IResettable
 		{
 			void Reset();
 		}
@@ -359,17 +359,17 @@ namespace KERBALISM
 		/// with a parameterless constructor that implements IResettable
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
-		public class CachedObject<T> where T : class, IResettable, new()
+		class CachedObject<T> where T : class, IResettable, new()
 		{
-			private List<T> objects = new List<T>();
-			private int active = 0;
+			List<T> objects = new List<T>();
+			int active = 0;
 
 			/// <summary>
 			/// Returns a new T from the cache or, if there aren't
 			/// any free, creates a new one and adds it to the cache
 			/// </summary>
 			/// <returns></returns>
-			public T Next()
+			internal T Next()
 			{
 				if (active < objects.Count)
 					return objects[active++];
@@ -385,7 +385,7 @@ namespace KERBALISM
 			/// it to the cache, compacting the active set
 			/// </summary>
 			/// <param name="obj"></param>
-			public void Free(T obj)
+			void Free(T obj)
 			{
 				for (int i = active; i-- > 0;)
 				{
@@ -405,7 +405,7 @@ namespace KERBALISM
 			/// Resets all objects in the cache and
 			/// makes them all available
 			/// </summary>
-			public void Reset()
+			internal void Reset()
 			{
 				for (int i = active; i-- > 0;)
 					objects[i].Reset();
@@ -416,7 +416,7 @@ namespace KERBALISM
 			/// <summary>
 			/// Fully clears the cache. This will expose the objects to GC!
 			/// </summary>
-			public void Clear()
+			void Clear()
 			{
 				objects.Clear();
 				active = 0;
@@ -428,34 +428,34 @@ namespace KERBALISM
 		/// and ProtoPartResourceSnapshot), but they share the same attributes,
 		/// we create a baseclass wrapper for them
 		/// </summary>
-		public abstract class Wrap : IResettable
+		internal abstract class Wrap : IResettable
 		{
-			public abstract double amount { get; set; }
-			public abstract double maxAmount { get; set; }
+			internal abstract double amount { get; set; }
+			internal abstract double maxAmount { get; set; }
 
 			public abstract void Reset();
 		}
 
-		public class WrapPR : Wrap
+		class WrapPR : Wrap
 		{
-			private PartResource res;
+			PartResource res;
 
-			public override double amount { get => res.amount; set => res.amount = value; }
-			public override double maxAmount { get => res.maxAmount; set => res.maxAmount = value; }
+			internal override double amount { get => res.amount; set => res.amount = value; }
+			internal override double maxAmount { get => res.maxAmount; set => res.maxAmount = value; }
 
-			public void Link(PartResource r) { res = r; }
+			internal void Link(PartResource r) { res = r; }
 
 			public override void Reset() { res = null; }
 		}
 
-		public class WrapPPRS : Wrap
+		class WrapPPRS : Wrap
 		{
-			private ProtoPartResourceSnapshot res;
+			ProtoPartResourceSnapshot res;
 
-			public override double amount { get => res.amount; set => res.amount = value; }
-			public override double maxAmount { get => res.maxAmount; set => res.maxAmount = value; }
+			internal override double amount { get => res.amount; set => res.amount = value; }
+			internal override double maxAmount { get => res.maxAmount; set => res.maxAmount = value; }
 
-			public void Link(ProtoPartResourceSnapshot r) { res = r; }
+			internal void Link(ProtoPartResourceSnapshot r) { res = r; }
 
 			public override void Reset() { res = null; }
 		}
@@ -465,13 +465,13 @@ namespace KERBALISM
 		/// The tanksets contain resource wrappers rather than resources directly.
 		/// The total amount and maxAmount for all tanks is stored.
 		/// </summary>
-		public class PriorityTankSets : IResettable
+		class PriorityTankSets : IResettable
 		{
-			private List<TankSet> sets = new List<TankSet>(5);
-			public double amount;
-			public double maxAmount;
+			List<TankSet> sets = new List<TankSet>(5);
+			internal double amount;
+			internal double maxAmount;
 
-			public void Add(Wrap rw, int pri)
+			internal void Add(Wrap rw, int pri)
 			{
 				amount += rw.amount;
 				maxAmount += rw.maxAmount;
@@ -508,7 +508,7 @@ namespace KERBALISM
 			/// [-amount, maxAmount]
 			/// </summary>
 			/// <param name="delta"></param>
-			public void ApplyDelta(double delta)
+			internal void ApplyDelta(double delta)
 			{
 				// pulling
 				if (delta < 0)
@@ -581,12 +581,12 @@ namespace KERBALISM
 			}
 		}
 
-		public class TankSet : IResettable
+		internal class TankSet : IResettable
 		{
-			public int priority;
-			private List<Wrap> tanks = new List<Wrap>(20);
-			public double amount = 0;
-			public double maxAmount = 0;
+			internal int priority;
+			List<Wrap> tanks = new List<Wrap>(20);
+			internal double amount = 0;
+			internal double maxAmount = 0;
 
 			public void Reset()
 			{
@@ -595,14 +595,14 @@ namespace KERBALISM
 				tanks.Clear();
 			}
 
-			public void Add(Wrap r)
+			internal void Add(Wrap r)
 			{
 				amount += r.amount;
 				maxAmount += r.maxAmount;
 				tanks.Add(r);
 			}
 
-			public void Fill()
+			internal void Fill()
 			{
 				amount = maxAmount;
 				for (int i = tanks.Count; i-- > 0;)
@@ -612,14 +612,14 @@ namespace KERBALISM
 				}
 			}
 
-			public void Empty()
+			internal void Empty()
 			{
 				amount = 0;
 				for (int i = tanks.Count; i-- > 0;)
 					tanks[i].amount = 0;
 			}
 
-			public void ApplyDelta(double delta)
+			internal void ApplyDelta(double delta)
 			{
 				// If we're pulling, then the ratio per tank is
 				// its amount / [total amount of all tanks].
@@ -655,31 +655,31 @@ namespace KERBALISM
 			}
 		}
 
-		private PriorityTankSets pts = new PriorityTankSets();
-		private static CachedObject<TankSet> cachedTS = new CachedObject<TankSet>();
-		private static CachedObject<WrapPR> cachedPR = new CachedObject<WrapPR>();
-		private static CachedObject<WrapPPRS> cachedPPRS = new CachedObject<WrapPPRS>();
+		PriorityTankSets pts = new PriorityTankSets();
+		static CachedObject<TankSet> cachedTS = new CachedObject<TankSet>();
+		static CachedObject<WrapPR> cachedPR = new CachedObject<WrapPR>();
+		static CachedObject<WrapPPRS> cachedPPRS = new CachedObject<WrapPPRS>();
 
-		public void AddToSyncSet(PartResource r, int pri)
+		internal void AddToSyncSet(PartResource r, int pri)
 		{
 			var wrap = cachedPR.Next();
 			wrap.Link(r);
 			pts.Add(wrap, pri);
 		}
 
-		public void AddToSyncSet(ProtoPartResourceSnapshot r, int pri)
+		internal void AddToSyncSet(ProtoPartResourceSnapshot r, int pri)
 		{
 			var wrap = cachedPPRS.Next();
 			wrap.Link(r);
 			pts.Add(wrap, pri);
 		}
 
-		public void ClearSyncSet()
+		internal void ClearSyncSet()
 		{
 			pts.Reset();
 		}
 
-		public static void ResetSyncCaches()
+		internal static void ResetSyncCaches()
 		{
 			cachedTS.Reset();
 			cachedPR.Reset();
@@ -688,9 +688,9 @@ namespace KERBALISM
 
 		#endregion
 
-		private string resourceName;
+		string resourceName;
 		/// <summary> Associated resource name</summary>
-		public string ResourceName
+		internal string ResourceName
 		{
 			get { return resourceName; }
 			set
@@ -700,44 +700,44 @@ namespace KERBALISM
 			}
 		}
 
-		private int resourceID;
-		public int ResourceID => resourceID;
+		int resourceID;
+		int ResourceID => resourceID;
 
 		/// <summary> Rate of change in amount per-second, this is purely for visualization</summary>
-		public double Rate { get; private set; }
+		internal double Rate { get; private set; }
 
 		/// <summary> Rate of change in amount per-second, including average rate for interval-based rules</summary>
-		public double AverageRate { get; private set; }
+		internal double AverageRate { get; private set; }
 
 		/// <summary> Amount vs capacity, or 0 if there is no capacity</summary>
-		public double Level { get; private set; }
+		internal double Level { get; private set; }
 
 		/// <summary> True if an interval-based rule consumption/production was processed in the last simulation step</summary>
-		public bool IntervalRuleHappened { get; private set; }
+		bool IntervalRuleHappened { get; set; }
 
 		/// <summary> Not yet consumed or produced amount that will be synchronized to the vessel parts in Sync()</summary>
-		public double Deferred { get; private set; }
+		internal double Deferred { get; private set; }
 
 		/// <summary> Amount of resource</summary>
-		public double Amount { get; private set; }
+		internal double Amount { get; private set; }
 
 		/// <summary> Storage capacity of resource</summary>
-		public double Capacity { get; private set; }
+		internal double Capacity { get; private set; }
 
 		/// <summary> Simulated average rate of interval-based rules in amount per-second. This is for information only, the resource is not consumed</summary>
-		private double intervalRulesRate;
+		double intervalRulesRate;
 
 		/// <summary> Amount consumed/produced by interval-based rules in this simulation step</summary>
-		private double intervalRuleAmount;
+		double intervalRuleAmount;
 
 		/// <summary>Dictionary of all consumers and producers (key) and how much amount they did add/remove (value).</summary>
-		private Dictionary<ResourceBroker, double> brokersResourceAmounts;
+		Dictionary<ResourceBroker, double> brokersResourceAmounts;
 
 		/// <summary>Dictionary of all interval-based rules (key) and their simulated average rate (value). This is for information only, the resource is not consumed</summary>
-		private Dictionary<ResourceBroker, double> intervalRuleBrokersRates;
+		Dictionary<ResourceBroker, double> intervalRuleBrokersRates;
 
 		/// <summary>Ctor</summary>
-		public ResourceInfo(Vessel v, string res_name)
+		internal ResourceInfo(Vessel v, string res_name)
 		{
 			// remember resource name
 			ResourceName = res_name;
@@ -795,7 +795,7 @@ namespace KERBALISM
 
 		/// <summary>Record a production, it will be stored in "Deferred" and later synchronized to the vessel in Sync()</summary>
 		/// <param name="brokerName">origin of the production, will be available in the UI</param>
-		public void Produce(double quantity, ResourceBroker broker)
+		internal void Produce(double quantity, ResourceBroker broker)
 		{
 			Deferred += quantity;
 
@@ -810,7 +810,7 @@ namespace KERBALISM
 
 		/// <summary>Record a consumption, it will be stored in "Deferred" and later synchronized to the vessel in Sync()</summary>
 		/// <param name="brokerName">origin of the consumption, will be available in the UI</param>
-		public void Consume(double quantity, ResourceBroker broker)
+		internal void Consume(double quantity, ResourceBroker broker)
 		{
 			Deferred -= quantity;
 
@@ -828,7 +828,7 @@ namespace KERBALISM
 		/// this function will also sync from vessel to cache so you can always use the
 		/// ResourceInfo interface to get information about resources
 		/// </remarks>
-		public void Sync(Vessel v, VesselData vd, double elapsed_s)
+		internal void Sync(Vessel v, VesselData vd, double elapsed_s)
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.Resource.Sync");
 			// # OVERVIEW
@@ -965,7 +965,7 @@ namespace KERBALISM
 		}
 
 		/// <summary>estimate time until depletion, including the simulated rate from interval-based rules</summary>
-		public double DepletionTime()
+		internal double DepletionTime()
 		{
 			// return depletion
 			return Amount <= 1e-10 ? 0.0 : AverageRate >= -1e-10 ? double.NaN : Amount / -AverageRate;
@@ -973,7 +973,7 @@ namespace KERBALISM
 
 		/// <summary>Inform that meal has happened in this simulation step</summary>
 		/// <remarks>A simulation step can cover many physics ticks, especially for unloaded vessels</remarks>
-		public void UpdateIntervalRule(double amount, double averageRate, ResourceBroker broker)
+		internal void UpdateIntervalRule(double amount, double averageRate, ResourceBroker broker)
 		{
 			intervalRuleAmount += amount;
 			intervalRulesRate += averageRate;
@@ -1003,11 +1003,11 @@ namespace KERBALISM
 	// then check "antennaOutput" availability to scale the amount of data sent
 	// This would also allow removing the "Cures" thing.
 
-	public sealed class ResourceRecipe
+	sealed class ResourceRecipe
 	{
-		public struct Entry
+		internal struct Entry
 		{
-			public Entry(string name, double quantity, bool dump = true, string combined = null)
+			internal Entry(string name, double quantity, bool dump = true, string combined = null)
 			{
 				this.name = name;
 				this.combined = combined;
@@ -1015,21 +1015,21 @@ namespace KERBALISM
 				this.inv_quantity = 1.0 / quantity;
 				this.dump = dump;
 			}
-			public string name;
-			public string combined;    // if entry is the primary to be combined, then the secondary resource is named here. secondary entry has its combined set to "" not null
-			public double quantity;
-			public double inv_quantity;
-			public bool dump;
+			internal string name;
+			internal string combined;    // if entry is the primary to be combined, then the secondary resource is named here. secondary entry has its combined set to "" not null
+			internal double quantity;
+			internal double inv_quantity;
+			internal bool dump;
 		}
 
-		public List<Entry> inputs;   // set of input resources
-		public List<Entry> outputs;  // set of output resources
-		public List<Entry> cures;    // set of cures
-		public double left;     // what proportion of the recipe is left to execute
+		List<Entry> inputs;   // set of input resources
+		List<Entry> outputs;  // set of output resources
+		List<Entry> cures;    // set of cures
+		double left;     // what proportion of the recipe is left to execute
 
-		private ResourceBroker broker;
+		ResourceBroker broker;
 
-		public ResourceRecipe(ResourceBroker broker)
+		internal ResourceRecipe(ResourceBroker broker)
 		{
 			this.inputs = new List<Entry>();
 			this.outputs = new List<Entry>();
@@ -1039,7 +1039,7 @@ namespace KERBALISM
 		}
 
 		/// <summary>add an input to the recipe</summary>
-		public void AddInput(string resource_name, double quantity)
+		internal void AddInput(string resource_name, double quantity)
 		{
 			if (quantity > double.Epsilon) //< avoid division by zero
 			{
@@ -1048,7 +1048,7 @@ namespace KERBALISM
 		}
 
 		/// <summary>add a combined input to the recipe</summary>
-		public void AddInput(string resource_name, double quantity, string combined)
+		internal void AddInput(string resource_name, double quantity, string combined)
 		{
 			if (quantity > double.Epsilon) //< avoid division by zero
 			{
@@ -1057,7 +1057,7 @@ namespace KERBALISM
 		}
 
 		/// <summary>add an output to the recipe</summary>
-		public void AddOutput(string resource_name, double quantity, bool dump)
+		internal void AddOutput(string resource_name, double quantity, bool dump)
 		{
 			if (quantity > double.Epsilon) //< avoid division by zero
 			{
@@ -1066,7 +1066,7 @@ namespace KERBALISM
 		}
 
 		/// <summary>add a cure to the recipe</summary>
-		public void AddCure(string cure, double quantity, string resource_name)
+		internal void AddCure(string cure, double quantity, string resource_name)
 		{
 			if (quantity > double.Epsilon) //< avoid division by zero
 			{
@@ -1075,7 +1075,7 @@ namespace KERBALISM
 		}
 
 		/// <summary>Execute all recipes and record deferred consumption/production for inputs/ouputs</summary>
-		public static void ExecuteRecipes(Vessel v, VesselResources resources, List<ResourceRecipe> recipes)
+		internal static void ExecuteRecipes(Vessel v, VesselResources resources, List<ResourceRecipe> recipes)
 		{
 			bool executing = true;
 			while (executing)
@@ -1097,7 +1097,7 @@ namespace KERBALISM
 		/// This need to be called multiple times until left &lt;= 0.0 for complete execution of the recipe.
 		/// return true if recipe execution is completed, false otherwise
 		/// </summary>
-		private bool ExecuteRecipeStep(Vessel v, VesselResources resources)
+		bool ExecuteRecipeStep(Vessel v, VesselResources resources)
 		{
 			// determine worst input ratio
 			// - pure input recipes can just underflow
@@ -1223,11 +1223,11 @@ namespace KERBALISM
 	}
 
 	// equalize/vent a vessel
-	public static class ResourceBalance
+	static class ResourceBalance
 	{
 		// This Method has a lot of "For\Foreach" because it was design for multi resources
 		// Method don't count disabled habitats
-		public static void Equalizer(Vessel v)
+		internal static void Equalizer(Vessel v)
 		{
 			// get resource level in habitats
 			double[] res_level = new double[resourceName.Length];                   // Don't count Manned or Depressiong habitats
@@ -1457,9 +1457,9 @@ namespace KERBALISM
 		const double equalize_speed = 0.01;  // equalization/venting mutiple speed per-second, in proportion to amount
 
 		// Resources to equalize
-		public static string[] resourceName = new string[2] { "Atmosphere", "WasteAtmosphere" };
+		internal static string[] resourceName = new string[2] { "Atmosphere", "WasteAtmosphere" };
 
 		// Resources to equalize
-		public static double precision = 0.00001;
+		internal static double precision = 0.00001;
 	}
 }

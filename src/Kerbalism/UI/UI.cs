@@ -7,9 +7,9 @@ namespace KERBALISM
 {
 
 
-	public static class UI
+	static class UI
 	{
-		public static void Init()
+		internal static void Init()
 		{
 			// create subsystems
 			message = new Message();
@@ -17,12 +17,12 @@ namespace KERBALISM
 			window = new Window((uint)Styles.ScaleWidthFloat(300), 0, 0);
 		}
 
-		public static void Sync()
+		internal static void Sync()
 		{
 			window.Position(DB.ui.win_left, DB.ui.win_top);
 		}
 
-		public static void Update(bool show_window)
+		internal static void Update(bool show_window)
 		{
 			// if gui should be shown
 			if (show_window)
@@ -51,7 +51,7 @@ namespace KERBALISM
 			GameSettings.AXIS_MOUSEWHEEL.primary.scale = 1.0f;
 		}
 
-		public static void On_gui(bool show_window)
+		internal static void On_gui(bool show_window)
 		{
 			// render subsystems
 			message.On_gui();
@@ -62,14 +62,14 @@ namespace KERBALISM
 			}
 		}
 
-		public static void Open(Action<Panel> refresh)
+		internal static void Open(Action<Panel> refresh)
 		{
 			window.Open(refresh);
 		}
 
 		static Message message;
 		static Launcher launcher;
-		public static Window window;
+		internal static Window window;
 	}
 
 

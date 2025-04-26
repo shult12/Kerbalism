@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiVerticalLayout : KsmGuiBase
+	class KsmGuiVerticalLayout : KsmGuiBase
 	{
-		public VerticalLayoutGroup LayoutGroup { get; private set; }
+		VerticalLayoutGroup LayoutGroup { get; set; }
 
-		public KsmGuiVerticalLayout
+		internal KsmGuiVerticalLayout
 			(
 				KsmGuiBase parent,
 				int spacing = 0,

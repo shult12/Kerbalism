@@ -7,16 +7,16 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiButton : KsmGuiHorizontalLayout, IKsmGuiText, IKsmGuiInteractable, IKsmGuiButton, IKsmGuiIcon
+	class KsmGuiButton : KsmGuiHorizontalLayout, IKsmGuiText, IKsmGuiInteractable, IKsmGuiButton, IKsmGuiIcon
 	{
-		public Image ImageComponent { get; private set; }
-		public Button ButtonComponent { get; private set; }
-		public KsmGuiText TextObject { get; private set; }
-		public KsmGuiIcon IconObject { get; private set; }
+		Image ImageComponent { get; set; }
+		Button ButtonComponent { get; set; }
+		KsmGuiText TextObject { get; set; }
+		KsmGuiIcon IconObject { get; set; }
 
-		private UnityAction onClick;
+		UnityAction onClick;
 
-		public KsmGuiButton
+		internal KsmGuiButton
 			(
 			KsmGuiBase parent,
 			string buttonText,

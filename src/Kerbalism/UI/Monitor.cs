@@ -5,7 +5,7 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public enum MonitorPage
+	enum MonitorPage
 	{
 		telemetry,
 		data,
@@ -15,10 +15,10 @@ namespace KERBALISM
 		log
 	}
 
-	public sealed class Monitor
+	sealed class Monitor
 	{
 		// ctor
-		public Monitor()
+		internal Monitor()
 		{
 			// filter style
 			filter_style = new GUIStyle(HighLogic.Skin.label);
@@ -47,7 +47,7 @@ namespace KERBALISM
 			GameEvents.onVesselChange.Add((Vessel v) => { if (selected_id != Guid.Empty) selected_id = v.id; });
 		}
 
-		public void Update()
+		internal void Update()
 		{
 			// reset panel
 			panel.Clear();
@@ -108,7 +108,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void Render()
+		internal void Render()
 		{
 			// in flight / map view, put the menu on top
 			if (HighLogic.LoadedSceneIsFlight)
@@ -143,7 +143,7 @@ namespace KERBALISM
 			}
 		}
 
-		public float Width()
+		internal float Width()
 		{
 			//if ((page == MonitorPage.data || page == MonitorPage.log || selected_id == Guid.Empty) && !Lib.IsFlight())
 			//	return Styles.ScaleWidthFloat(465.0f);
@@ -152,7 +152,7 @@ namespace KERBALISM
 			//return Styles.ScaleWidthFloat(405.0f);
 		}
 
-		public float Height()
+		internal float Height()
 		{
 			// top spacing
 			float h = Styles.ScaleFloat(36.0f);

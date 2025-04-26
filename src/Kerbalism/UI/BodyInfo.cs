@@ -6,9 +6,9 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public static class BodyInfo
+	static class BodyInfo
 	{
-		public static void Body_info(this Panel p)
+		internal static void Body_info(this Panel p)
 		{
 			// only show in mapview
 			if (!MapView.MapIsEnabled) return;
@@ -100,7 +100,7 @@ namespace KERBALISM
 			p.Title(Lib.BuildString(Lib.Ellipsis(body.bodyName, Styles.ScaleStringLength(24)), " ", Lib.Color(Local.BodyInfo_title, Lib.Kolor.LightGrey)));//"BODY INFO"
 		}
 
-		private static void RadiationLevels(CelestialBody body, out string inner, out string outer, out string pause, out double activity, out double cycle)
+		static void RadiationLevels(CelestialBody body, out string inner, out string outer, out string pause, out double activity, out double cycle)
 		{
 			// TODO cache this information somewhere
 

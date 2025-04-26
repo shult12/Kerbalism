@@ -7,7 +7,7 @@ using KSP.Localization;
 namespace KERBALISM
 {
 
-	public class Greenhouse : PartModule, IModuleInfo, ISpecifics, IContractObjectiveModule, IConfigurable
+	class Greenhouse : PartModule, IModuleInfo, ISpecifics, IContractObjectiveModule, IConfigurable
 	{
 		// config
 		[KSPField] public string crop_resource;         // name of resource produced by harvests
@@ -45,9 +45,9 @@ namespace KERBALISM
 
 		// other data
 		Renderer lamps_rdr;
-		public bool WACO2 = false;        // true if we have combined WasteAtmosphere and CarbonDioxide
+		internal bool WACO2 = false;        // true if we have combined WasteAtmosphere and CarbonDioxide
 
-		private bool isConfigurable = false;
+		bool isConfigurable = false;
 
 		public void Configure(bool enable) {
 			active = enable;
@@ -88,7 +88,7 @@ namespace KERBALISM
 		}
 
 
-		public void Update()
+		void Update()
 		{
 			// set lamps emissive object
 			if (lamps_rdr != null)
@@ -129,7 +129,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void FixedUpdate()
+		void FixedUpdate()
 		{
 			// do nothing in the editor
 			if (Lib.IsEditor()) return;
@@ -244,7 +244,7 @@ namespace KERBALISM
 		}
 
 
-		public static void BackgroundUpdate(Vessel v, ProtoPartModuleSnapshot m, Greenhouse g,
+		internal static void BackgroundUpdate(Vessel v, ProtoPartModuleSnapshot m, Greenhouse g,
 											VesselData vd, VesselResources resources, double elapsed_s)
 		{
 			// get protomodule data
@@ -478,7 +478,7 @@ namespace KERBALISM
 		/// <summary>
 		/// checks if we have WasteAtmosphere and CarbonDioxide inputs and sets the WACO2 flag accordingly
 		/// </summary>
-		private void Set_WACO2()
+		void Set_WACO2()
 		{
 			WACO2 = false;
 			foreach (ModuleResource input in resHandler.inputResources)
@@ -512,15 +512,15 @@ namespace KERBALISM
 
 
 		// return data about all greenhouses in a vessel
-		public sealed class Data
+		internal sealed class Data
 		{
-			public double growth;           // growth progress
-			public double natural;          // natural lighting
-			public double artificial;       // artificial lighting
-			public double tta;              // time to harvest
-			public string issue;            // first issue detected, or empty
+			internal double growth;           // growth progress
+			internal double natural;          // natural lighting
+			internal double artificial;       // artificial lighting
+			internal double tta;              // time to harvest
+			internal string issue;            // first issue detected, or empty
 		}
-		public static List<Data> Greenhouses(Vessel v)
+		internal static List<Data> Greenhouses(Vessel v)
 		{
 			List<Data> ret = new List<Data>();
 			if (v.loaded)

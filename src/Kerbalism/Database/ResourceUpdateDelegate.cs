@@ -5,20 +5,20 @@ using System.Reflection;
 
 namespace KERBALISM
 {
-	public class ResourceUpdateDelegate
+	class ResourceUpdateDelegate
 	{
-		private static Type[] signature = { typeof(Dictionary<string, double>), typeof(List<KeyValuePair<string, double>>) };
+		static Type[] signature = { typeof(Dictionary<string, double>), typeof(List<KeyValuePair<string, double>>) };
 
-		internal PartModule module;
+		PartModule module;
 
-		internal MethodInfo methodInfo;
-		private ResourceUpdateDelegate(MethodInfo methodInfo, PartModule module)
+		MethodInfo methodInfo;
+		ResourceUpdateDelegate(MethodInfo methodInfo, PartModule module)
 		{
 			this.methodInfo = methodInfo;
 			this.module = module;
 		}
 
-		public string invoke(Dictionary<string, double> availableRresources, List<KeyValuePair<string, double>> resourceChangeRequest)
+		internal string invoke(Dictionary<string, double> availableRresources, List<KeyValuePair<string, double>> resourceChangeRequest)
 		{
 			IKerbalismModule km = module as IKerbalismModule;
 			if (km != null)
@@ -29,7 +29,7 @@ namespace KERBALISM
 			return title.ToString();
 		}
 
-		public static ResourceUpdateDelegate Instance(PartModule module)
+		internal static ResourceUpdateDelegate Instance(PartModule module)
 		{
 			MethodInfo methodInfo = null;
 			var type = module.GetType();
@@ -49,7 +49,7 @@ namespace KERBALISM
 			return new ResourceUpdateDelegate(methodInfo, module);
 		}
 
-		private static readonly Dictionary<Type, MethodInfo> supportedModules = new Dictionary<Type, MethodInfo>();
-		private static readonly List<Type> unsupportedModules = new List<Type>();
+		static readonly Dictionary<Type, MethodInfo> supportedModules = new Dictionary<Type, MethodInfo>();
+		static readonly List<Type> unsupportedModules = new List<Type>();
 	}
 }

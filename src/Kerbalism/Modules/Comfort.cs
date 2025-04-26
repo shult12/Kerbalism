@@ -8,7 +8,7 @@ namespace KERBALISM
 {
 
 
-	public class Comfort : PartModule, ISpecifics
+	class Comfort : PartModule, ISpecifics
 	{
 		// config+persistence
 		[KSPField(isPersistant = true)] public string bonus = string.Empty; // the comfort bonus provided
@@ -41,9 +41,9 @@ namespace KERBALISM
 	}
 
 
-	public class Comforts
+	class Comforts
 	{
-		public Comforts(Vessel v, bool env_firm_ground, bool env_not_alone, bool env_call_home)
+		internal Comforts(Vessel v, bool env_firm_ground, bool env_not_alone, bool env_call_home)
 		{
 			// environment factors
 			firm_ground = env_firm_ground;
@@ -109,7 +109,7 @@ namespace KERBALISM
 		}
 
 
-		public Comforts(List<Part> parts, bool env_firm_ground, bool env_not_alone, bool env_call_home)
+		internal Comforts(List<Part> parts, bool env_firm_ground, bool env_not_alone, bool env_call_home)
 		{
 			// environment factors
 			firm_ground = env_firm_ground;
@@ -161,7 +161,7 @@ namespace KERBALISM
 
 
 
-		public string Tooltip()
+		internal string Tooltip()
 		{
 			string yes = Lib.BuildString("<b><color=#00ff00>", Local.Generic_YES, " </color></b>");
 			string no = Lib.BuildString("<b><color=#ffaa00>", Local.Generic_NO, " </color></b>");
@@ -178,7 +178,7 @@ namespace KERBALISM
 			);
 		}
 
-		public string Summary()
+		internal string Summary()
 		{
 			if (factor >= 0.99) return Local.Module_Comfort_Summary1;//"ideal"
 			else if (factor >= 0.66) return Local.Module_Comfort_Summary2;//"good"
@@ -187,13 +187,13 @@ namespace KERBALISM
 			else return Local.Module_Comfort_Summary5;//"none"
 		}
 
-		public bool firm_ground;
-		public bool exercise;
-		public bool not_alone;
-		public bool call_home;
-		public bool panorama;
-		public bool plants;
-		public double factor;
+		bool firm_ground;
+		bool exercise;
+		bool not_alone;
+		bool call_home;
+		bool panorama;
+		bool plants;
+		internal double factor;
 	}
 
 

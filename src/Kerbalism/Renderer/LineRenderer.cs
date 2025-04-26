@@ -8,17 +8,17 @@ namespace KERBALISM
 
 
 	// a simple line renderer
-	public static class LineRenderer
+	static class LineRenderer
 	{
 		// pseudo-ctor
-		public static void Init()
+		internal static void Init()
 		{
 			// load shader
 			mat = Lib.GetShader("AntiAliasedLine");
 		}
 
 		// for debug purpose
-		public static void CommitWorldVector(Vector3d start, Vector3d direction, float lengthKm, Color color)
+		static void CommitWorldVector(Vector3d start, Vector3d direction, float lengthKm, Color color)
 		{
 			Vector3d end = ScaledSpace.LocalToScaledSpace(start + (direction * (lengthKm * 1000.0)));
 			ScaledSpace.LocalToScaledSpace(ref start);
@@ -26,7 +26,7 @@ namespace KERBALISM
 		}
 
 		// commit a line
-		public static void Commit(Vector3 a, Vector3 b, Color color)
+		static void Commit(Vector3 a, Vector3 b, Color color)
 		{
 			// create a new line
 			Line_data line = new Line_data
@@ -42,7 +42,7 @@ namespace KERBALISM
 
 
 		// render all committed lines
-		public static void Render()
+		internal static void Render()
 		{
 			// half width of line, in pixels
 			const float half_width = 2.0f;
@@ -133,11 +133,11 @@ namespace KERBALISM
 
 
 		// store a committed line
-		public class Line_data
+		class Line_data
 		{
-			public Vector3 a;       // starting point
-			public Vector3 b;       // ending point
-			public Color color;     // line color
+			internal Vector3 a;       // starting point
+			internal Vector3 b;       // ending point
+			internal Color color;     // line color
 		};
 
 		// set of committed lines

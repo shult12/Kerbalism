@@ -5,15 +5,15 @@ using UnityEngine;
 
 namespace KERBALISM
 {
-	public static class Cache
+	internal static class Cache
 	{
-		public static void Init()
+		internal static void Init()
 		{
 			vesselObjects = new Dictionary<Guid, Dictionary<string, object>>();
 		}
 
 
-		public static void Clear()
+		internal static void Clear()
 		{
 			vesselObjects.Clear();
 		}
@@ -22,7 +22,7 @@ namespace KERBALISM
 		/// Called whenever a vessel changes and/or should be updated for various reasons.
 		/// Purge the anonymous cache and science transmission cache
 		/// </summary>
-		public static void PurgeVesselCaches(Vessel v)
+		internal static void PurgeVesselCaches(Vessel v)
 		{
 			var id = Lib.VesselID(v);
 			vesselObjects.Remove(id);
@@ -32,7 +32,7 @@ namespace KERBALISM
 		/// Called whenever a vessel changes and/or should be updated for various reasons.
 		/// Purge the anonymous cache and science transmission cache
 		/// </summary>
-		public static void PurgeVesselCaches(ProtoVessel v)
+		internal static void PurgeVesselCaches(ProtoVessel v)
 		{
 			var id = Lib.VesselID(v);
 			vesselObjects.Remove(id);
@@ -42,7 +42,7 @@ namespace KERBALISM
 		/// Called when the game state has changed (savegame loads), must reset all non-persisted data that won't be loaded from DB
 		/// Purge all anonymous caches, science transmission caches, experiments cached data, and log messages
 		/// </summary>
-		public static void PurgeAllCaches()
+		static void PurgeAllCaches()
 		{
 			vesselObjects.Clear();
 			Message.all_logs.Clear();
@@ -58,7 +58,7 @@ namespace KERBALISM
 			return VesselObjectsCache<T>(Lib.VesselID(vessel), key);
 		}
 
-		private static T VesselObjectsCache<T>(Guid id, string key)
+		static T VesselObjectsCache<T>(Guid id, string key)
 		{
 			if (!vesselObjects.ContainsKey(id))
 				return default(T);
@@ -83,7 +83,7 @@ namespace KERBALISM
 			SetVesselObjectsCache(Lib.VesselID(pv), key, value);
 		}
 
-		private static void SetVesselObjectsCache<T>(Guid id, string key, T value)
+		static void SetVesselObjectsCache<T>(Guid id, string key, T value)
 		{
 			if (!vesselObjects.ContainsKey(id))
 				vesselObjects.Add(id, new Dictionary<string, object>());
@@ -103,7 +103,7 @@ namespace KERBALISM
 			return HasVesselObjectsCache(Lib.VesselID(pv), key);
 		}
 
-		private static bool HasVesselObjectsCache(Guid id, string key)
+		static bool HasVesselObjectsCache(Guid id, string key)
 		{
 			if (!vesselObjects.ContainsKey(id))
 				return false;
@@ -122,7 +122,7 @@ namespace KERBALISM
 			RemoveVesselObjectsCache(Lib.VesselID(pv), key);
 		}
 
-		private static void RemoveVesselObjectsCache(Guid id, string key)
+		static void RemoveVesselObjectsCache(Guid id, string key)
 		{
 			if (!vesselObjects.ContainsKey(id))
 				return;
@@ -131,7 +131,7 @@ namespace KERBALISM
 		}
 
 		// caches
-		private static Dictionary<Guid, Dictionary<string, System.Object>> vesselObjects;
+		static Dictionary<Guid, Dictionary<string, System.Object>> vesselObjects;
 	}
 
 

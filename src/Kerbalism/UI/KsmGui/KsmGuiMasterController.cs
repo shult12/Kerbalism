@@ -6,22 +6,22 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiMasterController : MonoBehaviour
+	class KsmGuiMasterController : MonoBehaviour
 	{
-		public static KsmGuiMasterController Instance { get; private set; }
+		internal static KsmGuiMasterController Instance { get; private set; }
 
-		public GameObject KsmGuiCanvas { get; private set; }
-		public RectTransform KsmGuiTransform { get; private set; }
-		public CanvasScaler CanvasScaler { get; private set; }
-		public GraphicRaycaster GraphicRaycaster { get; private set; }
-		public Canvas Canvas { get; private set; }
+		GameObject KsmGuiCanvas { get; set; }
+		internal RectTransform KsmGuiTransform { get; private set; }
+		CanvasScaler CanvasScaler { get; set; }
+		GraphicRaycaster GraphicRaycaster { get; set; }
+		Canvas Canvas { get; set; }
 
-		public static void Init()
+		internal static void Init()
 		{
 			Instance = UIMasterController.Instance.gameObject.AddOrGetComponent<KsmGuiMasterController>();
 		}
 
-		private void Awake()
+		void Awake()
 		{
 			// Add tooltip controller to the tooltip canvas
 			UIMasterController.Instance.tooltipCanvas.gameObject.AddComponent<KsmGuiTooltipController>();
@@ -72,7 +72,7 @@ namespace KERBALISM.KsmGui
 			GameEvents.onUIScaleChange.Add(OnScaleChange);
 		}
 
-		private void OnScaleChange()
+		void OnScaleChange()
 		{
 			CanvasScaler.scaleFactor = Settings.UIScale * GameSettings.UI_SCALE;
 		}

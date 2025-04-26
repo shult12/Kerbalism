@@ -3,11 +3,11 @@ using System;
 
 namespace KERBALISM
 {
-	public sealed class PanelDevice : LoadedDevice<SolarPanelFixer>
+	sealed class PanelDevice : LoadedDevice<SolarPanelFixer>
 	{
-		public PanelDevice(SolarPanelFixer module) : base(module) { }
+		internal PanelDevice(SolarPanelFixer module) : base(module) { }
 
-		public override string Name
+		internal override string Name
 		{
 			get
 			{
@@ -18,7 +18,7 @@ namespace KERBALISM
 			}
 		}
 
-		public override string Status
+		internal override string Status
 		{
 			get
 			{
@@ -33,27 +33,27 @@ namespace KERBALISM
 			}
 		}
 
-		public override bool IsVisible => module.SolarPanel.SupportAutomation(module.state);
+		internal override bool IsVisible => module.SolarPanel.SupportAutomation(module.state);
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			if (value && module.state == SolarPanelFixer.PanelState.Retracted) module.ToggleState();
 			if (!value && module.state == SolarPanelFixer.PanelState.Extended) module.ToggleState();
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			if (module.state == SolarPanelFixer.PanelState.Retracted || module.state == SolarPanelFixer.PanelState.Extended)
 				module.ToggleState();
 		}
 	}
 
-	public sealed class ProtoPanelDevice : ProtoDevice<SolarPanelFixer>
+	sealed class ProtoPanelDevice : ProtoDevice<SolarPanelFixer>
 	{
-		public ProtoPanelDevice(SolarPanelFixer prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
+		internal ProtoPanelDevice(SolarPanelFixer prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
 			: base(prefab, protoPart, protoModule) { }
 
-		public override string Name
+		internal override string Name
 		{
 			get
 			{
@@ -64,9 +64,9 @@ namespace KERBALISM
 			}
 		}
 
-		public override uint PartId => protoPart.flightID;
+		internal override uint PartId => protoPart.flightID;
 
-		public override string Status
+		internal override string Status
 		{
 			get
 			{
@@ -80,9 +80,9 @@ namespace KERBALISM
 			}
 		}
 
-		public override bool IsVisible => prefab.SolarPanel.SupportProtoAutomation(protoModule);
+		internal override bool IsVisible => prefab.SolarPanel.SupportProtoAutomation(protoModule);
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			SolarPanelFixer.PanelState state = (SolarPanelFixer.PanelState)Enum.Parse(typeof(SolarPanelFixer.PanelState), Lib.Proto.GetString(protoModule, "state"));
 			if ((value && state == SolarPanelFixer.PanelState.Retracted)
@@ -91,7 +91,7 @@ namespace KERBALISM
 			SolarPanelFixer.ProtoToggleState(prefab, protoModule, state);
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			SolarPanelFixer.PanelState state = (SolarPanelFixer.PanelState)Enum.Parse(typeof(SolarPanelFixer.PanelState), Lib.Proto.GetString(protoModule, "state"));
 			SolarPanelFixer.ProtoToggleState(prefab, protoModule, state);

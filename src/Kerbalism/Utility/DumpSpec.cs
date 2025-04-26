@@ -7,11 +7,11 @@ namespace KERBALISM
 	/// <summary>
 	/// Contains a list of resources that can be dumped overboard
 	/// </summary>
-	public sealed class DumpSpecs
+	sealed class DumpSpecs
 	{
 		// constructor
 		/// <summary> Configures the always dump resources and the dump valves, dump valves are only used if always_dump is empty or contains "false" </summary>
-		public DumpSpecs(string always_dump, string dump_valves)
+		internal DumpSpecs(string always_dump, string dump_valves)
 		{
 			// if always_dump is empty or false: configure dump valves if any requested
 			if (always_dump.Length == 0 || string.Equals(always_dump, "false", System.StringComparison.OrdinalIgnoreCase))
@@ -45,7 +45,7 @@ namespace KERBALISM
 			}
 		}
 
-		private enum DumpType
+		enum DumpType
 		{
 			NeverDump,
 			AlwaysDump,
@@ -53,29 +53,29 @@ namespace KERBALISM
 		}
 
 		// dump type
-		private DumpType dumpType = DumpType.NeverDump;
+		DumpType dumpType = DumpType.NeverDump;
 		// list of resource names to be dumped for each dump valve entry
-		private List<List<string>> dumpValves = new List<List<string>>();
+		List<List<string>> dumpValves = new List<List<string>>();
 		// UI title of each dump valve (note : can't be localized due to https://github.com/JadeOfMaar/RationalResources/issues/25)
-		private List<string> dumpValvesTitles = new List<string>();
+		List<string> dumpValvesTitles = new List<string>();
 
-		public sealed class ActiveValve
+		internal sealed class ActiveValve
 		{
-			private DumpSpecs _dumpSpecs;
-			public DumpSpecs DumpSpecs => _dumpSpecs;
-			private int current;
+			DumpSpecs _dumpSpecs;
+			internal DumpSpecs DumpSpecs => _dumpSpecs;
+			int current;
 
-			public ActiveValve(DumpSpecs dumpSpecs)
+			internal ActiveValve(DumpSpecs dumpSpecs)
 			{
 				_dumpSpecs = dumpSpecs;
 			}
 
-			public bool CanSwitchValves => _dumpSpecs.dumpValves.Count > 1;
+			internal bool CanSwitchValves => _dumpSpecs.dumpValves.Count > 1;
 
-			public string ValveTitle => current < _dumpSpecs.dumpValvesTitles.Count ? _dumpSpecs.dumpValvesTitles[current] : string.Empty;
+			internal string ValveTitle => current < _dumpSpecs.dumpValvesTitles.Count ? _dumpSpecs.dumpValvesTitles[current] : string.Empty;
 
 			/// <summary> activates or returns the current dump valve index </summary>
-			public int ValveIndex
+			internal int ValveIndex
 			{
 				get => current;
 				set
@@ -88,7 +88,7 @@ namespace KERBALISM
 			}
 
 			/// <summary> activates the next dump valve and returns its index </summary>
-			public int NextValve()
+			internal int NextValve()
 			{
 				if (_dumpSpecs.dumpValves.Count == 0)
 					current = 0;
@@ -99,7 +99,7 @@ namespace KERBALISM
 			}
 
 			/// <summary> returns true if the specified resource should be dumped </summary>
-			public bool Check(string res_name)
+			internal bool Check(string res_name)
 			{
 				switch (_dumpSpecs.dumpType)
 				{

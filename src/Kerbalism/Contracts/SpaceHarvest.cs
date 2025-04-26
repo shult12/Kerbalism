@@ -8,7 +8,7 @@ namespace KERBALISM.CONTRACTS
 
 
 	// First space harvest
-	public sealed class SpaceHarvest : Contract
+	sealed class SpaceHarvest : Contract
 	{
 		protected override bool Generate()
 		{
@@ -66,7 +66,7 @@ namespace KERBALISM.CONTRACTS
 	}
 
 
-	public sealed class SpaceHarvestCondition : ContractParameter
+	sealed class SpaceHarvestCondition : ContractParameter
 	{
 		protected override string GetHashString()
 		{

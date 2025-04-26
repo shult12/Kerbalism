@@ -11,14 +11,14 @@ namespace KERBALISM
 	/// the second part (after the "@") of the stock string-based subject id.
 	/// generate an unique int number to be used as a key in one of the scienceDB dictionaries
 	/// </summary>
-	public class Situation : IEquatable<Situation>
+	class Situation : IEquatable<Situation>
 	{
-		public const int agnosticBiomeIndex = byte.MaxValue;
+		const int agnosticBiomeIndex = byte.MaxValue;
 
-		public CelestialBody Body { get; private set; }
-		public ScienceSituation ScienceSituation { get; private set; }
-		public CBAttributeMapSO.MapAttribute Biome { get; private set; }
-		public VirtualBiome VirtualBiome { get; private set; }
+		internal CelestialBody Body { get; private set; }
+		internal ScienceSituation ScienceSituation { get; private set; }
+		CBAttributeMapSO.MapAttribute Biome { get; set; }
+		VirtualBiome VirtualBiome { get; set; }
 
 		/// <summary>
 		/// Store the situation fields as a unique 32-bit array (int) :
@@ -26,9 +26,9 @@ namespace KERBALISM
 		/// - 8 next bits : vessel situation (byte)
 		/// - 8 last bits : biome index (byte)
 		/// </summary>
-		public int Id { get; private set; }
+		internal int Id { get; private set; }
 
-		public Situation(int bodyIndex, ScienceSituation situation, int biomeIndex = -1)
+		internal Situation(int bodyIndex, ScienceSituation situation, int biomeIndex = -1)
 		{
 			ScienceSituation = situation;
 			Body = FlightGlobals.Bodies[bodyIndex];
@@ -69,7 +69,7 @@ namespace KERBALISM
 			return Equals(objAs);
 		}
 
-		public static int FieldsToId(int bodyIndex, ScienceSituation situation, int biomeIndex = -1)
+		static int FieldsToId(int bodyIndex, ScienceSituation situation, int biomeIndex = -1)
 		{
 			if (biomeIndex < 0)
 				biomeIndex = agnosticBiomeIndex;
@@ -77,7 +77,7 @@ namespace KERBALISM
 			return ((byte)biomeIndex << 8 | (byte)situation) << 16 | (ushort)bodyIndex;
 		}
 
-		public static void IdToFields(int id, out int bodyIndex, out int situation, out int biomeIndex)
+		internal static void IdToFields(int id, out int bodyIndex, out int situation, out int biomeIndex)
 		{
 			biomeIndex = (byte)(id >> 24);
 			situation = (byte)(id >> 16);
@@ -85,7 +85,7 @@ namespace KERBALISM
 			if (biomeIndex == agnosticBiomeIndex) biomeIndex = -1;
 		}
 
-		public static int GetBiomeAgnosticIdForExperiment(int situationId, ExperimentInfo expInfo)
+		internal static int GetBiomeAgnosticIdForExperiment(int situationId, ExperimentInfo expInfo)
 		{
 			ScienceSituation sit = (ScienceSituation)(byte)(situationId >> 16);
 			if (!sit.IsBiomesRelevantForExperiment(expInfo))
@@ -95,38 +95,38 @@ namespace KERBALISM
 			return situationId;
 		}
 
-		public int GetBiomeAgnosticId()
+		internal int GetBiomeAgnosticId()
 		{
 			return Id | (agnosticBiomeIndex << 24);
 		}
 
-		public Situation GetBiomeAgnosticSituation()
+		Situation GetBiomeAgnosticSituation()
 		{
 			return new Situation((ushort)Id, (ScienceSituation)(byte)(Id >> 16));
 		}
 
-		public string Title =>
+		string Title =>
 			Biome != null
 			? Lib.BuildString(BodyTitle, " ", ScienceSituationTitle, " ", BiomeTitle)
 			: Lib.BuildString(BodyTitle, " ", ScienceSituationTitle);
 
-		public string BodyTitle => Body.name;
-		public string BiomeTitle => Biome != null ? Biome.displayname : VirtualBiome != VirtualBiome.None ? VirtualBiome.Title() : string.Empty;
-		public string ScienceSituationTitle => ScienceSituation.Title();
+		internal string BodyTitle => Body.name;
+		internal string BiomeTitle => Biome != null ? Biome.displayname : VirtualBiome != VirtualBiome.None ? VirtualBiome.Title() : string.Empty;
+		internal string ScienceSituationTitle => ScienceSituation.Title();
 
-		public string BodyName => Body.name;
-		public string BiomeName => Biome != null ? Biome.name.Replace(" ", string.Empty) : VirtualBiome != VirtualBiome.None ? VirtualBiome.Serialize() : string.Empty;
-		public string ScienceSituationName => ScienceSituation.Serialize();
-		public string StockScienceSituationName => ScienceSituation.ToValidStockSituation().Serialize();
+		string BodyName => Body.name;
+		string BiomeName => Biome != null ? Biome.name.Replace(" ", string.Empty) : VirtualBiome != VirtualBiome.None ? VirtualBiome.Serialize() : string.Empty;
+		string ScienceSituationName => ScienceSituation.Serialize();
+		string StockScienceSituationName => ScienceSituation.ToValidStockSituation().Serialize();
 
 		public override string ToString()
 		{
 			return Lib.BuildString(BodyName, ScienceSituationName, BiomeName);
 		}
 
-		public double SituationMultiplier => ScienceSituation.BodyMultiplier(Body);
+		internal double SituationMultiplier => ScienceSituation.BodyMultiplier(Body);
 
-		public string GetTitleForExperiment(ExperimentInfo expInfo)
+		internal string GetTitleForExperiment(ExperimentInfo expInfo)
 		{
 			if (ScienceSituation.IsBiomesRelevantForExperiment(expInfo))
 				return Lib.BuildString(BodyTitle, " ", ScienceSituationTitle, " ", BiomeTitle);
@@ -134,7 +134,7 @@ namespace KERBALISM
 				return Lib.BuildString(BodyTitle, " ", ScienceSituationTitle);
 		}
 
-		public string GetStockIdForExperiment(ExperimentInfo expInfo)
+		internal string GetStockIdForExperiment(ExperimentInfo expInfo)
 		{
 			if (ScienceSituation.IsBiomesRelevantForExperiment(expInfo))
 				return Lib.BuildString(BodyName, StockScienceSituationName, BiomeName);
@@ -142,7 +142,7 @@ namespace KERBALISM
 				return Lib.BuildString(BodyName, StockScienceSituationName);
 		}
 
-		public bool AtmosphericFlight()
+		internal bool AtmosphericFlight()
 		{
 			switch (ScienceSituation)
 			{

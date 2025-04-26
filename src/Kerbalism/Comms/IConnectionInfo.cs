@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KERBALISM
 {
-	public interface IConnectionInfo
+	interface IConnectionInfo
 	{
 		bool HasActiveAntenna { get; }
 

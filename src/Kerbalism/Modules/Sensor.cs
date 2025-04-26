@@ -9,7 +9,7 @@ namespace KERBALISM
 {
 
 	// Add a specific environment reading to a part ui, and to the telemetry panel.
-	public class Sensor : PartModule, ISpecifics
+	class Sensor : PartModule, ISpecifics
 	{
 		// config
 		[KSPField(isPersistant = true)] public string type;   // type of telemetry provided
@@ -34,7 +34,7 @@ namespace KERBALISM
 		}
 
 
-		public void Update()
+		void Update()
 		{
 			// in flight
 			if (Lib.IsFlight())
@@ -75,7 +75,7 @@ namespace KERBALISM
 
 
 		// get readings value in [0,1] range, for pin animation
-		public static double Telemetry_pin(Vessel v, VesselData vd, string type)
+		internal static double Telemetry_pin(Vessel v, VesselData vd, string type)
 		{
 			switch (type)
 			{
@@ -89,7 +89,7 @@ namespace KERBALISM
 		}
 
 		// get readings value
-		public static double Telemetry_value(Vessel v, VesselData vd, string type)
+		internal static double Telemetry_value(Vessel v, VesselData vd, string type)
 		{
 			switch (type)
 			{
@@ -103,7 +103,7 @@ namespace KERBALISM
 		}
 
 		// get readings short text info
-		public static string Telemetry_content(Vessel v, VesselData vd, string type)
+		internal static string Telemetry_content(Vessel v, VesselData vd, string type)
 		{
 			switch (type)
 			{
@@ -116,13 +116,13 @@ namespace KERBALISM
 			return string.Empty;
 		}
 
-		private static double HabitatRadiation(VesselData vd)
+		static double HabitatRadiation(VesselData vd)
 		{
 			return (1.0 - vd.Shielding) * vd.EnvHabitatRadiation;
 		}
 
 		// get readings tooltip
-		public static string Telemetry_tooltip(Vessel v, VesselData vd, string type)
+		internal static string Telemetry_tooltip(Vessel v, VesselData vd, string type)
 		{
 			switch (type)
 			{

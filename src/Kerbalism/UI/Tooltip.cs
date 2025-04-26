@@ -7,14 +7,14 @@ namespace KERBALISM
 {
 
 
-	public sealed class Tooltip
+	sealed class Tooltip
 	{
-		public Tooltip()
+		internal Tooltip()
 		{
 			tooltip = string.Empty;
 		}
 
-		public void Draw(Rect screen_rect)
+		internal void Draw(Rect screen_rect)
 		{
 			// draw tooltip, if there is one specified
 			if (tooltip.Length > 0) Render_tooltip(screen_rect);

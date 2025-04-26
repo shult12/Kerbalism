@@ -11,15 +11,15 @@ namespace KERBALISM.KsmGui
 
 
 
-	public class KsmGuiWindow : KsmGuiBase
+	class KsmGuiWindow : KsmGuiBase
 	{
-		public class KsmGuiInputLock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+		class KsmGuiInputLock : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		{
-			private string inputLockId;
-			public RectTransform rectTransform;
-			private bool isLocked = false;
+			string inputLockId;
+			internal RectTransform rectTransform;
+			bool isLocked = false;
 
-			private ControlTypes inputLocks =
+			ControlTypes inputLocks =
 				ControlTypes.MANNODE_ADDEDIT |
 				ControlTypes.MANNODE_DELETE |
 				ControlTypes.MAP_UI | // not sure this is necessary, and might cause infinite loop of adding/removing the lock
@@ -59,17 +59,17 @@ namespace KERBALISM.KsmGui
 			}
 		}
 
-		public KsmGuiInputLock InputLockManager { get; private set; }
-		public bool IsDraggable { get; private set; }
-		public DragPanel DragPanel { get; private set; }
-		public ContentSizeFitter SizeFitter { get; private set; }
-		public Action OnClose { get; set; }
-		public HorizontalOrVerticalLayoutGroup LayoutGroup { get; private set; }
-		public bool destroyOnClose;
+		KsmGuiInputLock InputLockManager { get; set; }
+		bool IsDraggable { get; set; }
+		DragPanel DragPanel { get; set; }
+		ContentSizeFitter SizeFitter { get; set; }
+		internal Action OnClose { get; set; }
+		HorizontalOrVerticalLayoutGroup LayoutGroup { get; set; }
+		bool destroyOnClose;
 
-		public enum LayoutGroupType { Vertical, Horizontal }
+		internal enum LayoutGroupType { Vertical, Horizontal }
 
-		public KsmGuiWindow
+		internal KsmGuiWindow
 			(
 				LayoutGroupType topLayout,
 				bool destroyOnClose = true,
@@ -127,9 +127,9 @@ namespace KERBALISM.KsmGui
 			GameEvents.onGameSceneLoadRequested.Add(OnSceneChange);
 		}
 
-		public virtual void OnSceneChange(GameScenes data) => Close();
+		void OnSceneChange(GameScenes data) => Close();
 
-		public void Close()
+		internal void Close()
 		{
 			if (OnClose != null) OnClose();
 			KsmGuiTooltipController.Instance.HideTooltip();
@@ -140,7 +140,7 @@ namespace KERBALISM.KsmGui
 				Enabled = false;
 		}
 
-		private void OnDestroy()
+		void OnDestroy()
 		{
 			GameEvents.onGameSceneLoadRequested.Remove(OnSceneChange);
 			KsmGuiTooltipController.Instance.HideTooltip();

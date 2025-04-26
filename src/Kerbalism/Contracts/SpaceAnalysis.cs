@@ -8,7 +8,7 @@ namespace KERBALISM.CONTRACTS
 
 
 	// First sample analysis
-	public sealed class SpaceAnalysis : Contract
+	sealed class SpaceAnalysis : Contract
 	{
 		protected override bool Generate()
 		{
@@ -66,7 +66,7 @@ namespace KERBALISM.CONTRACTS
 	}
 
 
-	public sealed class SpaceAnalysisCondition : ContractParameter
+	sealed class SpaceAnalysisCondition : ContractParameter
 	{
 		protected override string GetHashString()
 		{

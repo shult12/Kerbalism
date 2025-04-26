@@ -2,23 +2,23 @@
 
 namespace KERBALISM
 {
-	public class CommHandler
+	class CommHandler
 	{
-		private static bool CommNetStormPatchApplied = false;
+		static bool CommNetStormPatchApplied = false;
 
 		protected VesselData vd;
 
-		private bool transmittersDirty;
+		bool transmittersDirty;
 
 		/// <summary>
 		/// false while the network isn't initialized or when the transmitter list is not up-to-date
 		/// </summary>
-		public bool IsReady => NetworkIsReady && !transmittersDirty;
+		internal bool IsReady => NetworkIsReady && !transmittersDirty;
 
 		/// <summary>
 		/// pseudo ctor for getting the right handler type
 		/// </summary>
-		public static CommHandler GetHandler(VesselData vd, bool isGroundController)
+		internal static CommHandler GetHandler(VesselData vd, bool isGroundController)
 		{
 			CommHandler handler;
 
@@ -66,7 +66,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> Update the provided Connection </summary>
-		public void UpdateConnection(ConnectionInfo connection)
+		internal void UpdateConnection(ConnectionInfo connection)
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.CommHandler.UpdateConnection");
 
@@ -109,7 +109,7 @@ namespace KERBALISM
 		/// Clear and re-find all transmitters partmodules on the vessel.
 		/// Must be called when parts have been removed / added on the vessel.
 		/// </summary>
-		public void ResetPartTransmitters() => transmittersDirty = true;
+		internal void ResetPartTransmitters() => transmittersDirty = true;
 
 		/// <summary>
 		/// Get the cost for transmitting data with this CommHandler
@@ -117,7 +117,7 @@ namespace KERBALISM
 		/// <param name="transmittedTotal">Amount of the total capacity of data that can be sent</param>
 		/// <param name="elapsed_s"></param>
 		/// <returns></returns>
-		public virtual double GetTransmissionCost(double transmittedTotal, double elapsed_s)
+		internal virtual double GetTransmissionCost(double transmittedTotal, double elapsed_s)
 		{
 			return (vd.Connection.ec - vd.Connection.ec_idle) * (transmittedTotal / (vd.Connection.rate * elapsed_s));
 		}

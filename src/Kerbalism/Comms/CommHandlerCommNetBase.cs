@@ -6,7 +6,7 @@ using HarmonyLib;
 
 namespace KERBALISM
 {
-	public class CommHandlerCommNetBase : CommHandler
+	class CommHandlerCommNetBase : CommHandler
 	{
 		/// <summary> base data rate set in derived classes from UpdateTransmitters()</summary>
 		protected double baseRate = 0.0;
@@ -95,12 +95,12 @@ namespace KERBALISM
 				connection.rate = Settings.DataRateMinimumBitsPerSecond / Lib.bitsPerMB;
 		}
 
-		private static Vessel CommNodeToVessel(CommNode node)
+		static Vessel CommNodeToVessel(CommNode node)
 		{
 			return node?.transform?.gameObject.GetComponent<Vessel>();
 		}
 
-		public static void ApplyHarmonyPatches()
+		internal static void ApplyHarmonyPatches()
 		{
 			MethodInfo CommNetVessel_OnNetworkPreUpdate_Info = AccessTools.Method(typeof(CommNetVessel), nameof(CommNetVessel.OnNetworkPreUpdate));
 
@@ -122,7 +122,7 @@ namespace KERBALISM
 		}
 
 		// ensure unloadedDoOnce is true for unloaded vessels
-		private static void CommNetVessel_OnNetworkPreUpdate_Prefix(CommNetVessel __instance, ref bool ___unloadedDoOnce)
+		static void CommNetVessel_OnNetworkPreUpdate_Prefix(CommNetVessel __instance, ref bool ___unloadedDoOnce)
 		{
 			if (!__instance.Vessel.loaded && __instance.CanComm)
 				___unloadedDoOnce = true;
@@ -130,7 +130,7 @@ namespace KERBALISM
 
 
 		// ensure unloadedDoOnce is true for unloaded vessels
-		private static void CommNetVessel_OnNetworkPostUpdate_Prefix(CommNetVessel __instance, ref bool ___unloadedDoOnce)
+		static void CommNetVessel_OnNetworkPostUpdate_Prefix(CommNetVessel __instance, ref bool ___unloadedDoOnce)
 		{
 			if (!__instance.Vessel.loaded && __instance.CanComm)
 				___unloadedDoOnce = true;
@@ -138,7 +138,7 @@ namespace KERBALISM
 
 
 		// apply storm radiation factor to the comm strength multiplier used by stock for plasma blackout
-		private static void CommNetVessel_OnNetworkPreUpdate_Postfix(CommNetVessel __instance, ref bool ___inPlasma, ref double ___plasmaMult)
+		static void CommNetVessel_OnNetworkPreUpdate_Postfix(CommNetVessel __instance, ref bool ___inPlasma, ref double ___plasmaMult)
 		{
 			if (!__instance.CanComm || !__instance.Vessel.TryGetVesselData(out VesselData vd))
 				return;
@@ -152,7 +152,7 @@ namespace KERBALISM
 		}
 
 		// apply storm radiation factor to the comm strength multiplier used by stock for plasma blackout
-		private static bool CommNetVessel_GetSignalStrengthModifier_Prefix(CommNetVessel __instance, bool ___canComm, bool ___inPlasma, double ___plasmaMult, out double __result)
+		static bool CommNetVessel_GetSignalStrengthModifier_Prefix(CommNetVessel __instance, bool ___canComm, bool ___inPlasma, double ___plasmaMult, out double __result)
 		{
 			if (!___canComm)
 			{

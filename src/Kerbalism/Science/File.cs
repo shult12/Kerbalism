@@ -2,26 +2,26 @@ using System;
 
 namespace KERBALISM
 {
-	public sealed class File
+	sealed class File
 	{
 		/// <summary>data size in Mb</summary>
-		public double size;
+		internal double size;
 
 		/// <summary>randomized result text</summary>
-		public string resultText;
+		internal string resultText;
 
 		/// <summary> will be true if the file was created by the hijacker. Force the stock crediting formula to be applied on recovery</summary>
-		public bool useStockCrediting;
+		internal bool useStockCrediting;
 
 		//public double scienceValueRatio;
 		//public double ScienceMaxValue => Math.Max((subjectData.ScienceMaxValue * scienceValueRatio) - subjectData.ScienceRetrievedInKSC, 0.0);
 		//public double SciencePerMB => subjectData.SciencePerMB * scienceValueRatio;
 
-		public SubjectData subjectData;
+		internal SubjectData subjectData;
 
-		public double transmitRate = 0.0;
+		internal double transmitRate = 0.0;
 
-		public File(SubjectData subjectData, double size = 0.0, bool useStockCrediting = false, string resultText = "")
+		internal File(SubjectData subjectData, double size = 0.0, bool useStockCrediting = false, string resultText = "")
 		{
 			this.subjectData = subjectData;
 			this.size = size;
@@ -38,7 +38,7 @@ namespace KERBALISM
 				this.resultText = resultText;
 		}
 
-		public static File Load(string integerSubjectId, ConfigNode node)
+		internal static File Load(string integerSubjectId, ConfigNode node)
 		{
 			SubjectData subjectData;
 			string stockSubjectId = Lib.ConfigValue(node, "stockSubjectId", string.Empty);
@@ -65,7 +65,7 @@ namespace KERBALISM
 		}
 
 		// this is a fallback loading method for pre 3.1 / pre build 7212 files saved used the stock subject id
-		public static File LoadOldFormat(string stockSubjectId, ConfigNode node)
+		internal static File LoadOldFormat(string stockSubjectId, ConfigNode node)
 		{
 			SubjectData subjectData = ScienceDB.GetSubjectDataFromStockId(stockSubjectId);
 
@@ -85,7 +85,7 @@ namespace KERBALISM
 			return new File(subjectData, size, useStockCrediting, resultText);
 		}
 
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			node.AddValue("size", size);
 			node.AddValue("resultText", resultText);
@@ -95,7 +95,7 @@ namespace KERBALISM
 				node.AddValue("stockSubjectId", subjectData.StockSubjectId);
 		}
 
-		public ScienceData ConvertToStockData()
+		internal ScienceData ConvertToStockData()
 		{
 			return new ScienceData((float)size, 1.0f, 1.0f, subjectData.StockSubjectId, subjectData.FullTitle);
 		}

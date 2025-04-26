@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace KERBALISM
 {
-	public static class Sim
+	static class Sim
 	{
 		#region pseudo-ctor
-		public static void Init()
+		internal static void Init()
 		{
 			Sim.SolarFluxAtHome = 0.0;
 			// Search for "LightShifter" components, added by Kopernicus to bodies that are stars
@@ -61,7 +61,7 @@ namespace KERBALISM
 
 		#region GENERAL
 		// return period of an orbit at specified altitude over a body
-		public static double OrbitalPeriod(CelestialBody body, double altitude)
+		internal static double OrbitalPeriod(CelestialBody body, double altitude)
 		{
 			if (altitude <= double.Epsilon) return body.rotationPeriod;
 			double Ra = altitude + body.Radius;
@@ -69,7 +69,7 @@ namespace KERBALISM
 		}
 
 		/// <summary>period in shadow of an orbit at specified altitude over a body</summary>
-		public static double ShadowPeriod(CelestialBody body, double altitude)
+		internal static double ShadowPeriod(CelestialBody body, double altitude)
 		{
 			if (altitude <= double.Epsilon) return body.rotationPeriod * 0.5;
 			double Ra = altitude + body.Radius;
@@ -78,7 +78,7 @@ namespace KERBALISM
 		}
 
 		/// <summary>orbital period of the specified vessel</summary>
-		public static double OrbitalPeriod(Vessel v)
+		static double OrbitalPeriod(Vessel v)
 		{
 			if (Lib.Landed(v) || double.IsNaN(v.orbit.inclination))
 				return v.mainBody.rotationPeriod;
@@ -104,7 +104,7 @@ namespace KERBALISM
 		/// _area_ tapers off as the plane approaches the body's horizon. This
 		/// is anything but exact, but is close enough for reasonable results.
 		/// </summary>
-		public static double EclipseFraction(Vessel v, CelestialBody sun, Vector3d sunVec)
+		internal static double EclipseFraction(Vessel v, CelestialBody sun, Vector3d sunVec)
 		{
 			var obt = v.orbitDriver?.orbit;
 			if (obt == null)
@@ -166,7 +166,7 @@ namespace KERBALISM
 		/// <param name="sma">The semi-major axis</param>
 		/// <param name="R">The body's radius</param>
 		/// <returns></returns>
-		private static double FracEclipseCircular(double betaAngle, double sma, double R)
+		static double FracEclipseCircular(double betaAngle, double sma, double R)
 		{
 			// from https://commons.erau.edu/cgi/viewcontent.cgi?article=1412&context=ijaaa
 			// beta* is the angle above which there is no occlusion of the orbit
@@ -188,7 +188,7 @@ namespace KERBALISM
 		/// <param name="e">eccentricity</param>
 		/// <param name="sunVec">The normalized vector to the sun</param>
 		/// <returns></returns>
-		private static double FracEclipseElliptical(Vessel v, double betaAngle, double a, double R, double e, Vector3d sunVec)
+		static double FracEclipseElliptical(Vessel v, double betaAngle, double a, double R, double e, Vector3d sunVec)
 		{
 			var obt = v.orbit;
 			double b = obt.semiMinorAxis;
@@ -239,7 +239,7 @@ namespace KERBALISM
 		/// <summary>
 		/// This expects to be called repeatedly
 		/// </summary>
-		public static double SampleSunFactor(Vessel v, double elapsedSeconds, CelestialBody sun)
+		internal static double SampleSunFactor(Vessel v, double elapsedSeconds, CelestialBody sun)
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.Sim.SunFactor2");
 
@@ -344,7 +344,7 @@ namespace KERBALISM
 		/// <param name="UT"></param>
 		/// <param name="isSurf">is the vessel landed</param>
 		/// <returns></returns>
-		internal static bool IsSunVisibleAtTime(Vessel vessel, Vector3d vesselPos, CelestialBody sun, List<CelestialBody> occluders, bool isSurf)
+		static bool IsSunVisibleAtTime(Vessel vessel, Vector3d vesselPos, CelestialBody sun, List<CelestialBody> occluders, bool isSurf)
 		{
 			// generate ray parameters
 			Vector3d sunPos = bodyCache.GetBodyPosition(sun.flightGlobalsIndex) - vesselPos;
@@ -398,20 +398,20 @@ namespace KERBALISM
 		}
 
 		// return rotation speed at body surface
-		public static double SurfaceSpeed(CelestialBody body)
+		static double SurfaceSpeed(CelestialBody body)
 		{
 			return 2.0 * Math.PI * body.Radius / body.rotationPeriod;
 		}
 
 		// return gravity at body surface
-		public static double SurfaceGravity(CelestialBody body)
+		static double SurfaceGravity(CelestialBody body)
 		{
 			return body.gravParameter / (body.Radius * body.Radius);
 		}
 
 
 		// return apoapsis of a body orbit
-		public static double Apoapsis(CelestialBody body)
+		static double Apoapsis(CelestialBody body)
 		{
 			if (body != null && body.orbit != null)
 			{
@@ -422,7 +422,7 @@ namespace KERBALISM
 
 
 		// return periapsis of a body orbit
-		public static double Periapsis(CelestialBody body)
+		static double Periapsis(CelestialBody body)
 		{
 			if (body != null && body.orbit != null)
 			{
@@ -433,7 +433,7 @@ namespace KERBALISM
 
 
 		// return apoapsis of a vessel orbit
-		public static double Apoapsis(Vessel v)
+		internal static double Apoapsis(Vessel v)
 		{
 			if (double.IsNaN(v.orbit.inclination)) return 0.0;
 			return (1.0 + v.orbit.eccentricity) * v.orbit.semiMajorAxis;
@@ -441,7 +441,7 @@ namespace KERBALISM
 
 
 		// return periapsis of a vessel orbit
-		public static double Periapsis(Vessel v)
+		internal static double Periapsis(Vessel v)
 		{
 			if (double.IsNaN(v.orbit.inclination)) return 0.0;
 			return (1.0 - v.orbit.eccentricity) * v.orbit.semiMajorAxis;
@@ -451,11 +451,11 @@ namespace KERBALISM
 
 		#region RAYTRACING
 		/// <summary>Scaled space planetary layer for physic raytracing</summary>
-		private static int planetaryLayerMask = int.MaxValue;
+		static int planetaryLayerMask = int.MaxValue;
 
 		/// <summary>Return true if there is no CelestialBody between the vessel position and the 'end' point. Beware that this uses a (very slow) physic raycast.</summary>
 		/// <param name="endNegOffset">distance from which the ray will stop before hitting the 'end' point, put the body radius here if the end point is a CB</param>
-		public static bool RaytracePhysic(Vessel vessel, Vector3d vesselPos, Vector3d end, double endNegOffset = 0.0)
+		static bool RaytracePhysic(Vessel vessel, Vector3d vesselPos, Vector3d end, double endNegOffset = 0.0)
 		{
 			// for unloaded vessels, position in scaledSpace is 1 fixedUpdate frame desynchronized :
 			if (!vessel.loaded)
@@ -475,7 +475,7 @@ namespace KERBALISM
 		/// <param name="dir">ray direction</param>
 		/// <param name="dist">ray length</param>
 		/// <param name="body">obstacle to check against</param>
-		public static bool RayAvoidBody(Vector3d start, Vector3d dir, double dist, CelestialBody body)
+		static bool RayAvoidBody(Vector3d start, Vector3d dir, double dist, CelestialBody body)
 		{
 			// ray from origin to body center
 			Vector3d diff = body.position - start;
@@ -493,7 +493,7 @@ namespace KERBALISM
 		/// <param name="bodyDir">normalized vector from vessel to body</param>
 		/// <param name="bodyDist">distance from vessel to body surface</param>
 		/// <returns></returns>
-		public static bool IsBodyVisible(Vessel vessel, Vector3d vesselPos, CelestialBody body, List<CelestialBody> occludingBodies, out Vector3d bodyDir, out double bodyDist)
+		internal static bool IsBodyVisible(Vessel vessel, Vector3d vesselPos, CelestialBody body, List<CelestialBody> occludingBodies, out Vector3d bodyDir, out double bodyDist)
 		{
 			// generate ray parameters
 			bodyDir = body.position - vesselPos;
@@ -517,7 +517,7 @@ namespace KERBALISM
 		}
 
 		/// <summary>return the list of bodies whose apparent diameter is greater than 10 arcmin from the 'position' POV</summary>
-		public static List<CelestialBody> GetLargeBodies(Vector3d position)
+		internal static List<CelestialBody> GetLargeBodies(Vector3d position)
 		{
 			List <CelestialBody> visibleBodies = new List<CelestialBody>();
 			foreach (CelestialBody occludingBody in FlightGlobals.Bodies)
@@ -536,18 +536,18 @@ namespace KERBALISM
 		/// Solar luminosity from all stars/suns at the home body, in W/m².
 		/// Use this instead of PhysicsGlobals.SolarLuminosityAtHome
 		/// </summary>
-		public static double SolarFluxAtHome { get; private set; }
+		internal static double SolarFluxAtHome { get; private set; }
 
 		/// <summary>List of all suns/stars, with reference to their CB and their (total) luminosity</summary>
-		public static readonly List<SunData> suns = new List<SunData>();
-		public class SunData
+		internal static readonly List<SunData> suns = new List<SunData>();
+		internal class SunData
 		{
-			public CelestialBody body;
-			public int bodyIndex;
-			private double solarFluxAtAU;
-			private double solarFluxTotal;
+			internal CelestialBody body;
+			internal int bodyIndex;
+			double solarFluxAtAU;
+			double solarFluxTotal;
 
-			public SunData(int bodyIndex, double solarFluxAtAU)
+			internal SunData(int bodyIndex, double solarFluxAtAU)
 			{
 				body = FlightGlobals.Bodies[bodyIndex];
 				this.bodyIndex = bodyIndex;
@@ -555,14 +555,14 @@ namespace KERBALISM
 			}
 
 			// This must be called after "suns" SunData list is populated (because it use AU > Lib.IsSun)
-			public void InitSolarFluxTotal()
+			internal void InitSolarFluxTotal()
 			{
 				this.solarFluxTotal = solarFluxAtAU * AU * AU * Math.PI * 4.0;
 			}
 
 			/// <summary>Luminosity in W/m² at the given distance from this sun/star</summary>
 			/// <param name="fromSunSurface">true if the 'distance' is from the sun surface</param>
-			public double SolarFlux(double distance, bool fromSunSurface = true)
+			internal double SolarFlux(double distance, bool fromSunSurface = true)
 			{
 				// note: for consistency we always consider distances to bodies to be relative to the surface
 				// however, flux, luminosity and irradiance consider distance to the sun center, and not surface
@@ -582,18 +582,18 @@ namespace KERBALISM
 		/// semilatus rectum. Then when set for a UT, it calculates positions
 		/// for each occluder on up the chain to the root CB.
 		/// </summary>
-		public class BodyCache
+		class BodyCache
 		{
-			private Vector3d[] positions = null;
-			private int[] parents;
-			private double[] semiLatusRectums;
+			Vector3d[] positions = null;
+			int[] parents;
+			double[] semiLatusRectums;
 
-			public Vector3d GetBodyPosition(int idx) { return positions[idx]; }
+			internal Vector3d GetBodyPosition(int idx) { return positions[idx]; }
 
 			/// <summary>
 			/// Check and, if uninitialized, setup the body caches
 			/// </summary>
-			private void CheckInitBodies()
+			void CheckInitBodies()
 			{
 				int c = FlightGlobals.Bodies.Count;
 				if (positions != null && positions.Length == c)
@@ -626,7 +626,7 @@ namespace KERBALISM
 			/// parents
 			/// </summary>
 			/// <param name="occluders"></param>
-			public void SetForOccluders(List<CelestialBody> occluders)
+			internal void SetForOccluders(List<CelestialBody> occluders)
 			{
 				CheckInitBodies();
 
@@ -638,7 +638,7 @@ namespace KERBALISM
 					SetSLRs(occluders[i].flightGlobalsIndex);
 			}
 
-			private void SetSLRs(int i)
+			void SetSLRs(int i)
 			{
 				// Check if set
 				if (semiLatusRectums[i] != double.MaxValue)
@@ -660,7 +660,7 @@ namespace KERBALISM
 			/// Set the occluder body positions at the given UT
 			/// </summary>
 			/// <param name="ut"></param>
-			public void SetForUT(double ut, List<CelestialBody> occluders)
+			internal void SetForUT(double ut, List<CelestialBody> occluders)
 			{
 				// Start from unknown positions
 				for (int i = positions.Length; i-- > 0;)
@@ -671,7 +671,7 @@ namespace KERBALISM
 					SetForUTInternal(occluders[i].flightGlobalsIndex, ut);
 			}
 
-			private void SetForUTInternal(int i, double ut)
+			void SetForUTInternal(int i, double ut)
 			{
 				// If we've already been here, bail
 				if (positions[i].x != double.MaxValue)
@@ -702,7 +702,7 @@ namespace KERBALISM
 		/// <param name="UT"></param>
 		/// <param name="semiLatusRectum"></param>
 		/// <returns></returns>
-		private static Vector3d FastGetRelativePositionAtUT(Orbit orbit, double UT, double semiLatusRectum)
+		static Vector3d FastGetRelativePositionAtUT(Orbit orbit, double UT, double semiLatusRectum)
 		{
 			double T = orbit.getObtAtUT(UT);
 
@@ -720,7 +720,7 @@ namespace KERBALISM
 
 		static double au = 0.0;
 		/// <summary> Distance between the home body and its main sun</summary>
-		public static double AU
+		internal static double AU
 		{
 			get
 			{
@@ -734,7 +734,7 @@ namespace KERBALISM
 		}
 
 		// get distance from the sun
-		public static double SunDistance(Vector3d pos, CelestialBody sun)
+		static double SunDistance(Vector3d pos, CelestialBody sun)
 		{
 			return Vector3d.Distance(pos, sun.position) - sun.Radius;
 		}
@@ -746,7 +746,7 @@ namespace KERBALISM
 		/// <param name="mainSunDirection"></param>
 		/// <param name="mainSunDistance"></param>
 		/// <returns></returns>
-		public static double SolarFluxAtBody(CelestialBody body, bool worstCase, out CelestialBody mainSun, out Vector3d mainSunDirection, out double mainSunDistance)
+		internal static double SolarFluxAtBody(CelestialBody body, bool worstCase, out CelestialBody mainSun, out Vector3d mainSunDirection, out double mainSunDistance)
 		{
 			// get first parent sun
 			mainSun = Lib.GetParentSun(body);
@@ -779,7 +779,7 @@ namespace KERBALISM
 			return solarFlux;
 		}
 
-		public static double SunBodyAngle(Vessel vessel, Vector3d vesselPos, CelestialBody sun)
+		internal static double SunBodyAngle(Vessel vessel, Vector3d vesselPos, CelestialBody sun)
 		{
 			// orbit around sun?
 			if (vessel.mainBody == sun) return 0.0;
@@ -789,13 +789,13 @@ namespace KERBALISM
 
 		#region TEMPERATURE
 		// calculate temperature in K from irradiance in W/m2, as per Stefan-Boltzmann equation
-		public static double BlackBodyTemperature(double flux)
+		internal static double BlackBodyTemperature(double flux)
 		{
 			return Math.Pow(flux / PhysicsGlobals.StefanBoltzmanConstant, 0.25);
 		}
 
 		// calculate irradiance in W/m2 from solar flux reflected on a celestial body in direction of the vessel
-		public static double AlbedoFlux(CelestialBody body, Vector3d pos)
+		internal static double AlbedoFlux(CelestialBody body, Vector3d pos)
 		{
 			CelestialBody sun = Lib.GetParentSun(body);
 			Vector3d sun_dir = sun.position - body.position;
@@ -818,7 +818,7 @@ namespace KERBALISM
 		}
 
 		// return irradiance from the surface of a body in W/m2
-		public static double BodyFlux(CelestialBody body, double altitude)
+		internal static double BodyFlux(CelestialBody body, double altitude)
 		{
 			CelestialBody sun = Lib.GetParentSun(body);
 			Vector3d sun_dir = sun.position - body.position;
@@ -923,13 +923,13 @@ namespace KERBALISM
 		}
 
 		// return CMB irradiance in W/m2
-		public static double BackgroundFlux()
+		internal static double BackgroundFlux()
 		{
 			return 3.14E-6;
 		}
 
 		// return temperature of a vessel
-		public static double Temperature(Vessel v, Vector3d position, double solar_flux, out double albedo_flux, out double body_flux, out double total_flux)
+		internal static double Temperature(Vessel v, Vector3d position, double solar_flux, out double albedo_flux, out double body_flux, out double total_flux)
 		{
 			// get vessel body
 			CelestialBody body = v.mainBody;
@@ -962,7 +962,7 @@ namespace KERBALISM
 
 		// return difference from survival temperature
 		// - as a special case, there is no temp difference when landed on the home body
-		public static double TempDiff(double k, CelestialBody body, bool landed)
+		internal static double TempDiff(double k, CelestialBody body, bool landed)
 		{
 			if (body.flightGlobalsIndex == FlightGlobals.GetHomeBodyIndex() && landed) return 0.0;
 			return Math.Max(Math.Abs(k - Settings.LifeSupportSurvivalTemperature) - Settings.LifeSupportSurvivalRange, 0.0);
@@ -970,12 +970,12 @@ namespace KERBALISM
 		#endregion
 
 		#region ATMOSPHERE
-		public static double depthfactor = 0.1;
+		static double depthfactor = 0.1;
 
 		// return proportion of flux not blocked by atmosphere
 		// - position: sampling point
 		// - sun_dir: normalized vector from sampling point to the sun
-		public static double AtmosphereFactor(CelestialBody body, Vector3d position, Vector3d sun_dir)
+		internal static double AtmosphereFactor(CelestialBody body, Vector3d position, Vector3d sun_dir)
 		{
 			// get up vector & altitude
 			Vector3d up = position - body.position;
@@ -998,7 +998,7 @@ namespace KERBALISM
 		// note: this one assume the receiver is on the ground
 		// - cos_a: cosine of angle between zenith and sun, in [0..1] range
 		//          to get an average for stats purpose, use 0.7071
-		public static double AtmosphereFactor(CelestialBody body, double cos_a)
+		internal static double AtmosphereFactor(CelestialBody body, double cos_a)
 		{
 			double static_pressure = body.GetPressure(0.0);
 			if (static_pressure > 0.0)
@@ -1014,7 +1014,7 @@ namespace KERBALISM
 		// - by doing an average of values at midday, sunrise and an intermediate value
 		// - using the current sun direction at the given position to approximate
 		//   the influence of high latitudes and of the inclinaison of the body orbit
-		public static double AtmosphereFactorAnalytic(CelestialBody body, Vector3d position, Vector3d sun_dir)
+		internal static double AtmosphereFactorAnalytic(CelestialBody body, Vector3d position, Vector3d sun_dir)
 		{
 			// only for atmospheric bodies whose rotation period is less than 120 hours
 			if (body.rotationPeriod > 432000.0)
@@ -1058,7 +1058,7 @@ namespace KERBALISM
 
 
 		// return proportion of ionizing radiation not blocked by atmosphere
-		public static double GammaTransparency(CelestialBody body, double altitude)
+		internal static double GammaTransparency(CelestialBody body, double altitude)
 		{
 			// deal with underwater & fp precision issues
 			altitude = Math.Abs(altitude);
@@ -1088,7 +1088,7 @@ namespace KERBALISM
 
 
 		// return true if the vessel is under water
-		public static bool Underwater(Vessel v)
+		internal static bool Underwater(Vessel v)
 		{
 			double safe_threshold = v.isEVA ? -0.5 : -2.0;
 			return v.mainBody.ocean && v.altitude < safe_threshold;
@@ -1096,7 +1096,7 @@ namespace KERBALISM
 
 
 		// return true if a vessel is inside a breathable atmosphere
-		public static bool Breathable(Vessel v, bool underwater)
+		internal static bool Breathable(Vessel v, bool underwater)
 		{
 			// a vessel is inside a breathable atmosphere if:
 			// - it is inside an atmosphere
@@ -1110,7 +1110,7 @@ namespace KERBALISM
 		}
 
 		// return true if a celestial body atmosphere is breathable at surface conditions
-		public static bool Breathable(CelestialBody body)
+		internal static bool Breathable(CelestialBody body)
 		{
 			return body.atmosphereContainsOxygen
 				&& body.atmospherePressureSeaLevel > 25.0;
@@ -1118,7 +1118,7 @@ namespace KERBALISM
 
 
 		// return pressure at sea level in kPA
-		public static double PressureAtSeaLevel()
+		internal static double PressureAtSeaLevel()
 		{
 			// note: we could get the home body pressure at sea level, and deal with the case when it is atmosphere-less
 			// however this function can be called to generate part tooltips, and at that point the bodies are not ready
@@ -1127,7 +1127,7 @@ namespace KERBALISM
 
 
 		// return true if vessel is inside the thermosphere
-		public static bool InsideThermosphere(Vessel v)
+		internal static bool InsideThermosphere(Vessel v)
 		{
 			var body = v.mainBody;
 			return body.atmosphere && v.altitude > body.atmosphereDepth && v.altitude <= body.atmosphereDepth * 5.0;
@@ -1135,7 +1135,7 @@ namespace KERBALISM
 
 
 		// return true if vessel is inside the exosphere
-		public static bool InsideExosphere(Vessel v)
+		internal static bool InsideExosphere(Vessel v)
 		{
 			var body = v.mainBody;
 			return body.atmosphere && v.altitude > body.atmosphereDepth * 5.0 && v.altitude <= body.atmosphereDepth * 25.0;
@@ -1143,7 +1143,7 @@ namespace KERBALISM
 		#endregion
 
 		#region GRAVIOLI
-		public static double Graviolis(Vessel v)
+		internal static double Graviolis(Vessel v)
 		{
 			double dist = Vector3d.Distance(v.GetWorldPos3D(), Lib.GetParentSun(v.mainBody).position);
 			double au = dist / FlightGlobals.GetHomeBody().orbit.semiMajorAxis;
@@ -1152,8 +1152,8 @@ namespace KERBALISM
 		#endregion
 
 		#region SIGNAL
-		private static double dampingExponent = 0;
-		public static double DataRateDampingExponent
+		static double dampingExponent = 0;
+		internal static double DataRateDampingExponent
 		{
 			get
 			{
@@ -1214,7 +1214,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static double DataRateDampingExponentRT
+		internal static double DataRateDampingExponentRT
 		{
 			get
 			{
@@ -1269,7 +1269,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static double SignalStrength(double maxRange, double distance)
+		static double SignalStrength(double maxRange, double distance)
 		{
 			if (distance > maxRange)
 				return 0.0;

@@ -5,7 +5,7 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public class Emitter : PartModule, ISpecifics, IKerbalismModule
+	class Emitter : PartModule, ISpecifics, IKerbalismModule
 	{
 		// config
 		[KSPField] public string active;                          // name of animation to play when enabling/disabling
@@ -48,12 +48,12 @@ namespace KERBALISM
 			active_anim.Still(running ? 0.0 : 1.0);
 		}
 
-		public class HabitatInfo
+		class HabitatInfo
 		{
-			public Habitat habitat;
-			public float distance;
+			internal Habitat habitat;
+			internal float distance;
 
-			public HabitatInfo(Habitat habitat, float distance)
+			internal HabitatInfo(Habitat habitat, float distance)
 			{
 				this.habitat = habitat;
 				this.distance = distance;
@@ -61,13 +61,13 @@ namespace KERBALISM
 		}
 		List<HabitatInfo> habitatInfos = null;
 
-		public void Recalculate()
+		internal void Recalculate()
 		{
 			habitatInfos = null;
 			CalculateRadiationImpact();
 		}
 
-		public void BuildHabitatInfos()
+		void BuildHabitatInfos()
 		{
 			if (habitatInfos != null) return;
 			if (part.transform == null) return;
@@ -104,7 +104,7 @@ namespace KERBALISM
 		}
 
 		/// <summary>Calculate the average radiation effect to all habitats. returns true if successful.</summary>
-		public bool CalculateRadiationImpact()
+		bool CalculateRadiationImpact()
 		{
 			if (radiation < 0)
 			{
@@ -130,7 +130,7 @@ namespace KERBALISM
 			return true;
 		}
 
-		public void Update()
+		void Update()
 		{
 			// update ui
 			if (!part.IsPAWVisible())
@@ -140,14 +140,14 @@ namespace KERBALISM
 			Events["Toggle"].guiName = Lib.StatusToggle(part.partInfo.title, running ? Local.Generic_ACTIVE : Local.Generic_DISABLED);
 		}
 
-		public void FixedUpdate()
+		void FixedUpdate()
 		{
 			if (!radiation_impact_calculated)
 				radiation_impact_calculated = CalculateRadiationImpact();
 		}
 
 		// See IKerbalismModule
-		public static string BackgroundUpdate(Vessel v,
+		static string BackgroundUpdate(Vessel v,
 			ProtoPartSnapshot part_snapshot, ProtoPartModuleSnapshot module_snapshot,
 			PartModule proto_part_module, Part proto_part,
 			Dictionary<string, double> availableResources, List<KeyValuePair<string, double>> resourceChangeRequest,
@@ -227,7 +227,7 @@ namespace KERBALISM
 		/// <summary>
 		/// get the total radiation emitted by nearby emitters (used for EVAs). only works for loaded vessels.
 		/// </summary>
-		public static double Nearby(Vessel v)
+		internal static double Nearby(Vessel v)
 		{
 			if (!v.loaded || !v.isEVA) return 0.0;
 			var evaPosition = v.rootPart.transform.position;
@@ -257,7 +257,7 @@ namespace KERBALISM
 		}
 
 		// return total radiation emitted in a vessel
-		public static double Total(Vessel v)
+		internal static double Total(Vessel v)
 		{
 			// get resource cache
 			ResourceInfo ec = ResourceCache.GetResource(v, "ElectricCharge");

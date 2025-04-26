@@ -8,7 +8,7 @@ namespace KERBALISM.CONTRACTS
 
 
 	// put a kerbal in orbit for 30 days
-	public sealed class MannedOrbit : Contract
+	sealed class MannedOrbit : Contract
 	{
 		protected override bool Generate()
 		{
@@ -65,7 +65,7 @@ namespace KERBALISM.CONTRACTS
 	}
 
 
-	public sealed class MannedOrbitCondition : ContractParameter
+	sealed class MannedOrbitCondition : ContractParameter
 	{
 		protected override string GetHashString()
 		{

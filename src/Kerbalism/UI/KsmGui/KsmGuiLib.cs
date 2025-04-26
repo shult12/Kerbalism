@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public static class KsmGuiLib
+	static class KsmGuiLib
 	{
-		public static void SetParentFixScale(this Transform child, Transform parent)
+		internal static void SetParentFixScale(this Transform child, Transform parent)
 		{
 			child.SetParent(parent, false);
 		}
 
-		public static void ForceOneScale(RectTransform transform)
+		static void ForceOneScale(RectTransform transform)
 		{
 			transform.localScale = Vector3.one;
 
@@ -28,7 +28,7 @@ namespace KERBALISM.KsmGui
 		/// <param name="destinationPivot"> Point on this transform that will be used as destination for deltaX/Y values. Sets pivot</param>
 		/// <param name="deltaX"> Distance in pixels between originInParent and destinationPivot</param>
 		/// <param name="deltaY"> Distance in pixels between originInParent and destinationPivot</param>
-		public static void SetAnchorsAndPosition(this RectTransform transform, TextAnchor originInParent, TextAnchor destinationPivot, int deltaX = 0, int deltaY = 0)
+		internal static void SetAnchorsAndPosition(this RectTransform transform, TextAnchor originInParent, TextAnchor destinationPivot, int deltaX = 0, int deltaY = 0)
 		{
 			// set the anchor (origin point) on the parent (screen) that will be used as reference in anchoredPosition
 			switch (originInParent)
@@ -69,12 +69,12 @@ namespace KERBALISM.KsmGui
 		/// <param name="transform"></param>
 		/// <param name="sizeX"></param>
 		/// <param name="sizeY"></param>
-		public static void SetSizeDelta(this RectTransform transform, int sizeX, int sizeY)
+		internal static void SetSizeDelta(this RectTransform transform, int sizeX, int sizeY)
 		{
 			transform.sizeDelta = new Vector2(sizeX, sizeY);
 		}
 
-		public static void AddImageComponentWithColor(this KsmGuiBase ksmGuiBase, Color color)
+		internal static void AddImageComponentWithColor(this KsmGuiBase ksmGuiBase, Color color)
 		{
 			// Unity will trhow an exception, but it doesn't hurt to know why
 			if (ksmGuiBase.TopObject.GetComponent<Graphic>() != null)

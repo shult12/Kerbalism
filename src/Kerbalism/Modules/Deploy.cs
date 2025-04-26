@@ -5,7 +5,7 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public class Deploy : PartModule
+	class Deploy : PartModule
 	{
 		[KSPField] public string type;                      // component name
 		[KSPField] public double extra_Cost = 0;            // extra energy cost to keep the part active
@@ -14,21 +14,21 @@ namespace KERBALISM
 		// Support Reliability
 		[KSPField(isPersistant = true, guiName = "#KERBALISM_Deploy_isBroken", guiUnits = "", guiFormat = "")]//IsBroken
 		public bool isBroken;                               // is it broken
-		public bool lastBrokenState;                        // broken state has changed since last update?
-		public bool lastFixedBrokenState;                   // broken state has changed since last fixed update?
+		bool lastBrokenState;                        // broken state has changed since last update?
+		bool lastFixedBrokenState;                   // broken state has changed since last fixed update?
 
 		[KSPField(guiName = "#KERBALISM_Deploy_actualCost", guiUnits = "/s", guiFormat = "F3")]//EC Usage
 		public double actualCost = 0;                       // Energy Consume
 
 		// Vessel info
-		public bool hasEnergy;                              // Check if vessel has energy, otherwise will disable animations and functions
-		public bool isConsuming;                            // Module is consuming energy
-		public bool hasEnergyChanged;                       // Energy state has changed since last update?
-		public bool hasFixedEnergyChanged;                  // Energy state has changed since last fixed update?
-		public ResourceInfo resources;
+		bool hasEnergy;                              // Check if vessel has energy, otherwise will disable animations and functions
+		bool isConsuming;                            // Module is consuming energy
+		bool hasEnergyChanged;                       // Energy state has changed since last update?
+		bool hasFixedEnergyChanged;                  // Energy state has changed since last fixed update?
+		ResourceInfo resources;
 
-		public PartModule module;                           // component cache, the Reliability.cs is one to many, instead the Deploy will be one to one
-		public KeyValuePair<bool, double> modReturn;        // Return from DeviceEC
+		PartModule module;                           // component cache, the Reliability.cs is one to many, instead the Deploy will be one to one
+		KeyValuePair<bool, double> modReturn;        // Return from DeviceEC
 
 		public override void OnStart(StartState state)
 		{
@@ -95,7 +95,7 @@ namespace KERBALISM
 			}
 		}
 
-		public virtual void FixedUpdate()
+		void FixedUpdate()
 		{
 			if (!Lib.IsFlight() || module == null) return;
 
@@ -119,7 +119,7 @@ namespace KERBALISM
 			if (isConsuming && resources != null) resources.Consume(actualCost * Kerbalism.elapsed_s, ResourceBroker.Deploy);
 		}
 
-		public virtual bool GetIsConsuming()
+		bool GetIsConsuming()
 		{
 			try
 			{
@@ -139,7 +139,7 @@ namespace KERBALISM
 			return true;
 		}
 
-		public virtual void Update_UI(bool isEnabled)
+		void Update_UI(bool isEnabled)
 		{
 			try
 			{
@@ -156,7 +156,7 @@ namespace KERBALISM
 			}
 		}
 
-		public virtual void FixModule(bool isEnabled)
+		void FixModule(bool isEnabled)
 		{
 			try
 			{
@@ -174,7 +174,7 @@ namespace KERBALISM
 		}
 
 		// Some modules need to constantly update the UI 
-		public virtual void Constant_OnGUI(bool isEnabled)
+		void Constant_OnGUI(bool isEnabled)
 		{
 			// wtf?
 			/*
@@ -188,7 +188,7 @@ namespace KERBALISM
 			*/
 		}
 
-		public void ToggleActions(PartModule partModule, bool value)
+		void ToggleActions(PartModule partModule, bool value)
 		{
 			//Lib.LogDebugStack("Part '{0}'.'{1}', setting actions to {2}", partModule.part.partInfo.title, partModule.moduleName, value ? "ON" : "OFF");
 			foreach (BaseAction ac in partModule.Actions)
@@ -197,7 +197,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void BackgroundUpdate(Vessel v, ProtoPartSnapshot p, ProtoPartModuleSnapshot m, Deploy deploy, ResourceInfo ec, double elapsed_s)
+		static void BackgroundUpdate(Vessel v, ProtoPartSnapshot p, ProtoPartModuleSnapshot m, Deploy deploy, ResourceInfo ec, double elapsed_s)
 		{
 			if (deploy.isConsuming) ec.Consume(deploy.extra_Cost * elapsed_s, ResourceBroker.Deploy);
 		}

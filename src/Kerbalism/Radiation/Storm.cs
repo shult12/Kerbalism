@@ -6,12 +6,12 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-    public static class Storm
+    static class Storm
     {
-        // TODO multi sun support?
-        public static float sun_observation_quality = 1.0f;
+		// TODO multi sun support?
+		internal static float sun_observation_quality = 1.0f;
 
-        internal static void CreateStorm(StormData bd, CelestialBody body, double distanceToSun)
+        static void CreateStorm(StormData bd, CelestialBody body, double distanceToSun)
         {
             // do nothing if storms are disabled
             if (!Features.SpaceWeather) return;
@@ -78,7 +78,7 @@ namespace KERBALISM
             }
         }
 
-        public static void Update(CelestialBody body, double elapsed_s)
+		internal static void Update(CelestialBody body, double elapsed_s)
         {
 			// do nothing if storms are disabled
 			if (!Features.SpaceWeather) return;
@@ -121,7 +121,7 @@ namespace KERBALISM
             bd.msg_storm = bd.storm_state;
         }
 
-        public static void Update(Vessel v, VesselData vd, double elapsed_s)
+		internal static void Update(Vessel v, VesselData vd, double elapsed_s)
         {
             // do nothing if storms are disabled
             if (!Features.SpaceWeather) return;
@@ -216,8 +216,8 @@ namespace KERBALISM
         }
 
 
-        // used by the engine to update one body per-step
-        public static bool Skip_body(CelestialBody body)
+		// used by the engine to update one body per-step
+		internal static bool Skip_body(CelestialBody body)
         {
             // skip all bodies if storms are disabled
             if (!Features.SpaceWeather) return true;
@@ -233,15 +233,15 @@ namespace KERBALISM
             return false;
         }
 
-        /// <summary>return true if a storm is incoming</summary>
-        public static bool Incoming(Vessel v)
+		/// <summary>return true if a storm is incoming</summary>
+		internal static bool Incoming(Vessel v)
         {
             var bd = Lib.IsSun(v.mainBody) ? v.KerbalismData().stormData : DB.Storm(Lib.GetParentPlanet(v.mainBody).name);
             return bd.storm_state == 1 && bd.display_warning;
         }
 
-        /// <summary>return true if a storm is in progress</summary>
-        public static bool InProgress(Vessel v)
+		/// <summary>return true if a storm is in progress</summary>
+		internal static bool InProgress(Vessel v)
         {
             var bd = Lib.IsSun(v.mainBody) ? v.KerbalismData().stormData : DB.Storm(Lib.GetParentPlanet(v.mainBody).name);
             return bd.storm_state == 2;

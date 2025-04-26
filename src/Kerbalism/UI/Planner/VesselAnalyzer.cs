@@ -6,9 +6,9 @@ namespace KERBALISM.Planner
 {
 
 	///<summary> Planners simulator for all vessel aspects other than resource simulation </summary>
-	public sealed class VesselAnalyzer
+	sealed class VesselAnalyzer
 	{
-		public void Analyze(List<Part> parts, ResourceSimulator sim, EnvironmentAnalyzer env)
+		internal void Analyze(List<Part> parts, ResourceSimulator sim, EnvironmentAnalyzer env)
 		{
 			// note: vessel analysis require resource analysis, but at the same time resource analysis
 			// require vessel analysis, so we are using resource analysis from previous frame (that's okay)
@@ -242,38 +242,38 @@ namespace KERBALISM.Planner
 
 
 		// general
-		public List<ProtoCrewMember> crew;                  // full information on all crew
-		public uint crew_count;                             // crew member on board
-		public uint crew_capacity;                          // crew member capacity
-		public bool crew_engineer;                          // true if an engineer is among the crew
-		public bool crew_scientist;                         // true if a scientist is among the crew
-		public bool crew_pilot;                             // true if a pilot is among the crew
-		public uint crew_engineer_maxlevel;                 // experience level of top engineer on board
-		public uint crew_scientist_maxlevel;                // experience level of top scientist on board
-		public uint crew_pilot_maxlevel;                    // experience level of top pilot on board
+		internal List<ProtoCrewMember> crew;                  // full information on all crew
+		internal uint crew_count;                             // crew member on board
+		internal uint crew_capacity;                          // crew member capacity
+		internal bool crew_engineer;                          // true if an engineer is among the crew
+		bool crew_scientist;                         // true if a scientist is among the crew
+		bool crew_pilot;                             // true if a pilot is among the crew
+		internal uint crew_engineer_maxlevel;                 // experience level of top engineer on board
+		uint crew_scientist_maxlevel;                // experience level of top scientist on board
+		uint crew_pilot_maxlevel;                    // experience level of top pilot on board
 
 		// habitat
-		public double volume;                               // total volume in m^3
-		public double surface;                              // total surface in m^2
-		public bool pressurized;                            // true if the vessel has pressure control capabilities
-		public bool scrubbed;                               // true if the vessel has co2 scrubbing capabilities
-		public bool humid;                                  // true if the vessel has co2 scrubbing capabilities
+		internal double volume;                               // total volume in m^3
+		internal double surface;                              // total surface in m^2
+		internal bool pressurized;                            // true if the vessel has pressure control capabilities
+		internal bool scrubbed;                               // true if the vessel has co2 scrubbing capabilities
+		bool humid;                                  // true if the vessel has co2 scrubbing capabilities
 
 		// radiation related
-		public double emitted;                              // amount of radiation emitted by components
-		public double shielding;                            // shielding factor
+		internal double emitted;                              // amount of radiation emitted by components
+		internal double shielding;                            // shielding factor
 
 		// quality-of-life related
-		public double living_space;                         // living space factor
-		public Comforts comforts;                           // comfort info
+		internal double living_space;                         // living space factor
+		internal Comforts comforts;                           // comfort info
 
 		// reliability-related
-		public uint components;                             // number of components that can fail
-		public double high_quality;                         // percentage of high quality components
-		public double failure_year;                         // estimated failures per-year, averaged per-component
-		public Dictionary<string, int> redundancy;          // number of components per redundancy group
+		uint components;                             // number of components that can fail
+		internal double high_quality;                         // percentage of high quality components
+		internal double failure_year;                         // estimated failures per-year, averaged per-component
+		internal Dictionary<string, int> redundancy;          // number of components per redundancy group
 
-		public bool has_comms;
+		bool has_comms;
 	}
 
 

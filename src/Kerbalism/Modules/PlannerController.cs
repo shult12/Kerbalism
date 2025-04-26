@@ -7,7 +7,7 @@ using KSP.Localization;
 namespace KERBALISM
 {
 
-	public class PlannerController : PartModule
+	class PlannerController : PartModule
 	{
 		// config
 		[KSPField] public bool toggle = true;                       // true to show the toggle button in editor

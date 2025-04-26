@@ -7,7 +7,7 @@ using KSP.Localization;
 namespace KERBALISM
 {
 
-	public class Laboratory: PartModule, IModuleInfo, ISpecifics, IContractObjectiveModule
+	class Laboratory: PartModule, IModuleInfo, ISpecifics, IContractObjectiveModule
 	{
 		// config
 		[KSPField] public double ec_rate;						// ec consumed per-second
@@ -19,7 +19,7 @@ namespace KERBALISM
 		[KSPField(isPersistant = true)] public bool running;	// true if the lab is active
 
 		// status enum
-		private enum Status
+		enum Status
 		{
 			DISABLED = 0,
 			NO_EC,
@@ -30,24 +30,24 @@ namespace KERBALISM
 		}
 
 		// other data
-		private CrewSpecs researcher_cs;                            // crew specs for the researcher
-		private static CrewSpecs background_researcher_cs;          // crew specs for the researcher in background simulation
-		private SubjectData current_sample = null;                       // sample currently being analyzed
-		private static SubjectData background_sample = null;             // sample currently being analyzed in background simulation
-		private Status status = Status.DISABLED;                    // laboratory status
-		private string status_txt = string.Empty;                   // status string to show next to the ui button
-		private ResourceInfo ec = null;                            // resource info for EC
+		CrewSpecs researcher_cs;                            // crew specs for the researcher
+		static CrewSpecs background_researcher_cs;          // crew specs for the researcher in background simulation
+		SubjectData current_sample = null;                       // sample currently being analyzed
+		static SubjectData background_sample = null;             // sample currently being analyzed in background simulation
+		Status status = Status.DISABLED;                    // laboratory status
+		string status_txt = string.Empty;                   // status string to show next to the ui button
+		ResourceInfo ec = null;                            // resource info for EC
 
 		// localized strings
-		private static readonly string localized_title = Lib.BuildString("<size=1><color=#00000000>00</color></size>", Local.Laboratory_Title);
-		private static readonly string localized_toggle = Local.Laboratory_Toggle;
-		private static readonly string localized_enabled = Local.Generic_ENABLED;
-		private static readonly string localized_disabled = Local.Generic_DISABLED;
-		private static readonly string localized_noEC = Lib.Color(Local.Laboratory_NoEC, Lib.Kolor.Orange);
-		private static readonly string localized_noSample = Local.Laboratory_NoSample;
-		private static readonly string localized_cleaned = Local.Laboratory_Cleaned;
-		private static readonly string localized_results = Local.Laboratory_Results;
-		private static readonly string localized_noStorage = Local.Laboratory_Nostorage;//"No storage available"
+		static readonly string localized_title = Lib.BuildString("<size=1><color=#00000000>00</color></size>", Local.Laboratory_Title);
+		static readonly string localized_toggle = Local.Laboratory_Toggle;
+		static readonly string localized_enabled = Local.Generic_ENABLED;
+		static readonly string localized_disabled = Local.Generic_DISABLED;
+		static readonly string localized_noEC = Lib.Color(Local.Laboratory_NoEC, Lib.Kolor.Orange);
+		static readonly string localized_noSample = Local.Laboratory_NoSample;
+		static readonly string localized_cleaned = Local.Laboratory_Cleaned;
+		static readonly string localized_results = Local.Laboratory_Results;
+		static readonly string localized_noStorage = Local.Laboratory_Nostorage;//"No storage available"
 
 		public override void OnStart(StartState state)
 		{
@@ -65,7 +65,7 @@ namespace KERBALISM
 			researcher_cs = new CrewSpecs(researcher);
 		}
 
-		public void Update()
+		void Update()
 		{
 			if (!part.IsPAWVisible())
 				return;
@@ -83,7 +83,7 @@ namespace KERBALISM
 			else Events["Toggle"].guiName = Lib.StatusToggle(localized_toggle, running ? localized_enabled : localized_disabled);
 		}
 
-		public void FixedUpdate()
+		void FixedUpdate()
 		{
 			// do nothing in the editor
 			if (Lib.IsEditor()) return;
@@ -133,7 +133,7 @@ namespace KERBALISM
 			else status = Status.DISABLED;
 		}
 
-		public static void BackgroundUpdate(Vessel v, ProtoPartSnapshot p, ProtoPartModuleSnapshot m, Laboratory lab, ResourceInfo ec, double elapsed_s)
+		internal static void BackgroundUpdate(Vessel v, ProtoPartSnapshot p, ProtoPartModuleSnapshot m, Laboratory lab, ResourceInfo ec, double elapsed_s)
 		{
 			// if enabled
 			if (Lib.Proto.GetBool(m, "running"))
@@ -233,7 +233,7 @@ namespace KERBALISM
 		public string GetContractObjectiveType() { return "Laboratory"; }
 
 		// get next sample to analyze, return null if there isn't a sample
-		private static SubjectData NextSample(Vessel v)
+		static SubjectData NextSample(Vessel v)
 		{
 			foreach(var drive in Drive.GetDrives(v, true))
 			{
@@ -250,7 +250,7 @@ namespace KERBALISM
 		}
 
 		// analyze a sample
-		private static Status Analyze(Vessel v, SubjectData subject, double amount)
+		static Status Analyze(Vessel v, SubjectData subject, double amount)
 		{
 			Sample sample = null;
 			Drive sampleDrive = null;
@@ -318,7 +318,7 @@ namespace KERBALISM
 			return Status.RUNNING;
 		}
 
-		private static void RestoreSampleMass(Vessel v, SubjectData filename, double restoredAmount)
+		static void RestoreSampleMass(Vessel v, SubjectData filename, double restoredAmount)
 		{
 			if(v.loaded) // loaded vessel
 			{
@@ -337,7 +337,7 @@ namespace KERBALISM
 			}
 		}
 
-		private void SetStatusText()
+		void SetStatusText()
 		{
 			switch (status)
 			{

@@ -6,23 +6,23 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiBase
+	class KsmGuiBase
 	{
-		public RectTransform TopTransform { get; private set; }
-		public GameObject TopObject { get; private set; }
-		public LayoutElement LayoutElement { get; private set; }
-		public KsmGuiUpdateHandler UpdateHandler { get; private set; }
-		private KsmGuiTooltip tooltip;
-		private KsmGuiLayoutOptimizer layoutOptimizer;
+		internal RectTransform TopTransform { get; private set; }
+		internal GameObject TopObject { get; private set; }
+		LayoutElement LayoutElement { get; set; }
+		KsmGuiUpdateHandler UpdateHandler { get; set; }
+		KsmGuiTooltip tooltip;
+		KsmGuiLayoutOptimizer layoutOptimizer;
 
 		/// <summary>
 		/// transform that will be used as parent for child KsmGui objects.
 		/// override this if you have an internal object hierarchy where child
 		/// objects must be parented to a specific transform (ex : scroll view)
 		/// </summary>
-		public virtual RectTransform ParentTransformForChilds => TopTransform;
+		internal virtual RectTransform ParentTransformForChilds => TopTransform;
 
-		public KsmGuiBase(KsmGuiBase parent)
+		internal KsmGuiBase(KsmGuiBase parent)
 		{
 			TopObject = new GameObject(Name);
 			TopTransform = TopObject.AddComponent<RectTransform>();
@@ -41,9 +41,9 @@ namespace KERBALISM.KsmGui
 			TopObject.SetLayerRecursive(5);
 		}
 
-		public virtual string Name => GetType().Name;
+		internal virtual string Name => GetType().Name;
 
-		public virtual bool Enabled
+		internal virtual bool Enabled
 		{
 			get => TopObject.activeSelf;
 			set
@@ -57,7 +57,7 @@ namespace KERBALISM.KsmGui
 
 		/// <summary> callback that will be called on this object Update(). Won't be called if Enabled = false </summary>
 		/// <param name="updateFrequency">amount of Update() frames skipped between each call. 50 =~ 1 sec </param>
-		public void SetUpdateAction(Action action, int updateFrequency = 1)
+		internal void SetUpdateAction(Action action, int updateFrequency = 1)
 		{
 			if (UpdateHandler == null)
 				UpdateHandler = TopObject.AddComponent<KsmGuiUpdateHandler>();
@@ -68,7 +68,7 @@ namespace KERBALISM.KsmGui
 		}
 
 		/// <summary> coroutine-like (IEnumerable) method that will be called repeatedly as long as Enabled = true </summary>
-		public void SetUpdateCoroutine(KsmGuiUpdateCoroutine coroutineFactory)
+		internal void SetUpdateCoroutine(KsmGuiUpdateCoroutine coroutineFactory)
 		{
 			if (UpdateHandler == null)
 				UpdateHandler = TopObject.AddComponent<KsmGuiUpdateHandler>();
@@ -76,13 +76,13 @@ namespace KERBALISM.KsmGui
 			UpdateHandler.coroutineFactory = coroutineFactory;
 		}
 
-		public void ForceExecuteCoroutine(bool fromStart = false)
+		internal void ForceExecuteCoroutine(bool fromStart = false)
 		{
 			if (UpdateHandler != null)
 				UpdateHandler.ForceExecuteCoroutine(fromStart);
 		}
 
-		public void SetTooltipText(string text)
+		internal void SetTooltipText(string text)
 		{
 			if (text == null)
 				return;
@@ -94,7 +94,7 @@ namespace KERBALISM.KsmGui
 		}
 
 		/// <summary> Add sizing constraints trough a LayoutElement component</summary>
-		public void SetLayoutElement(bool flexibleWidth = false, bool flexibleHeight = false, int preferredWidth = -1, int preferredHeight = -1, int minWidth = -1, int minHeight = -1)
+		internal void SetLayoutElement(bool flexibleWidth = false, bool flexibleHeight = false, int preferredWidth = -1, int preferredHeight = -1, int minWidth = -1, int minHeight = -1)
 		{
 			if (LayoutElement == null)
 				LayoutElement = TopObject.AddComponent<LayoutElement>();
@@ -107,14 +107,14 @@ namespace KERBALISM.KsmGui
 			LayoutElement.minHeight = minHeight;
 		}
 
-		public void RebuildLayout() => layoutOptimizer.RebuildLayout();
+		internal void RebuildLayout() => layoutOptimizer.RebuildLayout();
 
-		public void MoveAsFirstChild()
+		internal void MoveAsFirstChild()
 		{
 			TopTransform.SetAsFirstSibling();
 		}
 
-		public void MoveAfter(KsmGuiBase afterThis)
+		void MoveAfter(KsmGuiBase afterThis)
 		{
 			
 		}

@@ -6,20 +6,20 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public class KerbalismScansat : PartModule
+	class KerbalismScansat : PartModule
 	{
 		[KSPField] public string experimentType = string.Empty;
 		[KSPField] public double ec_rate = 0.0;
 
-		[KSPField(isPersistant = true)] private int sensorType = 0;
-		[KSPField(isPersistant = true)] private string body_name = string.Empty;
-		[KSPField(isPersistant = true)] private double body_coverage = 0.0;
-		[KSPField(isPersistant = true)] private double warp_buffer = 0.0;
+		[KSPField(isPersistant = true)] int sensorType = 0;
+		[KSPField(isPersistant = true)] string body_name = string.Empty;
+		[KSPField(isPersistant = true)] double body_coverage = 0.0;
+		[KSPField(isPersistant = true)] double warp_buffer = 0.0;
 
 
-		private PartModule scanner = null;
+		PartModule scanner = null;
 		ExperimentInfo expInfo;
-		public bool IsScanning { get; internal set; }
+		bool IsScanning { get; set; }
 
 		public override void OnStart(StartState state)
 		{
@@ -40,7 +40,7 @@ namespace KERBALISM
 			expInfo = ScienceDB.GetExperimentInfo(experimentType);
 		}
 
-		public void FixedUpdate()
+		void FixedUpdate()
 		{
 			if (scanner == null) return;
 			if (!Features.Science) return;
@@ -117,21 +117,21 @@ namespace KERBALISM
 			}
 		}
 
-		internal void StopScan()
+		void StopScan()
 		{
 			if (scanner == null) return;
 			SCANsat.StopScan(scanner);
 			IsScanning = SCANsat.IsScanning(scanner);
 		}
 
-		internal void StartScan()
+		void StartScan()
 		{
 			if (scanner == null) return;
 			SCANsat.StartScan(scanner);
 			IsScanning = SCANsat.IsScanning(scanner);
 		}
 
-		public static void BackgroundUpdate(Vessel vessel, ProtoPartSnapshot p, ProtoPartModuleSnapshot m, KerbalismScansat kerbalismScansat,
+		internal static void BackgroundUpdate(Vessel vessel, ProtoPartSnapshot p, ProtoPartModuleSnapshot m, KerbalismScansat kerbalismScansat,
 		                                    Part part_prefab, VesselData vd, ResourceInfo ec, double elapsed_s)
 		{
 			List<ProtoPartModuleSnapshot> scanners = Cache.VesselObjectsCache<List<ProtoPartModuleSnapshot>>(vessel, "scansat_" + p.flightID);

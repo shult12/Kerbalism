@@ -5,18 +5,18 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public sealed class HarvesterDevice : LoadedDevice<Harvester>
+	sealed class HarvesterDevice : LoadedDevice<Harvester>
 	{
-		private readonly ModuleAnimationGroup animator;
+		readonly ModuleAnimationGroup animator;
 
-		public HarvesterDevice(Harvester module) : base(module)
+		internal HarvesterDevice(Harvester module) : base(module)
 		{
 			animator = module.part.FindModuleImplementing<ModuleAnimationGroup>();
 		}
 
-		public override string Name => Lib.BuildString(module.resource, " harvester").ToLower();
+		internal override string Name => Lib.BuildString(module.resource, " harvester").ToLower();
 
-		public override string Status
+		internal override string Status
 		{
 			get
 			{
@@ -30,7 +30,7 @@ namespace KERBALISM
 			}
 		}
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			if (module.deployed)
 			{
@@ -38,25 +38,25 @@ namespace KERBALISM
 			}
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			Ctrl(!module.running);
 		}
 	}
 
-	public sealed class ProtoHarvesterDevice : ProtoDevice<Harvester>
+	sealed class ProtoHarvesterDevice : ProtoDevice<Harvester>
 	{
-		private readonly ProtoPartModuleSnapshot animator;
+		readonly ProtoPartModuleSnapshot animator;
 
-		public ProtoHarvesterDevice(Harvester prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
+		internal ProtoHarvesterDevice(Harvester prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
 			: base(prefab, protoPart, protoModule)
 		{
 			this.animator = protoPart.FindModule("ModuleAnimationGroup");
 		}
 
-		public override string Name => Lib.BuildString(prefab.resource, " harvester").ToLower();
+		internal override string Name => Lib.BuildString(prefab.resource, " harvester").ToLower();
 
-		public override string Status
+		internal override string Status
 		{
 			get
 			{
@@ -74,7 +74,7 @@ namespace KERBALISM
 			}
 		}
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			if (Lib.Proto.GetBool(protoModule, "deployed"))
 			{
@@ -82,7 +82,7 @@ namespace KERBALISM
 			}
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			Ctrl(!Lib.Proto.GetBool(protoModule, "running"));
 		}

@@ -7,9 +7,9 @@ namespace KERBALISM.Planner
 {
 
 	///<summary> Contains all the data for a single resource within the planners vessel simulator </summary>
-	public sealed class SimulatedResource
+	sealed class SimulatedResource
 	{
-		public SimulatedResource(string name)
+		internal SimulatedResource(string name)
 		{
 			ResetSimulatorDisplayValues();
 
@@ -30,7 +30,7 @@ namespace KERBALISM.Planner
 		/// where resources that are initially empty at vessel start have been created, otherwise
 		/// user sees data only relevant for first simulation step (typically 1/50 seconds)
 		/// </remarks>
-		public void ResetSimulatorDisplayValues()
+		internal void ResetSimulatorDisplayValues()
 		{
 			consumers = new Dictionary<string, Wrapper>();
 			producers = new Dictionary<string, Wrapper>();
@@ -47,14 +47,14 @@ namespace KERBALISM.Planner
 		/// KSP 1.3 always defaults to vessel wide
 		/// design is shared with Resource_location in Resource.cs module
 		/// </remarks>
-		private class Resource_location
+		class Resource_location
 		{
-			public Resource_location(Part p)
+			Resource_location(Part p)
 			{
 				vessel_wide = false;
 				persistent_identifier = p.persistentId;
 			}
-			public Resource_location() { }
+			internal Resource_location() { }
 
 			/// <summary>Equals method in order to ensure object behaves like a value object</summary>
 			public override bool Equals(object obj)
@@ -73,60 +73,60 @@ namespace KERBALISM.Planner
 				return (int)persistent_identifier;
 			}
 
-			public bool IsVesselWide() { return vessel_wide; }
-			public uint GetPersistentPartId() { return persistent_identifier; }
+			bool IsVesselWide() { return vessel_wide; }
+			uint GetPersistentPartId() { return persistent_identifier; }
 
-			private bool vessel_wide = true;
-			private uint persistent_identifier = 0;
+			bool vessel_wide = true;
+			uint persistent_identifier = 0;
 		}
 
 		/// <summary>implementation of Simulated_resource_view</summary>
 		/// <remarks>only constructed by Simulated_resource class to hide the dependencies between the two</remarks>
-		private class Simulated_resource_view_impl: SimulatedResourceView
+		class Simulated_resource_view_impl: SimulatedResourceView
 		{
-			public Simulated_resource_view_impl(Part p, string resource_name, SimulatedResource i)
+			internal Simulated_resource_view_impl(Part p, string resource_name, SimulatedResource i)
 			{
 				info = i;
 				location = info.vessel_wide_location;
 			}
 
-			public override void AddPartResources(Part p)
+			internal override void AddPartResources(Part p)
 			{
 				info.AddPartResources(location, p);
 			}
-			public override void Produce(double quantity, string name)
+			internal override void Produce(double quantity, string name)
 			{
 				info.Produce(location, quantity, name);
 			}
-			public override void Consume(double quantity, string name)
+			internal override void Consume(double quantity, string name)
 			{
 				info.Consume(location, quantity, name);
 			}
-			public override void Clamp()
+			internal override void Clamp()
 			{
 				info.Clamp(location);
 			}
 
-			public override double amount
+			internal override double amount
 			{
 				get => info._amount[location];
 			}
-			public override double capacity
+			internal override double capacity
 			{
 				get => info._capacity[location];
 			}
-			public override double storage
+			internal override double storage
 			{
 				get => info._storage[location];
 			}
 
-			private SimulatedResource info;
-			private Resource_location location;
+			SimulatedResource info;
+			Resource_location location;
 		}
 
 		/// <summary>initialize resource amounts for new resource location</summary>
 		/// <remarks>typically for a part that has not yet used this resource</remarks>
-		private void InitDicts(Resource_location location)
+		void InitDicts(Resource_location location)
 		{
 			_storage[location] = 0.0;
 			_amount[location] = 0.0;
@@ -135,18 +135,18 @@ namespace KERBALISM.Planner
 
 		/// <summary>obtain a view on this resource for a given loaded part</summary>
 		/// <remarks>passing a null part forces it vessel wide view</remarks>
-		public SimulatedResourceView GetSimulatedResourceView(Part p)
+		internal SimulatedResourceView GetSimulatedResourceView(Part p)
 		{
 			return _vessel_wide_view;
 		}
 
 		/// <summary>add resource information contained within part to vessel wide simulator</summary>
-		public void AddPartResources(Part p)
+		void AddPartResources(Part p)
 		{
 			AddPartResources(vessel_wide_location, p);
 		}
 		/// <summary>add resource information within part to per-part simulator</summary>
-		private void AddPartResources(Resource_location location, Part p)
+		void AddPartResources(Resource_location location, Part p)
 		{
 			_storage[location] += Lib.Amount(p, resource_name);
 			_amount[location] += Lib.Amount(p, resource_name);
@@ -154,13 +154,13 @@ namespace KERBALISM.Planner
 		}
 
 		/// <summary>consume resource from the vessel wide bookkeeping</summary>
-		public void Consume(double quantity, string name)
+		internal void Consume(double quantity, string name)
 		{
 			Consume(vessel_wide_location, quantity, name);
 		}
 		/// <summary>consume resource from the per-part bookkeeping</summary>
 		/// <remarks>also works for vessel wide location</remarks>
-		private void Consume(Resource_location location, double quantity, string name)
+		void Consume(Resource_location location, double quantity, string name)
 		{
 			if (quantity >= double.Epsilon)
 			{
@@ -174,13 +174,13 @@ namespace KERBALISM.Planner
 		}
 
 		/// <summary>produce resource for the vessel wide bookkeeping</summary>
-		public void Produce(double quantity, string name)
+		internal void Produce(double quantity, string name)
 		{
 			Produce(vessel_wide_location, quantity, name);
 		}
 		/// <summary>produce resource for the per-part bookkeeping</summary>
 		/// <remarks>also works for vessel wide location</remarks>
-		private void Produce(Resource_location location, double quantity, string name)
+		void Produce(Resource_location location, double quantity, string name)
 		{
 			if (quantity >= double.Epsilon)
 			{
@@ -194,25 +194,25 @@ namespace KERBALISM.Planner
 		}
 
 		/// <summary>clamp resource amount to capacity for the vessel wide bookkeeping</summary>
-		public void Clamp()
+		internal void Clamp()
 		{
 			Clamp(vessel_wide_location);
 		}
 		/// <summary>clamp resource amount to capacity for the per-part bookkeeping</summary>
-		private void Clamp(Resource_location location)
+		void Clamp(Resource_location location)
 		{
 			_amount[location] = Lib.Clamp(_amount[location], 0.0, _capacity[location]);
 		}
 
 		/// <summary>determine how long a resource will last at simulated consumption/production levels</summary>
-		public double Lifetime()
+		internal double Lifetime()
 		{
 			double rate = produced - consumed;
 			return amount <= double.Epsilon ? 0.0 : rate > -1e-10 ? double.NaN : amount / -rate;
 		}
 
 		/// <summary>generate resource tooltip multi-line string</summary>
-		public string Tooltip(bool invert = false)
+		internal string Tooltip(bool invert = false)
 		{
 			IDictionary<string, Wrapper> green = !invert ? producers : consumers;
 			IDictionary<string, Wrapper> red = !invert ? consumers : producers;
@@ -252,18 +252,18 @@ namespace KERBALISM.Planner
 		// Enforce that modification happens through official accessor functions
 		// Many external classes need to read these values, and they want convenient access
 		// However direct modification of these members from outside would make the coupling far too high
-		public string resource_name
+		string resource_name
 		{
 			get
 			{
 				return _resource_name;
 			}
-			private set
+			set
 			{
 				_resource_name = value;
 			}
 		}
-		public List<string> harvests
+		internal List<string> harvests
 		{
 			get
 			{
@@ -274,7 +274,7 @@ namespace KERBALISM.Planner
 				_harvests = value;
 			}
 		}
-		public double consumed
+		internal double consumed
 		{
 			get
 			{
@@ -285,7 +285,7 @@ namespace KERBALISM.Planner
 				_consumed = value;
 			}
 		}
-		public double produced
+		internal double produced
 		{
 			get
 			{
@@ -298,21 +298,21 @@ namespace KERBALISM.Planner
 		}
 
 		// only getters, use official interface for setting that support resource location
-		public double storage
+		internal double storage
 		{
 			get
 			{
 				return _storage.Values.Sum();
 			}
 		}
-		public double capacity
+		internal double capacity
 		{
 			get
 			{
 				return _capacity.Values.Sum();
 			}
 		}
-		public double amount
+		internal double amount
 		{
 			get
 			{
@@ -320,20 +320,20 @@ namespace KERBALISM.Planner
 			}
 		}
 
-		private string _resource_name;  // associated resource name
-		private List<string> _harvests; // some extra data about harvests
-		private double _consumed;       // total consumption rate
-		private double _produced;       // total production rate
+		string _resource_name;  // associated resource name
+		List<string> _harvests; // some extra data about harvests
+		double _consumed;       // total consumption rate
+		double _produced;       // total production rate
 
-		private IDictionary<Resource_location, double> _storage;  // amount stored (at the start of simulation)
-		private IDictionary<Resource_location, double> _capacity; // storage capacity
-		private IDictionary<Resource_location, double> _amount;   // amount stored (during simulation)
+		IDictionary<Resource_location, double> _storage;  // amount stored (at the start of simulation)
+		IDictionary<Resource_location, double> _capacity; // storage capacity
+		IDictionary<Resource_location, double> _amount;   // amount stored (during simulation)
 
-		private class Wrapper { public double value; }
-		private IDictionary<string, Wrapper> consumers; // consumers metadata
-		private IDictionary<string, Wrapper> producers; // producers metadata
-		private Resource_location vessel_wide_location;
-		private SimulatedResourceView _vessel_wide_view;
+		class Wrapper { internal double value; }
+		IDictionary<string, Wrapper> consumers; // consumers metadata
+		IDictionary<string, Wrapper> producers; // producers metadata
+		Resource_location vessel_wide_location;
+		SimulatedResourceView _vessel_wide_view;
 	}
 
 

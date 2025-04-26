@@ -8,10 +8,10 @@ namespace KERBALISM
 
 
 	// a simple particle renderer
-	public static class ParticleRenderer
+	static class ParticleRenderer
 	{
 		// pseudo-ctor
-		public static void Init()
+		internal static void Init()
 		{
 			// load shader
 			mat = Lib.GetShader("FullPointParticle");
@@ -24,7 +24,7 @@ namespace KERBALISM
 
 		// commit a particle to the renderer
 		// note: this function may trigger actual rendering
-		public static void Commit(Vector3 p, float size, Color32 color)
+		static void Commit(Vector3 p, float size, Color32 color)
 		{
 			points[point_index].Set(p.x, p.y, p.z);
 			sizes[point_index].Set(size, 0.0f);
@@ -55,7 +55,7 @@ namespace KERBALISM
 
 		// render all particles
 		// note: this only render all particles not already rendered during commit
-		public static void Render()
+		internal static void Render()
 		{
 			if (point_index > 0)
 			{
@@ -79,14 +79,14 @@ namespace KERBALISM
 
 
 
-		private const int max_particles = 64000;                                    // max particles per-mesh
-		private readonly static Vector3[] points = new Vector3[max_particles];      // mesh data: position
-		private readonly static Vector2[] sizes = new Vector2[max_particles];       // mesh data: size in pixels
-		private readonly static Color32[] colors = new Color32[max_particles];      // mesh data: 32bit color
-		private static List<int> indices = new List<int>(max_particles);            // mesh data: indices
-		private static Mesh mesh;                                                   // mesh used as set of VBA
-		private static Material mat;                                                // material used
-		private static int point_index;                                             // index of next point in the arrays
+		const int max_particles = 64000;                                    // max particles per-mesh
+		readonly static Vector3[] points = new Vector3[max_particles];      // mesh data: position
+		readonly static Vector2[] sizes = new Vector2[max_particles];       // mesh data: size in pixels
+		readonly static Color32[] colors = new Color32[max_particles];      // mesh data: 32bit color
+		static List<int> indices = new List<int>(max_particles);            // mesh data: indices
+		static Mesh mesh;                                                   // mesh used as set of VBA
+		static Material mat;                                                // material used
+		static int point_index;                                             // index of next point in the arrays
 	}
 
 

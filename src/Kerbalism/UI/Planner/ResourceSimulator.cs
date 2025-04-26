@@ -8,19 +8,19 @@ namespace KERBALISM.Planner
 {
 
 	///<summary> Planners simulator for resources contained, produced and consumed within the vessel </summary>
-	public class ResourceSimulator
+	class ResourceSimulator
 	{
-		private class PlannerDelegate
+		class PlannerDelegate
 		{
-			internal MethodInfo methodInfo = null;
-			internal IKerbalismModule module = null;
+			MethodInfo methodInfo = null;
+			IKerbalismModule module = null;
 
-			public PlannerDelegate(IKerbalismModule module)
+			PlannerDelegate(IKerbalismModule module)
 			{
 				this.module = module;
 			}
 
-			public PlannerDelegate(MethodInfo methodInfo)
+			internal PlannerDelegate(MethodInfo methodInfo)
 			{
 				this.methodInfo = methodInfo;
 			}
@@ -39,16 +39,16 @@ namespace KERBALISM.Planner
 			}
 		}
 
-		private static readonly Dictionary<string, PlannerDelegate> apiDelegates = new Dictionary<string, PlannerDelegate>();
-		private static readonly List<string> unsupportedModules = new List<string>();
+		static readonly Dictionary<string, PlannerDelegate> apiDelegates = new Dictionary<string, PlannerDelegate>();
+		static readonly List<string> unsupportedModules = new List<string>();
 
-		private static Type[] plannerMethodSignature = { typeof(List<KeyValuePair<string, double>>), typeof(CelestialBody), typeof(Dictionary<string, double>) };
+		static Type[] plannerMethodSignature = { typeof(List<KeyValuePair<string, double>>), typeof(CelestialBody), typeof(Dictionary<string, double>) };
 
 		/// <summary>
 		/// run simulator to get statistics a fraction of a second after the vessel would spawn
 		/// in the configured environment (celestial body, orbit height and presence of sunlight)
 		/// </summary>
-		public void Analyze(List<Part> parts, EnvironmentAnalyzer env, VesselAnalyzer va)
+		internal void Analyze(List<Part> parts, EnvironmentAnalyzer env, VesselAnalyzer va)
 		{
 			// reach steady state, so all initial resources like WasteAtmosphere are produced
 			// it is assumed that one cycle is needed to produce things that don't need inputs
@@ -69,7 +69,7 @@ namespace KERBALISM.Planner
 		}
 
 		/// <summary>run a single timestamp of the simulator</summary>
-		private void RunSimulator(List<Part> parts, EnvironmentAnalyzer env, VesselAnalyzer va)
+		void RunSimulator(List<Part> parts, EnvironmentAnalyzer env, VesselAnalyzer va)
 		{
 			// clear previous resource state
 			resources.Clear();
@@ -241,7 +241,7 @@ namespace KERBALISM.Planner
 				pair.Value.Clamp();
 		}
 
-		private void Process_apiModule(PartModule m, EnvironmentAnalyzer env, VesselAnalyzer va)
+		void Process_apiModule(PartModule m, EnvironmentAnalyzer env, VesselAnalyzer va)
 		{
 			List<KeyValuePair<string, double>> resourcesList = new List<KeyValuePair<string, double>>();
 
@@ -277,7 +277,7 @@ namespace KERBALISM.Planner
 			}
 		}
 
-		private bool IsModuleKerbalismAware(PartModule m)
+		bool IsModuleKerbalismAware(PartModule m)
 		{
 			if (m is IKerbalismModule) return true;
 
@@ -296,7 +296,7 @@ namespace KERBALISM.Planner
 		}
 
 		/// <summary>obtain information on resource metrics for any resource contained within simulated vessel</summary>
-		public SimulatedResource Resource(string name)
+		internal SimulatedResource Resource(string name)
 		{
 			SimulatedResource res;
 			if (!resources.TryGetValue(name, out res))
@@ -315,7 +315,7 @@ namespace KERBALISM.Planner
 		}
 
 		/// <summary>process a rule and add/remove the resources from the simulator</summary>
-		private void Process_rule_inner_body(double k, Part p, Rule r, EnvironmentAnalyzer env, VesselAnalyzer va)
+		void Process_rule_inner_body(double k, Part p, Rule r, EnvironmentAnalyzer env, VesselAnalyzer va)
 		{
 			// deduce rate per-second
 			double rate = va.crew_count * (r.interval > 0.0 ? r.rate / r.interval : r.rate);
@@ -336,7 +336,7 @@ namespace KERBALISM.Planner
 		}
 
 		/// <summary>determine if the resources involved are restricted to a part, and then process a rule</summary>
-		public void Process_rule(List<Part> parts, Rule r, EnvironmentAnalyzer env, VesselAnalyzer va)
+		void Process_rule(List<Part> parts, Rule r, EnvironmentAnalyzer env, VesselAnalyzer va)
 		{
 			// evaluate modifiers
 			double k = Modifiers.Evaluate(env, va, this, r.modifiers);
@@ -344,7 +344,7 @@ namespace KERBALISM.Planner
 		}
 
 		/// <summary>process the process and add/remove the resources from the simulator</summary>
-		private void Process_process_inner_body(double k, Part p, Process pr, EnvironmentAnalyzer env, VesselAnalyzer va)
+		void Process_process_inner_body(double k, Part p, Process pr, EnvironmentAnalyzer env, VesselAnalyzer va)
 		{
 			// prepare recipe
 			SimulatedRecipe recipe = new SimulatedRecipe(p, pr.title);
@@ -360,7 +360,7 @@ namespace KERBALISM.Planner
 		}
 
 		/// <summary>process the process and add/remove the resources from the simulator for the entire vessel at once</summary>
-		private void Process_process_vessel_wide(Process pr, EnvironmentAnalyzer env, VesselAnalyzer va)
+		void Process_process_vessel_wide(Process pr, EnvironmentAnalyzer env, VesselAnalyzer va)
 		{
 			// evaluate modifiers
 			double k = Modifiers.Evaluate(env, va, this, pr.modifiers);
@@ -372,7 +372,7 @@ namespace KERBALISM.Planner
 		/// the process and add/remove the resources from the simulator
 		/// </summary>
 		/// <remarks>while rules are usually input or output only, processes transform input to output</remarks>
-		public void Process_process(List<Part> parts, Process pr, EnvironmentAnalyzer env, VesselAnalyzer va)
+		void Process_process(List<Part> parts, Process pr, EnvironmentAnalyzer env, VesselAnalyzer va)
 		{
 			Process_process_vessel_wide(pr, env, va);
 		}

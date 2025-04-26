@@ -7,17 +7,17 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiTooltipController : MonoBehaviour
+	class KsmGuiTooltipController : MonoBehaviour
 	{
-		public static KsmGuiTooltipController Instance { get; private set; }
+		internal static KsmGuiTooltipController Instance { get; private set; }
 
-		private GameObject tooltipObject;
-		private TextMeshProUGUI textComponent;
-		public RectTransform TopTransform { get; private set; }
-		public RectTransform ContentTransform { get; private set; }
-		public bool IsVisible { get; private set; }
+		GameObject tooltipObject;
+		TextMeshProUGUI textComponent;
+		RectTransform TopTransform { get; set; }
+		RectTransform ContentTransform { get; set; }
+		bool IsVisible { get; set; }
 
-		private void Awake()
+		void Awake()
 		{
 			Instance = this;
 
@@ -113,12 +113,12 @@ namespace KERBALISM.KsmGui
 			IsVisible = false;
 		}
 
-		public void SetTooltipText(string text)
+		internal void SetTooltipText(string text)
 		{
 			textComponent.SetText(text);
 		}
 
-		public void ShowTooltip(string text)
+		internal void ShowTooltip(string text)
 		{
 			if (!string.IsNullOrEmpty(text))
 			{
@@ -129,13 +129,13 @@ namespace KERBALISM.KsmGui
 			}
 		}
 
-		public void HideTooltip()
+		internal void HideTooltip()
 		{
 			tooltipObject.SetActive(false);
 			IsVisible = false;
 		}
 
-		private void Update()
+		void Update()
 		{
 			if (IsVisible)
 			{

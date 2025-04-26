@@ -48,23 +48,23 @@ namespace KerbalismBootstrap
 	{
 		const string assemblyName = "Kerbalism";
 
-		public List<Kbin> Kbins { get; private set; }
-		public Version KSPVersion { get; private set; }
+		List<Kbin> Kbins { get; set; }
+		Version KSPVersion { get; set; }
 
-		public class Kbin
+		class Kbin
 		{
-			public string KbinAssemblyName;
-			public string KbinFilePath;
-			public Version KSPVersionMin;
-			public Version KSPVersionMax;
+			internal string KbinAssemblyName;
+			internal string KbinFilePath;
+			internal Version KSPVersionMin;
+			internal Version KSPVersionMax;
 		}
 
-		public int ParseKbinVersion(XmlNode KbinNode, string versionNode)
+		int ParseKbinVersion(XmlNode KbinNode, string versionNode)
 		{
 			return int.Parse(KbinNode.SelectSingleNode(versionNode).InnerText);
 		}
 
-		public void Start()
+		void Start()
 		{
 			// get assembly path
 			string codeBase = Assembly.GetExecutingAssembly().CodeBase;
@@ -179,10 +179,10 @@ namespace KerbalismBootstrap
 	}
 
 	// This class is a wrapper for the private AddonLoader.StartAddon() KSP method
-	public static class AddonLoaderWrapper
+	static class AddonLoaderWrapper
 	{
-		private static readonly MethodInfo KSPStartAddon;
-		public static bool IsValid => KSPStartAddon != null;
+		static readonly MethodInfo KSPStartAddon;
+		internal static bool IsValid => KSPStartAddon != null;
 
 		static AddonLoaderWrapper()
 		{
@@ -203,7 +203,7 @@ namespace KerbalismBootstrap
 			});
 		}
 
-		public static void StartAddon(AssemblyLoader.LoadedAssembly assembly, Type addonType, KSPAddon addon, KSPAddon.Startup startup)
+		internal static void StartAddon(AssemblyLoader.LoadedAssembly assembly, Type addonType, KSPAddon addon, KSPAddon.Startup startup)
 		{
 			KSPStartAddon.Invoke(AddonLoader.Instance, new object[] { assembly, addonType, addon, startup });
 		}

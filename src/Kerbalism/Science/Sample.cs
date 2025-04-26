@@ -7,28 +7,28 @@ namespace KERBALISM
 	/// <summary>
 	/// Stores information about a science sample
 	/// </summary>
-	public sealed class Sample
+	sealed class Sample
 	{
 		/// <summary>data size in Mb</summary>
-		public double size;
+		internal double size;
 
 		/// <summary>randomized result text</summary>
-		public string resultText;
+		internal string resultText;
 
 		/// <summary> will be true if the file was created by the hijacker. Force the stock crediting formula to be applied on recovery</summary>
-		public bool useStockCrediting;
+		internal bool useStockCrediting;
 
-		public SubjectData subjectData;
+		internal SubjectData subjectData;
 
-		public double mass;
+		internal double mass;
 
 		/// <summary>flagged for analysis in a laboratory</summary>
-		public bool analyze;
+		internal bool analyze;
 
 		/// <summary>
 		/// Creates a science sample with the specified size in Mb
 		/// </summary>
-		public Sample(SubjectData subjectData, double size = 0.0, bool useStockCrediting = false, string resultText = "")
+		internal Sample(SubjectData subjectData, double size = 0.0, bool useStockCrediting = false, string resultText = "")
 		{
 			this.subjectData = subjectData;
 			this.size = size;
@@ -48,7 +48,7 @@ namespace KERBALISM
 			analyze = false;
 		}
 
-		public static Sample Load(string integerSubjectId, ConfigNode node)
+		internal static Sample Load(string integerSubjectId, ConfigNode node)
 		{
 			SubjectData subjectData;
 			string stockSubjectId = Lib.ConfigValue(node, "stockSubjectId", string.Empty);
@@ -80,7 +80,7 @@ namespace KERBALISM
 		}
 
 		// this is a fallback loading method for pre 3.1 / pre build 7212 files saved used the stock subject id
-		public static Sample LoadOldFormat(string stockSubjectId, ConfigNode node)
+		internal static Sample LoadOldFormat(string stockSubjectId, ConfigNode node)
 		{
 			SubjectData subjectData = ScienceDB.GetSubjectDataFromStockId(stockSubjectId);
 
@@ -108,7 +108,7 @@ namespace KERBALISM
 		/// <summary>
 		/// Stores a science sample into the specified config node
 		/// </summary>
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			node.AddValue("size", size);
 			node.AddValue("resultText", resultText);
@@ -121,7 +121,7 @@ namespace KERBALISM
 			node.AddValue("mass", mass);
 		}
 
-		public ScienceData ConvertToStockData()
+		internal ScienceData ConvertToStockData()
 		{
 			return new ScienceData((float)size, 0.0f, 0.0f, subjectData.StockSubjectId, subjectData.FullTitle);
 		}

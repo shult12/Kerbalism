@@ -6,9 +6,9 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public static class VesselConfig
+	static class VesselConfig
 	{
-		public static void Config(this Panel p, Vessel v)
+		internal static void Config(this Panel p, Vessel v)
 		{
 			// avoid corner-case when this is called in a lambda after scene changes
 			v = FlightGlobals.FindVessel(v.id);

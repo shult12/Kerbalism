@@ -4,39 +4,39 @@ using UnityEngine;
 
 namespace KERBALISM
 {
-	public class SunShieldingPartData
+	class SunShieldingPartData
 	{
-		public double distance = 1.0;
-		public double thickness = 1.0;
+		internal double distance = 1.0;
+		internal double thickness = 1.0;
 
-		public SunShieldingPartData(double distance, double thickness)
+		internal SunShieldingPartData(double distance, double thickness)
 		{
 			this.distance = distance;
 			this.thickness = thickness;
 		}
 
-		public SunShieldingPartData(ConfigNode node)
+		internal SunShieldingPartData(ConfigNode node)
 		{
 			distance = Lib.ConfigValue<double>(node, "distance", 1.0);
 			thickness = Lib.ConfigValue<double>(node, "thickness", 1.0);
 		}
 
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			node.AddValue("distance", distance);
 			node.AddValue("thickness", thickness);
 		}
 	}
 
-	public class VesselHabitatInfo
+	class VesselHabitatInfo
 	{
-		public Dictionary<uint, List<SunShieldingPartData>> habitatShieldings = new Dictionary<uint, List<SunShieldingPartData>>();
-		private int habitatIndex = -1;
-		private List<Habitat> habitats;
+		Dictionary<uint, List<SunShieldingPartData>> habitatShieldings = new Dictionary<uint, List<SunShieldingPartData>>();
+		int habitatIndex = -1;
+		List<Habitat> habitats;
 
-		public double MaxPressure => maxPressure; private double maxPressure;
+		internal double MaxPressure => maxPressure; double maxPressure;
 
-		public VesselHabitatInfo(ConfigNode node)
+		internal VesselHabitatInfo(ConfigNode node)
 		{
 			if (node == null)
 				return;
@@ -71,7 +71,7 @@ namespace KERBALISM
 			}
 		}
 
-		private void RaytraceToSun(Part habitat)
+		void RaytraceToSun(Part habitat)
 		{
 			if (!Features.Radiation) return;
 
@@ -107,7 +107,7 @@ namespace KERBALISM
 			habitatShieldings[habitat.flightID] = sunShieldingParts;
 		}
 
-		public double AverageHabitatRadiation(double radiation)
+		internal double AverageHabitatRadiation(double radiation)
 		{
 			if (habitatShieldings.Count < 1) return radiation;
 

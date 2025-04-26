@@ -6,7 +6,7 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public class Reliability : PartModule, ISpecifics, IModuleInfo, IPartCostModifier, IPartMassModifier
+	class Reliability : PartModule, ISpecifics, IModuleInfo, IPartCostModifier, IPartMassModifier
 	{
 		// config
 		[KSPField(isPersistant = true)] public string type;                 // component name
@@ -103,7 +103,7 @@ namespace KERBALISM
 			if(broken) StartCoroutine(DeferredApply());
 		}
 
-		public IEnumerator DeferredApply()
+		IEnumerator DeferredApply()
 		{
 			// wait until vessel is unpacked. doing this will ensure that module
 			// specific hacks are executed after the module itself was OnStart()ed.
@@ -115,7 +115,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> Returns true if a failure should be triggered. </summary>
-		protected bool IgnitionCheck()
+		bool IgnitionCheck()
 		{
 			if (!PreferencesReliability.Instance.engineFailures)
 				return false;
@@ -197,7 +197,7 @@ namespace KERBALISM
 			return fail;
 		}
 
-		public void Update()
+		void Update()
 		{
 			if (Lib.IsFlight())
 			{
@@ -320,7 +320,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void FixedUpdate()
+		void FixedUpdate()
 		{
 			// do nothing in the editor
 			if (Lib.IsEditor()) return;
@@ -347,15 +347,15 @@ namespace KERBALISM
 			}
 		}
 
-		protected double nextRunningCheck = 0.0;
-		protected double lastRunningCheck = 0.0;
+		double nextRunningCheck = 0.0;
+		double lastRunningCheck = 0.0;
 
 		/// <summary>
 		/// This checks burn time and ignition failures, which is intended for engines only.
 		/// Since engines don't run on on unloaded vessels in KSP, this is only implemented
 		/// for loaded vessels.
 		/// </summary>
-		protected void RunningCheck()
+		void RunningCheck()
 		{
 			if (!PreferencesReliability.Instance.engineFailures) return;
 
@@ -442,7 +442,7 @@ namespace KERBALISM
 			lastRunningCheck = now;
 		}
 
-		public static void BackgroundUpdate(Vessel v, ProtoPartSnapshot p, ProtoPartModuleSnapshot m, Reliability reliability, double elapsed_s)
+		internal static void BackgroundUpdate(Vessel v, ProtoPartSnapshot p, ProtoPartModuleSnapshot m, Reliability reliability, double elapsed_s)
 		{
 			if(!PreferencesReliability.Instance.mtbfFailures) return;
 
@@ -636,7 +636,7 @@ namespace KERBALISM
 #if DEBUG_RELIABILITY
 		[KSPEvent(guiActive = true, guiActiveUnfocused = true, guiName = "_", active = true)] // [for testing]
 #endif
-		public void Break()
+		void Break()
 		{
 			vessel.KerbalismData().ResetReliabilityStatus();
 
@@ -689,7 +689,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void ProtoBreak(Vessel v, ProtoPartSnapshot p, ProtoPartModuleSnapshot m)
+		static void ProtoBreak(Vessel v, ProtoPartSnapshot p, ProtoPartModuleSnapshot m)
 		{
 			v.KerbalismData().ResetReliabilityStatus();
 
@@ -756,23 +756,23 @@ namespace KERBALISM
 			return Specs().Info();
 		}
 
-		public static double EffectiveMTBF(bool quality, double mtbf)
+		internal static double EffectiveMTBF(bool quality, double mtbf)
 		{
 			return mtbf * (quality ? Settings.QualityScale : 1.0);
 		}
 
-		public static double EffectiveDuration(bool quality, double duration)
+		internal static double EffectiveDuration(bool quality, double duration)
 		{
 			return duration * (quality ? Settings.QualityScale : 1.0);
 		}
 
-		public static int EffectiveIgnitions(bool quality, int ignitions)
+		internal static int EffectiveIgnitions(bool quality, int ignitions)
 		{
 			if(quality) return ignitions + (int)Math.Ceiling(ignitions * Settings.QualityScale * 0.2);
 			return ignitions;
 		}
 
-		public static double RadiationDecay(bool quality, double rad, double elapsed_s, double rated_radiation, double radiation_decay_rate)
+		static double RadiationDecay(bool quality, double rad, double elapsed_s, double rated_radiation, double radiation_decay_rate)
 		{
 			rad *= 3600.0;
 			if (quality) rated_radiation *= Settings.QualityScale;
@@ -829,7 +829,7 @@ namespace KERBALISM
 		public ModifierChangeWhen GetModuleCostChangeWhen() { return ModifierChangeWhen.CONSTANTLY; }
 		public ModifierChangeWhen GetModuleMassChangeWhen() { return ModifierChangeWhen.CONSTANTLY; }
 
-		protected bool IsRunning()
+		bool IsRunning()
 		{
 			if (type.StartsWith("ModuleEngines", StringComparison.Ordinal))
 			{
@@ -858,7 +858,7 @@ namespace KERBALISM
 		}
 
 		// apply type-specific hacks to enable/disable the module
-		protected void Apply(bool b)
+		void Apply(bool b)
 		{
 			if(b && type.StartsWith("ModuleEngines", StringComparison.Ordinal))
 			{
@@ -1064,7 +1064,7 @@ namespace KERBALISM
 
 
 		// cause a part at random to malfunction
-		public static void CauseMalfunction(Vessel v)
+		internal static void CauseMalfunction(Vessel v)
 		{
 			// if vessel is loaded
 			if (v.loaded)
@@ -1095,7 +1095,7 @@ namespace KERBALISM
 
 
 		// return true if it make sense to trigger a malfunction on the vessel
-		public static bool CanMalfunction(Vessel v)
+		internal static bool CanMalfunction(Vessel v)
 		{
 			if (v.loaded)
 			{
@@ -1109,7 +1109,7 @@ namespace KERBALISM
 
 
 		// return true if at least a component has malfunctioned or had a critical failure
-		public static bool HasMalfunction(Vessel v)
+		internal static bool HasMalfunction(Vessel v)
 		{
 			if (v.loaded)
 			{
@@ -1131,7 +1131,7 @@ namespace KERBALISM
 
 
 		// return true if at least a component has a critical failure
-		public static bool HasCriticalFailure(Vessel v)
+		internal static bool HasCriticalFailure(Vessel v)
 		{
 			if (v.loaded)
 			{

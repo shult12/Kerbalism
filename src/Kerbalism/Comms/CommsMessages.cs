@@ -2,9 +2,9 @@
 
 namespace KERBALISM
 {
-	public class CommsMessages
+	class CommsMessages
 	{
-		public static void Update(Vessel v, VesselData vd, double elapsed_s)
+		internal static void Update(Vessel v, VesselData vd, double elapsed_s)
 		{
 			if (!Lib.IsVessel(v))
 				return;

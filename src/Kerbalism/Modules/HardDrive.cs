@@ -9,7 +9,7 @@ using KSP.Localization;
 namespace KERBALISM
 {
 
-	public class HardDrive : PartModule, IScienceDataContainer, ISpecifics, IModuleInfo, IPartMassModifier, IPartCostModifier
+	class HardDrive : PartModule, IScienceDataContainer, ISpecifics, IModuleInfo, IPartMassModifier, IPartCostModifier
 	{
 		[KSPField] public double dataCapacity = -1;             // base drive capacity, in Mb. -1 = unlimited
 		[KSPField] public int sampleCapacity = -1;              // base drive capacity, in slots. -1 = unlimited
@@ -35,8 +35,8 @@ namespace KERBALISM
 		[KSPField(guiActive = true, guiName = "#KERBALISM_HardDrive_Capacity", guiActiveEditor = true, groupName = "Science", groupDisplayName = "#KERBALISM_Group_Science")]//Capacity--Science
 		public string Capacity;
 
-		private Drive drive;
-		private double totalSampleMass;
+		Drive drive;
+		double totalSampleMass;
 
 		List<KeyValuePair<string, double>> dataCapacities = null;
 		List<KeyValuePair<string, int>> sampleCapacities = null;
@@ -127,7 +127,7 @@ namespace KERBALISM
 			UpdateCapacity();
 		}
 
-		protected List<KeyValuePair<string, double>> GetDataCapacitySizes()
+		List<KeyValuePair<string, double>> GetDataCapacitySizes()
 		{
 			List<KeyValuePair<string, double>> result = new List<KeyValuePair<string, double>>();
 			for(var i = 1; i <= maxDataCapacityFactor; i++)
@@ -135,7 +135,7 @@ namespace KERBALISM
 			return result;
 		}
 
-		protected List<KeyValuePair<string, int>> GetSampleCapacitySizes()
+		List<KeyValuePair<string, int>> GetSampleCapacitySizes()
 		{
 			List<KeyValuePair<string, int>> result = new List<KeyValuePair<string, int>>();
 			for (var i = 1; i <= maxSampleCapacityFactor; i++)
@@ -143,12 +143,12 @@ namespace KERBALISM
 			return result;
 		}
 
-		public void FixedUpdate()
+		void FixedUpdate()
 		{
 			UpdateCapacity();
 		}
 
-		public void Update()
+		void Update()
 		{
 			if (drive == null)
 				return;
@@ -213,12 +213,12 @@ namespace KERBALISM
 			}
 		}
 
-		public bool IsPrivate()
+		bool IsPrivate()
 		{
 			return drive.is_private;
 		}
 
-		private void UpdateCapacity()
+		void UpdateCapacity()
 		{
 			if (drive == null)
 				return;
@@ -258,7 +258,7 @@ namespace KERBALISM
 			}
 		}
 
-		public Drive GetDrive()
+		Drive GetDrive()
 		{
 			return drive;
 		}

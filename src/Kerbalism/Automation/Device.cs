@@ -5,15 +5,15 @@ namespace KERBALISM
 {
 
 
-	public abstract class Device
+	abstract class Device
 	{
-		public class DeviceIcon
+		internal class DeviceIcon
 		{
-			public Texture2D texture;
-			public string tooltip;
-			public Action onClick;
+			internal Texture2D texture;
+			internal string tooltip;
+			internal Action onClick;
 
-			public DeviceIcon(Texture2D texture, string tooltip = "", Action onClick = null)
+			internal DeviceIcon(Texture2D texture, string tooltip = "", Action onClick = null)
 			{
 				this.texture = texture;
 				this.tooltip = tooltip;
@@ -21,7 +21,7 @@ namespace KERBALISM
 			}
 		}
 
-		public Device()
+		protected Device()
 		{
 			DeviceType = GetType().Name;
 		}
@@ -30,7 +30,7 @@ namespace KERBALISM
 		// same, and be unique in case multiple modules of the same type exists on the part.
 		// note 2 : dynamically generate the id when first requested.
 		// can't do it in the base ctor because the PartId and Name may be overloaded.
-		public uint Id
+		internal uint Id
 		{
 			get
 			{
@@ -40,88 +40,88 @@ namespace KERBALISM
 				return id;
 			}
 		}
-		private uint id = uint.MaxValue; // lets just hope nothing will ever have that id
+		uint id = uint.MaxValue; // lets just hope nothing will ever have that id
 
-		public string DeviceType { get; private set; }
+		internal string DeviceType { get; private set; }
 
 		// return device name, must be static and unique in case several modules of the same type are on the part
-		public abstract string Name { get; }
+		internal abstract string Name { get; }
 
 		// the name that will be displayed. can be overloaded in case some dynamic text is added (see experiments)
-		public virtual string DisplayName => Name;
+		internal virtual string DisplayName => Name;
 
 		// return part id
-		public abstract uint PartId { get; }
+		internal abstract uint PartId { get; }
 
 		// return part name
-		public abstract string PartName { get; }
+		internal abstract string PartName { get; }
 
 		// return short device status string
-		public abstract string Status { get; }
+		internal abstract string Status { get; }
 
 		// return tooltip string
-		public virtual string Tooltip => Lib.BuildString(Lib.Bold(DisplayName), "\non ", PartName);
+		internal virtual string Tooltip => Lib.BuildString(Lib.Bold(DisplayName), "\non ", PartName);
 
 		// return icon/button
-		public virtual DeviceIcon Icon => null;
+		internal virtual DeviceIcon Icon => null;
 
 		// control the device using a value
-		public abstract void Ctrl(bool value);
+		internal abstract void Ctrl(bool value);
 
 		// toggle the device state
-		public abstract void Toggle();
+		internal abstract void Toggle();
 
-		public virtual bool IsVisible => true;
+		internal virtual bool IsVisible => true;
 
-		public virtual void OnUpdate() { }
+		internal virtual void OnUpdate() { }
 	}
 
-	public abstract class LoadedDevice<T> : Device where T : PartModule
+	abstract class LoadedDevice<T> : Device where T : PartModule
 	{
 		protected readonly T module;
 
-		public LoadedDevice(T module) : base()
+		protected LoadedDevice(T module) : base()
 		{
 			this.module = module;
 		}
 
-		public override string PartName => module.part.partInfo.title;
-		public override string Name => module is IModuleInfo ? ((IModuleInfo)module).GetModuleTitle() : module.GUIName;
-		public override uint PartId => module.part.flightID;
+		internal override string PartName => module.part.partInfo.title;
+		internal override string Name => module is IModuleInfo ? ((IModuleInfo)module).GetModuleTitle() : module.GUIName;
+		internal override uint PartId => module.part.flightID;
 	}
 
-	public abstract class ProtoDevice<T> : Device where T : PartModule
+	abstract class ProtoDevice<T> : Device where T : PartModule
 	{
 		protected readonly T prefab;
 		protected readonly ProtoPartSnapshot protoPart;
 		protected readonly ProtoPartModuleSnapshot protoModule;
 
-		public ProtoDevice(T prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule) : base()
+		protected ProtoDevice(T prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule) : base()
 		{
 			this.prefab = prefab;
 			this.protoPart = protoPart;
 			this.protoModule = protoModule;
 		}
 
-		public override string PartName => prefab.part.partInfo.title;
-		public override string Name => prefab is IModuleInfo ? ((IModuleInfo)prefab).GetModuleTitle() : prefab.GUIName;
-		public override uint PartId => protoPart.flightID;
+		internal override string PartName => prefab.part.partInfo.title;
+		internal override string Name => prefab is IModuleInfo ? ((IModuleInfo)prefab).GetModuleTitle() : prefab.GUIName;
+		internal override uint PartId => protoPart.flightID;
 	}
 
-	public abstract class VesselDevice : Device
+	abstract class VesselDevice : Device
 	{
-		protected readonly Vessel vessel;
+		readonly Vessel vessel;
 		protected readonly VesselData vesselData;
 
-		public VesselDevice(Vessel v, VesselData vd) : base()
+		protected VesselDevice(Vessel v, VesselData vd) : base()
 		{
 			vessel = v;
 			vesselData = vd;
 		}
 
-		public override uint PartId => 0u;
-		public override string PartName => string.Empty;
-		public override string Tooltip => Lib.Bold(DisplayName);
+		internal override uint PartId => 0u;
+		internal override string PartName => string.Empty;
+		internal override string Tooltip => Lib.Bold(DisplayName);
 	}
 
 

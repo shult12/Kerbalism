@@ -6,45 +6,45 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public sealed class SickbayDevice : LoadedDevice<Sickbay>
+	sealed class SickbayDevice : LoadedDevice<Sickbay>
 	{
-		public SickbayDevice(Sickbay module) : base(module) { }
+		internal SickbayDevice(Sickbay module) : base(module) { }
 
-		public override string Status
+		internal override string Status
 			=> Lib.Color(module.running, Local.Generic_RUNNING, Lib.Kolor.Green, Local.Generic_STOPPED, Lib.Kolor.Yellow);
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			module.running = value;
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			Ctrl(!module.running);
 		}
 
-		public override bool IsVisible => module.slots > 0;
+		internal override bool IsVisible => module.slots > 0;
 	}
 
-	public sealed class ProtoSickbayDevice : ProtoDevice<Sickbay>
+	sealed class ProtoSickbayDevice : ProtoDevice<Sickbay>
 	{
-		public ProtoSickbayDevice(Sickbay prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
+		internal ProtoSickbayDevice(Sickbay prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
 			: base(prefab, protoPart, protoModule) { }
 
-		public override string Status
+		internal override string Status
 			=> Lib.Color(Lib.Proto.GetBool(protoModule, "running"), Local.Generic_RUNNING, Lib.Kolor.Green, Local.Generic_STOPPED, Lib.Kolor.Yellow);
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			Lib.Proto.Set(protoModule, "running", value);
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			Ctrl(!Lib.Proto.GetBool(protoModule, "running"));
 		}
 
-		public override bool IsVisible => Lib.Proto.GetUInt(protoModule, "slots", 0) > 0;
+		internal override bool IsVisible => Lib.Proto.GetUInt(protoModule, "slots", 0) > 0;
 	}
 
 

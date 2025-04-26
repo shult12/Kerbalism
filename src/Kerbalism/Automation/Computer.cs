@@ -4,7 +4,7 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public enum ScriptType
+	enum ScriptType
 	{
 		power_low = 1,    // called when ec level goes below 15%
 		power_high = 2,   // called when ec level goes above 15%
@@ -29,10 +29,10 @@ namespace KERBALISM
 		last = 21
 	}
 
-	public sealed class Computer
+	sealed class Computer
 	{
 
-		public Computer(ConfigNode node)
+		internal Computer(ConfigNode node)
 		{
 			scripts = new Dictionary<ScriptType, Script>();
 
@@ -46,7 +46,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			// save scripts
 			var scripts_node = node.AddNode("scripts");
@@ -58,14 +58,14 @@ namespace KERBALISM
 		}
 
 		// get a script
-		public Script Get(ScriptType type)
+		internal Script Get(ScriptType type)
 		{
 			if (!scripts.ContainsKey(type)) scripts.Add(type, new Script());
 			return scripts[type];
 		}
 
 		// execute a script
-		public void Execute(Vessel v, ScriptType type)
+		internal void Execute(Vessel v, ScriptType type)
 		{
 			// do nothing if there is no EC left on the vessel
 			ResourceInfo ec = ResourceCache.GetResource(v, "ElectricCharge");
@@ -88,7 +88,7 @@ namespace KERBALISM
 		}
 
 		// call scripts automatically when conditions are met
-		public void Automate(Vessel v, VesselData vd, VesselResources resources)
+		internal void Automate(Vessel v, VesselData vd, VesselResources resources)
 		{
 			// do nothing if automation is disabled
 			if (!Features.Automation) return;
@@ -227,7 +227,7 @@ namespace KERBALISM
 
 		// return set of devices on a vessel
 		// - the list is only valid for a single simulation step
-		public static List<Device> GetModuleDevices(Vessel v)
+		internal static List<Device> GetModuleDevices(Vessel v)
 		{
 			List<Device> moduleDevices = Cache.VesselObjectsCache<List<Device>>(v, "computer");
 			if (moduleDevices != null)

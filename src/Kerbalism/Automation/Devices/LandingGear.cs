@@ -3,9 +3,9 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public class LandingGearEC : DeviceEC
+	class LandingGearEC : DeviceEC
 	{
-		public LandingGearEC(ModuleWheelDeployment landingGear, double extra_Deploy)
+		internal LandingGearEC(ModuleWheelDeployment landingGear, double extra_Deploy)
 		{
 			this.landingGear = landingGear;
 			this.extra_Deploy = extra_Deploy;
@@ -24,13 +24,13 @@ namespace KERBALISM
 			}
 		}
 
-		public override void GUI_Update(bool isEnabled)
+		internal override void GUI_Update(bool isEnabled)
 		{
 			Lib.LogDebugStack("Buttons is '{0}' for '{1}' landingGear", Lib.LogLevel.Message, (isEnabled == true ? "ON" : "OFF"), landingGear.part.partInfo.title);
 			landingGear.Events["EventToggle"].active = isEnabled;
 		}
 
-		public override void FixModule(bool isEnabled)
+		internal override void FixModule(bool isEnabled)
 		{
 			ToggleActions(landingGear, isEnabled);
 		}

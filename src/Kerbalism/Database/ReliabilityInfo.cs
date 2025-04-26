@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace KERBALISM
 {
-	public class ReliabilityInfo
+	class ReliabilityInfo
 	{
-		public string title { get; private set; }
-		public string group { get; private set; }
-		public bool broken { get; private set; }
-		public bool critical { get; private set; }
-		public uint partId { get; private set; }
-		public double mtbf { get; private set; }
-		public double rel_duration { get; private set; }
-		public double rel_ignitions { get; private set; }
+		internal string title { get; private set; }
+		internal string group { get; private set; }
+		internal bool broken { get; private set; }
+		internal bool critical { get; private set; }
+		internal uint partId { get; private set; }
+		double mtbf { get; set; }
+		internal double rel_duration { get; private set; }
+		internal double rel_ignitions { get; private set; }
 
-		private bool need_maintenance;
-		private double maintenance_after = 0;
+		bool need_maintenance;
+		double maintenance_after = 0;
 
-		public ReliabilityInfo(Reliability module)
+		internal ReliabilityInfo(Reliability module)
 		{
 			title = Lib.BuildString(module.part.partInfo.title, Lib.Color(" " + module.title, Lib.Kolor.LightGrey));
 			group = module.redundancy;
@@ -45,7 +45,7 @@ namespace KERBALISM
 			}
 		}
 
-		public ReliabilityInfo(ProtoPartSnapshot p, ProtoPartModuleSnapshot m, Reliability module_prefab)
+		internal ReliabilityInfo(ProtoPartSnapshot p, ProtoPartModuleSnapshot m, Reliability module_prefab)
 		{
 			title = Lib.BuildString(p.partInfo.title, Lib.Color(" " + module_prefab.title, Lib.Kolor.LightGrey));
 			group = module_prefab.redundancy;
@@ -79,13 +79,13 @@ namespace KERBALISM
 			}
 		}
 
-		public bool NeedsMaintenance()
+		internal bool NeedsMaintenance()
 		{
 			if (maintenance_after > 0 && Planetarium.GetUniversalTime() > maintenance_after) return true;
 			return need_maintenance;
 		}
 
-		public static List<ReliabilityInfo> BuildList(Vessel vessel)
+		internal static List<ReliabilityInfo> BuildList(Vessel vessel)
 		{
 			var result = new List<ReliabilityInfo>();
 

@@ -10,7 +10,7 @@ namespace KERBALISM.Planner
 
 	///<summary> Class for the Planner used in the VAB/SPH, it is used to predict resource production/consumption and
 	/// provide information on life support, radiation, comfort and other relevant factors. </summary>
-	public static class Planner
+	static class Planner
 	{
 		#region CONSTRUCTORS_DESTRUCTORS
 		///<summary> Initializes the Planner for use </summary>
@@ -45,7 +45,7 @@ namespace KERBALISM.Planner
 		}
 
 		///<summary> Sets the styles for the panels UI </summary>
-		private static void SetStyles()
+		static void SetStyles()
 		{
 			// left menu style
 			leftmenu_style = new GUIStyle(HighLogic.Skin.label)
@@ -90,7 +90,7 @@ namespace KERBALISM.Planner
 		}
 
 		///<summary>Constructed a list of CB indices that is sorted (hierarchically) by SMA</summary>
-		private static void ComputeSortedBodyIndices()
+		static void ComputeSortedBodyIndices()
 		{
 			void SortBodiesAndAppendIndicesToList(List<CelestialBody> bodies)
 			{
@@ -276,7 +276,7 @@ namespace KERBALISM.Planner
 		}
 
 		///<summary> Add environment sub-panel, including tooltips </summary>
-		private static void AddSubPanelEnvironment(Panel p)
+		static void AddSubPanelEnvironment(Panel p)
 		{
 			string flux_tooltip = Lib.BuildString
 			(
@@ -308,7 +308,7 @@ namespace KERBALISM.Planner
 		}
 
 		///<summary> Add electric charge sub-panel, including tooltips </summary>
-		private static void AddSubPanelEC(Panel p)
+		static void AddSubPanelEC(Panel p)
 		{
 			// get simulated resource
 			SimulatedResource res = resource_sim.Resource("ElectricCharge");
@@ -330,7 +330,7 @@ namespace KERBALISM.Planner
 		/// does not include special resources like waste atmosphere
 		/// restricted to resources that are configured explicitly in the profile as supplies
 		///</remarks>
-		private static void AddSubPanelResource(Panel p, string res_name)
+		static void AddSubPanelResource(Panel p, string res_name)
 		{
 			// get simulated resource
 			SimulatedResource res = resource_sim.Resource(res_name);
@@ -351,7 +351,7 @@ namespace KERBALISM.Planner
 		}
 
 		///<summary> Add stress sub-panel, including tooltips </summary>
-		private static void AddSubPanelStress(Panel p)
+		static void AddSubPanelStress(Panel p)
 		{
 			// get first living space rule
 			// - guaranteed to exist, as this panel is not rendered if it doesn't
@@ -401,7 +401,7 @@ namespace KERBALISM.Planner
 		}
 
 		///<summary> Add radiation sub-panel, including tooltips </summary>
-		private static void AddSubPanelRadiation(Panel p)
+		static void AddSubPanelRadiation(Panel p)
 		{
 			// get first radiation rule
 			// - guaranteed to exist, as this panel is not rendered if it doesn't
@@ -464,7 +464,7 @@ namespace KERBALISM.Planner
 		}
 
 		///<summary> Add reliability sub-panel, including tooltips </summary>
-		private static void AddSubPanelReliability(Panel p)
+		static void AddSubPanelReliability(Panel p)
 		{
 			// evaluate redundancy metric
 			// - 0: no redundancy
@@ -538,7 +538,7 @@ namespace KERBALISM.Planner
 		}
 
 		///<summary> Add habitat sub-panel, including tooltips </summary>
-		private static void AddSubPanelHabitat(Panel p)
+		static void AddSubPanelHabitat(Panel p)
 		{
 			SimulatedResource atmo_res = resource_sim.Resource("Atmosphere");
 			SimulatedResource waste_res = resource_sim.Resource("WasteAtmosphere");
@@ -581,44 +581,44 @@ namespace KERBALISM.Planner
 
 #region FIELDS_PROPERTIES
 		// store situations and altitude multipliers
-		private static readonly string[] situations = { "Landed", "Low Orbit", "Orbit", "High Orbit" };
-		private static readonly double[] altitude_mults = { 0.0, 0.33, 1.0, 3.0 };
+		static readonly string[] situations = { "Landed", "Low Orbit", "Orbit", "High Orbit" };
+		static readonly double[] altitude_mults = { 0.0, 0.33, 1.0, 3.0 };
 
 		// styles
-		private static GUIStyle devbuild_style;
-		private static GUIStyle leftmenu_style;
-		private static GUIStyle rightmenu_style;
-		private static GUIStyle quote_style;
-		private static GUIStyle icon_style;
+		static GUIStyle devbuild_style;
+		static GUIStyle leftmenu_style;
+		static GUIStyle rightmenu_style;
+		static GUIStyle quote_style;
+		static GUIStyle icon_style;
 
 		// analyzers
-		private static ResourceSimulator resource_sim = new ResourceSimulator();
-		private static EnvironmentAnalyzer env_analyzer = new EnvironmentAnalyzer();
-		private static VesselAnalyzer vessel_analyzer = new VesselAnalyzer();
+		static ResourceSimulator resource_sim = new ResourceSimulator();
+		static EnvironmentAnalyzer env_analyzer = new EnvironmentAnalyzer();
+		static VesselAnalyzer vessel_analyzer = new VesselAnalyzer();
 
 		// panel arrays
-		private static List<string> supplies = new List<string>();
-		private static List<string> panel_resource = new List<string>();
-		private static List<string> panel_special = new List<string>();
-		private static List<string> panel_environment = new List<string>();
+		static List<string> supplies = new List<string>();
+		static List<string> panel_resource = new List<string>();
+		static List<string> panel_special = new List<string>();
+		static List<string> panel_environment = new List<string>();
 
 		// body/situation/sunlight indexes
-		private static int body_index;
-		private static List<int> sorted_body_indices = new List<int>();
-		private static int situation_index = 2;     // orbit
-		public enum SunlightState { SunlightNominal = 0, SunlightSimulated = 1, Shadow = 2 }
-		private static SunlightState sunlight = SunlightState.SunlightSimulated;
-		public static SunlightState Sunlight => sunlight;
+		static int body_index;
+		static List<int> sorted_body_indices = new List<int>();
+		static int situation_index = 2;     // orbit
+		internal enum SunlightState { SunlightNominal = 0, SunlightSimulated = 1, Shadow = 2 }
+		static SunlightState sunlight = SunlightState.SunlightSimulated;
+		internal static SunlightState Sunlight => sunlight;
 
 		// panel indexes
-		private static int resource_index;
-		private static int special_index;
-		private static int environment_index;
+		static int resource_index;
+		static int special_index;
+		static int environment_index;
 
 		// panel ui
-		private static Panel panel = new Panel();
-		private static bool enforceUpdate = false;
-		private static int update_counter = 0;
+		static Panel panel = new Panel();
+		static bool enforceUpdate = false;
+		static int update_counter = 0;
 #endregion
 	}
 

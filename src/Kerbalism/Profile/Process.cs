@@ -6,9 +6,9 @@ namespace KERBALISM
 {
 
 
-	public sealed class Process
+	sealed class Process
 	{
-		public Process(ConfigNode node)
+		internal Process(ConfigNode node)
 		{
 			name = Lib.ConfigValue(node, "name", string.Empty);
 			title = Lib.ConfigValue(node, "title", name);
@@ -84,7 +84,7 @@ namespace KERBALISM
 			defaultDumpValve = new DumpSpecs.ActiveValve(dump);
 		}
 
-		private void ExecuteRecipe(double k, VesselData vd, VesselResources resources, double elapsed_s)
+		void ExecuteRecipe(double k, VesselData vd, VesselResources resources, double elapsed_s)
 		{
 			// only execute processes if necessary
 			if (Math.Abs(k) < double.Epsilon) return;
@@ -115,7 +115,7 @@ namespace KERBALISM
 			resources.AddRecipe(recipe);
 		}
 
-		public void Execute(Vessel v, VesselData vd, VesselResources resources, double elapsed_s)
+		internal void Execute(Vessel v, VesselData vd, VesselResources resources, double elapsed_s)
 		{
 			// evaluate modifiers
 			// if a given PartModule has a larger than 1 capacity for a process, then the multiplication happens here
@@ -125,16 +125,16 @@ namespace KERBALISM
 			ExecuteRecipe(k, vd, resources, elapsed_s);
 		}
 
-		public string name;                           // unique name for the process
-		public string title;                          // UI title
-		public List<string> modifiers;                // if specified, rates are influenced by the product of all environment modifiers
-		public Dictionary<string, double> inputs;     // input resources and rates
-		public Dictionary<string, double> outputs;    // output resources and rates
-		public Dictionary<string, double> cures;      // cures and rates
-		public DumpSpecs dump;                        // set of output resources that should dump overboard
-		public DumpSpecs.ActiveValve defaultDumpValve;
-		public int defaultDumpValveIndex;
-		public ResourceBroker broker;
+		internal string name;                           // unique name for the process
+		internal string title;                          // UI title
+		internal List<string> modifiers;                // if specified, rates are influenced by the product of all environment modifiers
+		internal Dictionary<string, double> inputs;     // input resources and rates
+		internal Dictionary<string, double> outputs;    // output resources and rates
+		Dictionary<string, double> cures;      // cures and rates
+		internal DumpSpecs dump;                        // set of output resources that should dump overboard
+		internal DumpSpecs.ActiveValve defaultDumpValve;
+		internal int defaultDumpValveIndex;
+		ResourceBroker broker;
 	}
 
 

@@ -8,7 +8,7 @@ namespace KERBALISM.CONTRACTS
 
 
 	// Cross the heliopause
-	public sealed class CrossHeliopause : Contract
+	sealed class CrossHeliopause : Contract
 	{
 		protected override bool Generate()
 		{
@@ -72,7 +72,7 @@ namespace KERBALISM.CONTRACTS
 
 
 	// Cross radiation belt - condition
-	public sealed class CrossHeliopauseCondition : ContractParameter
+	sealed class CrossHeliopauseCondition : ContractParameter
 	{
 		protected override string GetHashString()
 		{

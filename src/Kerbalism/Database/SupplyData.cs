@@ -5,39 +5,39 @@ using UnityEngine;
 
 namespace KERBALISM
 {
-	public class SupplyData
+	class SupplyData
 	{
-		public SupplyData()
+		internal SupplyData()
 		{
 			message = 0;
 		}
 
-		public SupplyData(ConfigNode node)
+		internal SupplyData(ConfigNode node)
 		{
 			message = Lib.ConfigValue(node, "message", 0u);
 		}
 
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			node.AddValue("message", message);
 		}
 
-		public uint message;  // used to avoid sending messages multiple times
-		public List<ResourceBrokerRate> ResourceBrokers { get; private set; } = new List<ResourceBrokerRate>();
-		public static string LocAveragecache;
+		internal uint message;  // used to avoid sending messages multiple times
+		internal List<ResourceBrokerRate> ResourceBrokers { get; private set; } = new List<ResourceBrokerRate>();
+		static string LocAveragecache;
 
-		public class ResourceBrokerRate
+		internal class ResourceBrokerRate
 		{
-			public ResourceBroker broker;
-			public double rate;
-			public ResourceBrokerRate(ResourceBroker broker, double amount)
+			internal ResourceBroker broker;
+			internal double rate;
+			internal ResourceBrokerRate(ResourceBroker broker, double amount)
 			{
 				this.broker = broker;
 				this.rate = amount;
 			}
 		}
 
-		public void UpdateResourceBrokers(Dictionary<ResourceBroker, double> brokersResAmount, Dictionary<ResourceBroker, double> ruleBrokersRate, double unsupportedBrokersRate, double elapsedSeconds)
+		internal void UpdateResourceBrokers(Dictionary<ResourceBroker, double> brokersResAmount, Dictionary<ResourceBroker, double> ruleBrokersRate, double unsupportedBrokersRate, double elapsedSeconds)
 		{
 			ResourceBrokers.Clear();
 

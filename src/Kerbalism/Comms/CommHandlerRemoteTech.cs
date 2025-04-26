@@ -3,26 +3,26 @@ using System.Collections.Generic;
 
 namespace KERBALISM
 {
-	public class CommHandlerRemoteTech : CommHandler
+	class CommHandlerRemoteTech : CommHandler
 	{
 		const double bitsPerMB = 1024.0 * 1024.0 * 8.0;
 
-		private double baseRate;
+		double baseRate;
 
-		private class UnloadedTransmitter
+		class UnloadedTransmitter
 		{
-			public PartModule prefab;
-			public ProtoPartModuleSnapshot protoTransmitter;
+			internal PartModule prefab;
+			internal ProtoPartModuleSnapshot protoTransmitter;
 
-			public UnloadedTransmitter(PartModule prefab, ProtoPartModuleSnapshot protoTransmitter)
+			internal UnloadedTransmitter(PartModule prefab, ProtoPartModuleSnapshot protoTransmitter)
 			{
 				this.prefab = prefab;
 				this.protoTransmitter = protoTransmitter;
 			}
 		}
 
-		private List<UnloadedTransmitter> unloadedTransmitters;
-		private List<PartModule> loadedTransmitters;
+		List<UnloadedTransmitter> unloadedTransmitters;
+		List<PartModule> loadedTransmitters;
 
 		protected override bool NetworkIsReady => RemoteTech.Enabled;
 
@@ -247,7 +247,7 @@ namespace KERBALISM
 			connection.hasActiveAntenna = connection.ec_idle > 0.0;
 		}
 
-		public override double GetTransmissionCost(double transmittedTotal, double elapsed_s)
+		internal override double GetTransmissionCost(double transmittedTotal, double elapsed_s)
 		{
 			// I think a better model to calculate transmission cost with RemoteTech is to factor in the distance of
 			// transmission. An antenna wouldn't have to "scream" as loud if the recieving satellite or station were close.
@@ -258,7 +258,7 @@ namespace KERBALISM
 			return ((vd.Connection.ec - vd.Connection.ec_idle) * (1 - strength)) * (transmittedTotal / (vd.Connection.rate * elapsed_s));
 		}
 
-		private void GetTransmittersLoaded(Vessel v)
+		void GetTransmittersLoaded(Vessel v)
 		{
 			foreach (Part p in v.parts)
 			{
@@ -278,7 +278,7 @@ namespace KERBALISM
 			}
 		}
 
-		private void GetTransmittersUnloaded(Vessel v)
+		void GetTransmittersUnloaded(Vessel v)
 		{
 			foreach (ProtoPartSnapshot pps in v.protoVessel.protoPartSnapshots)
 			{

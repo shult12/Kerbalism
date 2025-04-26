@@ -8,7 +8,7 @@ namespace KERBALISM
 	/// <summary>
 	/// Helper module to simply display some information about transmitting data with Remote Tech in the KSP UI, only gets used if RemoteTech is installed
 	/// </summary>
-	public class AntennaDataTransmitterRemoteTech : PartModule
+	class AntennaDataTransmitterRemoteTech : PartModule
 	{
 		// TODO: Add some localization support, haven't look into that yet...
 		const string MODULE_DISPLAY_NAME = "Antenna Data Transmitter";

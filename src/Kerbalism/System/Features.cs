@@ -6,9 +6,9 @@ namespace KERBALISM
 {
 
 
-	public static class Features
+	static class Features
 	{
-		public static void Detect()
+		internal static void Detect()
 		{
 			// set user-specified features
 			Reliability = Settings.Reliability;
@@ -66,23 +66,23 @@ namespace KERBALISM
 		}
 
 		// user-specified features
-		public static bool Reliability;
-		public static bool Deploy;
-		public static bool Science;
-		public static bool SpaceWeather;
-		public static bool Automation;
+		internal static bool Reliability;
+		internal static bool Deploy;
+		internal static bool Science;
+		internal static bool SpaceWeather;
+		internal static bool Automation;
 
 		// features detected automatically from modifiers
-		public static bool Radiation;
-		public static bool Shielding;
-		public static bool LivingSpace;
-		public static bool Comfort;
-		public static bool Poisoning;
-		public static bool Pressure;
+		internal static bool Radiation;
+		internal static bool Shielding;
+		internal static bool LivingSpace;
+		internal static bool Comfort;
+		internal static bool Poisoning;
+		internal static bool Pressure;
 
 		// features detected in other ways
-		public static bool Habitat;
-		public static bool Supplies;
+		internal static bool Habitat;
+		internal static bool Supplies;
 	}
 
 

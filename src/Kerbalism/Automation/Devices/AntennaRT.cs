@@ -3,13 +3,13 @@ using static ModuleDeployablePart;
 
 namespace KERBALISM
 {
-	public sealed class AntennaRTDevice : LoadedDevice<PartModule>
+	sealed class AntennaRTDevice : LoadedDevice<PartModule>
 	{
-		public AntennaRTDevice(PartModule module) : base(module) { }
+		internal AntennaRTDevice(PartModule module) : base(module) { }
 
-		public override string Name => "antenna";
+		internal override string Name => "antenna";
 
-		public override string Status
+		internal override string Status
 		{
 			get
 			{
@@ -19,19 +19,19 @@ namespace KERBALISM
 			}
 		}
 
-		public override void Ctrl(bool value) => Lib.ReflectionValue(module, "IsRTActive", value);
+		internal override void Ctrl(bool value) => Lib.ReflectionValue(module, "IsRTActive", value);
 
-		public override void Toggle() => Ctrl(!Lib.ReflectionValue<bool>(module, "IsRTActive"));
+		internal override void Toggle() => Ctrl(!Lib.ReflectionValue<bool>(module, "IsRTActive"));
 	}
 
-	public sealed class ProtoAntennaRTDevice : ProtoDevice<PartModule>
+	sealed class ProtoAntennaRTDevice : ProtoDevice<PartModule>
 	{
-		public ProtoAntennaRTDevice(PartModule prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
+		internal ProtoAntennaRTDevice(PartModule prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
 			: base(prefab, protoPart, protoModule) { }
 
-		public override string Name => "antenna";
+		internal override string Name => "antenna";
 
-		public override string Status
+		internal override string Status
 		{
 			get
 			{
@@ -41,8 +41,8 @@ namespace KERBALISM
 			}
 		}
 
-		public override void Ctrl(bool value) => Lib.Proto.Set(protoModule, "IsRTActive", value);
+		internal override void Ctrl(bool value) => Lib.Proto.Set(protoModule, "IsRTActive", value);
 
-		public override void Toggle() => Ctrl(!Lib.Proto.GetBool(protoModule, "IsRTActive"));
+		internal override void Toggle() => Ctrl(!Lib.Proto.GetBool(protoModule, "IsRTActive"));
 	}
 }

@@ -29,13 +29,13 @@ namespace KERBALISM
 	// - We don't have any support for the animations, the target module must be able to keep handling them despite our hacks.
 	// - Depending on how "hackable" the target module is, we use different approaches :
 	//   either we disable the monobehavior and call the methods manually, or if possible we let it run and we just get/set what we need
-	public class SolarPanelFixer : PartModule
+	class SolarPanelFixer : PartModule
 	{
 		#region Declarations
 		/// <summary>Unit to show in the UI, this is the only configurable field for this module. Default is actually set in OnLoad and if a rateUnit is set for ElectricCharge and this is not specified, the rateUnit will be used instead.</summary>
 		[KSPField]
 		public string EcUIUnit = string.Empty;
-		public bool hasRUI = false; // are we using a ResourceUnitInfo?
+		bool hasRUI = false; // are we using a ResourceUnitInfo?
 
 		/// <summary>Main PAW info label</summary>
 		[KSPField(guiActive = true, guiActiveEditor = false, guiName = "#KERBALISM_SolarPanelFixer_Solarpanel")]//Solar panel
@@ -63,7 +63,7 @@ namespace KERBALISM
 
 		/// <summary>has the player manually selected the star to be tracked ?</summary>
 		[KSPField(isPersistant = true)]
-		private bool manualTracking = false;
+		bool manualTracking = false;
 
 		/// <summary>
 		/// Time based output degradation curve. Keys in hours, values in [0;1] range.
@@ -72,21 +72,21 @@ namespace KERBALISM
 		/// </summary>
 		[KSPField(isPersistant = true)]
 		public FloatCurve timeEfficCurve;
-		private static FloatCurve teCurve = null;
-		private bool prefabDefinesTimeEfficCurve = false;
+		static FloatCurve teCurve = null;
+		bool prefabDefinesTimeEfficCurve = false;
 
 		/// <summary>UT of part creation in flight, used to evaluate the timeEfficCurve</summary>
 		[KSPField(isPersistant = true)]
 		public double launchUT = -1.0;
 
 		/// <summary>internal object for handling the various hacks depending on the target solar panel module</summary>
-		public SupportedPanel SolarPanel { get; private set; }
+		internal SupportedPanel SolarPanel { get; private set; }
 
 		/// <summary>current state of the module</summary>
-		public bool isInitialized = false;
+		internal bool isInitialized = false;
 
 		/// <summary>for tracking analytic mode changes and ui updating</summary>
-		private bool analyticSunlight;
+		bool analyticSunlight;
 
 		/// <summary>can be used by external mods to get the current EC/s</summary>
 		[KSPField]
@@ -94,14 +94,14 @@ namespace KERBALISM
 
 		// The following fields are local to FixedUpdate() but are shared for status string updates in Update()
 		// Their value can be inconsistent, don't rely on them for anything else
-		private double exposureFactor;
-		private double wearFactor;
-		private ExposureState exposureState;
-		private string mainOccludingPart;
-		private string rateFormat;
-		private StringBuilder sb;
+		double exposureFactor;
+		double wearFactor;
+		ExposureState exposureState;
+		string mainOccludingPart;
+		string rateFormat;
+		StringBuilder sb;
 
-		public enum PanelState
+		internal enum PanelState
 		{
 			Unknown = 0,
 			Retracted,
@@ -114,7 +114,7 @@ namespace KERBALISM
 			Failure
 		}
 
-		public enum ExposureState
+		enum ExposureState
 		{
 			Disabled,
 			Exposed,
@@ -253,7 +253,7 @@ namespace KERBALISM
 			vd.SaveSolarPanelExposure(landedPersistentFactor);
 		}
 
-		public void Update()
+		void Update()
 		{
 			// sanity check
 			if (SolarPanel == null) return;
@@ -370,7 +370,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void FixedUpdate()
+		void FixedUpdate()
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.SolarPanelFixer.FixedUpdate");
 			// sanity check
@@ -563,7 +563,7 @@ namespace KERBALISM
 			UnityEngine.Profiling.Profiler.EndSample();
 		}
 
-		public static void BackgroundUpdate(Vessel v, ProtoPartModuleSnapshot m, SolarPanelFixer prefab, VesselData vd, ResourceInfo ec, double elapsed_s)
+		internal static void BackgroundUpdate(Vessel v, ProtoPartModuleSnapshot m, SolarPanelFixer prefab, VesselData vd, ResourceInfo ec, double elapsed_s)
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.SolarPanelFixer.BackgroundUpdate");
 			// this is ugly spaghetti code but initializing the prefab at loading time is messy because the targeted solar panel module may not be loaded yet
@@ -611,7 +611,7 @@ namespace KERBALISM
 		#endregion
 
 		#region Other methods
-		public bool GetSolarPanelModule()
+		bool GetSolarPanelModule()
 		{
 			// handle the possibility of multiple solar panel and SolarPanelFixer modules on the part
 			List<SolarPanelFixer> fixerModules = new List<SolarPanelFixer>();
@@ -660,17 +660,17 @@ namespace KERBALISM
 			return true;
 		}
 
-		private static PanelState GetProtoState(ProtoPartModuleSnapshot protoModule)
+		static PanelState GetProtoState(ProtoPartModuleSnapshot protoModule)
 		{
 			return (PanelState)Enum.Parse(typeof(PanelState), Lib.Proto.GetString(protoModule, "state"));
 		}
 
-		private static void SetProtoState(ProtoPartModuleSnapshot protoModule, PanelState newState)
+		static void SetProtoState(ProtoPartModuleSnapshot protoModule, PanelState newState)
 		{
 			Lib.Proto.Set(protoModule, "state", newState.ToString());
 		}
 
-		public static void ProtoToggleState(SolarPanelFixer prefab, ProtoPartModuleSnapshot protoModule, PanelState currentState)
+		internal static void ProtoToggleState(SolarPanelFixer prefab, ProtoPartModuleSnapshot protoModule, PanelState currentState)
 		{
 			switch (currentState)
 			{
@@ -681,18 +681,18 @@ namespace KERBALISM
 			}
 		}
 
-		public void ToggleState()
+		internal void ToggleState()
 		{
 			SolarPanel.ToggleState(state);
 		}
 
-		public void ReliabilityEvent(bool isBroken)
+		internal void ReliabilityEvent(bool isBroken)
 		{
 			state = isBroken ? PanelState.Failure : SolarPanel.GetState();
 			SolarPanel.Break(isBroken);
 		}
 
-		private double GetAnalyticalCosineFactorLanded(VesselData vd)
+		double GetAnalyticalCosineFactorLanded(VesselData vd)
 		{
 			double finalFactor = 0.0;
 			foreach (VesselData.SunInfo sun in vd.EnvSunsInfo)
@@ -715,7 +715,7 @@ namespace KERBALISM
 			return finalFactor;
 		}
 
-		public static double GetSolarPanelsAverageExposure(List<double> exposures)
+		internal static double GetSolarPanelsAverageExposure(List<double> exposures)
 		{
 			if (exposures.Count == 0) return -1.0;
 			double averageExposure = 0.0;
@@ -725,55 +725,55 @@ namespace KERBALISM
 		#endregion
 
 		#region Abstract class for common interaction with supported PartModules
-		public abstract class SupportedPanel 
+		internal abstract class SupportedPanel 
 		{
 			/// <summary>Reference to the SolarPanelFixer, must be set from OnLoad</summary>
 			protected SolarPanelFixer fixerModule;
 
 			/// <summary>Reference to the target module</summary>
-			public abstract PartModule TargetModule { get; }
+			internal abstract PartModule TargetModule { get; }
 
 			/// <summary>
 			/// Will be called by the SolarPanelFixer OnLoad, must set the partmodule reference.
 			/// GetState() must be able to return the correct state after this has been called
 			/// </summary>
-			public abstract void OnLoad(SolarPanelFixer fixerModule, PartModule targetModule);
+			internal abstract void OnLoad(SolarPanelFixer fixerModule, PartModule targetModule);
 
 			/// <summary> Main inititalization method called from OnStart, every hack we do must be done here (In particular the one preventing the target module from generating EC)</summary>
 			/// <param name="initialized">will be true if the method has already been called for this module (OnStart can be called multiple times in the editor)</param>
 			/// <param name="nominalRate">nominal rate at 1AU</param>
 			/// <returns>must return false is something has gone wrong, will disable the whole module</returns>
-			public abstract bool OnStart(bool initialized, ref double nominalRate);
+			internal abstract bool OnStart(bool initialized, ref double nominalRate);
 
 			/// <summary>Must return a [0;1] scalar evaluating the local occlusion factor (usually with a physic raycast already done by the target module)</summary>
 			/// <param name="occludingPart">if the occluding object is a part, name of the part. MUST return null in all other cases.</param>
 			/// <param name="analytic">if true, the returned scalar must account for the given sunDir, so we can't rely on the target module own raycast</param>
-			public abstract double GetOccludedFactor(Vector3d sunDir, out string occludingPart, bool analytic = false);
+			internal abstract double GetOccludedFactor(Vector3d sunDir, out string occludingPart, bool analytic = false);
 
 			/// <summary>Must return a [0;1] scalar evaluating the angle of the given sunDir on the panel surface (usually a dot product clamped to [0;1])</summary>
 			/// <param name="analytic">if true and the panel is orientable, the returned scalar must be the best possible output (must use the rotation around the pivot)</param>
-			public abstract double GetCosineFactor(Vector3d sunDir, bool analytic = false);
+			internal abstract double GetCosineFactor(Vector3d sunDir, bool analytic = false);
 
 			/// <summary>must return the state of the panel, must be able to work before OnStart has been called</summary>
-			public abstract PanelState GetState();
+			internal abstract PanelState GetState();
 
 			/// <summary>Can be overridden if the target module implement a time efficiency curve. Keys are in hours, values are a scalar in the [0:1] range.</summary>
-			public virtual FloatCurve GetTimeCurve() { return new FloatCurve(new Keyframe[] { new Keyframe(0f, 1f) }); }
+			internal virtual FloatCurve GetTimeCurve() { return new FloatCurve(new Keyframe[] { new Keyframe(0f, 1f) }); }
 
 			/// <summary>Called at Update(), can contain target module specific hacks</summary>
-			public virtual void OnUpdate() { }
+			internal virtual void OnUpdate() { }
 
 			/// <summary>Is the panel a sun-tracking panel</summary>
-			public virtual bool IsTracking => false;
+			internal virtual bool IsTracking => false;
 
 			/// <summary>Kopernicus stars support : must set the animation tracked body</summary>
-			public virtual void SetTrackedBody(CelestialBody body) { }
+			internal virtual void SetTrackedBody(CelestialBody body) { }
 
 			/// <summary>Reliability : specific hacks for the target module that must be applied when the panel is disabled by a failure</summary>
-			public virtual void Break(bool isBroken) { }
+			internal virtual void Break(bool isBroken) { }
 
 			/// <summary>Automation : override this with "return false" if the module doesn't support automation when loaded</summary>
-			public virtual bool SupportAutomation(PanelState state)
+			internal virtual bool SupportAutomation(PanelState state)
 			{
 				switch (state)
 				{
@@ -788,7 +788,7 @@ namespace KERBALISM
 			}
 
 			/// <summary>Automation : override this with "return false" if the module doesn't support automation when unloaded</summary>
-			public virtual bool SupportProtoAutomation(ProtoPartModuleSnapshot protoModule)
+			internal virtual bool SupportProtoAutomation(ProtoPartModuleSnapshot protoModule)
 			{
 				switch (Lib.Proto.GetString(protoModule, "state"))
 				{
@@ -801,19 +801,19 @@ namespace KERBALISM
 			}
 
 			/// <summary>Automation : this must work when called on the prefab module</summary>
-			public virtual bool IsRetractable() { return false; }
+			internal virtual bool IsRetractable() { return false; }
 
 			/// <summary>Automation : must be implemented if the panel is extendable</summary>
-			public virtual void Extend() { }
+			protected virtual void Extend() { }
 
 			/// <summary>Automation : must be implemented if the panel is retractable</summary>
-			public virtual void Retract() { }
+			protected virtual void Retract() { }
 
 			///<summary>Automation : Called OnLoad, must set the target module persisted extended/retracted fields to reflect changes done trough automation while unloaded</summary>
-			public virtual void SetDeployedStateOnLoad(PanelState state) { }
+			internal virtual void SetDeployedStateOnLoad(PanelState state) { }
 
 			///<summary>Automation : convenience method</summary>
-			public void ToggleState(PanelState state)
+			internal void ToggleState(PanelState state)
 			{
 				switch (state)
 				{
@@ -823,10 +823,10 @@ namespace KERBALISM
 			}
 		}
 
-		private abstract class SupportedPanel<T> : SupportedPanel where T : PartModule
+		abstract class SupportedPanel<T> : SupportedPanel where T : PartModule
 		{
-			public T panelModule;
-			public override PartModule TargetModule => panelModule;
+			protected T panelModule;
+			internal override PartModule TargetModule => panelModule;
 		}
 		#endregion
 
@@ -838,18 +838,18 @@ namespace KERBALISM
 		// - we let the module fixedupdate/update handle animations/suncatching
 		// - we prevent stock EC generation by reseting the reshandler rate
 		// - we don't support cylindrical/spherical panel types
-		private class StockPanel : SupportedPanel<ModuleDeployableSolarPanel>
+		class StockPanel : SupportedPanel<ModuleDeployableSolarPanel>
 		{
-			private Transform sunCatcherPosition;   // middle point of the panel surface (usually). Use only position, panel surface direction depend on the pivot transform, even for static panels.
-			private Transform sunCatcherPivot;      // If it's a tracking panel, "up" is the pivot axis and "position" is the pivot position. In any case "forward" is the panel surface normal.
+			Transform sunCatcherPosition;   // middle point of the panel surface (usually). Use only position, panel surface direction depend on the pivot transform, even for static panels.
+			Transform sunCatcherPivot;      // If it's a tracking panel, "up" is the pivot axis and "position" is the pivot position. In any case "forward" is the panel surface normal.
 
-			public override void OnLoad(SolarPanelFixer fixerModule, PartModule targetModule)
+			internal override void OnLoad(SolarPanelFixer fixerModule, PartModule targetModule)
 			{
 				this.fixerModule = fixerModule;
 				panelModule = (ModuleDeployableSolarPanel)targetModule;
 			}
 
-			public override bool OnStart(bool initialized, ref double nominalRate)
+			internal override bool OnStart(bool initialized, ref double nominalRate)
 			{
 				// hide stock ui
 				panelModule.Fields["sunAOA"].guiActive = false;
@@ -884,7 +884,7 @@ namespace KERBALISM
 			}
 
 			// akwardness award : stock timeEfficCurve use 24 hours days (1/(24*60/60)) as unit for the curve keys, we convert that to hours
-			public override FloatCurve GetTimeCurve()
+			internal override FloatCurve GetTimeCurve()
 			{
 
 				if (panelModule.timeEfficCurve?.Curve.keys.Length > 1)
@@ -898,7 +898,7 @@ namespace KERBALISM
 			}
 
 			// detect occlusion from the scene colliders using the stock module physics raycast, or our own if analytic mode = true
-			public override double GetOccludedFactor(Vector3d sunDir, out string occludingPart, bool analytic = false)
+			internal override double GetOccludedFactor(Vector3d sunDir, out string occludingPart, bool analytic = false)
 			{
 				double occludingFactor = 1.0;
 				occludingPart = null;
@@ -932,7 +932,7 @@ namespace KERBALISM
 			}
 
 			// we use the current panel orientation, only doing it ourself when analytic = true
-			public override double GetCosineFactor(Vector3d sunDir, bool analytic = false)
+			internal override double GetCosineFactor(Vector3d sunDir, bool analytic = false)
 			{
 #if DEBUG_SOLAR
 				SolarDebugDrawer.DebugLine(sunCatcherPosition.position, sunCatcherPosition.position + sunCatcherPivot.forward, Color.yellow);
@@ -958,7 +958,7 @@ namespace KERBALISM
 				}
 			}
 
-			public override PanelState GetState()
+			internal override PanelState GetState()
 			{
 				// Detect modified TotalEnergyRate (B9PS switching of the stock module or ROSolar built-in switching)
 				if (panelModule.resHandler.outputResources[0].rate != 0.0)
@@ -987,7 +987,7 @@ namespace KERBALISM
 				return PanelState.Unknown;
 			}
 
-			public override void SetDeployedStateOnLoad(PanelState state)
+			internal override void SetDeployedStateOnLoad(PanelState state)
 			{
 				switch (state)
 				{
@@ -1001,13 +1001,13 @@ namespace KERBALISM
 				}
 			}
 
-			public override void Extend() { panelModule.Extend(); }
+			protected override void Extend() { panelModule.Extend(); }
 
-			public override void Retract() { panelModule.Retract(); }
+			protected override void Retract() { panelModule.Retract(); }
 
-			public override bool IsRetractable() { return panelModule.retractable; }
+			internal override bool IsRetractable() { return panelModule.retractable; }
 
-			public override void Break(bool isBroken)
+			internal override void Break(bool isBroken)
 			{
 				// reenable the target module
 				panelModule.isEnabled = !isBroken;
@@ -1015,15 +1015,15 @@ namespace KERBALISM
 				if (isBroken) panelModule.part.FindModelComponents<Animation>().ForEach(k => k.Stop()); // stop the animations if we are disabling it
 			}
 
-			public override bool IsTracking => panelModule.isTracking;
+			internal override bool IsTracking => panelModule.isTracking;
 
-			public override void SetTrackedBody(CelestialBody body)
+			internal override void SetTrackedBody(CelestialBody body)
 			{
 				panelModule.trackingBody = body;
 				panelModule.GetTrackingBodyTransforms();
 			}
 
-			public override void OnUpdate()
+			internal override void OnUpdate()
 			{
 				panelModule.flowRate = (float)fixerModule.currentOutput;
 			}
@@ -1035,20 +1035,20 @@ namespace KERBALISM
 		// - We prevent the NFS module from running (disabled at MonoBehavior level)
 		// - We replicate the behavior of its FixedUpdate()
 		// - We call its Update() method but we disable the KSPFields UI visibility.
-		private class NFSCurvedPanel : SupportedPanel<PartModule>
+		class NFSCurvedPanel : SupportedPanel<PartModule>
 		{
-			private Transform[] sunCatchers;    // model transforms named after the "PanelTransformName" field
-			private bool deployable;            // "Deployable" field
-			private Action panelModuleUpdate;   // delegate for the module Update() method
+			Transform[] sunCatchers;    // model transforms named after the "PanelTransformName" field
+			bool deployable;            // "Deployable" field
+			Action panelModuleUpdate;   // delegate for the module Update() method
 
-			public override void OnLoad(SolarPanelFixer fixerModule, PartModule targetModule)
+			internal override void OnLoad(SolarPanelFixer fixerModule, PartModule targetModule)
 			{
 				this.fixerModule = fixerModule;
 				panelModule = targetModule;
 				deployable = Lib.ReflectionValue<bool>(panelModule, "Deployable");
 			}
 
-			public override bool OnStart(bool initialized, ref double nominalRate)
+			internal override bool OnStart(bool initialized, ref double nominalRate)
 			{
 #if !DEBUG_SOLAR
 				try
@@ -1084,7 +1084,7 @@ namespace KERBALISM
 #endif
 			}
 
-			public override double GetOccludedFactor(Vector3d sunDir, out string occludingPart, bool analytic = false)
+			internal override double GetOccludedFactor(Vector3d sunDir, out string occludingPart, bool analytic = false)
 			{
 				double occludedFactor = 1.0;
 				occludingPart = null;
@@ -1114,7 +1114,7 @@ namespace KERBALISM
 				return occludedFactor;
 			}
 
-			public override double GetCosineFactor(Vector3d sunDir, bool analytic = false)
+			internal override double GetCosineFactor(Vector3d sunDir, bool analytic = false)
 			{
 				double cosineFactor = 0.0;
 
@@ -1129,7 +1129,7 @@ namespace KERBALISM
 				return cosineFactor / sunCatchers.Length;
 			}
 
-			public override void OnUpdate()
+			internal override void OnUpdate()
 			{
 				// manually call the module Update() method since we have disabled the unity Monobehavior
 				panelModuleUpdate();
@@ -1141,7 +1141,7 @@ namespace KERBALISM
 				}
 			}
 
-			public override PanelState GetState()
+			internal override PanelState GetState()
 			{
 				// Detect modified TotalEnergyRate (B9PS switching of the target module)
 				double newrate = Lib.ReflectionValue<float>(panelModule, "TotalEnergyRate");
@@ -1173,7 +1173,7 @@ namespace KERBALISM
 				return PanelState.Unknown;
 			}
 
-			public override void SetDeployedStateOnLoad(PanelState state)
+			internal override void SetDeployedStateOnLoad(PanelState state)
 			{
 				switch (state)
 				{
@@ -1186,13 +1186,13 @@ namespace KERBALISM
 				}
 			}
 
-			public override void Extend() { Lib.ReflectionCall(panelModule, "DeployPanels"); }
+			protected override void Extend() { Lib.ReflectionCall(panelModule, "DeployPanels"); }
 
-			public override void Retract() { Lib.ReflectionCall(panelModule, "RetractPanels"); }
+			protected override void Retract() { Lib.ReflectionCall(panelModule, "RetractPanels"); }
 
-			public override bool IsRetractable() { return true; }
+			internal override bool IsRetractable() { return true; }
 
-			public override void Break(bool isBroken)
+			internal override void Break(bool isBroken)
 			{
 				// in any case, the monobehavior stays disabled
 				panelModule.enabled = false;
@@ -1207,14 +1207,14 @@ namespace KERBALISM
 		#region SSTU static multi-panel module support (SSTUSolarPanelStatic)
 		// - We prevent the module from running (disabled at MonoBehavior level and KSP level)
 		// - We replicate the behavior by ourselves
-		private class SSTUStaticPanel : SupportedPanel<PartModule>
+		class SSTUStaticPanel : SupportedPanel<PartModule>
 		{
-			private Transform[] sunCatchers;    // model transforms named after the "PanelTransformName" field
+			Transform[] sunCatchers;    // model transforms named after the "PanelTransformName" field
 
-			public override void OnLoad(SolarPanelFixer fixerModule, PartModule targetModule)
+			internal override void OnLoad(SolarPanelFixer fixerModule, PartModule targetModule)
 			{ this.fixerModule = fixerModule; panelModule = targetModule; }
 
-			public override bool OnStart(bool initialized, ref double nominalRate)
+			internal override bool OnStart(bool initialized, ref double nominalRate)
 			{
 				// disable it completely
 				panelModule.enabled = panelModule.isEnabled = panelModule.moduleIsEnabled = false;
@@ -1242,7 +1242,7 @@ namespace KERBALISM
 			}
 
 			// exactly the same code as NFS curved panel
-			public override double GetCosineFactor(Vector3d sunDir, bool analytic = false)
+			internal override double GetCosineFactor(Vector3d sunDir, bool analytic = false)
 			{
 				double cosineFactor = 0.0;
 
@@ -1258,7 +1258,7 @@ namespace KERBALISM
 			}
 
 			// exactly the same code as NFS curved panel
-			public override double GetOccludedFactor(Vector3d sunDir, out string occludingPart, bool analytic = false)
+			internal override double GetOccludedFactor(Vector3d sunDir, out string occludingPart, bool analytic = false)
 			{
 				double occludedFactor = 1.0;
 				occludingPart = null;
@@ -1288,13 +1288,13 @@ namespace KERBALISM
 				return occludedFactor;
 			}
 
-			public override PanelState GetState() { return PanelState.Static; }
+			internal override PanelState GetState() { return PanelState.Static; }
 
-			public override bool SupportAutomation(PanelState state) { return false; }
+			internal override bool SupportAutomation(PanelState state) { return false; }
 
-			public override bool SupportProtoAutomation(ProtoPartModuleSnapshot protoModule) { return false; }
+			internal override bool SupportProtoAutomation(ProtoPartModuleSnapshot protoModule) { return false; }
 
-			public override void Break(bool isBroken)
+			internal override void Break(bool isBroken)
 			{
 				// in any case, everything stays disabled
 				panelModule.enabled = panelModule.isEnabled = panelModule.moduleIsEnabled = false;
@@ -1310,39 +1310,39 @@ namespace KERBALISM
 		// - Double-pivot panels that use multiple partmodules (I think there is only the "ST-MST-ISS solar truss" that does that) aren't supported
 		// - Automation is currently not supported. Might be doable, but I don't have to mental strength to deal with it.
 		// - Reliability is 100% untested and has a very barebones support. It should disable the EC output but not animations nor extend/retract ability.
-		private class SSTUVeryComplexPanel : SupportedPanel<PartModule>
+		class SSTUVeryComplexPanel : SupportedPanel<PartModule>
 		{
-			private object solarModuleSSTU; // instance of the "SolarModule" class
-			private object animationModuleSSTU; // instance of the "AnimationModule" class
-			private Func<string> getAnimationState; // delegate for the AnimationModule.persistentData property (string of the animState struct)
-			private List<SSTUPanelData> panels;
-			private TrackingType trackingType = TrackingType.Unknown;
-			private enum TrackingType {Unknown = 0, Fixed, SinglePivot, DoublePivot }
-			private string currentModularVariant;
+			object solarModuleSSTU; // instance of the "SolarModule" class
+			object animationModuleSSTU; // instance of the "AnimationModule" class
+			Func<string> getAnimationState; // delegate for the AnimationModule.persistentData property (string of the animState struct)
+			List<SSTUPanelData> panels;
+			TrackingType trackingType = TrackingType.Unknown;
+			enum TrackingType {Unknown = 0, Fixed, SinglePivot, DoublePivot }
+			string currentModularVariant;
 
-			private class SSTUPanelData
+			class SSTUPanelData
 			{
-				public Transform pivot;
-				public Axis pivotAxis;
-				public SSTUSunCatcher[] suncatchers;
+				internal Transform pivot;
+				internal Axis pivotAxis;
+				internal SSTUSunCatcher[] suncatchers;
 
-				public class SSTUSunCatcher
+				internal class SSTUSunCatcher
 				{
-					public object objectRef; // reference to the "SuncatcherData" class instance, used to get the raycast hit (direct ref to the RaycastHit doesn't work)
-					public Transform transform;
-					public Axis axis;
+					internal object objectRef; // reference to the "SuncatcherData" class instance, used to get the raycast hit (direct ref to the RaycastHit doesn't work)
+					internal Transform transform;
+					internal Axis axis;
 				}
 
-				public bool IsValid => suncatchers[0].transform != null;
-				public Vector3 PivotAxisVector => GetDirection(pivot, pivotAxis);
-				public int SuncatcherCount => suncatchers.Length;
-				public Vector3 SuncatcherPosition(int index) => suncatchers[index].transform.position;
-				public Vector3 SuncatcherAxisVector(int index) => GetDirection(suncatchers[index].transform, suncatchers[index].axis);
-				public RaycastHit SuncatcherHit(int index) => Lib.ReflectionValue<RaycastHit>(suncatchers[index].objectRef, "hitData");
+				internal bool IsValid => suncatchers[0].transform != null;
+				internal Vector3 PivotAxisVector => GetDirection(pivot, pivotAxis);
+				internal int SuncatcherCount => suncatchers.Length;
+				internal Vector3 SuncatcherPosition(int index) => suncatchers[index].transform.position;
+				internal Vector3 SuncatcherAxisVector(int index) => GetDirection(suncatchers[index].transform, suncatchers[index].axis);
+				internal RaycastHit SuncatcherHit(int index) => Lib.ReflectionValue<RaycastHit>(suncatchers[index].objectRef, "hitData");
 
-				public enum Axis {XPlus, XNeg, YPlus, YNeg, ZPlus, ZNeg}
-				public static Axis ParseSSTUAxis(object sstuAxis) { return (Axis)Enum.Parse(typeof(Axis), sstuAxis.ToString()); }
-				private Vector3 GetDirection(Transform transform, Axis axis)
+				internal enum Axis {XPlus, XNeg, YPlus, YNeg, ZPlus, ZNeg}
+				internal static Axis ParseSSTUAxis(object sstuAxis) { return (Axis)Enum.Parse(typeof(Axis), sstuAxis.ToString()); }
+				Vector3 GetDirection(Transform transform, Axis axis)
 				{
 					switch (axis) // I hope I got this right
 					{
@@ -1357,10 +1357,10 @@ namespace KERBALISM
 				}
 			}
 
-			public override void OnLoad(SolarPanelFixer fixerModule, PartModule targetModule)
+			internal override void OnLoad(SolarPanelFixer fixerModule, PartModule targetModule)
 			{ this.fixerModule = fixerModule; panelModule = targetModule; }
 
-			public override bool OnStart(bool initialized, ref double nominalRate)
+			internal override bool OnStart(bool initialized, ref double nominalRate)
 			{
 #if !DEBUG_SOLAR
 				try
@@ -1464,7 +1464,7 @@ namespace KERBALISM
 #endif
 			}
 
-			public override double GetCosineFactor(Vector3d sunDir, bool analytic = false)
+			internal override double GetCosineFactor(Vector3d sunDir, bool analytic = false)
 			{
 				double cosineFactor = 0.0;
 				int suncatcherTotalCount = 0;
@@ -1492,7 +1492,7 @@ namespace KERBALISM
 				return cosineFactor / suncatcherTotalCount;
 			}
 
-			public override double GetOccludedFactor(Vector3d sunDir, out string occludingPart, bool analytic = false)
+			internal override double GetOccludedFactor(Vector3d sunDir, out string occludingPart, bool analytic = false)
 			{
 				double occludingFactor = 0.0;
 				occludingPart = null;
@@ -1523,7 +1523,7 @@ namespace KERBALISM
 				return occludingFactor;
 			}
 
-			public override PanelState GetState()
+			internal override PanelState GetState()
 			{
 				switch (trackingType)
 				{
@@ -1559,16 +1559,16 @@ namespace KERBALISM
 				return PanelState.Unknown;
 			}
 
-			public override bool IsTracking => trackingType == TrackingType.SinglePivot || trackingType == TrackingType.DoublePivot;
+			internal override bool IsTracking => trackingType == TrackingType.SinglePivot || trackingType == TrackingType.DoublePivot;
 
-			public override void SetTrackedBody(CelestialBody body)
+			internal override void SetTrackedBody(CelestialBody body)
 			{
 				Lib.ReflectionValue(solarModuleSSTU, "trackedBodyIndex", body.flightGlobalsIndex);
 			}
 
-			public override bool SupportAutomation(PanelState state) { return false; }
+			internal override bool SupportAutomation(PanelState state) { return false; }
 
-			public override bool SupportProtoAutomation(ProtoPartModuleSnapshot protoModule) { return false; }
+			internal override bool SupportProtoAutomation(ProtoPartModuleSnapshot protoModule) { return false; }
 		}
 		#endregion
 
@@ -1581,7 +1581,7 @@ namespace KERBALISM
 		/*
 		@PART:HAS[@MODULE[ModuleROSolar]]:AFTER[zzzKerbalism] { %MODULE[SolarPanelFixer]{} }
 		*/
-		private class ROConfigurablePanel : StockPanel
+		class ROConfigurablePanel : StockPanel
 		{
 			// Note : this has been implemented in the base class (StockPanel) because
 			// we have the same issue with NearFutureSolar B9PS-switching its MDSP modules.
@@ -1607,20 +1607,20 @@ namespace KERBALISM
 	// Source : https://github.com/sarbian/DebugStuff/blob/master/DebugDrawer.cs
 	// By Sarbian, released under MIT I think
 	[KSPAddon(KSPAddon.Startup.Instantly, true)]
-	class SolarDebugDrawer : MonoBehaviour
+	public class SolarDebugDrawer : MonoBehaviour
 	{
-		private static readonly List<Line> lines = new List<Line>();
-		private static readonly List<Point> points = new List<Point>();
-		private static readonly List<Trans> transforms = new List<Trans>();
-		public Material lineMaterial;
+		static readonly List<Line> lines = new List<Line>();
+		static readonly List<Point> points = new List<Point>();
+		static readonly List<Trans> transforms = new List<Trans>();
+		internal Material lineMaterial;
 
-		private struct Line
+		struct Line
 		{
-			public readonly Vector3 start;
-			public readonly Vector3 end;
-			public readonly Color color;
+			internal readonly Vector3 start;
+			internal readonly Vector3 end;
+			internal readonly Color color;
 
-			public Line(Vector3 start, Vector3 end, Color color)
+			internal Line(Vector3 start, Vector3 end, Color color)
 			{
 				this.start = start;
 				this.end = end;
@@ -1628,26 +1628,26 @@ namespace KERBALISM
 			}
 		}
 
-		private struct Point
+		struct Point
 		{
-			public readonly Vector3 pos;
-			public readonly Color color;
+			internal readonly Vector3 pos;
+			internal readonly Color color;
 
-			public Point(Vector3 pos, Color color)
+			internal Point(Vector3 pos, Color color)
 			{
 				this.pos = pos;
 				this.color = color;
 			}
 		}
 
-		private struct Trans
+		struct Trans
 		{
-			public readonly Vector3 pos;
-			public readonly Vector3 up;
-			public readonly Vector3 right;
-			public readonly Vector3 forward;
+			internal readonly Vector3 pos;
+			internal readonly Vector3 up;
+			internal readonly Vector3 right;
+			internal readonly Vector3 forward;
 
-			public Trans(Vector3 pos, Vector3 up, Vector3 right, Vector3 forward)
+			internal Trans(Vector3 pos, Vector3 up, Vector3 right, Vector3 forward)
 			{
 				this.pos = pos;
 				this.up = up;
@@ -1657,25 +1657,25 @@ namespace KERBALISM
 		}
 
 		[Conditional("DEBUG_SOLAR")]
-		public static void DebugLine(Vector3 start, Vector3 end, Color col)
+		internal static void DebugLine(Vector3 start, Vector3 end, Color col)
 		{
 			lines.Add(new Line(start, end, col));
 		}
 
 		[Conditional("DEBUG_SOLAR")]
-		public static void DebugPoint(Vector3 start, Color col)
+		internal static void DebugPoint(Vector3 start, Color col)
 		{
 			points.Add(new Point(start, col));
 		}
 
 		[Conditional("DEBUG_SOLAR")]
-		public static void DebugTransforms(Transform t)
+		internal static void DebugTransforms(Transform t)
 		{
 			transforms.Add(new Trans(t.position, t.up, t.right, t.forward));
 		}
 
 		[Conditional("DEBUG_SOLAR")]
-		private void Start()
+		void Start()
 		{
 			DontDestroyOnLoad(this);
 			if (!lineMaterial)
@@ -1692,7 +1692,7 @@ namespace KERBALISM
 			StartCoroutine("EndOfFrameDrawing");
 		}
 
-		private IEnumerator EndOfFrameDrawing()
+		IEnumerator EndOfFrameDrawing()
 		{
 			UnityEngine.Debug.Log("DebugDrawer starting");
 			while (true)
@@ -1755,7 +1755,7 @@ namespace KERBALISM
 			}
 		}
 
-		private static Camera GetActiveCam()
+		static Camera GetActiveCam()
 		{
 			if (!HighLogic.fetch)
 				return Camera.main;
@@ -1769,28 +1769,28 @@ namespace KERBALISM
 			return Camera.main;
 		}
 
-		private static void DrawLine(Vector3 origin, Vector3 destination, Color color)
+		static void DrawLine(Vector3 origin, Vector3 destination, Color color)
 		{
 			GL.Color(color);
 			GL.Vertex(origin);
 			GL.Vertex(destination);
 		}
 
-		private static void DrawRay(Vector3 origin, Vector3 direction, Color color)
+		static void DrawRay(Vector3 origin, Vector3 direction, Color color)
 		{
 			GL.Color(color);
 			GL.Vertex(origin);
 			GL.Vertex(origin + direction);
 		}
 
-		private static void DrawTransform(Vector3 position, Vector3 up, Vector3 right, Vector3 forward, float scale = 1.0f)
+		static void DrawTransform(Vector3 position, Vector3 up, Vector3 right, Vector3 forward, float scale = 1.0f)
 		{
 			DrawRay(position, up * scale, Color.green);
 			DrawRay(position, right * scale, Color.red);
 			DrawRay(position, forward * scale, Color.blue);
 		}
 
-		private static void DrawPoint(Vector3 position, Color color, float scale = 1.0f)
+		static void DrawPoint(Vector3 position, Color color, float scale = 1.0f)
 		{
 			DrawRay(position + Vector3.up * (scale * 0.5f), -Vector3.up * scale, color);
 			DrawRay(position + Vector3.right * (scale * 0.5f), -Vector3.right * scale, color);

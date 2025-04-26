@@ -5,23 +5,23 @@ using System.Text;
 
 namespace KERBALISM
 {
-	public class PartData
+	class PartData
 	{
-		public uint FlightId { get; private set; }
+		internal uint FlightId { get; private set; }
 
-		public Drive Drive { get; set; }
+		internal Drive Drive { get; set; }
 
-		public PartData(Part part)
+		internal PartData(Part part)
 		{
 			FlightId = part.flightID;
 		}
 
-		public PartData(ProtoPartSnapshot protopart)
+		internal PartData(ProtoPartSnapshot protopart)
 		{
 			FlightId = protopart.flightID;
 		}
 
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			if (Drive != null)
 			{
@@ -30,7 +30,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void Load(ConfigNode node)
+		internal void Load(ConfigNode node)
 		{
 			if (node.HasNode("drive"))
 			{
@@ -39,7 +39,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> Must be called if the part is destroyed </summary>
-		public void OnPartWillDie()
+		internal void OnPartWillDie()
 		{
 			if (Drive != null)
 				Drive.DeleteDriveData();

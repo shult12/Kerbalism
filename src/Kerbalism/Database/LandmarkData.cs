@@ -7,13 +7,13 @@ namespace KERBALISM
 {
 
 
-	public class LandmarkData
+	class LandmarkData
 	{
-		public LandmarkData()
+		internal LandmarkData()
 		{
 		}
 
-		public LandmarkData(ConfigNode node)
+		internal LandmarkData(ConfigNode node)
 		{
 			belt_crossing = Lib.ConfigValue(node, "belt_crossing", false);
 			manned_orbit = Lib.ConfigValue(node, "manned_orbit", false);
@@ -22,7 +22,7 @@ namespace KERBALISM
 			heliopause_crossing = Lib.ConfigValue(node, "heliopause_crossing", false);
 		}
 
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			node.AddValue("belt_crossing", belt_crossing);
 			node.AddValue("manned_orbit", manned_orbit);
@@ -31,11 +31,11 @@ namespace KERBALISM
 			node.AddValue("heliopause_crossing", heliopause_crossing);
 		}
 
-		public bool belt_crossing;        // record first belt crossing
-		public bool manned_orbit;         // record first 30 days manned orbit
-		public bool space_harvest;        // record first greenhouse harvest in space
-		public bool space_analysis;       // record first lab sample analysis in space
-		public bool heliopause_crossing;  // record first heliopause crossing
+		internal bool belt_crossing;        // record first belt crossing
+		internal bool manned_orbit;         // record first 30 days manned orbit
+		internal bool space_harvest;        // record first greenhouse harvest in space
+		internal bool space_analysis;       // record first lab sample analysis in space
+		internal bool heliopause_crossing;  // record first heliopause crossing
 	}
 
 

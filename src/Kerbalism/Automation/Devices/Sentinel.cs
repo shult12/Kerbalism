@@ -3,13 +3,13 @@ using SentinelMission;
 
 namespace KERBALISM
 {
-	public sealed class SentinelDevice : LoadedDevice<KerbalismSentinel>
+	sealed class SentinelDevice : LoadedDevice<KerbalismSentinel>
 	{
-		public SentinelDevice(KerbalismSentinel module) : base(module) { }
+		internal SentinelDevice(KerbalismSentinel module) : base(module) { }
 
-		public override string Name => SentinelUtilities.SentinelPartTitle;
+		internal override string Name => SentinelUtilities.SentinelPartTitle;
 
-		public override string Status
+		internal override string Status
 		{
 			get
 			{
@@ -20,7 +20,7 @@ namespace KERBALISM
 			}
 		}
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			if (value)
 				module.StartTracking();
@@ -28,22 +28,22 @@ namespace KERBALISM
 				module.StopTracking();
 		}
 
-		public override void Toggle() => Ctrl(!module.isTrackingEnabled);
+		internal override void Toggle() => Ctrl(!module.isTrackingEnabled);
 	}
 
-	public sealed class ProtoSentinelDevice : ProtoDevice<KerbalismSentinel>
+	sealed class ProtoSentinelDevice : ProtoDevice<KerbalismSentinel>
 	{
-		public ProtoSentinelDevice(KerbalismSentinel prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule, Vessel vessel)
+		internal ProtoSentinelDevice(KerbalismSentinel prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule, Vessel vessel)
 			: base(prefab, protoPart, protoModule)
 		{
 			this.vessel = vessel;
 		}
 
-		private readonly Vessel vessel;
+		readonly Vessel vessel;
 
-		public override string Name => SentinelUtilities.SentinelPartTitle;
+		internal override string Name => SentinelUtilities.SentinelPartTitle;
 
-		public override string Status
+		internal override string Status
 		{
 			get
 			{
@@ -80,8 +80,8 @@ namespace KERBALISM
 			}
 		}
 
-		public override void Ctrl(bool value) => Lib.Proto.Set(protoModule, "isTrackingEnabled", value);
+		internal override void Ctrl(bool value) => Lib.Proto.Set(protoModule, "isTrackingEnabled", value);
 
-		public override void Toggle() => Ctrl(!Lib.Proto.GetBool(protoModule, "isTrackingEnabled"));
+		internal override void Toggle() => Ctrl(!Lib.Proto.GetBool(protoModule, "isTrackingEnabled"));
 	}
 }

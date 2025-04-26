@@ -9,14 +9,14 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiToggle : KsmGuiHorizontalLayout, IKsmGuiText, IKsmGuiInteractable
+	class KsmGuiToggle : KsmGuiHorizontalLayout, IKsmGuiText, IKsmGuiInteractable
 	{
-		public bool IsOn => ToggleComponent.isOn;
-		public Toggle ToggleComponent { get; private set; }
-		public KsmGuiText TextObject { get; private set; }
-		private UnityAction<bool> onClickAction;
+		internal bool IsOn => ToggleComponent.isOn;
+		Toggle ToggleComponent { get; set; }
+		KsmGuiText TextObject { get; set; }
+		UnityAction<bool> onClickAction;
 
-		public KsmGuiToggle(KsmGuiBase parent, string toggleText, bool initialOnState, UnityAction<bool> onClick, string tooltipText = null, int width = -1, int height = 18)
+		internal KsmGuiToggle(KsmGuiBase parent, string toggleText, bool initialOnState, UnityAction<bool> onClick, string tooltipText = null, int width = -1, int height = 18)
 			: base(parent, 5)
 		{
 			onClickAction = onClick;
@@ -79,7 +79,7 @@ namespace KERBALISM.KsmGui
 			set => TextObject.Text = value;
 		}
 
-		public void SetOnState(bool isOn, bool fireOnClick = false)
+		internal void SetOnState(bool isOn, bool fireOnClick = false)
 		{
 			if (!fireOnClick)
 				ToggleComponent.onValueChanged.RemoveListener(onClickAction);

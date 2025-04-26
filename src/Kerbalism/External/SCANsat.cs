@@ -5,7 +5,7 @@ namespace KERBALISM
 {
 
 
-	public static class SCANsat
+	static class SCANsat
 	{
 		static SCANsat()
 		{
@@ -26,7 +26,7 @@ namespace KERBALISM
 		// - v: vessel that own the module
 		// - m: protomodule of a SCANsat or a resource scanner
 		// - p: prefab of the part owning the module
-		public static bool StopScanner(Vessel v, ProtoPartModuleSnapshot m, Part part_prefab)
+		internal static bool StopScanner(Vessel v, ProtoPartModuleSnapshot m, Part part_prefab)
 		{
 			return SCANUtils != null && (bool)UnregisterSensor.Invoke(null, new Object[] { v, m, part_prefab });
 		}
@@ -35,7 +35,7 @@ namespace KERBALISM
 		// - v: vessel that own the module
 		// - m: protomodule of a SCANsat or a resource scanner
 		// - p: prefab of the part owning the module
-		public static bool ResumeScanner(Vessel v, ProtoPartModuleSnapshot m, Part part_prefab)
+		internal static bool ResumeScanner(Vessel v, ProtoPartModuleSnapshot m, Part part_prefab)
 		{
 			return SCANUtils != null && (bool)RegisterSensor.Invoke(null, new Object[] { v, m, part_prefab });
 		}
@@ -43,23 +43,23 @@ namespace KERBALISM
 		// return the scanning coverage for a given sensor type on a give body
 		// - sensor_type: the sensor type
 		// - body: the body in question
-		public static double Coverage(int sensor_type, CelestialBody body)
+		internal static double Coverage(int sensor_type, CelestialBody body)
 		{
 			if (SCANUtils == null) return 0;
 			return (double)GetCoverage.Invoke(null, new Object[] { sensor_type, body });
 		}
 
-		public static bool IsScanning(PartModule scanner)
+		internal static bool IsScanning(PartModule scanner)
 		{
 			return Lib.ReflectionValue<bool>(scanner, "scanning");
 		}
 
-		public static void StopScan(PartModule scanner)
+		internal static void StopScan(PartModule scanner)
 		{
 			Lib.ReflectionCall(scanner, "stopScan");
 		}
 
-		public static void StartScan(PartModule scanner)
+		internal static void StartScan(PartModule scanner)
 		{
 			Lib.ReflectionCall(scanner, "startScan");
 		}

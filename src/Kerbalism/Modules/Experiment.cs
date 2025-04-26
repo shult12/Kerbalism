@@ -10,7 +10,7 @@ using System.Linq;
 namespace KERBALISM
 {
 
-	public class Experiment : PartModule, ISpecifics, IModuleInfo, IPartMassModifier, IConfigurable, IMultipleDragCube
+	class Experiment : PartModule, ISpecifics, IModuleInfo, IPartMassModifier, IConfigurable, IMultipleDragCube
 	{
 		// config
 		[KSPField] public string experiment_id = string.Empty;    // id of associated experiment definition
@@ -48,33 +48,33 @@ namespace KERBALISM
 		[KSPField(isPersistant = true)] public double prodFactor;
 
 		/// <summary> never set this directly, use the "State" property </summary>
-		[KSPField(isPersistant = true)] private RunningState expState = RunningState.Stopped;
-		[KSPField(isPersistant = true)] private ExpStatus status = ExpStatus.Stopped;
+		[KSPField(isPersistant = true)] RunningState expState = RunningState.Stopped;
+		[KSPField(isPersistant = true)] ExpStatus status = ExpStatus.Stopped;
 
-		public ExperimentInfo ExpInfo { get; set; }
-		private Situation situation;
-		public SubjectData Subject => subject; private SubjectData subject;
+		internal ExperimentInfo ExpInfo { get; set; }
+		Situation situation;
+		internal SubjectData Subject => subject; SubjectData subject;
 
-		public ExperimentRequirements Requirements { get; private set; }
-		public List<ObjectPair<string, double>> ResourceDefs { get; private set; }
+		internal ExperimentRequirements Requirements { get; private set; }
+		List<ObjectPair<string, double>> ResourceDefs { get; set; }
 
 		// animations
 		internal Animator deployAnimator;
-		internal Animator loopAnimator;
-		public ModuleAnimationGroup AnimationGroup { get; private set; }
+		Animator loopAnimator;
+		ModuleAnimationGroup AnimationGroup { get; set; }
 
-		private CrewSpecs operator_cs;
-		private CrewSpecs reset_cs;
-		private CrewSpecs prepare_cs;
+		CrewSpecs operator_cs;
+		CrewSpecs reset_cs;
+		CrewSpecs prepare_cs;
 
-		public bool isConfigurable = false;
+		internal bool isConfigurable = false;
 
 		#region state/status
 
-		public enum ExpStatus { Stopped, Running, Forced, Waiting, Issue, Broken }
-		public enum RunningState { Stopped, Running, Forced, Broken }
+		internal enum ExpStatus { Stopped, Running, Forced, Waiting, Issue, Broken }
+		internal enum RunningState { Stopped, Running, Forced, Broken }
 
-		public RunningState State
+		internal RunningState State
 		{
 			get => expState;
 			set
@@ -87,9 +87,9 @@ namespace KERBALISM
 			}
 		}
 
-		public ExpStatus Status => status;
+		internal ExpStatus Status => status;
 
-		public static ExpStatus GetStatus(RunningState state, SubjectData subject, string issue)
+		static ExpStatus GetStatus(RunningState state, SubjectData subject, string issue)
 		{
 			switch (state)
 			{
@@ -109,15 +109,15 @@ namespace KERBALISM
 			}
 		}
 
-		public static bool IsRunning(ExpStatus status)
+		internal static bool IsRunning(ExpStatus status)
 			=> status == ExpStatus.Running || status == ExpStatus.Forced || status == ExpStatus.Waiting || status == ExpStatus.Issue;
-		public static bool IsRunning(RunningState state)
+		internal static bool IsRunning(RunningState state)
 			=> state == RunningState.Running || state == RunningState.Forced;
-		public bool Running
+		internal bool Running
 			=> IsRunning(expState);
-		public static bool IsBroken(RunningState state)
+		internal static bool IsBroken(RunningState state)
 			=> state == RunningState.Broken;
-		public bool Broken
+		bool Broken
 			=> IsBroken(State);
 
 		#endregion
@@ -222,7 +222,7 @@ namespace KERBALISM
 			}
 		}
 
-		private void FirstStart()
+		void FirstStart()
 		{
 			// initialize the remaining sample mass
 			// this needs to be done only once just after launch
@@ -234,8 +234,8 @@ namespace KERBALISM
 			}
 		}
 
-		private static List<ObjectPair<string, double>> noResources = new List<ObjectPair<string, double>>();
-		internal static List<ObjectPair<string, double>> ParseResources(string resources, bool logErros = false)
+		static List<ObjectPair<string, double>> noResources = new List<ObjectPair<string, double>>();
+		static List<ObjectPair<string, double>> ParseResources(string resources, bool logErros = false)
 		{
 			if (string.IsNullOrEmpty(resources)) return noResources;
 
@@ -260,7 +260,7 @@ namespace KERBALISM
 
 		#region update methods
 
-		public virtual void Update()
+		void Update()
 		{
 			if (!part.IsPAWVisible())
 				return;
@@ -311,7 +311,7 @@ namespace KERBALISM
 			}
 		}
 
-		public virtual void FixedUpdate()
+		void FixedUpdate()
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.Experiment.FixedUpdate");
 
@@ -372,7 +372,7 @@ namespace KERBALISM
 		}
 
 		// note : we use a non-static method so it can be overriden
-		public virtual void BackgroundUpdate(Vessel v, VesselData vd, ProtoPartModuleSnapshot m, ResourceInfo ec, VesselResources resources, double elapsed_s)
+		internal void BackgroundUpdate(Vessel v, VesselData vd, ProtoPartModuleSnapshot m, ResourceInfo ec, VesselResources resources, double elapsed_s)
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.Experiment.BackgroundUpdate");
 
@@ -434,7 +434,7 @@ namespace KERBALISM
 			UnityEngine.Profiling.Profiler.EndSample();
 		}
 
-		private static double RunningUpdate(
+		static double RunningUpdate(
 			Vessel v, VesselData vd, Situation vs, Experiment prefab, uint hdId, bool didPrepare, bool isShrouded,
 			ResourceInfo ec, VesselResources resources, List<ObjectPair<string, double>> resourceDefs,
 			ExperimentInfo expInfo, RunningState expState, double elapsed_s,
@@ -642,12 +642,12 @@ namespace KERBALISM
 			return prodFactor;
 		}
 
-		public virtual Situation GetSituation(VesselData vd)
+		Situation GetSituation(VesselData vd)
 		{
 			return vd.VesselSituations.GetExperimentSituation(ExpInfo);
 		}
 
-		private static Drive GetDrive(VesselData vesselData, uint hdId, double chunkSize, SubjectData subjectData)
+		static Drive GetDrive(VesselData vesselData, uint hdId, double chunkSize, SubjectData subjectData)
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.Experiment.GetDrive");
 			bool isFile = subjectData.ExpInfo.SampleMass == 0.0;
@@ -660,7 +660,7 @@ namespace KERBALISM
 			return drive;
 		}
 
-		private static bool HasRequiredResources(Vessel v, List<ObjectPair<string, double>> defs, VesselResources res, out string issue)
+		static bool HasRequiredResources(Vessel v, List<ObjectPair<string, double>> defs, VesselResources res, out string issue)
 		{
 			issue = string.Empty;
 			if (defs.Count < 1)
@@ -683,7 +683,7 @@ namespace KERBALISM
 
 		#region user interaction
 
-		public RunningState Toggle(bool setForcedRun = false)
+		internal RunningState Toggle(bool setForcedRun = false)
 		{
 			if (State == RunningState.Broken)
 				return State;
@@ -781,7 +781,7 @@ namespace KERBALISM
 			return State;
 		}
 
-		public static RunningState ProtoToggle(Vessel v, Experiment prefab, ProtoPartModuleSnapshot protoModule, bool setForcedRun = false)
+		internal static RunningState ProtoToggle(Vessel v, Experiment prefab, ProtoPartModuleSnapshot protoModule, bool setForcedRun = false)
 		{
 			RunningState expState = Lib.Proto.GetEnum(protoModule, "expState", RunningState.Stopped);
 
@@ -816,7 +816,7 @@ namespace KERBALISM
 			return expState;
 		}
 
-		private static void ProtoSetState(Vessel v, Experiment prefab, ProtoPartModuleSnapshot protoModule, RunningState expState)
+		static void ProtoSetState(Vessel v, Experiment prefab, ProtoPartModuleSnapshot protoModule, RunningState expState)
 		{
 			Lib.Proto.Set(protoModule, "expState", expState);
 
@@ -831,7 +831,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> works for loaded and unloaded vessel. very slow method, don't use it every tick </summary>
-		public static bool IsExperimentRunningOnVessel(Vessel vessel, string experiment_id)
+		static bool IsExperimentRunningOnVessel(Vessel vessel, string experiment_id)
 		{
 			if (vessel.loaded)
 			{
@@ -928,7 +928,7 @@ namespace KERBALISM
 			Reset(true);
 		}
 
-		public bool Reset(bool showMessage)
+		internal bool Reset(bool showMessage)
 		{
 			// disable for dead eva kerbals
 			Vessel v = FlightGlobals.ActiveVessel;
@@ -989,7 +989,7 @@ namespace KERBALISM
 
 		#region info / UI
 
-		public static string RunningStateInfo(RunningState state)
+		internal static string RunningStateInfo(RunningState state)
 		{
 			switch (state)
 			{
@@ -1002,7 +1002,7 @@ namespace KERBALISM
 
 		}
 
-		public static string StatusInfo(ExpStatus status, string issue = null)
+		internal static string StatusInfo(ExpStatus status, string issue = null)
 		{
 			switch (status)
 			{
@@ -1016,7 +1016,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static string RunningCountdown(ExperimentInfo expInfo, SubjectData subjectData, double dataRate, double prodFactor = 1.0, bool compact = true)
+		internal static string RunningCountdown(ExperimentInfo expInfo, SubjectData subjectData, double dataRate, double prodFactor = 1.0, bool compact = true)
 		{
 			double count;
 			if (subjectData != null)
@@ -1030,7 +1030,7 @@ namespace KERBALISM
 			return Lib.HumanReadableCountdown(count / prodFactor, compact);
 		}
 
-		public static string ScienceValue(SubjectData subjectData)
+		internal static string ScienceValue(SubjectData subjectData)
 		{
 			if (subjectData != null)
 				return Lib.BuildString(Lib.HumanReadableScience(subjectData.ScienceCollectedTotal), " / ", Lib.HumanReadableScience(subjectData.ScienceMaxValue));
@@ -1054,7 +1054,7 @@ namespace KERBALISM
 			return specs;
 		}
 
-		public static Specifics SpecsWithoutRequires(ExperimentInfo expInfo, Experiment prefab)
+		internal static Specifics SpecsWithoutRequires(ExperimentInfo expInfo, Experiment prefab)
 		{
 			var specs = new Specifics();
 			if (expInfo == null)
@@ -1156,13 +1156,13 @@ namespace KERBALISM
 
 		#region utility / other
 
-		public void ReliablityEvent(bool breakdown)
+		internal void ReliablityEvent(bool breakdown)
 		{
 			if (breakdown) State = RunningState.Broken;
 			else State = RunningState.Stopped;
 		}
 
-		public static void PostMultipleRunsMessage(string title, string vesselName)
+		static void PostMultipleRunsMessage(string title, string vesselName)
 		{
 			Message.Post(Lib.Color(Local.Module_Experiment_MultipleRunsMessage_title, Lib.Kolor.Orange, true), Local.Module_Experiment_MultipleRunsMessage.Format(title,vesselName));//"ALREADY RUNNING""Can't start " +  + " a second time on vessel " + 
 		}
@@ -1232,7 +1232,7 @@ namespace KERBALISM
 
 		#region drag cubes
 
-		private void SetDragCubes(bool deployed)
+		void SetDragCubes(bool deployed)
 		{
 			if (deployAnimator == null)
 				return;
@@ -1276,10 +1276,10 @@ namespace KERBALISM
 		#endregion
 	}
 
-	internal class EditorTracker
+	class EditorTracker
 	{
-		private static EditorTracker instance;
-		private readonly List<Experiment> experiments = new List<Experiment>();
+		static EditorTracker instance;
+		readonly List<Experiment> experiments = new List<Experiment>();
 
 		static EditorTracker()
 		{
@@ -1287,7 +1287,7 @@ namespace KERBALISM
 				instance = new EditorTracker();
 		}
 
-		private EditorTracker()
+		EditorTracker()
 		{
 			if(instance == null) {
 				instance = this;
@@ -1295,7 +1295,7 @@ namespace KERBALISM
 			}
 		}
 
-		internal void ShipModified(ShipConstruct construct)
+		void ShipModified(ShipConstruct construct)
 		{
 			experiments.Clear();
 			foreach(var part in construct.Parts)

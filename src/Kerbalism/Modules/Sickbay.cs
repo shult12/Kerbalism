@@ -6,9 +6,9 @@ using KSP.Localization;
 namespace KERBALISM
 {
 
-	public class Sickbay : PartModule, IModuleInfo, ISpecifics
+	class Sickbay : PartModule, IModuleInfo, ISpecifics
 	{
-		private static int MAX_SLOTS = 5;
+		static int MAX_SLOTS = 5;
 
 		// config
 		[KSPField] public string resource = string.Empty; // pseudo-resource to control
@@ -20,7 +20,7 @@ namespace KERBALISM
 		[KSPField] public bool cureEverybody = false;     // cure everyone in the part, ignore slots
 
 		[KSPField(isPersistant = true)] public string patients = "";
-		private List<string> patientList = new List<string>();
+		List<string> patientList = new List<string>();
 
 		[KSPField(isPersistant = true)] public bool running;
 
@@ -60,7 +60,7 @@ namespace KERBALISM
 		[KSPEvent(guiActive = true, guiActiveEditor = false, guiName = "#KERBALISM_Sickbay_cure", active = false, groupName = "Habitat", groupDisplayName = "#KERBALISM_Group_Habitat")]//cure"Habitat"
 		public void Toggle5() { Toggle(5); }
 
-		public void Start()
+		void Start()
 		{
 			// don't break tutorial scenarios
 			if (Lib.DisableScenario(this))
@@ -82,13 +82,13 @@ namespace KERBALISM
 			UpdateActions();
 		}
 
-		public void Configure(bool enable, int slots, bool cureEverybody)
+		void Configure(bool enable, int slots, bool cureEverybody)
 		{
 			if (cureEverybody) Lib.SetProcessEnabledDisabled(part, resource, enable, capacity);
 			else Lib.SetProcessEnabledDisabled(part, resource, enable, capacity * slots);
 		}
 
-		public void Update()
+		void Update()
 		{
 			// remove all patients that are not in this part
 			List<string> removeList = new List<string>();
@@ -128,13 +128,13 @@ namespace KERBALISM
 				UpdateActions();
 		}
 
-		private void RemovePatients(List<string> patientNames)
+		void RemovePatients(List<string> patientNames)
 		{
 			foreach (string patientName in patientNames)
 				RemovePatient(patientName);
 		}
 
-		internal void RemovePatient(string patientName)
+		void RemovePatient(string patientName)
 		{
 			if (!patientList.Contains(patientName))
 				return;
@@ -152,7 +152,7 @@ namespace KERBALISM
 				running = patientList.Count > 0 && (slots > 0 || cureEverybody);
 		}
 
-		private void AddPatient(string patientName)
+		void AddPatient(string patientName)
 		{
 			if (patientList.Contains(patientName))
 				return;
@@ -164,12 +164,12 @@ namespace KERBALISM
 			running = true;
 		}
 
-		private bool IsPatient(string patientName)
+		bool IsPatient(string patientName)
 		{
 			return patientList.Contains(patientName);
 		}
 
-		private void UpdateActions()
+		void UpdateActions()
 		{
 			Events["Toggle"].active = slots > 0 || cureEverybody;
 			Events["Toggle"].guiName = Lib.StatusToggle(title, running ? Local.Sickbay_running : Local.Sickbay_stopped);//"running""stopped"
@@ -212,7 +212,7 @@ namespace KERBALISM
 			}
 		}
 
-		private void Toggle(int i)
+		void Toggle(int i)
 		{
 			if (patientList.Count >= i)
 			{

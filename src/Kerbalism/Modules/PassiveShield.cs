@@ -5,7 +5,7 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public class PassiveShield: PartModule, IPartMassModifier, IKerbalismModule
+	class PassiveShield: PartModule, IPartMassModifier, IKerbalismModule
 	{
 		// config
 		[KSPField] public string title = Local.PassiveShield_Sandbags;//"Sandbags"              // GUI name of the status action in the PAW
@@ -65,7 +65,7 @@ namespace KERBALISM
 			deploy_cs = new CrewSpecs(crew_operate);
 		}
 
-		public void Update()
+		void Update()
 		{
 			if (!part.IsPAWVisible())
 				return;
@@ -75,7 +75,7 @@ namespace KERBALISM
 			Events["Toggle"].guiName = Lib.StatusToggle(title, deployed ? disengageActionTitle : engageActionTitle);
 		}
 
-		public void FixedUpdate()
+		void FixedUpdate()
 		{
 			// do nothing else in the editor
 			if (Lib.IsEditor()) return;
@@ -97,7 +97,7 @@ namespace KERBALISM
 		/// <param name="resourceChangeRequest">key-value pair that contains the resource names and the units per second that you want to produce/consume (produce: positive, consume: negative)</param>
 		/// <param name="elapsed_s">how much time elapsed since the last time. note this can be very long, minutes and hours depending on warp speed</param>
 		/// <returns>the title to be displayed in the resource tooltip</returns>
-		public static string BackgroundUpdate(Vessel vessel, ProtoPartSnapshot proto_part,
+		internal static string BackgroundUpdate(Vessel vessel, ProtoPartSnapshot proto_part,
 			ProtoPartModuleSnapshot proto_module, PartModule partModule, Part part,
 			Dictionary<string, double> availableResources, List<KeyValuePair<string, double>> resourceChangeRequest, double elapsed_s)
 		{
@@ -168,7 +168,7 @@ namespace KERBALISM
 
 
 		// return total radiation emitted in a vessel
-		public static double Total(Vessel v)
+		internal static double Total(Vessel v)
 		{
 			// get resource cache
 			ResourceInfo ec = ResourceCache.GetResource(v, "ElectricCharge");

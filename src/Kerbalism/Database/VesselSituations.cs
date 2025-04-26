@@ -6,29 +6,29 @@ using UnityEngine;
 
 namespace KERBALISM
 {
-	public class VesselSituations
+	class VesselSituations
 	{
-		private VesselData vd;
-		public CelestialBody body { get; private set; }
-		public int biomeIndex { get; private set; }
-		private CBAttributeMapSO.MapAttribute biome;
-		public List<ScienceSituation> situations { get; private set; } = new List<ScienceSituation>();
-		public List<VirtualBiome> virtualBiomes { get; private set; } = new List<VirtualBiome>();
+		VesselData vd;
+		CelestialBody body { get; set; }
+		int biomeIndex { get; set; }
+		CBAttributeMapSO.MapAttribute biome;
+		List<ScienceSituation> situations { get; set; } = new List<ScienceSituation>();
+		List<VirtualBiome> virtualBiomes { get; set; } = new List<VirtualBiome>();
 
-		public string BodyTitle => body.displayName.LocalizeRemoveGender();
-		public string BiomeTitle => biome != null ? biome.displayname : string.Empty;
+		string BodyTitle => body.displayName.LocalizeRemoveGender();
+		string BiomeTitle => biome != null ? biome.displayname : string.Empty;
 
-		public string BodyName => body.name;
-		public string BiomeName => biome != null ? biome.name.Replace(" ", string.Empty) : string.Empty;
+		string BodyName => body.name;
+		string BiomeName => biome != null ? biome.name.Replace(" ", string.Empty) : string.Empty;
 
-		public string FirstSituationTitle =>
+		internal string FirstSituationTitle =>
 			biome != null
 			? Lib.BuildString(BodyTitle, " ", situations[0].Title(), " ", BiomeTitle)
 			: Lib.BuildString(BodyTitle, " ", situations[0].Title());
 
-		public Situation FirstSituation => new Situation(body.flightGlobalsIndex, situations[0], biomeIndex);
+		internal Situation FirstSituation => new Situation(body.flightGlobalsIndex, situations[0], biomeIndex);
 
-		public string[] SituationsTitle
+		string[] SituationsTitle
 		{
 			get
 			{
@@ -39,13 +39,13 @@ namespace KERBALISM
 			}
 		}
 
-		public VesselSituations(VesselData vd)
+		internal VesselSituations(VesselData vd)
 		{
 			this.vd = vd;
 		}
 
 		/// <summary> Require EnvLanded, EnvInnerBelt and EnvOuterBelt to evaluated first </summary>
-		public void Update()
+		internal void Update()
 		{
 			body = vd.Vessel.mainBody;
 			GetSituationsAndVirtualBiomes();
@@ -56,7 +56,7 @@ namespace KERBALISM
 				biome = null;
 		}
 
-		public Situation GetExperimentSituation(ExperimentInfo expInfo)
+		internal Situation GetExperimentSituation(ExperimentInfo expInfo)
 		{
 			ScienceSituation expSituation = ScienceSituation.None;
 
@@ -90,7 +90,7 @@ namespace KERBALISM
 		/// The method is made so the lists are ordered with specific situations first and global ones last,
 		/// because experiments will use the first valid situation/biome found.
 		/// </summary>
-		private void GetSituationsAndVirtualBiomes()
+		void GetSituationsAndVirtualBiomes()
 		{
 			situations.Clear();
 			virtualBiomes.Clear();
@@ -179,7 +179,7 @@ namespace KERBALISM
 			situations.Add(ScienceSituation.BodyGlobal);
 		}
 
-		public static int GetBiomeIndex(Vessel vessel)
+		static int GetBiomeIndex(Vessel vessel)
 		{
 			CBAttributeMapSO biomeMap = vessel.mainBody.BiomeMap;
 			if (biomeMap == null)

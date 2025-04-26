@@ -74,11 +74,11 @@ namespace KERBALISM
 		}
 	}
 
-	public sealed class Callbacks
+	sealed class Callbacks
 	{
-		public static EventData<Part, Configure> onConfigure = new EventData<Part, Configure>("onConfigure");
+		internal static EventData<Part, Configure> onConfigure = new EventData<Part, Configure>("onConfigure");
 
-		public Callbacks()
+		internal Callbacks()
 		{
 			GameEvents.onPartCouple.Add(OnPartCouple);
 
@@ -121,27 +121,27 @@ namespace KERBALISM
 			GameEvents.onEditorShipModified.Add((sc) => Planner.Planner.EditorShipModifiedEvent(sc));
 		}
 
-		private void OnPartCouple(GameEvents.FromToAction<Part, Part> data)
+		void OnPartCouple(GameEvents.FromToAction<Part, Part> data)
 		{
 			VesselData.OnPartCouple(data);
 		}
 
 		// Called by an harmony patch, happens every time a part is decoupled (decouplers, joint failure...)
 		// but only if a new vessel has been created in the process
-		public void OnPartAfterUndock(Part part, Vessel oldVessel, Vessel newVessel)
+		internal void OnPartAfterUndock(Part part, Vessel oldVessel, Vessel newVessel)
 		{
 			VesselData.OnDecoupleOrUndock(oldVessel, newVessel);
 		}
 
 		// Called by an harmony patch, happens every time a part is undocked
 		// but only if a new vessel has been created in the process
-		public void OnPartAfterDecouple(Part part, Vessel oldVessel, Vessel newVessel)
+		internal void OnPartAfterDecouple(Part part, Vessel oldVessel, Vessel newVessel)
 		{
 			VesselData.OnDecoupleOrUndock(oldVessel, newVessel);
 		}
 
 		// Called by an harmony patch, exactly the same as the stock OnPartWillDie (that is not available in 1.5/1.6)
-		public void OnPartWillDie(Part p)
+		internal void OnPartWillDie(Part p)
 		{
 			// do nothing in the editor
 			if (Lib.IsEditor())
@@ -154,14 +154,14 @@ namespace KERBALISM
 			this.OnVesselModified(p.vessel);
 		}
 
-		private void OnVesselStandardModification(Vessel vessel)
+		void OnVesselStandardModification(Vessel vessel)
 		{
 			// avoid this being called on vessel launch, when vessel is not yet properly initialized
 			if (!vessel.loaded && vessel.protoVessel == null) return;
 			OnVesselModified(vessel);
 		}
 
-		private void OnVesselModified(Vessel vessel)
+		void OnVesselModified(Vessel vessel)
 		{
 			foreach(var emitter in vessel.FindPartModulesImplementing<Emitter>())
 				emitter.Recalculate();
@@ -518,7 +518,7 @@ namespace KERBALISM
 			}
 		}
 
-		public bool visible;
+		internal bool visible;
 	}
 
 

@@ -8,19 +8,19 @@ namespace KERBALISM
 {
 
 
-	public interface ISpecifics
+	interface ISpecifics
 	{
 		Specifics Specs();
 	}
 
-	public sealed class Specifics
+	sealed class Specifics
 	{
-		public Specifics()
+		internal Specifics()
 		{
 			entries = new List<Entry>();
 		}
 
-		public void Add(string label, string value = "")
+		internal void Add(string label, string value = "")
 		{
 			Entry e = new Entry
 			{
@@ -30,7 +30,7 @@ namespace KERBALISM
 			entries.Add(e);
 		}
 
-		public string Info(string desc = "")
+		internal string Info(string desc = "")
 		{
 			StringBuilder sb = new StringBuilder();
 			if (desc.Length > 0)
@@ -58,13 +58,13 @@ namespace KERBALISM
 			return sb.ToString();
 		}
 
-		public class Entry
+		internal class Entry
 		{
-			public string label = string.Empty;
-			public string value = string.Empty;
+			internal string label = string.Empty;
+			internal string value = string.Empty;
 		}
 
-		public List<Entry> entries;
+		internal List<Entry> entries;
 	}
 
 

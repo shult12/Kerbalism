@@ -5,9 +5,9 @@ using UnityEngine.EventSystems;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+	class KsmGuiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
-		private string tooltipText;
+		string tooltipText;
 		bool IsTooltipOverThis = false;
 
 		public void OnPointerEnter(PointerEventData eventData)
@@ -22,7 +22,7 @@ namespace KERBALISM.KsmGui
 			IsTooltipOverThis = false;
 		}
 
-		public void SetTooltipText(string text)
+		internal void SetTooltipText(string text)
 		{
 			tooltipText = text;
 			if (IsTooltipOverThis)

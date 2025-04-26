@@ -1,9 +1,9 @@
 namespace KERBALISM
 {
-	public static class GotoVessel
+	static class GotoVessel
 	{
-		[KSPField(isPersistant = true)] public static int version = 0;
-		public static void JumpToVessel(Vessel v)
+		[KSPField(isPersistant = true)] public static int version = 0; //TODO: doesn't seem to work
+		internal static void JumpToVessel(Vessel v)
 		{
 			string _saveGame = GamePersistence.SaveGame("Goto_" + version.ToString(), HighLogic.SaveFolder, SaveMode.OVERWRITE);
 
@@ -29,7 +29,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void SetVesselAsTarget(Vessel v)
+		internal static void SetVesselAsTarget(Vessel v)
 		{
 			if (v != FlightGlobals.ActiveVessel) FlightGlobals.fetch.SetVesselTarget(v);
 		}

@@ -5,11 +5,11 @@ namespace KERBALISM
 {
 	// note : theoretically ModuleDataTransmitter can handle multiple animation modules, we don't support it.
 
-	public sealed class AntennaDevice : LoadedDevice<ModuleDataTransmitter>
+	sealed class AntennaDevice : LoadedDevice<ModuleDataTransmitter>
 	{
-		private readonly IScalarModule deployFxModule;
+		readonly IScalarModule deployFxModule;
 
-		public AntennaDevice(ModuleDataTransmitter module) : base(module)
+		internal AntennaDevice(ModuleDataTransmitter module) : base(module)
 		{
 			List<IScalarModule> deployFxModules = Lib.ReflectionValue<List<IScalarModule>>(module, "deployFxModules");
 			if (deployFxModules != null && deployFxModules.Count > 0)
@@ -18,9 +18,9 @@ namespace KERBALISM
 			}
 		}
 
-		public override bool IsVisible => deployFxModule != null;
+		internal override bool IsVisible => deployFxModule != null;
 
-		public override string Name
+		internal override string Name
 		{
 			get
 			{
@@ -34,7 +34,7 @@ namespace KERBALISM
 			}
 		}
 
-		public override string Status
+		internal override string Status
 		{
 			get
 			{
@@ -51,7 +51,7 @@ namespace KERBALISM
 			}
 		}
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			if (deployFxModule.CanMove && !deployFxModule.IsMoving())
 			{
@@ -63,7 +63,7 @@ namespace KERBALISM
 			}
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			if (deployFxModule.CanMove && !deployFxModule.IsMoving())
 			{
@@ -76,11 +76,11 @@ namespace KERBALISM
 		}
 	}
 
-	public sealed class ProtoAntennaDevice : ProtoDevice<ModuleDataTransmitter>
+	sealed class ProtoAntennaDevice : ProtoDevice<ModuleDataTransmitter>
 	{
-		private readonly ProtoPartModuleSnapshot scalarModuleSnapshot;
+		readonly ProtoPartModuleSnapshot scalarModuleSnapshot;
 
-		public ProtoAntennaDevice(ModuleDataTransmitter prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
+		internal ProtoAntennaDevice(ModuleDataTransmitter prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
 			: base(prefab, protoPart, protoModule)
 		{
 			if (prefab.DeployFxModuleIndices != null && prefab.DeployFxModuleIndices.Length > 0 && prefab.part.Modules[prefab.DeployFxModuleIndices[0]] is IScalarModule)
@@ -89,9 +89,9 @@ namespace KERBALISM
 			}
 		}
 
-		public override bool IsVisible => scalarModuleSnapshot != null;
+		internal override bool IsVisible => scalarModuleSnapshot != null;
 
-		public override string Name
+		internal override string Name
 		{
 			get
 			{
@@ -105,7 +105,7 @@ namespace KERBALISM
 			}
 		}
 
-		public override string Status
+		internal override string Status
 		{
 			get
 			{
@@ -132,7 +132,7 @@ namespace KERBALISM
 			}
 		}
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			if (protoPart.shielded)
 				return;
@@ -156,7 +156,7 @@ namespace KERBALISM
 			Lib.Proto.Set(protoModule, "canComm", value);
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			switch (scalarModuleSnapshot.moduleName)
 			{

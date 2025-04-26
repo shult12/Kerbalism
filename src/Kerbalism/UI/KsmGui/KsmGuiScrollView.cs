@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiVerticalScrollView : KsmGuiBase
+	class KsmGuiVerticalScrollView : KsmGuiBase
 	{
-		public RectTransform Content { get; private set; }
-		public VerticalLayoutGroup ContentGroup { get; private set; }
+		RectTransform Content { get; set; }
+		internal VerticalLayoutGroup ContentGroup { get; private set; }
 
-		public override RectTransform ParentTransformForChilds => Content;
+		internal override RectTransform ParentTransformForChilds => Content;
 
-		public KsmGuiVerticalScrollView(KsmGuiBase parent, int contentSpacing = 5, int contentPaddingLeft = 5, int contentPaddingRight = 5, int contentPaddingTop = 5, int contentPaddingBottom = 5) : base (parent)
+		internal KsmGuiVerticalScrollView(KsmGuiBase parent, int contentSpacing = 5, int contentPaddingLeft = 5, int contentPaddingRight = 5, int contentPaddingTop = 5, int contentPaddingBottom = 5) : base (parent)
 		{
 			ScrollRect scrollRect = TopObject.AddComponent<ScrollRect>();
 			scrollRect.horizontal = false;

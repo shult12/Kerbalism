@@ -7,13 +7,13 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiHeader : KsmGuiHorizontalLayout, IKsmGuiText
+	class KsmGuiHeader : KsmGuiHorizontalLayout, IKsmGuiText
 	{
 
 
-		public KsmGuiText TextObject { get; private set; }
+		internal KsmGuiText TextObject { get; private set; }
 
-		public KsmGuiHeader(KsmGuiBase parent, string title, Color backgroundColor = default, int textPreferredWidth = -1)
+		internal KsmGuiHeader(KsmGuiBase parent, string title, Color backgroundColor = default, int textPreferredWidth = -1)
 			: base(parent, 2, 0, 0, 0, 0, TextAnchor.UpperLeft)
 		{
 			// default : black background

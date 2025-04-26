@@ -3,22 +3,22 @@ using System;
 
 namespace KERBALISM
 {
-	public sealed class Transformator
+	sealed class Transformator
 	{
-		private readonly Part part;
-		private Transform transform;
-		private readonly string name;
+		readonly Part part;
+		Transform transform;
+		readonly string name;
 
-		private Quaternion baseAngles;
+		Quaternion baseAngles;
 
-		private float rotationRateGoal;
-		private float CurrentSpinRate;
+		float rotationRateGoal;
+		float CurrentSpinRate;
 
-		private readonly float SpinRate;
-		private readonly float spinAccel;
-		private readonly bool rotate_iva;
+		readonly float SpinRate;
+		readonly float spinAccel;
+		readonly bool rotate_iva;
 
-		public Transformator(Part p, string transf_name, float SpinRate, float spinAccel, bool iva = true)
+		internal Transformator(Part p, string transf_name, float SpinRate, float spinAccel, bool iva = true)
 		{
 			transform = null;
 			name = string.Empty;
@@ -41,19 +41,19 @@ namespace KERBALISM
 			}
 		}
 
-		public void Play()
+		internal void Play()
 		{
 			//Lib.Log("Playing Transformation {0}", name);
 			if (transform != null) rotationRateGoal = 1.0f;
 		}
 
-		public void Stop()
+		internal void Stop()
 		{
 			//Lib.Log("Stopping Transformation {0}", name);
 			if (transform != null) rotationRateGoal = 0.0f;
 		}
 
-		public void DoSpin()
+		internal void DoSpin()
 		{
 			CurrentSpinRate = Mathf.MoveTowards(CurrentSpinRate, rotationRateGoal * SpinRate, TimeWarp.deltaTime * spinAccel);
 			float spin = Mathf.Clamp(TimeWarp.deltaTime * CurrentSpinRate, -10.0f, 10.0f);
@@ -69,12 +69,12 @@ namespace KERBALISM
 			}
 		}
 
-		public bool IsRotating()
+		internal bool IsRotating()
 		{
 			return Math.Abs(CurrentSpinRate) > Math.Abs(float.Epsilon * SpinRate);
 		}
 
-		public bool IsStopping()
+		internal bool IsStopping()
 		{
 			return Math.Abs(rotationRateGoal) <= float.Epsilon;
 		}

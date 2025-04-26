@@ -7,9 +7,9 @@ namespace KERBALISM
 {
 
 
-	public static class EVA
+	static class EVA
 	{
-		public static void Update(Vessel v)
+		internal static void Update(Vessel v)
 		{
 			// do nothing if not an eva kerbal
 			if (!v.isEVA) return;
@@ -50,7 +50,7 @@ namespace KERBALISM
 
 
 		// return true if the vessel is a kerbal eva, and is flagged as dead
-		public static bool IsDeadEVA(Vessel v)
+		internal static bool IsDeadEVA(Vessel v)
 		{
 			if (!v.isEVA) return false;
 			List<ProtoCrewMember> crew = Lib.CrewList(v);
@@ -60,7 +60,7 @@ namespace KERBALISM
 
 
 		// set headlamps on/off
-		public static void HeadLamps(KerbalEVA kerbal, bool b)
+		internal static void HeadLamps(KerbalEVA kerbal, bool b)
 		{
 			// set the lights intensity
 			kerbal.headLamp.GetComponent<Light>().intensity = b ? 1.0f : 0.0f;
@@ -76,7 +76,7 @@ namespace KERBALISM
 		}
 
 
-		public static void DisableModules(KerbalEVA kerbal)
+		static void DisableModules(KerbalEVA kerbal)
 		{
 			for (int i = 0; i < kerbal.part.Modules.Count; ++i)
 			{
@@ -96,7 +96,7 @@ namespace KERBALISM
 		}
 
 
-		public static void Freeze(KerbalEVA kerbal)
+		static void Freeze(KerbalEVA kerbal)
 		{
 			// set kerbal to the 'freezed' unescapable state
 			// how it works:

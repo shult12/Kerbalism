@@ -8,7 +8,7 @@ namespace KERBALISM.CONTRACTS
 
 
 	// Cross radiation belt
-	public sealed class CrossBelt : Contract
+	sealed class CrossBelt : Contract
 	{
 		protected override bool Generate()
 		{
@@ -65,7 +65,7 @@ namespace KERBALISM.CONTRACTS
 	}
 
 
-	public sealed class CrossBeltCondition : ContractParameter
+	sealed class CrossBeltCondition : ContractParameter
 	{
 		protected override string GetHashString()
 		{

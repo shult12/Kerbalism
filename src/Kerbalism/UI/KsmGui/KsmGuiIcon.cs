@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiIcon : KsmGuiBase, IKsmGuiIcon
+	class KsmGuiIcon : KsmGuiBase, IKsmGuiIcon
 	{
-		public RawImage Image { get; private set; }
-		public RectTransform IconTransform { get; private set; }
+		protected RawImage Image { get; private set; }
+		RectTransform IconTransform { get; set; }
 
 		/// <summary> force the size of the icon. This will ignore all layout constraints</summary>
-		public void ForceIconSize(float width, float height) => IconTransform.sizeDelta = new Vector2(width, height);
+		void ForceIconSize(float width, float height) => IconTransform.sizeDelta = new Vector2(width, height);
 
-		public KsmGuiIcon(KsmGuiBase parent, Texture2D texture, string tooltipText = null, int width = 16, int height = 16) : base(parent)
+		internal KsmGuiIcon(KsmGuiBase parent, Texture2D texture, string tooltipText = null, int width = 16, int height = 16) : base(parent)
 		{
 			// we use a child gameobject because KsmGuiIcon can be used as a button (we need it as a child in this case)
 			// we directly set its size trough anchors / sizeDelta instead of using layout components, this way it can be used

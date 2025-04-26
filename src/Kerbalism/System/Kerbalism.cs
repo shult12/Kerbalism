@@ -12,7 +12,7 @@ namespace KERBALISM
 	[KSPAddon(KSPAddon.Startup.MainMenu, false)]
 	public class KerbalismCoreSystems : MonoBehaviour
 	{
-		public void Start()
+		void Start()
 		{
 			// reset the save game initialized flag
 			Kerbalism.IsSaveGameInitDone = false;
@@ -35,59 +35,59 @@ namespace KERBALISM
 		#region declarations
 
 		/// <summary> global access </summary>
-		public static Kerbalism Fetch { get; private set; } = null;
+		internal static Kerbalism Fetch { get; private set; } = null;
 
 		/// <summary> Is the one-time main menu init done. Becomes true after loading, when the the main menu is shown, and never becomes false again</summary>
-		public static bool IsCoreMainMenuInitDone { get; set; } = false;
+		internal static bool IsCoreMainMenuInitDone { get; set; } = false;
 
 		/// <summary> Is the one-time on game load init done. Becomes true after the first OnLoad() of a game, and never becomes false again</summary>
-		public static bool IsCoreGameInitDone { get; set; } = false;
+		static bool IsCoreGameInitDone { get; set; } = false;
 
 		/// <summary> Is the savegame (or new game) first load done. Becomes true after the first OnLoad(), and false when returning to the main menu</summary>
-		public static bool IsSaveGameInitDone { get; set; } = false;
+		internal static bool IsSaveGameInitDone { get; set; } = false;
 
 		// used to setup KSP callbacks
-		public static Callbacks Callbacks { get; private set; }
+		internal static Callbacks Callbacks { get; private set; }
 
 		// the rendering script attached to map camera
 		static MapCameraScript map_camera_script;
 
 		// store time until last update for unloaded vessels
 		// note: not using reference_wrapper<T> to increase readability
-		sealed class Unloaded_data { public double time; }; //< reference wrapper
+		sealed class Unloaded_data { internal double time; }; //< reference wrapper
 		static Dictionary<Guid, Unloaded_data> unloaded = new Dictionary<Guid, Unloaded_data>();
 
 		// used to update storm data on one body per step
 		static int storm_index;
-		class Storm_data { public double time; public CelestialBody body; };
+		class Storm_data { internal double time; internal CelestialBody body; };
 		static List<Storm_data> storm_bodies = new List<Storm_data>();
 
 		// equivalent to TimeWarp.fixedDeltaTime
 		// note: stored here to avoid converting it to double every time
-		public static double elapsed_s;
+		internal static double elapsed_s;
 
 		// number of steps from last warp blending
-		private static uint warp_blending;
+		static uint warp_blending;
 
 		/// <summary>Are we in an intermediary timewarp speed ?</summary>
-		public static bool WarpBlending => warp_blending > 2u;
+		internal static bool WarpBlending => warp_blending > 2u;
 
 		// last savegame unique id
 		static int savegame_uid;
 
 		/// <summary> real time of last game loaded event </summary>
-		public static float gameLoadTime = 0.0f;
+		internal static float gameLoadTime = 0.0f;
 
-		public static bool SerenityEnabled { get; private set; }
+		internal static bool SerenityEnabled { get; private set; }
 
-		private static bool didSanityCheck = false;
+		static bool didSanityCheck = false;
 
 		#endregion
 
 		#region initialization & save/load
 
 		//  constructor
-		public Kerbalism()
+		Kerbalism()
 		{
 			// enable global access
 			Fetch = this;
@@ -95,7 +95,7 @@ namespace KERBALISM
 			SerenityEnabled = Expansions.ExpansionsLoader.IsExpansionInstalled("Serenity");
 		}
 
-		private void OnDestroy()
+		void OnDestroy()
 		{
 			Fetch = null;
 		}
@@ -232,7 +232,7 @@ namespace KERBALISM
 			UnityEngine.Profiling.Profiler.EndSample();
 		}
 
-		private void LoadFailedPopup(string error)
+		void LoadFailedPopup(string error)
 		{
 			string popupMsg = "Kerbalism has encountered an unrecoverable error and KSP must be closed\n\n";
 			popupMsg += "If you can't fix it, ask for help in the <b>kerbalism discord</b> or at the KSP forums thread\n\n";
@@ -492,7 +492,7 @@ namespace KERBALISM
 
 		#endregion
 
-		private string SanityCheck(bool forced = false)
+		string SanityCheck(bool forced = false)
 		{
 			// fix PostScreenMessage() not being available for a few updates after scene load since KSP 1.8
 			if (!forced)
@@ -579,7 +579,7 @@ namespace KERBALISM
 			return msg;
 		}
 
-		private static void DisplayWarning(string msg)
+		static void DisplayWarning(string msg)
 		{
 			if (string.IsNullOrEmpty(msg)) return;
 
@@ -593,7 +593,7 @@ namespace KERBALISM
 		}
 	}
 
-	public sealed class MapCameraScript: MonoBehaviour
+	sealed class MapCameraScript: MonoBehaviour
 	{
 		void OnPostRender()
 		{
@@ -612,16 +612,16 @@ namespace KERBALISM
 	}
 
 	// misc functions
-	public static class Misc
+	static class Misc
 	{
-		public static void ClearLocks()
+		internal static void ClearLocks()
 		{
 			// remove control locks
 			InputLockManager.RemoveControlLock("eva_dead_lock");
 			InputLockManager.RemoveControlLock("no_signal_lock");
 		}
 
-		public static void SetLocks(Vessel v)
+		internal static void SetLocks(Vessel v)
 		{
 			// lock controls for EVA death
 			if (EVA.IsDeadEVA(v))
@@ -630,7 +630,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void ManageRescueMission(Vessel v)
+		internal static void ManageRescueMission(Vessel v)
 		{
 			// true if we detected this was a rescue mission vessel
 			bool detected = false;
@@ -687,7 +687,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void TechDescriptions()
+		internal static void TechDescriptions()
 		{
 			var rnd = RDController.Instance;
 			if (rnd == null)
@@ -737,7 +737,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void PartPrefabsTweaks()
+		internal static void PartPrefabsTweaks()
 		{
 			List<string> partSequence = new List<string>();
 
@@ -858,7 +858,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void KeyboardInput()
+		internal static void KeyboardInput()
 		{
 			// mute/unmute messages with keyboard
 			if (Input.GetKeyDown(KeyCode.Pause))
@@ -902,7 +902,7 @@ namespace KERBALISM
 		}
 
 		// return true if the vessel is a rescue mission
-		public static bool IsRescueMission(Vessel v)
+		internal static bool IsRescueMission(Vessel v)
 		{
 			// avoid corner-case situation on the first update : rescue vessel handling code is called
 			// after the VesselData creation, causing Vesseldata evaluation to be delayed, causing anything
@@ -924,7 +924,7 @@ namespace KERBALISM
 
 		// kill a kerbal
 		// note: you can't kill a kerbal while iterating over vessel crew list, do it outside the loop
-		public static void Kill(Vessel v, ProtoCrewMember c)
+		internal static void Kill(Vessel v, ProtoCrewMember c)
 		{
 			// if on pod
 			if (!v.isEVA)
@@ -991,7 +991,7 @@ namespace KERBALISM
 		}
 
 		// trigger a random breakdown event
-		public static void Breakdown(Vessel v, ProtoCrewMember c)
+		internal static void Breakdown(Vessel v, ProtoCrewMember c)
 		{
 			// constants
 			const double res_penalty = 0.1;        // proportion of food lost on 'depressed' and 'wrong_valve'
@@ -1069,7 +1069,7 @@ namespace KERBALISM
 		}
 
 		// breakdown events
-		public enum KerbalBreakdown
+		enum KerbalBreakdown
 		{
 			mumbling,         // do nothing (in case all conditions fail)
 			fat_finger,       // data has been canceled

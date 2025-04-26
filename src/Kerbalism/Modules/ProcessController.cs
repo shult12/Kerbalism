@@ -8,7 +8,7 @@ using System.Diagnostics;
 namespace KERBALISM
 {
 
-	public class ProcessController: PartModule, IModuleInfo, IAnimatedModule, ISpecifics, IConfigurable
+	class ProcessController: PartModule, IModuleInfo, IAnimatedModule, ISpecifics, IConfigurable
 	{
 		// config
 		[KSPField] public string resource = string.Empty; // pseudo-resource to control
@@ -26,12 +26,12 @@ namespace KERBALISM
 		[KSPField] public int valve_i = 0;
 
 		// caching of GetInfo() for automation tooltip
-		public string ModuleInfo { get; private set; }
+		internal string ModuleInfo { get; private set; }
 
-		private DumpSpecs.ActiveValve dumpValve;
-		private int persistentValveIndex = -1;
-		private bool broken = false;
-		private bool isConfigurable = false;
+		DumpSpecs.ActiveValve dumpValve;
+		int persistentValveIndex = -1;
+		bool broken = false;
+		bool isConfigurable = false;
 
 		public override void OnLoad(ConfigNode node)
 		{
@@ -56,7 +56,7 @@ namespace KERBALISM
 				node.AddValue(nameof(persistentValveIndex), dumpValve.ValveIndex);
 		}
 
-		public void Start()
+		void Start()
 		{
 			// don't break tutorial scenarios
 			if (Lib.DisableScenario(this))
@@ -133,13 +133,13 @@ namespace KERBALISM
 		public void ModuleIsConfigured() => isConfigurable = true;
 
 		///<summary> Call this when process controller breaks down or is repaired </summary>
-		public void ReliablityEvent(bool breakdown)
+		internal void ReliablityEvent(bool breakdown)
 		{
 			broken = breakdown;
 			Lib.SetProcessEnabledDisabled(part, resource, broken ? false : running, capacity);
 		}
 
-		public void Update()
+		void Update()
 		{
 			if (!part.IsPAWVisible())
 				return;
@@ -164,7 +164,7 @@ namespace KERBALISM
 			if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
 		}
 
-		public void SetRunning(bool value)
+		internal void SetRunning(bool value)
 		{
 			if (broken)
 				return;
@@ -186,7 +186,7 @@ namespace KERBALISM
 			return isConfigurable ? string.Empty : Specs().Info(desc);
 		}
 
-		public bool IsRunning() {
+		internal bool IsRunning() {
 			return running;
 		}
 

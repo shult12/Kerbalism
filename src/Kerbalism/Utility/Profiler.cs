@@ -10,7 +10,7 @@ namespace KERBALISM
 {
 #if !DEBUG_PROFILER
     /// <summary> Simple profiler for measuring the execution time of code placed between the Start and Stop methods. </summary>
-    public sealed class Profiler
+    sealed class Profiler
     {
 #endif
 #if DEBUG_PROFILER
@@ -19,53 +19,53 @@ namespace KERBALISM
 	public sealed class Profiler: MonoBehaviour
 	{
 		// constants
-		private const float width = 500.0f;
-		private const float height = 500.0f;
+		const float width = 500.0f;
+		const float height = 500.0f;
 
-		private const float value_width = 65.0f;
+		const float value_width = 65.0f;
 
 		// visible flag
-		private static bool visible = false;
-		private static bool show_zero = true;
+		static bool visible = false;
+		static bool show_zero = true;
 
 		// popup window
-		private static MultiOptionDialog multi_dialog;
-		private static PopupDialog popup_dialog;
-		private static DialogGUIVerticalLayout dialog_items;
+		static MultiOptionDialog multi_dialog;
+		static PopupDialog popup_dialog;
+		static DialogGUIVerticalLayout dialog_items;
 
 		// an entry in the profiler
-		private class Entry
+		class Entry
 		{
-			public double start;        // used to measure call time
-			public long calls;          // number of calls in current simulation step
-			public double time;         // time in current simulation step
-			public long prev_calls;     // number of calls in previous simulation step
-			public double prev_time;    // time in previous simulation step
-			public long tot_calls;      // number of calls in total used for avg calculation
-			public double tot_time;     // total time used for avg calculation
+			internal double start;        // used to measure call time
+			internal long calls;          // number of calls in current simulation step
+			internal double time;         // time in current simulation step
+			internal long prev_calls;     // number of calls in previous simulation step
+			internal double prev_time;    // time in previous simulation step
+			internal long tot_calls;      // number of calls in total used for avg calculation
+			internal double tot_time;     // total time used for avg calculation
 
-			public string last_txt = "";        // last call time display string
-			public string avg_txt = "";         // average call time display string
-			public string calls_txt = "";       // number of calls display string
-			public string avg_calls_txt = "";   // number of average calls display string
+			internal string last_txt = "";        // last call time display string
+			internal string avg_txt = "";         // average call time display string
+			internal string calls_txt = "";       // number of calls display string
+			internal string avg_calls_txt = "";   // number of average calls display string
 		}
 
 		// store all entries
-		private Dictionary<string, Entry> entries = new Dictionary<string, Entry>();
+		Dictionary<string, Entry> entries = new Dictionary<string, Entry>();
 
 		// display update timer
-		private static double update_timer = Lib.Clocks();
-		private readonly static double timeout = Stopwatch.Frequency / update_fps;
-		private const double update_fps = 5.0;      // Frames per second the entry value display will update.
-		private static long tot_frames = 0;         // total physics frames used for avg calculation
-		private static string tot_frames_txt = "";  // total physics frames display string
+		static double update_timer = Lib.Clocks();
+		readonly static double timeout = Stopwatch.Frequency / update_fps;
+		const double update_fps = 5.0;      // Frames per second the entry value display will update.
+		static long tot_frames = 0;         // total physics frames used for avg calculation
+		static string tot_frames_txt = "";  // total physics frames display string
 
 
 		// permit global access
-		public static Profiler Fetch { get; private set; } = null;
+		internal static Profiler Fetch { get; private set; } = null;
 
 		//  constructor
-		public Profiler()
+		internal Profiler()
 		{
 			// enable global access
 			Fetch = this;
@@ -99,7 +99,7 @@ namespace KERBALISM
 			   });
 		}
 
-		private void Start()
+		void Start()
 		{
 			// create popup dialog
 			popup_dialog = PopupDialog.SpawnPopupDialog(multi_dialog, false, HighLogic.UISkin, false, "");
@@ -107,7 +107,7 @@ namespace KERBALISM
 				popup_dialog.gameObject.SetActive(false);
 		}
 
-		private void Update()
+		void Update()
 		{
 			if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) &&
 					 Input.GetKeyUp(KeyCode.P) && popup_dialog != null)
@@ -124,7 +124,7 @@ namespace KERBALISM
 			}
 		}
 
-		private static void Calculate()
+		static void Calculate()
 		{
 			foreach (KeyValuePair<string, Entry> p in Fetch.entries)
 			{
@@ -148,7 +148,7 @@ namespace KERBALISM
 			tot_frames_txt = tot_frames.ToString() + " Frames";
 		}
 
-		private void FixedUpdate()
+		void FixedUpdate()
 		{
 			foreach (KeyValuePair<string, Entry> p in Fetch.entries)
 			{
@@ -165,7 +165,7 @@ namespace KERBALISM
 			++tot_frames;
 		}
 
-		private void OnDestroy()
+		void OnDestroy()
 		{
 			Fetch = null;
 			if (popup_dialog != null)
@@ -175,7 +175,7 @@ namespace KERBALISM
 			}
 		}
 
-		private static string GetTitle()
+		static string GetTitle()
 		{
 			switch (Localizer.CurrentLanguage)
 			{
@@ -200,7 +200,7 @@ namespace KERBALISM
 			}
 		}
 
-		private static void OnButtonClick_Reset()
+		static void OnButtonClick_Reset()
 		{
 			foreach (KeyValuePair<string, Entry> e in Fetch.entries)
 			{
@@ -211,12 +211,12 @@ namespace KERBALISM
 			tot_frames = 0L;
 		}
 
-		private static void OnButtonClick_ShowZero(bool inState)
+		static void OnButtonClick_ShowZero(bool inState)
 		{
 			show_zero = inState;
 		}
 
-		private void AddDialogItem(string e_name)
+		void AddDialogItem(string e_name)
 		{
 			// add item
 			dialog_items.AddChild(
@@ -236,7 +236,7 @@ namespace KERBALISM
 
 		[System.Diagnostics.Conditional("DEBUG_PROFILER")]
 		/// <summary> Start a profiler entry. </summary>
-		public static void Start(string e_name)
+		internal static void Start(string e_name)
 		{
 #if DEBUG_PROFILER
 			if (Fetch == null)
@@ -254,7 +254,7 @@ namespace KERBALISM
 
 		[System.Diagnostics.Conditional("DEBUG_PROFILER")]
 		/// <summary> Stop a profiler entry. </summary>
-		public static void Stop(string e_name)
+		internal static void Stop(string e_name)
 		{
 #if DEBUG_PROFILER
 			if (Fetch == null)
@@ -270,9 +270,9 @@ namespace KERBALISM
 #if DEBUG_PROFILER
 
 		/// <summary> Profile a function scope. </summary>
-		public sealed class ProfileScope: IDisposable
+		sealed class ProfileScope: IDisposable
 		{
-			public ProfileScope(string name)
+			internal ProfileScope(string name)
 			{
 				this.name = name;
 				Profiler.Start(name);
@@ -283,7 +283,7 @@ namespace KERBALISM
 				Profiler.Stop(name);
 			}
 
-			private readonly string name;
+			readonly string name;
 		}
 
 #endif

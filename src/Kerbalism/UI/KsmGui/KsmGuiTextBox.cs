@@ -4,11 +4,11 @@ using TMPro;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiTextBox : KsmGuiVerticalSection, IKsmGuiText
+	class KsmGuiTextBox : KsmGuiVerticalSection, IKsmGuiText
 	{
-		public KsmGuiText TextObject { get; private set; }
+		internal KsmGuiText TextObject { get; private set; }
 
-		public KsmGuiTextBox(KsmGuiBase parent, string text, string tooltipText = null, TextAlignmentOptions alignement = TextAlignmentOptions.TopLeft) : base(parent)
+		internal KsmGuiTextBox(KsmGuiBase parent, string text, string tooltipText = null, TextAlignmentOptions alignement = TextAlignmentOptions.TopLeft) : base(parent)
 		{
 			SetLayoutElement(true, true);
 			TextObject = new KsmGuiText(this, text, null, alignement);

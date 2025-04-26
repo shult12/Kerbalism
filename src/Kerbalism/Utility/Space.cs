@@ -7,9 +7,9 @@ namespace KERBALISM
 
 
 	// represent a 3d reference frame
-	public struct Space
+	struct Space
 	{
-		public Space(Vector3 x_axis, Vector3 y_axis, Vector3 z_axis, Vector3 origin, float scale)
+		internal Space(Vector3 x_axis, Vector3 y_axis, Vector3 z_axis, Vector3 origin, float scale)
 		{
 			this.x_axis = x_axis;
 			this.y_axis = y_axis;
@@ -18,7 +18,7 @@ namespace KERBALISM
 			this.scale = scale;
 		}
 
-		public Vector3 Transform_in(Vector3 p)
+		internal Vector3 Transform_in(Vector3 p)
 		{
 			p -= origin;
 			p /= scale;
@@ -30,7 +30,7 @@ namespace KERBALISM
 			);
 		}
 
-		public Vector3 Transform_out(Vector3 p)
+		internal Vector3 Transform_out(Vector3 p)
 		{
 			return origin
 			  + x_axis * (p.x * scale)
@@ -38,7 +38,7 @@ namespace KERBALISM
 			  + z_axis * (p.z * scale);
 		}
 
-		public Matrix4x4 Look_at()
+		internal Matrix4x4 Look_at()
 		{
 			return Matrix4x4.TRS
 			(
@@ -48,11 +48,11 @@ namespace KERBALISM
 			);
 		}
 
-		public Vector3 x_axis;
-		public Vector3 y_axis;
-		public Vector3 z_axis;
-		public Vector3 origin;
-		public float scale;
+		internal Vector3 x_axis;
+		internal Vector3 y_axis;
+		internal Vector3 z_axis;
+		internal Vector3 origin;
+		internal float scale;
 	}
 
 

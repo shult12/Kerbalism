@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace KERBALISM
 {
-	public class KerbalismSentinel : SentinelModule, IContractObjectiveModule
+	class KerbalismSentinel : SentinelModule, IContractObjectiveModule
 	{
 		// ec consumed per-second
 		[KSPField] public double ec_rate = 0.0;
@@ -45,7 +45,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void BackgroundUpdate(Vessel v, ProtoPartModuleSnapshot m, KerbalismSentinel prefab, VesselData vd, ResourceInfo ec, double elapsed_s)
+		internal static void BackgroundUpdate(Vessel v, ProtoPartModuleSnapshot m, KerbalismSentinel prefab, VesselData vd, ResourceInfo ec, double elapsed_s)
 		{
 			if (Lib.Proto.GetBool(m, "isTrackingEnabled"))
 			{
@@ -67,7 +67,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void ApplyHarmonyPatches(Harmony harmonyInstance)
+		internal static void ApplyHarmonyPatches(Harmony harmonyInstance)
 		{
 			if (!Features.Science)
 			{
@@ -91,7 +91,7 @@ namespace KERBALISM
 			harmonyInstance.Patch(telescopeCanActivate, new HarmonyMethod(telescopeCanActivatePrefix));
 		}
 
-		private static void StartTrackingPostfix(KerbalismSentinel __instance)
+		static void StartTrackingPostfix(KerbalismSentinel __instance)
 		{
 			if (__instance.isTracking)
 			{
@@ -104,12 +104,12 @@ namespace KERBALISM
 			}
 		}
 
-		private static void StopTrackingPostfix(KerbalismSentinel __instance)
+		static void StopTrackingPostfix(KerbalismSentinel __instance)
 		{
 			__instance.isTrackingEnabled = false;
 		}
 
-		private static bool FixedUpdatePrefix(KerbalismSentinel __instance)
+		static bool FixedUpdatePrefix(KerbalismSentinel __instance)
 		{
 			if (__instance.isTrackingEnabled)
 			{
@@ -138,7 +138,7 @@ namespace KERBALISM
 			return true;
 		}
 
-		private static bool TelescopeCanActivatePrefix(KerbalismSentinel __instance, ref bool __result)
+		static bool TelescopeCanActivatePrefix(KerbalismSentinel __instance, ref bool __result)
 		{
 			if (__instance.vessel.orbit.referenceBody != Planetarium.fetch.Sun)
 			{

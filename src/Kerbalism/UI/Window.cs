@@ -7,17 +7,17 @@ using UnityEngine;
 namespace KERBALISM
 {
 	// a window containing a panel
-	public sealed class Window
+	sealed class Window
 	{
 		// click through locks
-		private bool clickThroughLocked = false;
-		private const ControlTypes WindowLockTypes = ControlTypes.MANNODE_ADDEDIT | ControlTypes.MANNODE_DELETE | ControlTypes.MAP_UI |
+		bool clickThroughLocked = false;
+		const ControlTypes WindowLockTypes = ControlTypes.MANNODE_ADDEDIT | ControlTypes.MANNODE_DELETE | ControlTypes.MAP_UI |
 			ControlTypes.TARGETING | ControlTypes.VESSEL_SWITCHING | ControlTypes.TWEAKABLES | ControlTypes.EDITOR_UI | ControlTypes.EDITOR_SOFT_LOCK | ControlTypes.UI;
 
 		// - width: window width in pixel
 		// - left: initial window horizontal position
 		// - top: initial window vertical position
-		public Window(uint width, uint left, uint top)
+		internal Window(uint width, uint left, uint top)
 		{
 			// generate unique id
 			win_id = Lib.RandomInt(int.MaxValue);
@@ -32,12 +32,12 @@ namespace KERBALISM
 			tooltip = new Tooltip();
 		}
 
-		public void Open(Action<Panel> refresh)
+		internal void Open(Action<Panel> refresh)
 		{
 			this.refresh = refresh;
 		}
 
-		public void Close()
+		internal void Close()
 		{
 			// clear input locks
 			InputLockManager.RemoveControlLock("KerbalismWindowLock");
@@ -47,7 +47,7 @@ namespace KERBALISM
 			panel = null;
 		}
 
-		public void Update()
+		internal void Update()
 		{
 			if (refresh != null)
 			{
@@ -66,7 +66,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void On_gui()
+		internal void On_gui()
 		{
 			// window is considered closed if panel is null
 			if (panel == null) return;
@@ -144,27 +144,27 @@ namespace KERBALISM
 			GUI.DragWindow(drag_rect);
 		}
 
-		public bool Contains(Vector2 pos)
+		bool Contains(Vector2 pos)
 		{
 			return win_rect.Contains(pos);
 		}
 
-		public void Position(uint x, uint y)
+		internal void Position(uint x, uint y)
 		{
 			win_rect.Set((float)x, (float)y, win_rect.width, win_rect.height);
 		}
 
-		public uint Left()
+		internal uint Left()
 		{
 			return (uint)win_rect.xMin;
 		}
 
-		public uint Top()
+		internal uint Top()
 		{
 			return (uint)win_rect.yMin;
 		}
 
-		public Panel.PanelType PanelType
+		internal Panel.PanelType PanelType
 		{
 			get
 			{
@@ -176,25 +176,25 @@ namespace KERBALISM
 		}
 
 		// store window id
-		private readonly int win_id;
+		readonly int win_id;
 
 		// store window geometry
-		private Rect win_rect;
+		Rect win_rect;
 
 		// store dragbox geometry
-		private Rect drag_rect;
+		Rect drag_rect;
 
 		// used by scroll window mechanics
-		private Vector2 scroll_pos;
+		Vector2 scroll_pos;
 
 		// tooltip utility
-		private Tooltip tooltip;
+		Tooltip tooltip;
 
 		// panel
-		private Panel panel;
+		Panel panel;
 
 		// refresh function
-		private Action<Panel> refresh;
+		Action<Panel> refresh;
 	}
 
 

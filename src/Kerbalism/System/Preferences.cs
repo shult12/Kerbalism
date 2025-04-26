@@ -7,7 +7,7 @@ namespace KERBALISM
 {
 
 
-	public class PreferencesReliability : GameParameters.CustomParameterNode
+	class PreferencesReliability : GameParameters.CustomParameterNode
 	{
 		[GameParameters.CustomParameterUI("#KERBALISM_HighlightMalfunctions", toolTip = "#KERBALISM_HighlightMalfunctions_desc")]//Highlight Malfunctions--Highlight failed parts in flight
 		public bool highlights = true;
@@ -86,9 +86,9 @@ namespace KERBALISM
 
 		public override string Title { get { return Local.Preferences_Reliability; } }//"Reliability"
 
-		private static PreferencesReliability instance;
+		static PreferencesReliability instance;
 
-		public static PreferencesReliability Instance
+		internal static PreferencesReliability Instance
 		{
 			get
 			{
@@ -108,7 +108,7 @@ namespace KERBALISM
 		}
 	}
 
-	public class PreferencesScience : GameParameters.CustomParameterNode
+	class PreferencesScience : GameParameters.CustomParameterNode
 	{
 		[GameParameters.CustomParameterUI("#KERBALISM_TransmitScienceImmediately", toolTip = "#KERBALISM_TransmitScienceImmediately_desc")]//Transmit Science Immediately--Automatically flag science files for transmission
 		public bool transmitScience = true;
@@ -159,9 +159,9 @@ namespace KERBALISM
 
 		public override string Title { get { return Local.Preferences_Science; } }//"Science"
 
-		private static PreferencesScience instance;
+		static PreferencesScience instance;
 
-		public static PreferencesScience Instance
+		internal static PreferencesScience Instance
 		{
 			get
 			{
@@ -181,7 +181,7 @@ namespace KERBALISM
 		}
 	}
 
-	public class PreferencesMessages : GameParameters.CustomParameterNode
+	class PreferencesMessages : GameParameters.CustomParameterNode
 	{
 		[GameParameters.CustomParameterUI("#KERBALISM_ElectricalCharge", toolTip = "#KERBALISM_ElectricalCharge_desc")]//Electrical Charge--Show a message when EC level is low\n(Preset, can be changed per vessel)
 		public bool ec = true;
@@ -219,9 +219,9 @@ namespace KERBALISM
 
 		public override string Title { get { return Local.Preferences_Notifications; } }//"Notifications"
 
-		private static PreferencesMessages instance;
+		static PreferencesMessages instance;
 
-		public static PreferencesMessages Instance
+		internal static PreferencesMessages Instance
 		{
 			get
 			{
@@ -241,7 +241,7 @@ namespace KERBALISM
 		}
 	}
 
-	public class PreferencesComfort : GameParameters.CustomParameterNode
+	class PreferencesComfort : GameParameters.CustomParameterNode
 	{
 		[GameParameters.CustomParameterUI("#KERBALISM_StressBreakdowns", toolTip = "#KERBALISM_StressBreakdowns_desc")]//Stress Breakdowns--Kerbals can make mistakes when they're under stress
 		public bool stressBreakdowns = false;
@@ -307,9 +307,9 @@ namespace KERBALISM
 
 		public override string Title { get { return Local.Preferences_Comfort; } }//"Comfort"
 
-		private static PreferencesComfort instance;
+		static PreferencesComfort instance;
 
-		public static PreferencesComfort Instance
+		internal static PreferencesComfort Instance
 		{
 			get
 			{
@@ -329,7 +329,7 @@ namespace KERBALISM
 		}
 	}
 
-	public class PreferencesRadiation : GameParameters.CustomParameterNode
+	class PreferencesRadiation : GameParameters.CustomParameterNode
 	{
 		[GameParameters.CustomParameterUI("#KERBALISM_LifetimeRadiation", toolTip = "#KERBALISM_LifetimeRadiation_desc")]//Lifetime Radiation--Do not reset radiation values for kerbals recovered on kerbin
 		public bool lifetime = false;
@@ -346,11 +346,11 @@ namespace KERBALISM
 		[GameParameters.CustomFloatParameterUI("#KERBALISM_ShieldingEfficiency", asPercentage = true, minValue = 0.01f, maxValue = 1, displayFormat = "F2", toolTip = "#KERBALISM_ShieldingEfficiency_desc")]//Shielding Efficiency--Proportion of radiation blocked by shielding (at max amount)
 		public float shieldingEfficiency = Settings.ShieldingEfficiency;
 
-		public double AvgStormDuration { get { return stormDurationHours * 3600.0; } }
+		internal double AvgStormDuration { get { return stormDurationHours * 3600.0; } }
 
-		public double StormRadiation { get { return stormRadiation / 3600.0; } }
+		internal double StormRadiation { get { return stormRadiation / 3600.0; } }
 
-		public double StormEjectionSpeed { get { return Settings.StormEjectionSpeed * 299792458.0; } }
+		internal double StormEjectionSpeed { get { return Settings.StormEjectionSpeed * 299792458.0; } }
 
 		public override GameParameters.GameMode GameMode { get { return GameParameters.GameMode.ANY; } }
 
@@ -397,9 +397,9 @@ namespace KERBALISM
 
 		public override string Title { get { return Local.Preferences_Radiation; } }//"Radiation"
 
-		private static PreferencesRadiation instance;
+		static PreferencesRadiation instance;
 
-		public static PreferencesRadiation Instance
+		internal static PreferencesRadiation Instance
 		{
 			get
 			{

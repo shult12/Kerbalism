@@ -6,11 +6,11 @@ using System.Reflection;
 namespace KERBALISM
 {
 
-	public static class Background
+	static class Background
 	{
-		private class BackgroundDelegate
+		class BackgroundDelegate
 		{
-			private static Type[] signature = { typeof(Vessel), typeof(ProtoPartSnapshot), typeof(ProtoPartModuleSnapshot), typeof(PartModule), typeof(Part), typeof(Dictionary<string, double>), typeof(List<KeyValuePair<string, double>>), typeof(double) };
+			static Type[] signature = { typeof(Vessel), typeof(ProtoPartSnapshot), typeof(ProtoPartModuleSnapshot), typeof(PartModule), typeof(Part), typeof(Dictionary<string, double>), typeof(List<KeyValuePair<string, double>>), typeof(double) };
 
 #if KSP18
 			// non-generic actions are too new to be used in pre-KSP18
@@ -18,7 +18,7 @@ namespace KERBALISM
 #else
 			internal MethodInfo methodInfo;
 #endif
-			private BackgroundDelegate(MethodInfo methodInfo)
+			BackgroundDelegate(MethodInfo methodInfo)
 			{
 #if KSP18
 				function = (Func<Vessel, ProtoPartSnapshot, ProtoPartModuleSnapshot, PartModule, Part, Dictionary<string, double>, List<KeyValuePair<string, double>>, double, string>)Delegate.CreateDelegate(typeof(Func<Vessel, ProtoPartSnapshot, ProtoPartModuleSnapshot, PartModule, Part, Dictionary<string, double>, List<KeyValuePair<string, double>>, double, string>), methodInfo);
@@ -27,7 +27,7 @@ namespace KERBALISM
 #endif
 			}
 
-			public string invoke(Vessel v, ProtoPartSnapshot p, ProtoPartModuleSnapshot m, PartModule module_prefab, Part part_prefab, Dictionary<string, double> availableRresources, List<KeyValuePair<string, double>> resourceChangeRequest, double elapsed_s)
+			internal string invoke(Vessel v, ProtoPartSnapshot p, ProtoPartModuleSnapshot m, PartModule module_prefab, Part part_prefab, Dictionary<string, double> availableRresources, List<KeyValuePair<string, double>> resourceChangeRequest, double elapsed_s)
 			{
 				// TODO optimize this for performance
 #if KSP18
@@ -41,7 +41,7 @@ namespace KERBALISM
 #endif
 			}
 
-			public static BackgroundDelegate Instance(PartModule module_prefab)
+			internal static BackgroundDelegate Instance(PartModule module_prefab)
 			{
 				BackgroundDelegate result = null;
 
@@ -63,11 +63,11 @@ namespace KERBALISM
 				return result;
 			}
 
-			private static readonly Dictionary<Type, BackgroundDelegate> supportedModules = new Dictionary<Type, BackgroundDelegate>();
-			private static readonly List<Type> unsupportedModules = new List<Type>();
+			static readonly Dictionary<Type, BackgroundDelegate> supportedModules = new Dictionary<Type, BackgroundDelegate>();
+			static readonly List<Type> unsupportedModules = new List<Type>();
 		}
 
-		public enum Module_type
+		enum Module_type
 		{
 			Reliability = 0,
 			Experiment,
@@ -97,7 +97,7 @@ namespace KERBALISM
 			APIModule
 		}
 
-		public static Module_type ModuleType(string module_name)
+		static Module_type ModuleType(string module_name)
 		{
 			switch (module_name)
 			{
@@ -132,7 +132,7 @@ namespace KERBALISM
 			return Module_type.Unknown;
 		}
 
-		internal class BackgroundPM
+		class BackgroundPM
 		{
 			internal ProtoPartSnapshot p;
 			internal ProtoPartModuleSnapshot m;
@@ -141,7 +141,7 @@ namespace KERBALISM
 			internal Module_type type;
 		}
 
-		public static void Update(Vessel v, VesselData vd, VesselResources resources, double elapsed_s)
+		internal static void Update(Vessel v, VesselData vd, VesselResources resources, double elapsed_s)
 		{
 			if (!Lib.IsVessel(v))
 				return;
@@ -184,7 +184,7 @@ namespace KERBALISM
 			}
 		}
 
-		private static List<BackgroundPM> Background_PMs(Vessel v)
+		static List<BackgroundPM> Background_PMs(Vessel v)
 		{
 			var result = Cache.VesselObjectsCache<List<BackgroundPM>>(v, "background");
 			if (result != null)
@@ -248,7 +248,7 @@ namespace KERBALISM
 			return result;
 		}
 
-		private static void ProcessApiModule(Vessel v, ProtoPartSnapshot p, ProtoPartModuleSnapshot m,
+		static void ProcessApiModule(Vessel v, ProtoPartSnapshot p, ProtoPartModuleSnapshot m,
 			Part part_prefab, PartModule module_prefab, VesselResources resources, Dictionary<string, double> availableResources, List<KeyValuePair<string, double>> resourceChangeRequests, double elapsed_s)
 		{
 			resourceChangeRequests.Clear();

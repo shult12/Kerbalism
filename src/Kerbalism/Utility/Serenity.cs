@@ -3,7 +3,7 @@ using Expansions.Serenity.DeployedScience.Runtime;
 namespace KERBALISM
 {
 
-	public static class Serenity
+	static class Serenity
 	{
 		/// <summary>
 		/// Use this whenever possible. Note this cannot be used during deployment.

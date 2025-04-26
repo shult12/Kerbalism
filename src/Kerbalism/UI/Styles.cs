@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace KERBALISM
 {
-	public static class Styles
+	static class Styles
 	{
 		static Styles()
 		{
@@ -208,35 +208,35 @@ namespace KERBALISM
 		/// for some unkwnown reason since KSP 1.8 IMGUI background textures are dropped on scene changes
 		/// so we reload then on every OnLoad()
 		/// </summary>
-		public static void ReloadBackgroundStyles()
+		internal static void ReloadBackgroundStyles()
 		{
 			section_container.normal.background = blackBackground;
 			tooltip.normal.background = blackBackground;
 			message.normal.background = blackBackground;
 		}
 
-		public static int ScaleInteger(int val)
+		internal static int ScaleInteger(int val)
 		{
 			return (int)(val * Settings.UIScale * GameSettings.UI_SCALE * GameSettings.UI_SCALE_APPS);
 		}
 
-		public static float ScaleFloat(float val)
+		internal static float ScaleFloat(float val)
 		{
 			return val * Settings.UIScale * GameSettings.UI_SCALE * GameSettings.UI_SCALE_APPS;
 		}
 
 		// Increasing font size does not affect width as much as height. To avoid excessively wide UIs we scale with UIPanelWidthSScale rather than	UIScale
-		public static float ScaleWidthFloat(float val)
+		internal static float ScaleWidthFloat(float val)
 		{
 			return val * Settings.UIPanelWidthScale * GameSettings.UI_SCALE * GameSettings.UI_SCALE_APPS;
 		}
 
-		public static uint ScaleStringLength(int val)
+		internal static uint ScaleStringLength(int val)
 		{
 			return (uint)ScaleWidthFloat(val / (Settings.UIScale * Settings.UIScale * GameSettings.UI_SCALE * GameSettings.UI_SCALE_APPS));
 		}
 
-		public static Texture2D GetUIScaledTexture(string name, int width = 16, int height =16, float prescalar = 1.0f)
+		internal static Texture2D GetUIScaledTexture(string name, int width = 16, int height =16, float prescalar = 1.0f)
 		{
 			Texture2D texture = Lib.GetTexture(name, width, height);
 
@@ -246,24 +246,24 @@ namespace KERBALISM
 		}
 
 		// styles
-		private static Texture2D blackBackground;
-		public static GUIStyle win;                       // window
-		public static GUIStyle title_container;           // window title container
-		public static GUIStyle title_text;                // window title text
-		public static GUIStyle section_container;         // container for a section subtitle
-		public static GUIStyle section_text;              // text for a section subtitle
-		public static GUIStyle entry_container;           // container for a row
-		public static GUIStyle entry_label;               // left content for a row
-		public static GUIStyle entry_label_nowrap;        // left content for a row that doesn't wrap
-		public static GUIStyle entry_value;               // right content for a row
-		public static GUIStyle desc_container;            // multi-line description container
-		public static GUIStyle desc;                      // multi-line description content
-		public static GUIStyle left_icon;                 // an icon on the left
-		public static GUIStyle right_icon;                // an icon on the right
-		public static GUIStyle tooltip;                   // tooltip label
-		public static GUIStyle tooltip_container;         // tooltip label container
-		public static GUIStyle smallStationHead;
-		public static GUIStyle smallStationText;
-		public static GUIStyle message;
+		static Texture2D blackBackground;
+		internal static GUIStyle win;                       // window
+		internal static GUIStyle title_container;           // window title container
+		internal static GUIStyle title_text;                // window title text
+		internal static GUIStyle section_container;         // container for a section subtitle
+		internal static GUIStyle section_text;              // text for a section subtitle
+		internal static GUIStyle entry_container;           // container for a row
+		internal static GUIStyle entry_label;               // left content for a row
+		internal static GUIStyle entry_label_nowrap;        // left content for a row that doesn't wrap
+		internal static GUIStyle entry_value;               // right content for a row
+		internal static GUIStyle desc_container;            // multi-line description container
+		internal static GUIStyle desc;                      // multi-line description content
+		internal static GUIStyle left_icon;                 // an icon on the left
+		internal static GUIStyle right_icon;                // an icon on the right
+		internal static GUIStyle tooltip;                   // tooltip label
+		internal static GUIStyle tooltip_container;         // tooltip label container
+		static GUIStyle smallStationHead;
+		static GUIStyle smallStationText;
+		internal static GUIStyle message;
 	}
 } // KERBALISM

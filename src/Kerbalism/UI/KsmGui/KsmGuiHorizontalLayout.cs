@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public class KsmGuiHorizontalLayout : KsmGuiBase
+	class KsmGuiHorizontalLayout : KsmGuiBase
 	{
 
-		public HorizontalLayoutGroup LayoutGroup { get; private set; }
+		HorizontalLayoutGroup LayoutGroup { get; set; }
 
-		public KsmGuiHorizontalLayout
+		internal KsmGuiHorizontalLayout
 		(
 			KsmGuiBase parent,
 			int spacing = 0,

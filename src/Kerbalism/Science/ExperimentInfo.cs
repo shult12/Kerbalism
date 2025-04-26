@@ -9,70 +9,70 @@ namespace KERBALISM
 	/// Stores information about an experiment_id or a subject_id
 	/// Beware that subject information will be incomplete until the stock `ScienceSubject` is created in RnD
 	/// </summary>
-	public sealed class ExperimentInfo
+	sealed class ExperimentInfo
 	{
-		public static StringBuilder ExpInfoSB = new StringBuilder();
+		internal static StringBuilder ExpInfoSB = new StringBuilder();
 
 		/// <summary> experiment definition </summary>
-		private ScienceExperiment stockDef;
+		ScienceExperiment stockDef;
 
 		/// <summary> experiment identifier </summary>
-		public string ExperimentId { get; private set; }
+		internal string ExperimentId { get; private set; }
 
 		/// <summary> UI friendly name of the experiment </summary>
-		public string Title { get; private set; }
+		internal string Title { get; private set; }
 
 		/// <summary> mass of a full sample </summary>
-		public double SampleMass { get; private set; }
+		internal double SampleMass { get; private set; }
 
-		public BodyConditions ExpBodyConditions { get; private set; }
+		internal BodyConditions ExpBodyConditions { get; private set; }
 
 		/// <summary> size of a full file or sample</summary>
-		public double DataSize { get; private set; }
+		internal double DataSize { get; private set; }
 
-		public bool IsSample { get; private set; }
+		internal bool IsSample { get; private set; }
 
-		public double MassPerMB { get; private set; }
+		internal double MassPerMB { get; private set; }
 
-		public double DataScale => stockDef.dataScale;
+		internal double DataScale => stockDef.dataScale;
 
 		/// <summary> situation mask </summary>
-		public uint SituationMask { get; private set; }
+		internal uint SituationMask { get; private set; }
 
 		/// <summary> stock ScienceExperiment situation mask </summary>
-		public uint StockSituationMask => stockDef.situationMask;
+		uint StockSituationMask => stockDef.situationMask;
 
 		/// <summary> biome mask </summary>
-		public uint BiomeMask { get; private set; }
+		internal uint BiomeMask { get; private set; }
 
 		/// <summary> stock ScienceExperiment biome mask </summary>
-		public uint StockBiomeMask => stockDef.biomeMask;
+		uint StockBiomeMask => stockDef.biomeMask;
 
 		/// <summary> virtual biomes mask </summary>
-		public uint VirtualBiomeMask { get; private set; }
+		internal uint VirtualBiomeMask { get; private set; }
 
-		public List<VirtualBiome> VirtualBiomes { get; private set; } = new List<VirtualBiome>();
+		internal List<VirtualBiome> VirtualBiomes { get; private set; } = new List<VirtualBiome>();
 
-		public double ScienceCap => stockDef.scienceCap * HighLogic.CurrentGame.Parameters.Career.ScienceGainMultiplier;
+		internal double ScienceCap => stockDef.scienceCap * HighLogic.CurrentGame.Parameters.Career.ScienceGainMultiplier;
 
 		/// <summary> Cache the information returned by GetInfo() in the first found module using that experiment</summary>
-		public string ModuleInfo { get; private set; } = string.Empty;
+		internal string ModuleInfo { get; private set; } = string.Empty;
 
 		/// <summary> If true, subject completion will enable the stock resource map for the corresponding body</summary>
-		public bool UnlockResourceSurvey { get; private set; }
+		internal bool UnlockResourceSurvey { get; private set; }
 
-		public bool IsROC { get; private set; }
+		internal bool IsROC { get; private set; }
 
-		public bool HasDBSubjects { get; private set; }
+		internal bool HasDBSubjects { get; private set; }
 
-		public bool IgnoreBodyRestrictions { get; private set; }
+		internal bool IgnoreBodyRestrictions { get; private set; }
 
 		/// <summary> List of experiments that will be collected automatically alongside this one</summary>
-		public List<ExperimentInfo> IncludedExperiments { get; private set; } = new List<ExperimentInfo>();
+		internal List<ExperimentInfo> IncludedExperiments { get; private set; } = new List<ExperimentInfo>();
 
-		private string[] includedExperimentsId;
+		string[] includedExperimentsId;
 
-		public ExperimentInfo(ScienceExperiment stockDef, ConfigNode expInfoNode)
+		internal ExperimentInfo(ScienceExperiment stockDef, ConfigNode expInfoNode)
 		{
 			// if we have a custom "KERBALISM_EXPERIMENT" definition for the experiment, load it, else just use an empty node to avoid nullrefs
 			if (expInfoNode == null) expInfoNode = new ConfigNode();
@@ -228,7 +228,7 @@ namespace KERBALISM
 			stockDef.biomeMask = stockBiomeMask;
 		}
 
-		public void ParseIncludedExperiments()
+		internal void ParseIncludedExperiments()
 		{
 			foreach (string expId in includedExperimentsId)
 			{
@@ -247,7 +247,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void CheckIncludedExperimentsRecursion(ExperimentInfo expInfoToCheck, List<ExperimentInfo> chainedExperiments)
+		internal static void CheckIncludedExperimentsRecursion(ExperimentInfo expInfoToCheck, List<ExperimentInfo> chainedExperiments)
 		{
 			List<ExperimentInfo> loopedExperiments = new List<ExperimentInfo>();
 			foreach (ExperimentInfo includedExp in expInfoToCheck.IncludedExperiments)
@@ -272,7 +272,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void GetIncludedExperimentTitles(ExperimentInfo expinfo, List<string> includedExperiments)
+		internal static void GetIncludedExperimentTitles(ExperimentInfo expinfo, List<string> includedExperiments)
 		{
 			foreach (ExperimentInfo includedExpinfo in expinfo.IncludedExperiments)
 			{
@@ -286,7 +286,7 @@ namespace KERBALISM
 		/// parts that have experiments can't get their module info (what is shown in the VAB tooltip) correctly setup
 		/// because the ExperimentInfo database isn't available at loading time, so we recompile their info manually.
 		/// </summary>
-		public void CompileModuleInfos()
+		internal void CompileModuleInfos()
 		{
 			if (PartLoader.LoadedPartsList == null)
 			{
@@ -416,7 +416,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> UI friendly list of situations available for the experiment</summary>
-		public List<string> AvailableSituations()
+		internal List<string> AvailableSituations()
 		{
 			List<string> result = new List<string>();
 
@@ -445,15 +445,15 @@ namespace KERBALISM
 			return result;
 		}
 
-		public class BodyConditions
+		internal class BodyConditions
 		{
-			private static string typeNamePlus = typeof(BodyConditions).FullName + "+";
+			static string typeNamePlus = typeof(BodyConditions).FullName + "+";
 
-			public bool HasConditions { get; private set; }
-			private List<BodyCondition> bodiesAllowed = new List<BodyCondition>();
-			private List<BodyCondition> bodiesNotAllowed = new List<BodyCondition>();
+			internal bool HasConditions { get; private set; }
+			List<BodyCondition> bodiesAllowed = new List<BodyCondition>();
+			List<BodyCondition> bodiesNotAllowed = new List<BodyCondition>();
 
-			public BodyConditions(ConfigNode node)
+			internal BodyConditions(ConfigNode node)
 			{
 				foreach (string allowed in node.GetValues("BodyAllowed"))
 				{
@@ -472,7 +472,7 @@ namespace KERBALISM
 				HasConditions = bodiesAllowed.Count > 0 || bodiesNotAllowed.Count > 0;
 			}
 
-			private BodyCondition ParseCondition(string condition)
+			BodyCondition ParseCondition(string condition)
 			{
 				Type type = Type.GetType(typeNamePlus + condition);
 				if (type != null)
@@ -489,7 +489,7 @@ namespace KERBALISM
 				return null;
 			}
 
-			public bool IsBodyAllowed(CelestialBody body)
+			internal bool IsBodyAllowed(CelestialBody body)
 			{
 				bool isAllowed;
 
@@ -510,7 +510,7 @@ namespace KERBALISM
 				return isAllowed;
 			}
 
-			public string ConditionsToString()
+			internal string ConditionsToString()
 			{
 				ExpInfoSB.Length = 0;
 
@@ -540,78 +540,78 @@ namespace KERBALISM
 				return ExpInfoSB.ToString();
 			}
 
-			private abstract class BodyCondition
+			abstract class BodyCondition
 			{
-				public abstract bool TestCondition(CelestialBody body);
-				public abstract string Title { get; }
+				internal abstract bool TestCondition(CelestialBody body);
+				internal abstract string Title { get; }
 			}
 
-			private class Atmospheric : BodyCondition
+			class Atmospheric : BodyCondition
 			{
-				public override bool TestCondition(CelestialBody body) => body.atmosphere;
-				public override string Title => Local.Experimentinfo_BodyCondition1;//"atmospheric"
+				internal override bool TestCondition(CelestialBody body) => body.atmosphere;
+				internal override string Title => Local.Experimentinfo_BodyCondition1;//"atmospheric"
 			}
 
-			private class NonAtmospheric : BodyCondition
+			class NonAtmospheric : BodyCondition
 			{
-				public override bool TestCondition(CelestialBody body) => !body.atmosphere;
-				public override string Title => Local.Experimentinfo_BodyCondition2;//"non-atmospheric"
+				internal override bool TestCondition(CelestialBody body) => !body.atmosphere;
+				internal override string Title => Local.Experimentinfo_BodyCondition2;//"non-atmospheric"
 			}
 
-			private class Gaseous : BodyCondition
+			class Gaseous : BodyCondition
 			{
-				public override bool TestCondition(CelestialBody body) => !body.hasSolidSurface;
-				public override string Title => Local.Experimentinfo_BodyCondition3;//"gaseous"
+				internal override bool TestCondition(CelestialBody body) => !body.hasSolidSurface;
+				internal override string Title => Local.Experimentinfo_BodyCondition3;//"gaseous"
 			}
 
-			private class Solid : BodyCondition
+			class Solid : BodyCondition
 			{
-				public override bool TestCondition(CelestialBody body) => !body.hasSolidSurface;
-				public override string Title => Local.Experimentinfo_BodyCondition4;//"solid"
+				internal override bool TestCondition(CelestialBody body) => !body.hasSolidSurface;
+				internal override string Title => Local.Experimentinfo_BodyCondition4;//"solid"
 			}
 
-			private class Oceanic : BodyCondition
+			class Oceanic : BodyCondition
 			{
-				public override bool TestCondition(CelestialBody body) => body.ocean;
-				public override string Title => Local.Experimentinfo_BodyCondition5;//"oceanic"
+				internal override bool TestCondition(CelestialBody body) => body.ocean;
+				internal override string Title => Local.Experimentinfo_BodyCondition5;//"oceanic"
 			}
 
-			private class HomeBody : BodyCondition
+			class HomeBody : BodyCondition
 			{
-				public override bool TestCondition(CelestialBody body) => body.isHomeWorld;
-				public override string Title => Local.Experimentinfo_BodyCondition6;//"home body"
+				internal override bool TestCondition(CelestialBody body) => body.isHomeWorld;
+				internal override string Title => Local.Experimentinfo_BodyCondition6;//"home body"
 			}
 
-			private class HomeBodyAndMoons : BodyCondition
+			class HomeBodyAndMoons : BodyCondition
 			{
-				public override bool TestCondition(CelestialBody body) => body.isHomeWorld || body.referenceBody.isHomeWorld;
-				public override string Title => Local.Experimentinfo_BodyCondition7;//"home body and its moons"
+				internal override bool TestCondition(CelestialBody body) => body.isHomeWorld || body.referenceBody.isHomeWorld;
+				internal override string Title => Local.Experimentinfo_BodyCondition7;//"home body and its moons"
 			}
 
-			private class Planets : BodyCondition
+			class Planets : BodyCondition
 			{
-				public override bool TestCondition(CelestialBody body) => !Lib.IsSun(body) && Lib.IsSun(body.referenceBody);
-				public override string Title => Local.Experimentinfo_BodyCondition8;//"planets"
+				internal override bool TestCondition(CelestialBody body) => !Lib.IsSun(body) && Lib.IsSun(body.referenceBody);
+				internal override string Title => Local.Experimentinfo_BodyCondition8;//"planets"
 			}
 
-			private class Moons : BodyCondition
+			class Moons : BodyCondition
 			{
-				public override bool TestCondition(CelestialBody body) => !Lib.IsSun(body) && !Lib.IsSun(body.referenceBody);
-				public override string Title => Local.Experimentinfo_BodyCondition9;//"moons"
+				internal override bool TestCondition(CelestialBody body) => !Lib.IsSun(body) && !Lib.IsSun(body.referenceBody);
+				internal override string Title => Local.Experimentinfo_BodyCondition9;//"moons"
 			}
 
-			private class Suns : BodyCondition
+			class Suns : BodyCondition
 			{
-				public override bool TestCondition(CelestialBody body) => Lib.IsSun(body);
-				public override string Title => Local.Experimentinfo_BodyCondition10;//"suns"
+				internal override bool TestCondition(CelestialBody body) => Lib.IsSun(body);
+				internal override string Title => Local.Experimentinfo_BodyCondition10;//"suns"
 			}
 
-			private class SpecificBody : BodyCondition
+			class SpecificBody : BodyCondition
 			{
-				private string bodyName;
-				public override bool TestCondition(CelestialBody body) => body.name == bodyName;
-				public override string Title => string.Empty;
-				public SpecificBody(string bodyName) { this.bodyName = bodyName; }
+				string bodyName;
+				internal override bool TestCondition(CelestialBody body) => body.name == bodyName;
+				internal override string Title => string.Empty;
+				internal SpecificBody(string bodyName) { this.bodyName = bodyName; }
 			}
 		}
 	}

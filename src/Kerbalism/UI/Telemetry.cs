@@ -8,9 +8,9 @@ namespace KERBALISM
 {
 
 
-	public static class Telemetry
+	static class Telemetry
 	{
-		public static void TelemetryPanel(this Panel p, Vessel v)
+		internal static void TelemetryPanel(this Panel p, Vessel v)
 		{
 			// avoid corner-case when this is called in a lambda after scene changes
 			v = FlightGlobals.FindVessel(v.id);

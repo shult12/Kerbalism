@@ -6,49 +6,49 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public sealed class EmitterDevice : LoadedDevice<Emitter>
+	sealed class EmitterDevice : LoadedDevice<Emitter>
 	{
-		public EmitterDevice(Emitter module) : base(module) { }
+		internal EmitterDevice(Emitter module) : base(module) { }
 
-		public override string Name => "emitter";
+		internal override string Name => "emitter";
 
-		public override string Status => Lib.Color(module.running, Local.Generic_ON, Lib.Kolor.Green, Local.Generic_OFF, Lib.Kolor.Yellow);
+		internal override string Status => Lib.Color(module.running, Local.Generic_ON, Lib.Kolor.Green, Local.Generic_OFF, Lib.Kolor.Yellow);
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			if (!module.toggle) return;
 			if (module.running != value) module.Toggle();
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			Ctrl(!module.running);
 		}
 
-		public override bool IsVisible => module.toggle;
+		internal override bool IsVisible => module.toggle;
 	}
 
-	public sealed class ProtoEmitterDevice : ProtoDevice<Emitter>
+	sealed class ProtoEmitterDevice : ProtoDevice<Emitter>
 	{
-		public ProtoEmitterDevice(Emitter prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
+		internal ProtoEmitterDevice(Emitter prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
 			: base(prefab, protoPart, protoModule) { }
 
-		public override string Name => "emitter";
+		internal override string Name => "emitter";
 
-		public override string Status => Lib.Color(Lib.Proto.GetBool(protoModule, "running"), Local.Generic_ACTIVE, Lib.Kolor.Green, Local.Generic_DISABLED, Lib.Kolor.Yellow);
+		internal override string Status => Lib.Color(Lib.Proto.GetBool(protoModule, "running"), Local.Generic_ACTIVE, Lib.Kolor.Green, Local.Generic_DISABLED, Lib.Kolor.Yellow);
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			Lib.Proto.Set(protoModule, "running", value);
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			if (!Lib.Proto.GetBool(protoModule, "toggle")) return;
 			Ctrl(!Lib.Proto.GetBool(protoModule, "running"));
 		}
 
-		public override bool IsVisible => Lib.Proto.GetBool(protoModule, "toggle");
+		internal override bool IsVisible => Lib.Proto.GetBool(protoModule, "toggle");
 	}
 
 

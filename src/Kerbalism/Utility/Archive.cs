@@ -9,20 +9,20 @@ namespace KERBALISM
 	// - YES ITS UGLY BUT DON'T TOUCH OR IT GO BOOM -
 	// ----------------------------------------------
 
-	public class ReadArchive
+	class ReadArchive
 	{
-		public ReadArchive(string data)
+		internal ReadArchive(string data)
 		{
 			this.data = data;
 		}
 
-		public void Load(out int integer)
+		internal void Load(out int integer)
 		{
 			integer = data[index] - 32;
 			++index;
 		}
 
-		public void Load(out string text)
+		internal void Load(out string text)
 		{
 			int len;
 			Load(out len);
@@ -30,7 +30,7 @@ namespace KERBALISM
 			index += len;
 		}
 
-		public void Load(out double value)
+		internal void Load(out double value)
 		{
 			string s;
 			Load(out s);
@@ -42,26 +42,26 @@ namespace KERBALISM
 	}
 
 
-	public class WriteArchive
+	class WriteArchive
 	{
-		public void Save(int integer)
+		internal void Save(int integer)
 		{
 			integer = Lib.Clamp(integer + 32, 32, 255);
 			sb.Append((char)integer);
 		}
 
-		public void Save(string text)
+		internal void Save(string text)
 		{
 			Save(text.Length);
 			sb.Append(text.Substring(0, Math.Min(255 - 32, text.Length)));
 		}
 
-		public void Save(double value)
+		internal void Save(double value)
 		{
 			Save(value.ToString());
 		}
 
-		public string Serialize()
+		internal string Serialize()
 		{
 			return sb.ToString();
 		}

@@ -5,9 +5,9 @@ namespace KERBALISM
 {
 
 
-	public sealed class Supply
+	sealed class Supply
 	{
-		public Supply(ConfigNode node)
+		internal Supply(ConfigNode node)
 		{
 			resource = Lib.ConfigValue(node, "resource", string.Empty);
 			on_pod = Lib.ConfigValue(node, "on_pod", 0.0);
@@ -32,7 +32,7 @@ namespace KERBALISM
 		}
 
 
-		public void Execute(Vessel v, VesselData vd, VesselResources resources)
+		internal void Execute(Vessel v, VesselData vd, VesselResources resources)
 		{
 			// get crew
 			List<ProtoCrewMember> crew = Lib.CrewList(v);
@@ -73,7 +73,7 @@ namespace KERBALISM
 		}
 
 
-		public void SetupPod(AvailablePart p)
+		internal void SetupPod(AvailablePart p)
 		{
 			// get prefab
 			Part prefab = p.partPrefab;
@@ -104,7 +104,7 @@ namespace KERBALISM
 		}
 
 
-		public void SetupEva(Part p)
+		internal void SetupEva(Part p)
 		{
 			// do nothing if no resource on eva
 			if (on_eva <= double.Epsilon) return;
@@ -114,7 +114,7 @@ namespace KERBALISM
 		}
 
 
-		public void SetupRescue(Vessel v)
+		internal void SetupRescue(Vessel v)
 		{
 			// do nothing if no resource on rescue
 			if (on_rescue <= double.Epsilon) return;
@@ -135,16 +135,16 @@ namespace KERBALISM
 
 
 
-		public string resource;                           // name of resource
-		public double on_pod;                             // how much resource to add to manned parts, per-kerbal
-		public double on_eva;                             // how much resource to take on eva, if any
-		public double on_rescue;                          // how much resource to gift to rescue missions
-		public bool empty;                              // set initial amount to zero
+		internal string resource;                           // name of resource
+		double on_pod;                             // how much resource to add to manned parts, per-kerbal
+		double on_eva;                             // how much resource to take on eva, if any
+		double on_rescue;                          // how much resource to gift to rescue missions
+		bool empty;                              // set initial amount to zero
 
-		public double low_threshold;                      // threshold of resource level used to show low messages and yellow status color
-		public string low_message;                        // messages shown on threshold crossings
-		public string empty_message;                      // .
-		public string refill_message;                     // .
+		internal double low_threshold;                      // threshold of resource level used to show low messages and yellow status color
+		string low_message;                        // messages shown on threshold crossings
+		string empty_message;                      // .
+		string refill_message;                     // .
 	}
 
 

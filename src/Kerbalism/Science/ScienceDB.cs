@@ -7,14 +7,14 @@ using System.Text.RegularExpressions;
 
 namespace KERBALISM
 {
-	public static class ScienceDB
+	static class ScienceDB
 	{
-		public class UniqueValuesList<T>
+		internal class UniqueValuesList<T>
 		{
-			private List<T> values = new List<T>();
-			private HashSet<T> valuesHashs = new HashSet<T>();
+			List<T> values = new List<T>();
+			HashSet<T> valuesHashs = new HashSet<T>();
 
-			public void Add(T value)
+			internal void Add(T value)
 			{
 				if (valuesHashs.Contains(value))
 					return;
@@ -25,7 +25,7 @@ namespace KERBALISM
 
 			public IEnumerator<T> GetEnumerator() => values.GetEnumerator();
 
-			public void Clear()
+			internal void Clear()
 			{
 				values.Clear();
 				valuesHashs.Clear();
@@ -38,17 +38,17 @@ namespace KERBALISM
 		// - iterating (foreach) should be as fast as on a list, and generate no garbage
 		// - key lookups are O(n) and are done by iterating and checking equality
 		// - other operations all have the O(n) lookup overhead, but no garbage generation
-		public class KeyValueList<TKey, TValue>
+		internal class KeyValueList<TKey, TValue>
 		{
-			private readonly List<ObjectPair<TKey, TValue>> keyValuePairs = new List<ObjectPair<TKey, TValue>>();
+			readonly List<ObjectPair<TKey, TValue>> keyValuePairs = new List<ObjectPair<TKey, TValue>>();
 
-			public TValue this[TKey key]
+			TValue this[TKey key]
 			{
 				get { return keyValuePairs[keyValuePairs.FindIndex(p => p.Key.Equals(key))].Value; }
 				set { keyValuePairs[keyValuePairs.FindIndex(p => p.Key.Equals(key))] = new ObjectPair<TKey, TValue>(key, value); }
 			}
 
-			public void Add(TKey key, TValue value)
+			internal void Add(TKey key, TValue value)
 			{
 				if (key == null)
 					throw new ArgumentNullException();
@@ -59,15 +59,15 @@ namespace KERBALISM
 				keyValuePairs.Add(new ObjectPair<TKey, TValue>(key, value));
 			}
 
-			public bool ContainsKey(TKey key) => keyValuePairs.Exists(p => p.Key.Equals(key));
+			bool ContainsKey(TKey key) => keyValuePairs.Exists(p => p.Key.Equals(key));
 
-			public int Count => keyValuePairs.Count;
+			int Count => keyValuePairs.Count;
 
-			public void Clear() => keyValuePairs.Clear();
+			void Clear() => keyValuePairs.Clear();
 
 			public IEnumerator<ObjectPair<TKey, TValue>> GetEnumerator() => keyValuePairs.GetEnumerator();
 
-			public bool Remove(TKey key)
+			bool Remove(TKey key)
 			{
 				int index = keyValuePairs.FindIndex(p => p.Key.Equals(key));
 				if (index == -1)
@@ -77,7 +77,7 @@ namespace KERBALISM
 				return true;
 			}
 
-			public bool TryGetValue(TKey key, out TValue value)
+			internal bool TryGetValue(TKey key, out TValue value)
 			{
 				int index = keyValuePairs.FindIndex(p => p.Key.Equals(key));
 				if (index == -1)
@@ -90,19 +90,19 @@ namespace KERBALISM
 				return true;
 			}
 
-			public void ForEach(Action<ObjectPair<TKey, TValue>> action) => keyValuePairs.ForEach(action);
+			void ForEach(Action<ObjectPair<TKey, TValue>> action) => keyValuePairs.ForEach(action);
 		}
 
 		/// <summary> KeyValueList of ObjectPair&lt;int, List&lt;SubjectData&gt;&gt;, int = biome index </summary>
-		public class BiomesSubject : KeyValueList<int, List<SubjectData>> { }
+		internal class BiomesSubject : KeyValueList<int, List<SubjectData>> { }
 		/// <summary> KeyValueList of ObjectPair&lt;ScienceSituation, BiomesSubject&gt; </summary>
-		public class SituationsBiomesSubject : KeyValueList<ScienceSituation, BiomesSubject> { }
+		internal class SituationsBiomesSubject : KeyValueList<ScienceSituation, BiomesSubject> { }
 		/// <summary> KeyValueList of ObjectPair&lt;int, SituationsBiomesSubject&gt; , int = body index </summary>
-		public class BodiesSituationsBiomesSubject : KeyValueList<int, SituationsBiomesSubject> { }
+		internal class BodiesSituationsBiomesSubject : KeyValueList<int, SituationsBiomesSubject> { }
 		/// <summary> Dictionary of KeyBaluePair&lt;ExperimentInfo, BodiesSituationsBiomesSubject&gt; </summary>
-		public class ExpBodiesSituationsBiomesSubject : Dictionary<ExperimentInfo, BodiesSituationsBiomesSubject>
+		class ExpBodiesSituationsBiomesSubject : Dictionary<ExperimentInfo, BodiesSituationsBiomesSubject>
 		{
-			public void AddSubject(ExperimentInfo expInfo, int bodyIndex, ScienceSituation scienceSituation, int biomeIndex, SubjectData subjectData)
+			internal void AddSubject(ExperimentInfo expInfo, int bodyIndex, ScienceSituation scienceSituation, int biomeIndex, SubjectData subjectData)
 			{
 
 				BodiesSituationsBiomesSubject bodiesSituationsBiomesSubject;
@@ -140,7 +140,7 @@ namespace KERBALISM
 				
 			}
 
-			public void RemoveSubject(ExperimentInfo expInfo, int bodyIndex, ScienceSituation scienceSituation, int biomeIndex, SubjectData subjectData)
+			internal void RemoveSubject(ExperimentInfo expInfo, int bodyIndex, ScienceSituation scienceSituation, int biomeIndex, SubjectData subjectData)
 			{
 				BodiesSituationsBiomesSubject bodiesSituationsBiomesSubject;
 				if (!TryGetValue(expInfo, out bodiesSituationsBiomesSubject))
@@ -163,17 +163,17 @@ namespace KERBALISM
 		}
 
 		/// <summary> All ExperimentInfos, accessible by experimentId </summary>
-		private static readonly Dictionary<string, ExperimentInfo>
+		static readonly Dictionary<string, ExperimentInfo>
 			experiments = new Dictionary<string, ExperimentInfo>();
 
 		/// <summary> All ExperimentInfos </summary>
-		public static IEnumerable<ExperimentInfo> ExperimentInfos => experiments.Values;
+		internal static IEnumerable<ExperimentInfo> ExperimentInfos => experiments.Values;
 
 		/// <summary>
 		/// For every ExperimentInfo, for every VesselSituation id, the corresponding SubjectData.
 		/// used to get the subject, or to test if a situation is available for a given experiment
 		/// </summary>
-		private static readonly Dictionary<ExperimentInfo, Dictionary<int, SubjectData>>
+		static readonly Dictionary<ExperimentInfo, Dictionary<int, SubjectData>>
 			subjectByExpThenSituationId = new Dictionary<ExperimentInfo, Dictionary<int, SubjectData>>();
 
 		/// <summary>
@@ -185,22 +185,22 @@ namespace KERBALISM
 		/// <para/> biome indexes are from the CelestialBody.BiomeMap.Attribute. The -1 index correspond to the biome-agnostic situation.
 		/// <para/> Ex : expBodiesSituationsBiomesSubject[expInfo][2][ScienceSituation.InnerBelt][4][0] return the first subject for expInfo, bodyIndex 2, inner belt situation, biome index 4
 		/// </summary>
-		private static readonly ExpBodiesSituationsBiomesSubject
+		static readonly ExpBodiesSituationsBiomesSubject
 			expBodiesSituationsBiomesSubject = new ExpBodiesSituationsBiomesSubject();
 
 		// HashSet of all subjects using the stock string id as key, used for RnD subjects synchronization
-		private static readonly HashSet<string> knownStockSubjectsId = new HashSet<string>();
+		static readonly HashSet<string> knownStockSubjectsId = new HashSet<string>();
 
-		private static readonly Dictionary<string, SubjectData> unknownSubjectDatas = new Dictionary<string, SubjectData>();
+		static readonly Dictionary<string, SubjectData> unknownSubjectDatas = new Dictionary<string, SubjectData>();
 
-		public static readonly Dictionary<string, ScienceSubject> sandboxSubjects = new Dictionary<string, ScienceSubject>();
+		internal static readonly Dictionary<string, ScienceSubject> sandboxSubjects = new Dictionary<string, ScienceSubject>();
 
 		/// <summary>
 		/// List of subjects that should be persisted in our own DB
 		/// </summary>
-		public static readonly UniqueValuesList<SubjectData> persistedSubjects = new UniqueValuesList<SubjectData>();
+		internal static readonly UniqueValuesList<SubjectData> persistedSubjects = new UniqueValuesList<SubjectData>();
 
-		public static void Init()
+		internal static void Init()
 		{
 			Lib.Log("ScienceDB init started");
 			int subjectCount = 0;
@@ -359,7 +359,7 @@ namespace KERBALISM
 			Lib.Log($"ScienceDB init done : {subjectCount} subjects found, total science points : {totalScience.ToString("F1")}");
 		}
 
-		public static void Load(ConfigNode node)
+		internal static void Load(ConfigNode node)
 		{
 			// RnD subjects don't exists in sandbox
 			if (!Science.GameHasRnD)
@@ -455,7 +455,7 @@ namespace KERBALISM
 					GetSubjectDataFromStockId(stockSubject.id, stockSubject);
 		}
 
-		public static void Save(ConfigNode node)
+		internal static void Save(ConfigNode node)
 		{
 			// RnD subjects don't exists in sandbox, so we have our own subject persistence
 			if (!Science.GameHasRnD)
@@ -493,16 +493,16 @@ namespace KERBALISM
 		// Use a buffer because AddScience is VERY slow
 		// We don't use "TransactionReasons.ScienceTransmission" because AddScience fire multiple events not meant to be fired continuously
 		// this avoid many side issues (ex : chatterer transmit sound playing continously, strategia "+0.0 science" popup...)
-		public static double uncreditedScience;
+		internal static double uncreditedScience;
 
 		// this is for the onSubjectsReceived API event
-		public static List<ScienceSubject> subjectsReceivedBuffer = new List<ScienceSubject>();
-		public static List<double> subjectsReceivedValueBuffer = new List<double>();
+		internal static List<ScienceSubject> subjectsReceivedBuffer = new List<ScienceSubject>();
+		internal static List<double> subjectsReceivedValueBuffer = new List<double>();
 
-		private static double realTimeElapsed = 0.0;
-		private static double realTimeElapsedAPI = 0.0;
-		private static double gameTimeElapsedAPI = 0.0;
-		public static void CreditScienceBuffers(double elapsed_s)
+		static double realTimeElapsed = 0.0;
+		static double realTimeElapsedAPI = 0.0;
+		static double gameTimeElapsedAPI = 0.0;
+		internal static void CreditScienceBuffers(double elapsed_s)
 		{
 			if (!Science.GameHasRnD)
 				return;
@@ -534,7 +534,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static ExperimentInfo GetExperimentInfo(string experimentId)
+		internal static ExperimentInfo GetExperimentInfo(string experimentId)
 		{
 			ExperimentInfo expInfo;
 			if (!experiments.TryGetValue(experimentId, out expInfo))
@@ -544,7 +544,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> return the subject information for the given experiment and situation, or null if the situation isn't available. </summary>
-		public static SubjectData GetSubjectData(ExperimentInfo expInfo, Situation situation)
+		internal static SubjectData GetSubjectData(ExperimentInfo expInfo, Situation situation)
 		{
 			int situationId;
 			if (!situation.ScienceSituation.IsBiomesRelevantForExperiment(expInfo))
@@ -560,7 +560,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> return the subject information for the given experiment and situation, or null if the situation isn't available. </summary>
-		public static SubjectData GetSubjectData(ExperimentInfo expInfo, Situation situation, out int situationId)
+		internal static SubjectData GetSubjectData(ExperimentInfo expInfo, Situation situation, out int situationId)
 		{
 			if (!situation.ScienceSituation.IsBiomesRelevantForExperiment(expInfo))
 				situationId = situation.GetBiomeAgnosticId();
@@ -575,7 +575,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> return the subject information for the given experiment and situation id, or null if the situation isn't available. </summary>
-		public static SubjectData GetSubjectData(ExperimentInfo expInfo, int situationId)
+		internal static SubjectData GetSubjectData(ExperimentInfo expInfo, int situationId)
 		{
 			SubjectData subjectData;
 			if (!subjectByExpThenSituationId[expInfo].TryGetValue(situationId, out subjectData))
@@ -585,7 +585,7 @@ namespace KERBALISM
 		}
 
 		/// <summary> return the subject information for the given experiment and situation, or null if the situation isn't available. </summary>
-		public static SubjectData GetSubjectData(string integerSubjectId)
+		internal static SubjectData GetSubjectData(string integerSubjectId)
 		{
 			string[] expAndSit = integerSubjectId.Split('@');
 
@@ -624,7 +624,7 @@ namespace KERBALISM
 		/// Create our SubjectData by parsing the stock "experiment@situation" subject id string.
 		/// Used for asteroid samples, for compatibility with RnD archive data of removed mods and for converting stock ScienceData into SubjectData
 		/// </summary>
-		public static SubjectData GetSubjectDataFromStockId(string stockSubjectId, ScienceSubject RnDSubject = null, string extraSituationInfo = null)
+		internal static SubjectData GetSubjectDataFromStockId(string stockSubjectId, ScienceSubject RnDSubject = null, string extraSituationInfo = null)
 		{
 			SubjectData subjectData = null;
 
@@ -762,7 +762,7 @@ namespace KERBALISM
 			return subjectData;
 		}
 
-		public static BodiesSituationsBiomesSubject GetSubjectsForExperiment(ExperimentInfo expInfo)
+		internal static BodiesSituationsBiomesSubject GetSubjectsForExperiment(ExperimentInfo expInfo)
 		{
 			BodiesSituationsBiomesSubject result;
 			expBodiesSituationsBiomesSubject.TryGetValue(expInfo, out result);

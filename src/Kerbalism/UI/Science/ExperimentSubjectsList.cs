@@ -12,13 +12,13 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public class ExperimentSubjectList : KsmGuiVerticalLayout
+	class ExperimentSubjectList : KsmGuiVerticalLayout
 	{
-		public KsmGuiToggle KnownSubjectsToggle {get; private set;}
-		public List<BodyContainer> BodyContainers = new List<BodyContainer>();
+		internal KsmGuiToggle KnownSubjectsToggle {get; private set;}
+		internal List<BodyContainer> BodyContainers = new List<BodyContainer>();
 
 
-		public ExperimentSubjectList(KsmGuiBase parent, ExperimentInfo expInfo) : base(parent)
+		internal ExperimentSubjectList(KsmGuiBase parent, ExperimentInfo expInfo) : base(parent)
 		{
 			KnownSubjectsToggle = new KsmGuiToggle(this, Local.SCIENCEARCHIVE_Showonlyknownsubjects, true, ToggleKnownSubjects, null, -1, 21);//"Show only known subjects"
 
@@ -70,7 +70,7 @@ namespace KERBALISM
 			ToggleKnownSubjects(true);
 		}
 
-		public void ToggleKnownSubjects(bool onlyKnown)
+		void ToggleKnownSubjects(bool onlyKnown)
 		{
 			foreach (BodyContainer body in BodyContainers)
 			{
@@ -95,7 +95,7 @@ namespace KERBALISM
 			RebuildLayout();
 		}
 
-		private IEnumerator Update()
+		IEnumerator Update()
 		{
 			foreach (BodyContainer body in BodyContainers)
 			{
@@ -148,13 +148,13 @@ namespace KERBALISM
 			yield break;
 		}
 
-		public class BodyContainer: KsmGuiVerticalLayout
+		internal class BodyContainer: KsmGuiVerticalLayout
 		{
-			public bool isKnown;
-			public SubjectsContainer SubjectsContainer { get; private set; }
+			internal bool isKnown;
+			internal SubjectsContainer SubjectsContainer { get; private set; }
 			KsmGuiIconButton bodyToggle;
 
-			public BodyContainer(KsmGuiBase parent, CelestialBody body, SituationsBiomesSubject situationsAndSubjects) : base(parent)
+			internal BodyContainer(KsmGuiBase parent, CelestialBody body, SituationsBiomesSubject situationsAndSubjects) : base(parent)
 			{
 				KsmGuiHeader header = new KsmGuiHeader(this, body.name, KsmGuiStyle.boxColor);
 				header.TextObject.TextComponent.fontStyle = FontStyles.Bold;
@@ -167,12 +167,12 @@ namespace KERBALISM
 				SubjectsContainer = new SubjectsContainer(this, situationsAndSubjects);
 			}
 
-			public void ToggleBody()
+			void ToggleBody()
 			{
 				ToggleBody(!SubjectsContainer.Enabled);
 			}
 
-			public void ToggleBody(bool enable)
+			internal void ToggleBody(bool enable)
 			{
 				if (enable)
 					SubjectsContainer.InstantiateUIObjects();
@@ -183,12 +183,12 @@ namespace KERBALISM
 			}
 		}
 
-		public class SubjectsContainer : KsmGuiVerticalLayout
+		internal class SubjectsContainer : KsmGuiVerticalLayout
 		{
-			public List<SituationContainer> Situations { get; private set; } = new List<SituationContainer>();
-			public bool IsInstantiated { get; private set; } = false;
+			internal List<SituationContainer> Situations { get; private set; } = new List<SituationContainer>();
+			internal bool IsInstantiated { get; private set; } = false;
 
-			public SubjectsContainer(BodyContainer parent, SituationsBiomesSubject situationsSubjects) : base(parent)
+			internal SubjectsContainer(BodyContainer parent, SituationsBiomesSubject situationsSubjects) : base(parent)
 			{
 				foreach (ObjectPair<ScienceSituation, BiomesSubject> situation in situationsSubjects)
 				{
@@ -196,7 +196,7 @@ namespace KERBALISM
 				}
 			}
 
-			public void InstantiateUIObjects()
+			internal void InstantiateUIObjects()
 			{
 				if (IsInstantiated || Situations.Count == 0)
 					return;
@@ -209,7 +209,7 @@ namespace KERBALISM
 				}
 			}
 
-			public void DestroyUIObjects()
+			internal void DestroyUIObjects()
 			{
 				if (IsInstantiated)
 				{
@@ -222,14 +222,14 @@ namespace KERBALISM
 			}
 		}
 
-		public class SituationContainer
+		internal class SituationContainer
 		{
-			public bool isKnown;
+			internal bool isKnown;
 			KsmGuiText situationText;
-			public bool IsInstantiated => situationText != null;
-			private ObjectPair<ScienceSituation, BiomesSubject> situationSubjects;
+			bool IsInstantiated => situationText != null;
+			ObjectPair<ScienceSituation, BiomesSubject> situationSubjects;
 
-			public bool Enabled
+			internal bool Enabled
 			{
 				get => situationText != null ? situationText.Enabled : false;
 				set
@@ -239,9 +239,9 @@ namespace KERBALISM
 				}
 			}
 
-			public List<SubjectLine> SubjectLines { get; private set; } = new List<SubjectLine>();
+			internal List<SubjectLine> SubjectLines { get; private set; } = new List<SubjectLine>();
 
-			public SituationContainer(ObjectPair<ScienceSituation, BiomesSubject> situationSubjects)
+			internal SituationContainer(ObjectPair<ScienceSituation, BiomesSubject> situationSubjects)
 			{
 				this.situationSubjects = situationSubjects;
 				foreach (ObjectPair<int, List<SubjectData>> subjects in situationSubjects.Value)
@@ -253,7 +253,7 @@ namespace KERBALISM
 				}
 			}
 
-			public int DBLinesCount()
+			internal int DBLinesCount()
 			{
 				int count = 0;
 				foreach (ObjectPair<int, List<SubjectData>> subjects in situationSubjects.Value)
@@ -261,7 +261,7 @@ namespace KERBALISM
 				return count;
 			}
 
-			public void UpdateLines()
+			internal void UpdateLines()
 			{
 				SubjectLines.Clear();
 				foreach (ObjectPair<int, List<SubjectData>> subjects in situationSubjects.Value)
@@ -273,7 +273,7 @@ namespace KERBALISM
 				}
 			}
 
-			public void InstantiateUIObjects(SubjectsContainer parent)
+			internal void InstantiateUIObjects(SubjectsContainer parent)
 			{
 				isKnown = false;
 
@@ -298,7 +298,7 @@ namespace KERBALISM
 				}
 			}
 
-			public void DestroyUIObjects()
+			internal void DestroyUIObjects()
 			{
 				if (situationText != null)
 				{
@@ -311,13 +311,13 @@ namespace KERBALISM
 			}
 		}
 
-		public class SubjectLine
+		internal class SubjectLine
 		{
-			public bool isKnown;
-			public SubjectData SubjectData { get; private set; }
+			internal bool isKnown;
+			internal SubjectData SubjectData { get; private set; }
 			KsmGuiText subjectText;
 
-			public bool Enabled
+			internal bool Enabled
 			{
 				get => subjectText != null ? subjectText.Enabled : false;
 				set
@@ -327,18 +327,18 @@ namespace KERBALISM
 				}
 			}
 
-			public SubjectLine(SubjectData subject)
+			internal SubjectLine(SubjectData subject)
 			{
 				SubjectData = subject;
 			}
 
-			public void InstantiateText(SubjectsContainer parent)
+			internal void InstantiateText(SubjectsContainer parent)
 			{
 				subjectText = new KsmGuiText(parent, GetText(), null, TextAlignmentOptions.TopLeft, false);
 				subjectText.SetLayoutElement(true, false, -1, 14);
 			}
 
-			public void DestroyText()
+			internal void DestroyText()
 			{
 				if (subjectText != null)
 				{
@@ -347,12 +347,12 @@ namespace KERBALISM
 				}
 			}
 
-			public void UpdateText()
+			internal void UpdateText()
 			{
 				if (subjectText != null) subjectText.Text = GetText();
 			}
 
-			public string GetText()
+			string GetText()
 			{
 				return Lib.BuildString
 				(

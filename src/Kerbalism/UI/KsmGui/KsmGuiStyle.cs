@@ -6,25 +6,25 @@ using UnityEngine.UI;
 
 namespace KERBALISM.KsmGui
 {
-	public static class KsmGuiStyle
+	static class KsmGuiStyle
 	{
-		public static readonly float defaultWindowOpacity = 0.8f;
+		internal static readonly float defaultWindowOpacity = 0.8f;
 
-		public static readonly Color textColor = Color.white;
-		public static readonly TMP_FontAsset textFont = UISkinManager.TMPFont; // KSP default font : Noto-sans
-		public static readonly float textSize = 12f;
+		internal static readonly Color textColor = Color.white;
+		internal static readonly TMP_FontAsset textFont = UISkinManager.TMPFont; // KSP default font : Noto-sans
+		internal static readonly float textSize = 12f;
 
-		public static readonly Color tooltipBackgroundColor = Color.black;
-		public static readonly Color tooltipBorderColor = Color.white; // new Color(1f, 0.82f, 0f); // yellow #FFD200
+		internal static readonly Color tooltipBackgroundColor = Color.black;
+		internal static readonly Color tooltipBorderColor = Color.white; // new Color(1f, 0.82f, 0f); // yellow #FFD200
 
-		public static readonly Color boxColor = new Color(0f, 0f, 0f, 0.2f);
-		public static readonly Color selectedBoxColor = new Color(0f, 0f, 0f, 0.5f);
+		internal static readonly Color boxColor = new Color(0f, 0f, 0f, 0.2f);
+		internal static readonly Color selectedBoxColor = new Color(0f, 0f, 0f, 0.5f);
 
-		public static readonly Color headerColor = Color.black;
+		static readonly Color headerColor = Color.black;
 
-		public static readonly float tooltipMaxWidth = 300f;
+		internal static readonly float tooltipMaxWidth = 300f;
 
-		public static readonly ColorBlock iconTransitionColorBlock = new ColorBlock()
+		internal static readonly ColorBlock iconTransitionColorBlock = new ColorBlock()
 		{
 			normalColor = Color.white,
 			highlightedColor = new Color(0.8f, 0.8f, 0.8f, 0.8f),
@@ -34,7 +34,7 @@ namespace KERBALISM.KsmGui
 			fadeDuration = 0.1f
 		};
 
-		public static readonly SpriteState buttonSpriteSwap = new SpriteState()
+		internal static readonly SpriteState buttonSpriteSwap = new SpriteState()
 		{
 			highlightedSprite = Textures.KsmGuiSpriteBtnHighlight,
 			pressedSprite = Textures.KsmGuiSpriteBtnHighlight,

@@ -6,9 +6,9 @@ namespace KERBALISM.Planner
 
 	///<summary> Description of how to convert inputs to outputs,
 	/// this class is also responsible for executing the recipe, such that it is actualized in the <see cref="SimulatedResource"/> </summary>
-	public sealed class SimulatedRecipe
+	sealed class SimulatedRecipe
 	{
-		public SimulatedRecipe(Part p, string name)
+		internal SimulatedRecipe(Part p, string name)
 		{
 			this.name = name;
 			this.inputs = new List<ResourceRecipe.Entry>();
@@ -20,7 +20,7 @@ namespace KERBALISM.Planner
 		/// <summary>
 		/// add an input to the recipe
 		/// </summary>
-		public void Input(string resource_name, double quantity)
+		internal void Input(string resource_name, double quantity)
 		{
 			if (quantity > double.Epsilon) //< avoid division by zero
 			{
@@ -31,7 +31,7 @@ namespace KERBALISM.Planner
 		/// <summary>
 		/// add a combined input to the recipe
 		/// </summary>
-		public void Input(string resource_name, double quantity, string combined)
+		internal void Input(string resource_name, double quantity, string combined)
 		{
 			if (quantity > double.Epsilon) //< avoid division by zero
 			{
@@ -40,7 +40,7 @@ namespace KERBALISM.Planner
 		}
 
 		// add an output to the recipe
-		public void Output(string resource_name, double quantity, bool dump)
+		internal void Output(string resource_name, double quantity, bool dump)
 		{
 			if (quantity > double.Epsilon) //< avoid division by zero
 			{
@@ -49,7 +49,7 @@ namespace KERBALISM.Planner
 		}
 
 		// execute the recipe
-		public bool Execute(ResourceSimulator sim)
+		internal bool Execute(ResourceSimulator sim)
 		{
 			// determine worst input ratio
 			double worst_input = left;
@@ -143,11 +143,11 @@ namespace KERBALISM.Planner
 		}
 
 		// store inputs and outputs
-		public string name;                         // name used for consumer/producer tooltip
-		public List<ResourceRecipe.Entry> inputs;  // set of input resources
-		public List<ResourceRecipe.Entry> outputs; // set of output resources
-		public double left;                         // what proportion of the recipe is left to execute
-		private Part loaded_part = null;            // part this recipe runs on, may be null for vessel wide recipe
+		string name;                         // name used for consumer/producer tooltip
+		List<ResourceRecipe.Entry> inputs;  // set of input resources
+		List<ResourceRecipe.Entry> outputs; // set of output resources
+		internal double left;                         // what proportion of the recipe is left to execute
+		Part loaded_part = null;            // part this recipe runs on, may be null for vessel wide recipe
 	}
 
 

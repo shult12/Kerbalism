@@ -7,9 +7,9 @@ namespace KERBALISM
 {
 
 
-	public static class FailuresManager
+	static class FailuresManager
 	{
-		public static void Failman(this Panel p, Vessel v)
+		internal static void Failman(this Panel p, Vessel v)
 		{
 			// avoid corner-case when this is called in a lambda after scene changes
 			v = FlightGlobals.FindVessel(v.id);
@@ -61,13 +61,13 @@ namespace KERBALISM
 			}
 		}
 
-		private static string Group2Section(string group)
+		static string Group2Section(string group)
 		{
 			if (string.IsNullOrEmpty(group)) return Local.QualityManagement_Misc;//"Misc"
 			return group;
 		}
 
-		private static string StatusString(ReliabilityInfo ri)
+		static string StatusString(ReliabilityInfo ri)
 		{
 			if (ri.broken)
 			{

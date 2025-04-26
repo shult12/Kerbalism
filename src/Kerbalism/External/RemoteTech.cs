@@ -5,28 +5,28 @@ namespace KERBALISM
 {
 
 	/// <summary> Contains methods for RemoteTech's API</summary>
-	public static class RemoteTech
+	static class RemoteTech
 	{
-		private static MethodInfo ModuleRTAntennaConsumptionMultiplier;
-		private static FieldInfo ModuleRTAntennaEnergyCost;
+		static MethodInfo ModuleRTAntennaConsumptionMultiplier;
+		static FieldInfo ModuleRTAntennaEnergyCost;
 
-		private static Type RT_API;
-		private static Func<bool> IsEnabled;
-		private static Action<bool> EnabledInSPC;
-		private static Func<Guid, bool> IsConnected;
-		private static Func<Guid, bool> IsConnectedKSC;
-		private static Func<Guid, bool> IsTargetKSC;
-		private static Func<Guid, string> NameTargetKSC;
-		private static Func<Guid, string> NameFirstHopKSC;
-		private static Func<Guid, double> SignalDelay;
-		private static Func<Guid, bool, string, bool> SetRadioBlackout;
-		private static Func<Guid, bool> GetRadioBlackout;
-		private static Func<Guid, bool, string, bool> SetPowerDown;
-		private static Func<Guid, bool> GetPowerDown;
-		private static Func<Guid, Guid[]> GetControlPath;
-		private static Func<Guid, Guid, double> GetDistance;
-		private static Func<Guid, Guid, double> GetMaxDistance;
-		private static Func<Guid, string> GetSatName;
+		static Type RT_API;
+		static Func<bool> IsEnabled;
+		static Action<bool> EnabledInSPC;
+		static Func<Guid, bool> IsConnected;
+		static Func<Guid, bool> IsConnectedKSC;
+		static Func<Guid, bool> IsTargetKSC;
+		static Func<Guid, string> NameTargetKSC;
+		static Func<Guid, string> NameFirstHopKSC;
+		static Func<Guid, double> SignalDelay;
+		static Func<Guid, bool, string, bool> SetRadioBlackout;
+		static Func<Guid, bool> GetRadioBlackout;
+		static Func<Guid, bool, string, bool> SetPowerDown;
+		static Func<Guid, bool> GetPowerDown;
+		static Func<Guid, Guid[]> GetControlPath;
+		static Func<Guid, Guid, double> GetDistance;
+		static Func<Guid, Guid, double> GetMaxDistance;
+		static Func<Guid, string> GetSatName;
 
 		// constructor
 		static RemoteTech()
@@ -72,7 +72,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void RTFailureHandler(Part part, string type, bool failure)
+		static void RTFailureHandler(Part part, string type, bool failure)
 		{
 			foreach (PartModule m in part.Modules)
 			{
@@ -83,75 +83,75 @@ namespace KERBALISM
 			}
 		}
 
-		public static bool Installed { get; private set; } = false;
+		internal static bool Installed { get; private set; } = false;
 
 		/// <summary> Returns true if RemoteTech is enabled for the current game</summary>
-		public static bool Enabled => IsEnabled != null && IsEnabled();
+		internal static bool Enabled => IsEnabled != null && IsEnabled();
 
 		/// <summary> Enables RTCore in the Space Center scene</summary>
-		public static void EnableInSPC() => EnabledInSPC?.Invoke(true);
+		internal static void EnableInSPC() => EnabledInSPC?.Invoke(true);
 
 		/// <summary> Returns true if the vessel has a connection back to KSC</summary>
-		public static bool ConnectedToKSC(Guid id) => IsConnectedKSC == null ? false : IsConnectedKSC(id);
+		internal static bool ConnectedToKSC(Guid id) => IsConnectedKSC == null ? false : IsConnectedKSC(id);
 
 		/// <summary> Returns true if the vessel directly targets KSC</summary>
-		public static bool TargetsKSC(Guid id) => IsTargetKSC == null ? false : IsTargetKSC(id);
+		internal static bool TargetsKSC(Guid id) => IsTargetKSC == null ? false : IsTargetKSC(id);
 
 		/// <summary> Returns the name of the ground station directly targeted with the shortest link if any found by the vessel</summary>
-		public static string NameTargetsKSC(Guid id) => NameTargetKSC?.Invoke(id);
+		internal static string NameTargetsKSC(Guid id) => NameTargetKSC?.Invoke(id);
 
 		/// <summary> Returns the name of the first hop vessel with the shortest link to KSC by the vessel</summary>
-		public static string NameFirstHopToKSC(Guid id) => NameFirstHopKSC?.Invoke(id);
+		internal static string NameFirstHopToKSC(Guid id) => NameFirstHopKSC?.Invoke(id);
 
 		/// <summary> Returns true if the vessel has any connection</summary>
-		public static bool Connected(Guid id) => IsConnected != null && IsConnected(id);
+		internal static bool Connected(Guid id) => IsConnected != null && IsConnected(id);
 
 		/// <summary> Returns the signal delay of the shortest route to the KSC if any found</summary>
-		public static double GetSignalDelay(Guid id) => SignalDelay == null ? 0.0 : SignalDelay(id);
+		internal static double GetSignalDelay(Guid id) => SignalDelay == null ? 0.0 : SignalDelay(id);
 
 		/// <summary> Sets the comms Blackout state for the vessel</summary>
-		public static void SetCommsBlackout(Guid id, bool flag) => SetRadioBlackout?.Invoke(id, flag, "Kerbalism");
+		internal static void SetCommsBlackout(Guid id, bool flag) => SetRadioBlackout?.Invoke(id, flag, "Kerbalism");
 
 		/// <summary> Gets the comms Blackout state of the vessel</summary>
-		public static bool GetCommsBlackout(Guid id) => GetRadioBlackout != null && GetRadioBlackout(id);
+		internal static bool GetCommsBlackout(Guid id) => GetRadioBlackout != null && GetRadioBlackout(id);
 
 		/// <summary> Sets the Powered down state for the vessel</summary>
-		public static void SetPoweredDown(Guid id, bool flag) => SetPowerDown?.Invoke(id, flag, "Kerbalism");
+		internal static void SetPoweredDown(Guid id, bool flag) => SetPowerDown?.Invoke(id, flag, "Kerbalism");
 
 		/// <summary> Gets the Powered down state of the vessel</summary>
-		public static bool IsPoweredDown(Guid id) => GetPowerDown != null && GetPowerDown(id);
+		internal static bool IsPoweredDown(Guid id) => GetPowerDown != null && GetPowerDown(id);
 
 		/// <summary> Returns an array of all vessel ids in the control path </summary>
 		/// <param name="id"> Satellite id to be searched</param>
-		public static Guid[] GetCommsControlPath(Guid id) => GetControlPath == null ? new Guid[0] : GetControlPath(id);
+		internal static Guid[] GetCommsControlPath(Guid id) => GetControlPath == null ? new Guid[0] : GetControlPath(id);
 
 		/// <summary> Returns distance between 2 satellites</summary>
 		/// <param name="id_A">Satellite Source id</param>
 		/// <param name="id_B">Satellite Target id</param>
-		public static double GetCommsDistance(Guid id_A, Guid id_B) => GetDistance == null ? 0.0 : GetDistance(id_A, id_B);
+		internal static double GetCommsDistance(Guid id_A, Guid id_B) => GetDistance == null ? 0.0 : GetDistance(id_A, id_B);
 
 		/// <summary> Returns max distance between 2 satellites</summary>
 		/// <param name="id_A">Satellite Source id</param>
 		/// <param name="id_B">Satellite Target id</param>
-		public static double GetCommsMaxDistance(Guid id_A, Guid id_B) => GetMaxDistance == null ? 0.0 : GetMaxDistance(id_A, id_B);
+		internal static double GetCommsMaxDistance(Guid id_A, Guid id_B) => GetMaxDistance == null ? 0.0 : GetMaxDistance(id_A, id_B);
 
 		/// <summary> Returns satellite name</summary>
 		/// <param name="id">Satellite id</param>
-		public static string GetSatelliteName(Guid id) => GetSatName == null ? "" : GetSatName(id);
+		internal static string GetSatelliteName(Guid id) => GetSatName == null ? "" : GetSatName(id);
 
 		/// <summary> Sets the Broken state for the vessel</summary>
-		public static void SetBroken(PartModule antenna, bool broken)
+		static void SetBroken(PartModule antenna, bool broken)
 		{
 			Lib.ReflectionValue(antenna, "IsRTBroken", broken);
 		}
 
-		public static float GetModuleRTAntennaConsumption(PartModule moduleRTAntenna)
+		internal static float GetModuleRTAntennaConsumption(PartModule moduleRTAntenna)
 		{
 			return (float)ModuleRTAntennaConsumptionMultiplier.Invoke(moduleRTAntenna, null) * (float)ModuleRTAntennaEnergyCost.GetValue(moduleRTAntenna);
 		}
 
 		/// <summary> Returns true if the PartModule is a RemoteTech Antenna</summary>
-		private static bool IsRTAntenna(PartModule m)
+		static bool IsRTAntenna(PartModule m)
 		{
 			// we test for moduleName, but could use the boolean IsRTAntenna here
 			return (m.moduleName == "ModuleRTAntenna" || m.moduleName == "ModuleRTAntennaPassive");

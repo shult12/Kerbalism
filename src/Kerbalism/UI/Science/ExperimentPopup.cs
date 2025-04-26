@@ -14,7 +14,7 @@ using KSP.Localization;
 namespace KERBALISM
 {
 
-	public class ExperimentPopup
+	class ExperimentPopup
 	{
 		// args
 		Vessel v;
@@ -59,10 +59,10 @@ namespace KERBALISM
 		KsmGuiHeader rndArchiveHeader;
 		ExperimentSubjectList rndArchiveView;
 
-		private static List<long> activePopups = new List<long>();
-		private long popupId;
+		static List<long> activePopups = new List<long>();
+		long popupId;
 
-		public ExperimentPopup(Vessel v, Experiment moduleOrPrefab, uint partId, string partName, ProtoPartModuleSnapshot protoModule = null)
+		internal ExperimentPopup(Vessel v, Experiment moduleOrPrefab, uint partId, string partName, ProtoPartModuleSnapshot protoModule = null)
 		{
 			popupId = partId + moduleOrPrefab.experiment_id.GetHashCode();
 
@@ -151,7 +151,7 @@ namespace KERBALISM
 			window.RebuildLayout();
 		}
 
-		private void GetData()
+		void GetData()
 		{
 			canInteract = vd.Connection.linked || vd.CrewCount > 0;
 
@@ -178,7 +178,7 @@ namespace KERBALISM
 			}
 		}
 
-		private void StatusUpdate()
+		void StatusUpdate()
 		{
 			/*
 			state :<pos=20em><b><color=#FFD200>started</color></b>
@@ -289,7 +289,7 @@ namespace KERBALISM
 			statusBox.Text = sb.ToString();
 		}
 
-		private void RequirementsUpdate()
+		void RequirementsUpdate()
 		{
 			sb.Length = 0;
 
@@ -323,7 +323,7 @@ namespace KERBALISM
 			requirementsBox.Text = sb.ToString();
 		}
 
-		private void UpdateStartStopButton()
+		void UpdateStartStopButton()
 		{
 			if (IsRunning(expState))
 			{
@@ -337,12 +337,12 @@ namespace KERBALISM
 			startStopButton.Interactable = canInteract && !IsBroken(expState);
 		}
 
-		private void UpdateForcedRunButton()
+		void UpdateForcedRunButton()
 		{
 			forcedRunButton.Interactable = canInteract && (expState == RunningState.Stopped || expState == RunningState.Running);
 		}
 
-		private void Toggle()
+		void Toggle()
 		{
 			if (isProto)
 				ProtoToggle(v, moduleOrPrefab, protoModule);
@@ -351,7 +351,7 @@ namespace KERBALISM
 		}
 
 
-		private void ToggleForcedRun()
+		void ToggleForcedRun()
 		{
 			if (isProto)
 				ProtoToggle(v, moduleOrPrefab, protoModule, true);
@@ -360,7 +360,7 @@ namespace KERBALISM
 		}
 
 
-		private void ToggleArchivePanel()
+		void ToggleArchivePanel()
 		{
 			if (rndArchiveHeader == null || !rndArchiveHeader.Enabled)
 			{
@@ -386,7 +386,7 @@ namespace KERBALISM
 			window.RebuildLayout();
 		}
 
-		private void ToggleExpInfo()
+		void ToggleExpInfo()
 		{
 			if (leftPanel.Enabled)
 			{

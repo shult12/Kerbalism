@@ -13,7 +13,7 @@ namespace KERBALISM
 	// This method support any module that set an appropriate OnDiscardData() callback
 	// when opening the science dialog, this include stock science experiments and others.
 	// Hiding the science dialog can be used by who doesn't want it.
-	public sealed class MiniHijacker : MonoBehaviour
+	sealed class MiniHijacker : MonoBehaviour
 	{
 		void Start()
 		{
@@ -128,7 +128,7 @@ namespace KERBALISM
 	// capture method as in MiniHijacker is used, but the science dialog is not hidden.
 	// Any event closing the dialog (like going on eva, or recovering) will act as
 	// if the 'keep' button was pressed for each page.
-	public sealed class Hijacker : MonoBehaviour
+	sealed class Hijacker : MonoBehaviour
 	{
 		void Start()
 		{
@@ -267,9 +267,9 @@ namespace KERBALISM
 	}
 
 
-	public sealed class MetaData
+	sealed class MetaData
 	{
-		public MetaData(ScienceData data, Part host, float xmitScalar)
+		internal MetaData(ScienceData data, Part host, float xmitScalar)
 		{
 			// find the part containing the data
 			part = host;
@@ -300,14 +300,14 @@ namespace KERBALISM
 			is_rerunnable = experiment == null || experiment.rerunnable;
 		}
 
-		public Part part;                               // part storing the data
-		public Vessel vessel;                           // vessel storing the data
-		public IScienceDataContainer container;         // module containing the data
-		public ModuleScienceExperiment experiment;      // module containing the data, as a stock experiment module
-		public bool is_sample;                          // true if the data can't be transmitted
-		public bool is_rerunnable;                      // true if the container/experiment can collect data multiple times
-		public bool is_collectable;                     // true if data can be collected from the module / part
-		public SubjectData subjectData;
+		Part part;                               // part storing the data
+		internal Vessel vessel;                           // vessel storing the data
+		IScienceDataContainer container;         // module containing the data
+		internal ModuleScienceExperiment experiment;      // module containing the data, as a stock experiment module
+		internal bool is_sample;                          // true if the data can't be transmitted
+		internal bool is_rerunnable;                      // true if the container/experiment can collect data multiple times
+		internal bool is_collectable;                     // true if data can be collected from the module / part
+		internal SubjectData subjectData;
 	}
 
 

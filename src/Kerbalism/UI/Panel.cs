@@ -5,9 +5,9 @@ using UnityEngine;
 namespace KERBALISM
 {
 	// store and render a simple structured ui
-	public sealed class Panel
+	sealed class Panel
 	{
-		public enum PanelType
+		internal enum PanelType
 		{
 			unknown,
 			telemetry,
@@ -19,7 +19,7 @@ namespace KERBALISM
 			connection
 		}
 
-		public Panel()
+		internal Panel()
 		{
 			headers = new List<Header>();
 			sections = new List<Section>();
@@ -29,7 +29,7 @@ namespace KERBALISM
 			paneltype = PanelType.unknown;
 		}
 
-		public void Clear()
+		internal void Clear()
 		{
 			headers.Clear();
 			sections.Clear();
@@ -38,7 +38,7 @@ namespace KERBALISM
 			paneltype = PanelType.unknown;
 		}
 
-		public void AddHeader(string label, string tooltip = "", Action click = null)
+		internal void AddHeader(string label, string tooltip = "", Action click = null)
 		{
 			Header h = new Header
 			{
@@ -52,7 +52,7 @@ namespace KERBALISM
 		}
 
 		///<summary> Sets the last added header or content leading icon (doesn't support sections)</summary>
-		public void SetLeftIcon(Texture2D texture, string tooltip = "", Action click = null)
+		internal void SetLeftIcon(Texture2D texture, string tooltip = "", Action click = null)
 		{
 			Icon i = new Icon
 			{
@@ -73,7 +73,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void AddSection(string title, string desc = "", Action left = null, Action right = null, Boolean sort = false)
+		internal void AddSection(string title, string desc = "", Action left = null, Action right = null, Boolean sort = false)
 		{
 			Section p = new Section
 			{
@@ -88,7 +88,7 @@ namespace KERBALISM
 			sections.Add(p);
 		}
 
-		public void AddContent(string label, string value = "", string tooltip = "", Action click = null, Action hover = null)
+		internal void AddContent(string label, string value = "", string tooltip = "", Action click = null, Action hover = null)
 		{
 			Entry e = new Entry
 			{
@@ -107,7 +107,7 @@ namespace KERBALISM
 		}
 
 		///<summary> Adds an icon to the last added header or content (doesn't support sections) </summary>
-		public void AddRightIcon(Texture2D texture, string tooltip = "", Action click = null)
+		internal void AddRightIcon(Texture2D texture, string tooltip = "", Action click = null)
 		{
 			Icon i = new Icon
 			{
@@ -127,7 +127,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void Render()
+		internal void Render()
 		{
 			// headers
 			foreach (Header h in headers)
@@ -215,7 +215,7 @@ namespace KERBALISM
 			}
 		}
 
-		public float Height()
+		internal float Height()
 		{
 			float h = 0.0f;
 
@@ -234,32 +234,32 @@ namespace KERBALISM
 		}
 
 		// utility: decrement an index, warping around 0
-		public void Prev(ref int index, int count)
+		internal void Prev(ref int index, int count)
 		{
 			index = (index == 0 ? count : index) - 1;
 		}
 
 		// utility: increment an index, warping around a max
-		public void Next(ref int index, int count)
+		internal void Next(ref int index, int count)
 		{
 			index = (index + 1) % count;
 		}
 
 		// utility: toggle a flag
-		public void Toggle(ref bool b)
+		internal void Toggle(ref bool b)
 		{
 			b = !b;
 		}
 
 		// merge another panel with this one
-		public void Add(Panel p)
+		internal void Add(Panel p)
 		{
 			headers.AddRange(p.headers);
 			sections.AddRange(p.sections);
 		}
 
 		// collapse all sections into one
-		public void Collapse(string title)
+		internal void Collapse(string title)
 		{
 			if (sections.Count > 0)
 			{
@@ -270,64 +270,64 @@ namespace KERBALISM
 		}
 
 		// return true if panel has no sections or titles
-		public bool Empty()
+		internal bool Empty()
 		{
 			return sections.Count == 0 && headers.Count == 0;
 		}
 
 		// set title metadata
-		public void Title(string s)
+		internal void Title(string s)
 		{
 			win_title = s;
 		}
 
 		// set width metadata
 		// - width never shrink
-		public void Width(float w)
+		internal void Width(float w)
 		{
 			min_width = Math.Max(w, min_width);
 		}
 
 		// get medata
-		public string Title() { return win_title; }
-		public float Width() { return min_width; }
+		internal string Title() { return win_title; }
+		internal float Width() { return min_width; }
 
 		sealed class Header
 		{
-			public string label;
-			public string tooltip;
-			public Action click;
-			public List<Icon> icons;
-			public Icon leftIcon;
+			internal string label;
+			internal string tooltip;
+			internal Action click;
+			internal List<Icon> icons;
+			internal Icon leftIcon;
 		}
 
 		sealed class Section
 		{
-			public string title;
-			public string desc;
-			public Action left;
-			public Action right;
-			public Boolean sort;
-			public Boolean needsSort;
-			public List<Entry> entries;
+			internal string title;
+			internal string desc;
+			internal Action left;
+			internal Action right;
+			internal Boolean sort;
+			internal Boolean needsSort;
+			internal List<Entry> entries;
 		}
 
 		sealed class Entry
 		{
-			public string label;
-			public string value;
-			public string tooltip;
-			public Action click;
-			public Action hover;
-			public List<Icon> icons;
-			public Icon leftIcon;
+			internal string label;
+			internal string value;
+			internal string tooltip;
+			internal Action click;
+			internal Action hover;
+			internal List<Icon> icons;
+			internal Icon leftIcon;
 		}
 
 		sealed class Icon
 		{
-			public Texture2D texture;
-			public string tooltip;
-			public Action click;
+			internal Texture2D texture;
+			internal string tooltip;
+			internal Action click;
 		}
 
 		List<Header> headers;    // fat entries to show before the first section
@@ -335,6 +335,6 @@ namespace KERBALISM
 		List<Action> callbacks;  // functions to call on input events
 		string win_title;        // metadata stored in panel
 		float min_width;         // metadata stored in panel
-		public PanelType paneltype;
+		internal PanelType paneltype;
 	}
 } // KERBALISM

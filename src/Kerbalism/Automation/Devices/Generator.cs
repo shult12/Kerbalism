@@ -6,39 +6,39 @@ using KSP.Localization;
 
 namespace KERBALISM
 {
-	public sealed class GeneratorDevice : LoadedDevice<ModuleGenerator>
+	sealed class GeneratorDevice : LoadedDevice<ModuleGenerator>
 	{
-		public GeneratorDevice(ModuleGenerator module) : base(module) { }
+		internal GeneratorDevice(ModuleGenerator module) : base(module) { }
 
-		public override string Name => "generator";
+		internal override string Name => "generator";
 
-		public override string Status
+		internal override string Status
 			=> module.isAlwaysActive ? Local.Generic_ALWAYSON : Lib.Color(module.generatorIsActive, Local.Generic_ON, Lib.Kolor.Green, Local.Generic_OFF,  Lib.Kolor.Yellow);
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			if (module.isAlwaysActive) return;
 			if (value) module.Activate();
 			else module.Shutdown();
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			Ctrl(!module.generatorIsActive);
 		}
 
-		public override bool IsVisible => !module.isAlwaysActive;
+		internal override bool IsVisible => !module.isAlwaysActive;
 	}
 
 
-	public sealed class ProtoGeneratorDevice : ProtoDevice<ModuleGenerator>
+	sealed class ProtoGeneratorDevice : ProtoDevice<ModuleGenerator>
 	{
-		public ProtoGeneratorDevice(ModuleGenerator prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
+		internal ProtoGeneratorDevice(ModuleGenerator prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
 			: base(prefab, protoPart, protoModule) { }
 
-		public override string Name => "generator";
+		internal override string Name => "generator";
 
-		public override string Status
+		internal override string Status
 		{
 			get
 			{
@@ -48,18 +48,18 @@ namespace KERBALISM
 			}
 		}
 
-		public override void Ctrl(bool value)
+		internal override void Ctrl(bool value)
 		{
 			if (prefab.isAlwaysActive) return;
 			Lib.Proto.Set(protoModule, "generatorIsActive", value);
 		}
 
-		public override void Toggle()
+		internal override void Toggle()
 		{
 			Ctrl(!Lib.Proto.GetBool(protoModule, "generatorIsActive"));
 		}
 
-		public override bool IsVisible => !prefab.isAlwaysActive;
+		internal override bool IsVisible => !prefab.isAlwaysActive;
 	}
 
 

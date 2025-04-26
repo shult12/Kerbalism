@@ -8,15 +8,15 @@ namespace KERBALISM
 {
 
 
-	public sealed class Script
+	sealed class Script
 	{
-		public Script()
+		internal Script()
 		{
 			states = new Dictionary<uint, bool>();
 			prev = string.Empty;
 		}
 
-		public Script(ConfigNode node)
+		internal Script(ConfigNode node)
 		{
 			states = new Dictionary<uint, bool>();
 			foreach (string s in node.GetValues("state"))
@@ -28,7 +28,7 @@ namespace KERBALISM
 			prev = Lib.ConfigValue(node, "prev", string.Empty);
 		}
 
-		public void Save(ConfigNode node)
+		internal void Save(ConfigNode node)
 		{
 			foreach (var p in states)
 			{
@@ -37,7 +37,7 @@ namespace KERBALISM
 			node.AddValue("prev", prev);
 		}
 
-		public void Set(Device dev, bool? state)
+		internal void Set(Device dev, bool? state)
 		{
 			states.Remove(dev.Id);
 			if (state != null)
@@ -46,7 +46,7 @@ namespace KERBALISM
 			}
 		}
 
-		public void Execute(List<Device> devices)
+		internal void Execute(List<Device> devices)
 		{
 			foreach (var p in states)
 			{
@@ -61,8 +61,8 @@ namespace KERBALISM
 		}
 
 
-		public Dictionary<uint, bool> states;
-		public string prev;
+		internal Dictionary<uint, bool> states;
+		internal string prev;
 	}
 
 

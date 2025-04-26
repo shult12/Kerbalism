@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace KERBALISM
 {
-    public static class DB
+    static class DB
     {
-        public static void Load(ConfigNode node)
+		internal static void Load(ConfigNode node)
         {
             // get version (or use current one for new savegames)
             string versionStr = Lib.ConfigValue(node, "version", Lib.KerbalismVersion.ToString());
@@ -121,7 +121,7 @@ namespace KERBALISM
 			if (version != Lib.KerbalismVersion) Lib.Log("savegame converted from version " + version + " to " + Lib.KerbalismVersion);
         }
 
-        public static void Save(ConfigNode node)
+		internal static void Save(ConfigNode node)
         {
             // save version
             node.AddValue("version", Lib.KerbalismVersion.ToString());
@@ -173,7 +173,7 @@ namespace KERBALISM
         }
 
 
-        public static KerbalData Kerbal(string name)
+		internal static KerbalData Kerbal(string name)
         {
             if (!kerbals.ContainsKey(name))
             {
@@ -182,7 +182,7 @@ namespace KERBALISM
             return kerbals[name];
         }
 
-		public static VesselData KerbalismData(this Vessel vessel)
+		internal static VesselData KerbalismData(this Vessel vessel)
 		{
 			VesselData vd;
 			if (!vessels.TryGetValue(vessel.id, out vd))
@@ -194,7 +194,7 @@ namespace KERBALISM
 			return vd;
 		}
 
-		public static VesselData KerbalismData(this ProtoVessel protoVessel)
+		internal static VesselData KerbalismData(this ProtoVessel protoVessel)
 		{
 			VesselData vd;
 			if (!vessels.TryGetValue(protoVessel.vesselID, out vd))
@@ -207,14 +207,14 @@ namespace KERBALISM
 		}
 
 		/// <summary>shortcut for VesselData.IsValid. False in the following cases : asteroid, debris, flag, deployed ground part, dead eva, rescue</summary>
-		public static bool KerbalismIsValid(this Vessel vessel)
+		internal static bool KerbalismIsValid(this Vessel vessel)
         {
             return KerbalismData(vessel).IsSimulated;
         }
 
-		public static Dictionary<Guid, VesselData>.ValueCollection VesselDatas => vessels.Values;
+		internal static Dictionary<Guid, VesselData>.ValueCollection VesselDatas => vessels.Values;
 
-        public static StormData Storm(string name)
+		internal static StormData Storm(string name)
         {
             if (!storms.ContainsKey(name))
             {
@@ -223,15 +223,15 @@ namespace KERBALISM
             return storms[name];
         }
 
-		public static Boolean ContainsKerbal(string name)
+		internal static Boolean ContainsKerbal(string name)
         {
             return kerbals.ContainsKey(name);
         }
 
-        /// <summary>
-        /// Remove a Kerbal and his lifetime data from the database
-        /// </summary>
-        public static void KillKerbal(String name, bool reallyDead)
+		/// <summary>
+		/// Remove a Kerbal and his lifetime data from the database
+		/// </summary>
+		internal static void KillKerbal(String name, bool reallyDead)
         {
             if (reallyDead)
             {
@@ -245,10 +245,10 @@ namespace KERBALISM
             }
         }
 
-        /// <summary>
-        /// Resets all process data of a kerbal, except lifetime data
-        /// </summary>
-        public static void RecoverKerbal(string name)
+		/// <summary>
+		/// Resets all process data of a kerbal, except lifetime data
+		/// </summary>
+		internal static void RecoverKerbal(string name)
         {
             if (ContainsKerbal(name))
             {
@@ -263,25 +263,25 @@ namespace KERBALISM
             }
         }
 
-        public static Dictionary<string, KerbalData> Kerbals()
+		internal static Dictionary<string, KerbalData> Kerbals()
         {
             return kerbals;
         }
 
-        public static string To_safe_key(string key) { return key.Replace(" ", "___"); }
-        public static string From_safe_key(string key) { return key.Replace("___", " "); }
+		internal static string To_safe_key(string key) { return key.Replace(" ", "___"); }
+		internal static string From_safe_key(string key) { return key.Replace("___", " "); }
 
-        public static Version version;                         // savegame version
-        public static int uid;                                 // savegame unique id
-        private static Dictionary<string, KerbalData> kerbals; // store data per-kerbal
-        private static Dictionary<Guid, VesselData> vessels = new Dictionary<Guid, VesselData>();    // store data per-vessel
-        public static Dictionary<string, StormData> storms;     // store data per-body
-        public static LandmarkData landmarks;                  // store landmark data
-        public static UIData ui;                               // store ui data
+        static Version version;                         // savegame version
+		internal static int uid;                                 // savegame unique id
+        static Dictionary<string, KerbalData> kerbals; // store data per-kerbal
+        static Dictionary<Guid, VesselData> vessels = new Dictionary<Guid, VesselData>();    // store data per-vessel
+        static Dictionary<string, StormData> storms;     // store data per-body
+		internal static LandmarkData landmarks;                  // store landmark data
+		internal static UIData ui;                               // store ui data
 
 		#region VESSELDATA METHODS
 
-		public static bool TryGetVesselDataTemp(this Vessel vessel, out VesselData vesselData)
+		internal static bool TryGetVesselDataTemp(this Vessel vessel, out VesselData vesselData)
 		{
 			if (!vessels.TryGetValue(vessel.id, out vesselData))
 			{
@@ -294,7 +294,7 @@ namespace KERBALISM
 		/// <summary>
 		/// Get the VesselData for this vessel, if it exists. Typically, you will need this in a Foreach on FlightGlobals.Vessels
 		/// </summary>
-		public static bool TryGetVesselData(this Vessel vessel, out VesselData vesselData)
+		internal static bool TryGetVesselData(this Vessel vessel, out VesselData vesselData)
 		{
 			if (!vessels.TryGetValue(vessel.id, out vesselData))
 				return false;
@@ -307,7 +307,7 @@ namespace KERBALISM
 		/// Typically it's safe to use from partmodules FixedUpdate() and OnStart(), but not in Awake() and probably not from Update()<br/>
 		/// Also, don't use this in a Foreach on FlightGlobals.Vessels, check the result of TryGetVesselData() instead
 		/// </summary>
-		public static VesselData GetVesselData(this Vessel vessel)
+		internal static VesselData GetVesselData(this Vessel vessel)
 		{
 			if (!vessels.TryGetValue(vessel.id, out VesselData vesselData))
 			{
@@ -317,7 +317,7 @@ namespace KERBALISM
 			return vesselData;
 		}
 
-		public static bool TryGetVesselData(this ProtoVessel protoVessel, out VesselData vesselData)
+		internal static bool TryGetVesselData(this ProtoVessel protoVessel, out VesselData vesselData)
 		{
 			return vessels.TryGetValue(protoVessel.vesselID, out vesselData);
 		}

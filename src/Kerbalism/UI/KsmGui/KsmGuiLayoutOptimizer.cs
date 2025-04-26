@@ -18,12 +18,12 @@ namespace KERBALISM.KsmGui
 	// - Layout groups (Vertical, Horizontal, Grid)
 	// This component is added to KsmGuiWindow, and a reference to it is kept by all KsmGuiBase elements
 	// Not ideal, but it works.
-	public class KsmGuiLayoutOptimizer : MonoBehaviour
+	class KsmGuiLayoutOptimizer : MonoBehaviour
 	{
-		private List<UIBehaviour> layoutControllers = new List<UIBehaviour>();
-		private bool isRebuilding;
-		
-		public void RebuildLayout()
+		List<UIBehaviour> layoutControllers = new List<UIBehaviour>();
+		bool isRebuilding;
+
+		internal void RebuildLayout()
 		{
 			if (isRebuilding)
 				return;
@@ -44,7 +44,7 @@ namespace KERBALISM.KsmGui
 			StartCoroutine(DisableLayoutAfterRebuild());
 		}
 
-		private IEnumerator DisableLayoutAfterRebuild()
+		IEnumerator DisableLayoutAfterRebuild()
 		{
 			// Unity needs components to be enabled at the beginning of the frame
 			// This mean the layout will rebuild only in the next frame, then we can disable
@@ -59,7 +59,7 @@ namespace KERBALISM.KsmGui
 			isRebuilding = false;
 		}
 
-		private IEnumerator WaitForFrames(int frameCount)
+		IEnumerator WaitForFrames(int frameCount)
 		{
 			if (frameCount <= 0)
 			{
@@ -73,7 +73,7 @@ namespace KERBALISM.KsmGui
 			}
 		}
 
-		private void OnDisable()
+		void OnDisable()
 		{
 			isRebuilding = false;
 		}

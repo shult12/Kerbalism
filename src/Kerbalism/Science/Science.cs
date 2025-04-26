@@ -10,9 +10,9 @@ using KSP.Localization;
 namespace KERBALISM
 {
 
-	public static class Science
+	static class Science
 	{
-		public static bool GameHasRnD
+		internal static bool GameHasRnD
 		{
 			get
 			{
@@ -28,27 +28,27 @@ namespace KERBALISM
 		}
 
 		/// <summary> When converting stock experiments / data, if the XmitDataScalar is less than this, the data will be converted as a sample.</summary>
-		public const float maxXmitDataScalarForSample = 0.001f;
+		internal const float maxXmitDataScalarForSample = 0.001f;
 
 		// science points from transmission won't be credited until they reach this amount
-		public const double minCreditBuffer = 0.1;
+		const double minCreditBuffer = 0.1;
 
 		// a subject will be completed (gamevent fired and popup shown) when there is less than this value to retrieve in RnD
 		// this is needed because of floating point imprecisions in the in-flight science count (due to a gazillion adds of very small values)
-		public const double scienceLeftForSubjectCompleted = 0.01;
+		internal const double scienceLeftForSubjectCompleted = 0.01;
 
 		// utility things
 		static readonly List<XmitFile> xmitFiles = new List<XmitFile>();
 
-		private class XmitFile
+		class XmitFile
 		{
-			public File file;
-			public double sciencePerMB; // caching this because it's slow to get
-			public Drive drive;
-			public bool isInWarpCache;
-			public File realDriveFile; // reference to the "real" file for files in the warp cache
+			internal File file;
+			internal double sciencePerMB; // caching this because it's slow to get
+			Drive drive;
+			internal bool isInWarpCache;
+			internal File realDriveFile; // reference to the "real" file for files in the warp cache
 
-			public XmitFile(File file, Drive drive, double sciencePerMB, bool isInWarpCache, File realDriveFile = null)
+			internal XmitFile(File file, Drive drive, double sciencePerMB, bool isInWarpCache, File realDriveFile = null)
 			{
 				this.file = file;
 				this.drive = drive;
@@ -59,7 +59,7 @@ namespace KERBALISM
 		}
 
 		// pseudo-ctor
-		public static void Init()
+		internal static void Init()
 		{
 			if (!Features.Science)
 				return;
@@ -73,7 +73,7 @@ namespace KERBALISM
 		}
 
 		// consume EC for transmission, and transmit science data
-		public static void Update(Vessel v, VesselData vd, ResourceInfo ec, double elapsed_s)
+		internal static void Update(Vessel v, VesselData vd, ResourceInfo ec, double elapsed_s)
 		{
 			// do nothing if science system is disabled
 			if (!Features.Science) return;
@@ -176,7 +176,7 @@ namespace KERBALISM
 			ec.Consume(transmissionCost * elapsed_s, ResourceBroker.CommsXmit);
 		}
 
-		private static void GetFilesToTransmit(Vessel v, VesselData vd)
+		static void GetFilesToTransmit(Vessel v, VesselData vd)
 		{
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.Science.GetFilesToTransmit");
 			Drive warpCache = vd.TransmitBufferDrive;
@@ -239,7 +239,7 @@ namespace KERBALISM
 		}
 
 		// return module acting as container of an experiment
-		public static IScienceDataContainer Container(Part p, string experiment_id)
+		internal static IScienceDataContainer Container(Part p, string experiment_id)
 		{
 			// first try to get a stock experiment module with the right experiment id
 			// - this support parts with multiple experiment modules, like eva kerbal
@@ -259,7 +259,7 @@ namespace KERBALISM
 		/// </summary>
 		/// <param name="randomized">If true the result can be different each this is called</param>
 		/// <param name="useGenericIfNotFound">If true, a generic text will be returned if no RESULTS{} definition exists</param>
-		public static string SubjectResultDescription(string subject_id, bool useGenericIfNotFound = true)
+		static string SubjectResultDescription(string subject_id, bool useGenericIfNotFound = true)
 		{
 			string result = ResearchAndDevelopment.GetResults(subject_id);
 			if (result == null) result = string.Empty;

@@ -6,11 +6,11 @@ namespace KERBALISM
 {
 
 
-	public static class Profile
+	static class Profile
 	{
 
 		// node parsing
-		private static void Nodeparse(ConfigNode profile_node)
+		static void Nodeparse(ConfigNode profile_node)
 		{
 			// parse all rules
 			foreach (ConfigNode rule_node in profile_node.GetNodes("Rule"))
@@ -77,7 +77,7 @@ namespace KERBALISM
 		}
 
 		// Support config file parsing
-		private static void ParseSupport()
+		static void ParseSupport()
 		{
 			// for each profile
 			foreach (ConfigNode profile_node in Lib.ParseConfigs("Profile"))
@@ -107,7 +107,7 @@ namespace KERBALISM
 			}
 		}
 
-		public static void Parse()
+		internal static void Parse()
 		{
 			// initialize data
 			rules = new List<Rule>();
@@ -155,7 +155,7 @@ namespace KERBALISM
 		}
 
 
-		public static void Execute(Vessel v, VesselData vd, VesselResources resources, double elapsed_s)
+		internal static void Execute(Vessel v, VesselData vd, VesselResources resources, double elapsed_s)
 		{
 			// execute all supplies
 			foreach (Supply supply in supplies)
@@ -178,7 +178,7 @@ namespace KERBALISM
 		}
 
 
-		public static void SetupPods()
+		internal static void SetupPods()
 		{
 			// add supply resources to all pods
 			foreach (AvailablePart p in PartLoader.LoadedPartsList)
@@ -191,7 +191,7 @@ namespace KERBALISM
 		}
 
 
-		public static void SetupEva(Part p)
+		internal static void SetupEva(Part p)
 		{
 			foreach (Supply supply in supplies)
 			{
@@ -200,7 +200,7 @@ namespace KERBALISM
 		}
 
 
-		public static void SetupRescue(Vessel v)
+		internal static void SetupRescue(Vessel v)
 		{
 			foreach (Supply supply in supplies)
 			{
@@ -209,9 +209,9 @@ namespace KERBALISM
 		}
 
 
-		public static List<Rule> rules;               // rules in the profile
-		public static List<Supply> supplies;          // supplies in the profile
-		public static List<Process> processes;        // processes in the profile
+		internal static List<Rule> rules;               // rules in the profile
+		internal static List<Supply> supplies;          // supplies in the profile
+		internal static List<Process> processes;        // processes in the profile
 	}
 
 

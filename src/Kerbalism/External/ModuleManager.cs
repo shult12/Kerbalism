@@ -3,11 +3,11 @@ using System.Reflection;
 
 namespace KERBALISM
 {
-	public static class ModuleManager
+	static class ModuleManager
 	{
-		public static int MM_major;
-		public static int MM_minor;
-		public static int MM_rev;
+		internal static int MM_major;
+		internal static int MM_minor;
+		internal static int MM_rev;
 		static ModuleManager()
 		{
 			foreach (var a in AssemblyLoader.loadedAssemblies)
