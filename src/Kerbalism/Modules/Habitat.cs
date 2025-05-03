@@ -23,7 +23,7 @@ namespace KERBALISM
 
 		// persistence
 		[KSPField(isPersistant = true)] public State state = State.enabled;
-        [KSPField(isPersistant = true)] double perctDeployed = 0;
+        [KSPField(isPersistant = true)] public double perctDeployed = 0;
 
         // rmb ui status strings
         [KSPField(guiActive = false, guiActiveEditor = true, guiName = "#KERBALISM_Habitat_Volume", groupName = "Habitat", groupDisplayName = "#KERBALISM_Group_Habitat")]//Habitat

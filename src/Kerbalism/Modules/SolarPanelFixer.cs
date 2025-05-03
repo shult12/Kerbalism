@@ -63,7 +63,7 @@ namespace KERBALISM
 
 		/// <summary>has the player manually selected the star to be tracked ?</summary>
 		[KSPField(isPersistant = true)]
-		bool manualTracking = false;
+		public bool manualTracking = false;
 
 		/// <summary>
 		/// Time based output degradation curve. Keys in hours, values in [0;1] range.

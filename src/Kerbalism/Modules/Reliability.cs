@@ -635,6 +635,7 @@ namespace KERBALISM
 
 #if DEBUG_RELIABILITY
 		[KSPEvent(guiActive = true, guiActiveUnfocused = true, guiName = "_", active = true)] // [for testing]
+		public
 #endif
 		void Break()
 		{

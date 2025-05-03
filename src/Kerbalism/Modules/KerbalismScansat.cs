@@ -11,10 +11,10 @@ namespace KERBALISM
 		[KSPField] public string experimentType = string.Empty;
 		[KSPField] public double ec_rate = 0.0;
 
-		[KSPField(isPersistant = true)] int sensorType = 0;
-		[KSPField(isPersistant = true)] string body_name = string.Empty;
-		[KSPField(isPersistant = true)] double body_coverage = 0.0;
-		[KSPField(isPersistant = true)] double warp_buffer = 0.0;
+		[KSPField(isPersistant = true)] public int sensorType = 0;
+		[KSPField(isPersistant = true)] public string body_name = string.Empty;
+		[KSPField(isPersistant = true)] public double body_coverage = 0.0;
+		[KSPField(isPersistant = true)] public double warp_buffer = 0.0;
 
 
 		PartModule scanner = null;

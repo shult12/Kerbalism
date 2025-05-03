@@ -48,8 +48,8 @@ namespace KERBALISM
 		[KSPField(isPersistant = true)] public double prodFactor;
 
 		/// <summary> never set this directly, use the "State" property </summary>
-		[KSPField(isPersistant = true)] RunningState expState = RunningState.Stopped;
-		[KSPField(isPersistant = true)] ExpStatus status = ExpStatus.Stopped;
+		[KSPField(isPersistant = true)] public RunningState expState = RunningState.Stopped;
+		[KSPField(isPersistant = true)] public ExpStatus status = ExpStatus.Stopped;
 
 		internal ExperimentInfo ExpInfo { get; set; }
 		Situation situation;

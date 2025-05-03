@@ -820,23 +820,23 @@ namespace KERBALISM
 			// assigns some of these fields
 #pragma warning disable CS0649
 			[Persistent]
-			string name;
-			internal string Name => name;
+			public string name;
+			public string Name => name;
 			[Persistent]
-			string rateUnit;
-			internal string RateUnit => rateUnit;
+			public string rateUnit;
+			public string RateUnit => rateUnit;
 			[Persistent]
-			bool useRatePostfix = true;
-			internal bool UseRatePostfix => useRatePostfix;
+			public bool useRatePostfix = true;
+			public bool UseRatePostfix => useRatePostfix;
 			[Persistent]
-			string amountUnit;
-			internal string AmountUnit => amountUnit;
+			public string amountUnit;
+			public string AmountUnit => amountUnit;
 			[Persistent]
-			double multiplierToUnit = 1d;
-			internal double MultiplierToUnit => multiplierToUnit;
+			public double multiplierToUnit = 1d;
+			public double MultiplierToUnit => multiplierToUnit;
 			[Persistent]
-			bool useHuman = false;
-			internal bool UseHuman => useHuman;
+			public bool useHuman = false;
+			public bool UseHuman => useHuman;
 #pragma warning restore CS0649
 
 			bool isValid;
