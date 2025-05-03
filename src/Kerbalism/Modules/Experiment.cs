@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Experience;
-using UnityEngine;
-using KSP.Localization;
-using System.Collections;
-using static KERBALISM.ExperimentRequirements;
 using System.Linq;
+using UnityEngine;
+using static KERBALISM.ExperimentRequirements;
 
 namespace KERBALISM
 {

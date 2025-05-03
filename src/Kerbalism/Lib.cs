@@ -1,14 +1,13 @@
+using CommNet;
+using KSP.UI.Screens;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Linq;
 using UnityEngine;
-using CommNet;
-using KSP.Localization;
-using KSP.UI.Screens;
 
 namespace KERBALISM
 {

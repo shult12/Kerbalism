@@ -1,6 +1,6 @@
-using System.Text;
 using HarmonyLib;
 using KSP.UI.TooltipTypes;
+using System.Text;
 
 namespace KERBALISM
 {

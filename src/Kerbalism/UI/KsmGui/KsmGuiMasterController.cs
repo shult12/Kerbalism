@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using KSP.UI;
 using UnityEngine;
 using UnityEngine.UI;

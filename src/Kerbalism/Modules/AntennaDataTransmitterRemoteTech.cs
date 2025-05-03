@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
-
-namespace KERBALISM
+﻿namespace KERBALISM
 {
 	/// <summary>
 	/// Helper module to simply display some information about transmitting data with Remote Tech in the KSP UI, only gets used if RemoteTech is installed

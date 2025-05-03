@@ -1,4 +1,3 @@
-using KSP.Localization;
 using System;
 using System.Collections.Generic;
 

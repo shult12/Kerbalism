@@ -1,9 +1,7 @@
-using System;
-using System.Reflection;
-using System.Collections.Generic;
-using UnityEngine;
-using KSP.UI.Screens;
 using HarmonyLib;
+using System.Collections.Generic;
+using System.Reflection;
+using UnityEngine;
 
 
 namespace KERBALISM

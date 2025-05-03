@@ -1,4 +1,3 @@
-using KSP.Localization;
 using System;
 
 namespace KERBALISM

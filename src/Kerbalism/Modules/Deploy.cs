@@ -1,7 +1,6 @@
+using ModuleWheels;
 using System;
 using System.Collections.Generic;
-using ModuleWheels;
-using KSP.Localization;
 
 namespace KERBALISM
 {

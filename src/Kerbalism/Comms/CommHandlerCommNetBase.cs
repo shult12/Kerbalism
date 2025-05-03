@@ -1,8 +1,8 @@
 ﻿using CommNet;
+using HarmonyLib;
 using KSP.Localization;
 using System;
 using System.Reflection;
-using HarmonyLib;
 
 namespace KERBALISM
 {

@@ -1,5 +1,5 @@
-using ModuleWheels;
 using KSP.Localization;
+using ModuleWheels;
 
 namespace KERBALISM
 {

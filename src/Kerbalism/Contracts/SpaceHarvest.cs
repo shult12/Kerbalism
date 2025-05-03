@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using Contracts;
-using KSP.Localization;
 
 namespace KERBALISM.CONTRACTS
 {

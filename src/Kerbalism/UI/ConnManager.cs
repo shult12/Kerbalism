@@ -1,4 +1,3 @@
-using KSP.Localization;
 namespace KERBALISM
 {
 	static class ConnManager

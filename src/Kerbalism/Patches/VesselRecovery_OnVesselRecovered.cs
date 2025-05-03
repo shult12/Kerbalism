@@ -1,9 +1,6 @@
-using System;
-using System.Reflection;
-using System.Collections.Generic;
 using HarmonyLib;
+using System.Collections.Generic;
 using UnityEngine;
-using KSP.Localization;
 
 namespace KERBALISM
 {

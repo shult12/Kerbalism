@@ -1,15 +1,10 @@
-using KSP.UI;
-using System;
+using KERBALISM.KsmGui;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
-using UnityEngine.Events;
-using static KERBALISM.ExperimentRequirements;
 using static KERBALISM.Experiment;
-using KERBALISM.KsmGui;
+using static KERBALISM.ExperimentRequirements;
 using static KERBALISM.ScienceDB;
-using KSP.Localization;
 
 namespace KERBALISM
 {

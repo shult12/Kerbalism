@@ -1,5 +1,3 @@
-using System;
-
 namespace KERBALISM
 {
 	sealed class File

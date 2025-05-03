@@ -1,8 +1,7 @@
-﻿using System.Reflection;
-using SentinelMission;
-using HarmonyLib;
+﻿using HarmonyLib;
 using KSP.Localization;
-using UnityEngine;
+using SentinelMission;
+using System.Reflection;
 
 namespace KERBALISM
 {

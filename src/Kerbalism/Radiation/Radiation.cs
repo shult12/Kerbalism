@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
 using System.Threading;
 using UnityEngine;
-using KSP.Localization;
 
 
 namespace KERBALISM

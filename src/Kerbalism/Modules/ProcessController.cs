@@ -1,8 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using KSP.Localization;
-using Smooth.Algebraics;
-using System.Diagnostics;
 
 
 namespace KERBALISM

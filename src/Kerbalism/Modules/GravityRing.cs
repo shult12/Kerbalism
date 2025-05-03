@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using KSP.Localization;
-
 namespace KERBALISM
 {
 	class GravityRing : PartModule, ISpecifics

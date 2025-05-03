@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
-using KSP.Localization;
 
 
 namespace KERBALISM

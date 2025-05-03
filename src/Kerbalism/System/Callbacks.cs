@@ -1,10 +1,8 @@
+using HarmonyLib;
+using KSP.UI.Screens;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using HarmonyLib;
-using KSP.UI.Screens;
-using UnityEngine;
-using KSP.Localization;
 
 
 namespace KERBALISM

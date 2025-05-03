@@ -1,8 +1,8 @@
 #if DEBUG_PROFILER
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using KSP.Localization;
 using UnityEngine;
 #endif
 

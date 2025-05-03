@@ -1,7 +1,7 @@
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using KSP.Localization;
 
 
 namespace KERBALISM

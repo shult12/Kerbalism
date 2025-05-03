@@ -1,8 +1,3 @@
-using System;
-using System.Reflection;
-using KSP.IO;
-using KSP.Localization;
-
 namespace KERBALISM
 {
 

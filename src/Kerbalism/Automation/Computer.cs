@@ -1,6 +1,4 @@
-using System.Linq;
 using System.Collections.Generic;
-using KSP.Localization;
 
 namespace KERBALISM
 {

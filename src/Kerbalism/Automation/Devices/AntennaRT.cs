@@ -1,6 +1,3 @@
-using KSP.Localization;
-using static ModuleDeployablePart;
-
 namespace KERBALISM
 {
 	sealed class AntennaRTDevice : LoadedDevice<PartModule>

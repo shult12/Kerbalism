@@ -1,7 +1,6 @@
+using KERBALISM.Planner;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using KERBALISM.Planner;
 
 
 namespace KERBALISM
