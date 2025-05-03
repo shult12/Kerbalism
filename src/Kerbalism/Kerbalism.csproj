@@ -156,6 +156,7 @@
     <Compile Include="Database\RuleData.cs" />
     <Compile Include="Database\VesselSituations.cs" />
     <Compile Include="External\BackgroundResources.cs" />
+    <Compile Include="Lib\Reflection.cs" />
     <Compile Include="LocalizationCache.cs" />
     <Compile Include="Lib\Logging.cs" />
     <Compile Include="Modules\AntennaDataTransmitterRemoteTech.cs" />

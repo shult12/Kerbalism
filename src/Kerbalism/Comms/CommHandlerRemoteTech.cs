@@ -162,9 +162,9 @@ namespace KERBALISM
 					else
 					{
 						// only include data rate and ec cost if transmitter is active
-						if (Lib.ReflectionValue<bool>(pm, "IsRTActive"))
+						if (Reflection.ReflectionValue<bool>(pm, "IsRTActive"))
 						{
-							double dataRate = (Lib.ReflectionValue<float>(pm, "RTPacketSize") / Lib.ReflectionValue<float>(pm, "RTPacketInterval"));
+							double dataRate = (Reflection.ReflectionValue<float>(pm, "RTPacketSize") / Reflection.ReflectionValue<float>(pm, "RTPacketInterval"));
 							connection.ec_idle += RemoteTech.GetModuleRTAntennaConsumption(pm);
 							// Transmit data only with the antenna that has highest transmission data rate, and also consume that
 							// antennas energy transmission rate, based on the antenna's efficiency in configs
@@ -172,7 +172,7 @@ namespace KERBALISM
 							{
 								highestDataRate = dataRate;
 								baseRate = dataRate;
-								float packetResourceCost = Lib.ReflectionValue<float>(pm, "RTPacketResourceCost");
+								float packetResourceCost = Reflection.ReflectionValue<float>(pm, "RTPacketResourceCost");
 								connection.ec = dataRate * packetResourceCost;
 							}
 						}
@@ -206,8 +206,8 @@ namespace KERBALISM
 						if (!Lib.Proto.GetBool(mdt.protoTransmitter, "IsRTActive", false))
 							continue;
 
-						float? packet_size = Lib.SafeReflectionValue<float>(mdt.prefab, "RTPacketSize");
-						float? packet_Interval = Lib.SafeReflectionValue<float>(mdt.prefab, "RTPacketInterval");
+						float? packet_size = Reflection.SafeReflectionValue<float>(mdt.prefab, "RTPacketSize");
+						float? packet_Interval = Reflection.SafeReflectionValue<float>(mdt.prefab, "RTPacketInterval");
 
 						if (packet_size != null && packet_Interval != null)
 						{
@@ -215,7 +215,7 @@ namespace KERBALISM
 							connection.ec_idle += RemoteTech.GetModuleRTAntennaConsumption(mdt.prefab);
 							if(dataRate > highestDataRate)
 							{
-								float? packetResourceCost = Lib.SafeReflectionValue<float>(mdt.prefab, "RTPacketResourceCost");
+								float? packetResourceCost = Reflection.SafeReflectionValue<float>(mdt.prefab, "RTPacketResourceCost");
 								if(packetResourceCost != null)
 								{
 									highestDataRate = dataRate;

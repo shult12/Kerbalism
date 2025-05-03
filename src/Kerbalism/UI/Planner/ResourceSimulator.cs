@@ -609,11 +609,11 @@ namespace KERBALISM.Planner
 
 		void Process_fission_generator(Part p, PartModule m)
 		{
-			double max_rate = Lib.ReflectionValue<float>(m, "PowerGeneration");
+			double max_rate = Reflection.ReflectionValue<float>(m, "PowerGeneration");
 
 			// get fission reactor tweakable, will default to 1.0 for other modules
 			ModuleResourceConverter reactor = p.FindModuleImplementing<ModuleResourceConverter>();
-			double tweakable = reactor == null ? 1.0 : Lib.ReflectionValue<float>(reactor, "CurrentPowerPercent") * 0.01f;
+			double tweakable = reactor == null ? 1.0 : Reflection.ReflectionValue<float>(reactor, "CurrentPowerPercent") * 0.01f;
 
 			Resource("ElectricCharge").Produce(max_rate * tweakable, "fission generator");
 		}
@@ -621,7 +621,7 @@ namespace KERBALISM.Planner
 
 		void Process_radioisotope_generator(Part p, PartModule m)
 		{
-			double max_rate = Lib.ReflectionValue<float>(m, "BasePower");
+			double max_rate = Reflection.ReflectionValue<float>(m, "BasePower");
 
 			Resource("ElectricCharge").Produce(max_rate, "radioisotope generator");
 		}
@@ -630,15 +630,15 @@ namespace KERBALISM.Planner
 		void Process_cryotank(Part p, PartModule m)
 		{
 			// is cooling available
-			bool available = Lib.ReflectionValue<bool>(m, "CoolingEnabled");
+			bool available = Reflection.ReflectionValue<bool>(m, "CoolingEnabled");
 
 			// get list of fuels, do nothing if no fuels
-			IList fuels = Lib.ReflectionValue<IList>(m, "fuels");
+			IList fuels = Reflection.ReflectionValue<IList>(m, "fuels");
 			if (fuels == null)
 				return;
 
 			// get cooling cost
-			double cooling_cost = Lib.ReflectionValue<float>(m, "CoolingCost");
+			double cooling_cost = Reflection.ReflectionValue<float>(m, "CoolingCost");
 
 			string fuel_name = "";
 			double amount = 0.0;
@@ -648,7 +648,7 @@ namespace KERBALISM.Planner
 			// calculate EC cost of cooling
 			foreach (object fuel in fuels)
 			{
-				fuel_name = Lib.ReflectionValue<string>(fuel, "fuelName");
+				fuel_name = Reflection.ReflectionValue<string>(fuel, "fuelName");
 				// if fuel_name is null, don't do anything
 				if (fuel_name == null)
 					continue;
@@ -669,7 +669,7 @@ namespace KERBALISM.Planner
 					else
 					{
 						// get boiloff rate per-second
-						boiloff_rate = Lib.ReflectionValue<float>(fuel, "boiloffRate") / 360000.0f;
+						boiloff_rate = Reflection.ReflectionValue<float>(fuel, "boiloffRate") / 360000.0f;
 
 						// let it boil off
 						Resource(fuel_name).Consume(amount * boiloff_rate, "cryotank");

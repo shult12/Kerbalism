@@ -51,17 +51,17 @@ namespace KERBALISM
 
 		internal static bool IsScanning(PartModule scanner)
 		{
-			return Lib.ReflectionValue<bool>(scanner, "scanning");
+			return Reflection.ReflectionValue<bool>(scanner, "scanning");
 		}
 
 		internal static void StopScan(PartModule scanner)
 		{
-			Lib.ReflectionCall(scanner, "stopScan");
+			Reflection.ReflectionCall(scanner, "stopScan");
 		}
 
 		internal static void StartScan(PartModule scanner)
 		{
-			Lib.ReflectionCall(scanner, "startScan");
+			Reflection.ReflectionCall(scanner, "startScan");
 		}
 
 		// reflection type of SCANUtils static class in SCANsat assembly, if present

@@ -142,7 +142,7 @@ namespace KERBALISM
 		/// <summary> Sets the Broken state for the vessel</summary>
 		static void SetBroken(PartModule antenna, bool broken)
 		{
-			Lib.ReflectionValue(antenna, "IsRTBroken", broken);
+			Reflection.ReflectionValue(antenna, "IsRTBroken", broken);
 		}
 
 		internal static float GetModuleRTAntennaConsumption(PartModule moduleRTAntenna)

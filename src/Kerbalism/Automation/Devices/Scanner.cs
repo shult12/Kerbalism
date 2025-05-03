@@ -5,18 +5,18 @@ namespace KERBALISM
 	{
 		internal ScannerDevice(PartModule module) : base(module) { }
 
-		internal override string Status => Lib.Color(Lib.ReflectionValue<bool>(module, "scanning"), Local.Generic_ENABLED, Lib.Kolor.Green, Local.Generic_DISABLED, Lib.Kolor.Yellow);
+		internal override string Status => Lib.Color(Reflection.ReflectionValue<bool>(module, "scanning"), Local.Generic_ENABLED, Lib.Kolor.Green, Local.Generic_DISABLED, Lib.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{
-			bool scanning = Lib.ReflectionValue<bool>(module, "scanning");
+			bool scanning = Reflection.ReflectionValue<bool>(module, "scanning");
 			if (scanning && !value) module.Events["stopScan"].Invoke();
 			else if (!scanning && value) module.Events["startScan"].Invoke();
 		}
 
 		internal override void Toggle()
 		{
-			Ctrl(!Lib.ReflectionValue<bool>(module, "scanning"));
+			Ctrl(!Reflection.ReflectionValue<bool>(module, "scanning"));
 		}
 	}
 

@@ -715,7 +715,7 @@ namespace KERBALISM
 						string correctedSubjectId = expAndSit[0] + "@" + bodyAndBiome[0] + situation + sanitizedBiome;
 						RnDSubject.id = correctedSubjectId;
 
-						Dictionary<string, ScienceSubject> stockSubjects = Lib.ReflectionValue<Dictionary<string, ScienceSubject>>(ResearchAndDevelopment.Instance, "scienceSubjects");
+						Dictionary<string, ScienceSubject> stockSubjects = Reflection.ReflectionValue<Dictionary<string, ScienceSubject>>(ResearchAndDevelopment.Instance, "scienceSubjects");
 						if (stockSubjects.Remove(stockSubjectId) && !stockSubjects.ContainsKey(correctedSubjectId))
 						{
 							stockSubjects.Add(correctedSubjectId, RnDSubject);

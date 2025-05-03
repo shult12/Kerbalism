@@ -10,15 +10,15 @@ namespace KERBALISM
 		{
 			get
 			{
-				return Lib.ReflectionValue<bool>(module, "IsRTActive")
+				return Reflection.ReflectionValue<bool>(module, "IsRTActive")
 					? Lib.Color(Local.Generic_ACTIVE, Lib.Kolor.Green)
 					: Lib.Color(Local.Generic_INACTIVE, Lib.Kolor.Yellow);
 			}
 		}
 
-		internal override void Ctrl(bool value) => Lib.ReflectionValue(module, "IsRTActive", value);
+		internal override void Ctrl(bool value) => Reflection.ReflectionValue(module, "IsRTActive", value);
 
-		internal override void Toggle() => Ctrl(!Lib.ReflectionValue<bool>(module, "IsRTActive"));
+		internal override void Toggle() => Ctrl(!Reflection.ReflectionValue<bool>(module, "IsRTActive"));
 	}
 
 	sealed class ProtoAntennaRTDevice : ProtoDevice<PartModule>

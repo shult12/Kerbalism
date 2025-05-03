@@ -17,7 +17,7 @@ namespace KERBALISM
 				{
 					if (c.GetType().ToString().Contains("LightShifter"))
 					{
-						double starFluxAtHome = Lib.ReflectionValue<double>(c, "solarLuminosity");
+						double starFluxAtHome = Reflection.ReflectionValue<double>(c, "solarLuminosity");
 						suns.Add(new SunData(body.flightGlobalsIndex, starFluxAtHome));
 						
 					}

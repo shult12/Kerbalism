@@ -10,7 +10,7 @@ namespace KERBALISM
 
 		internal AntennaDevice(ModuleDataTransmitter module) : base(module)
 		{
-			List<IScalarModule> deployFxModules = Lib.ReflectionValue<List<IScalarModule>>(module, "deployFxModules");
+			List<IScalarModule> deployFxModules = Reflection.ReflectionValue<List<IScalarModule>>(module, "deployFxModules");
 			if (deployFxModules != null && deployFxModules.Count > 0)
 			{
 				deployFxModule = deployFxModules[0];

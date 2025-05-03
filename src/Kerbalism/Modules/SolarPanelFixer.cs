@@ -1044,7 +1044,7 @@ namespace KERBALISM
 			{
 				this.fixerModule = fixerModule;
 				panelModule = targetModule;
-				deployable = Lib.ReflectionValue<bool>(panelModule, "Deployable");
+				deployable = Reflection.ReflectionValue<bool>(panelModule, "Deployable");
 			}
 
 			internal override bool OnStart(bool initialized, ref double nominalRate)
@@ -1057,10 +1057,10 @@ namespace KERBALISM
 					panelModuleUpdate = (Action)Delegate.CreateDelegate(typeof(Action), panelModule, "Update");
 
 					// since we are disabling the MonoBehavior, ensure the module Start() has been called
-					Lib.ReflectionCall(panelModule, "Start");
+					Reflection.ReflectionCall(panelModule, "Start");
 
 					// get transform name from module
-					string transform_name = Lib.ReflectionValue<string>(panelModule, "PanelTransformName");
+					string transform_name = Reflection.ReflectionValue<string>(panelModule, "PanelTransformName");
 
 					// get panel components
 					sunCatchers = panelModule.part.FindModelTransforms(transform_name);
@@ -1070,7 +1070,7 @@ namespace KERBALISM
 					panelModule.enabled = false;
 
 					// return panel nominal rate
-					nominalRate = Lib.ReflectionValue<float>(panelModule, "TotalEnergyRate");
+					nominalRate = Reflection.ReflectionValue<float>(panelModule, "TotalEnergyRate");
 
 					return true;
 #if !DEBUG_SOLAR
@@ -1143,13 +1143,13 @@ namespace KERBALISM
 			internal override PanelState GetState()
 			{
 				// Detect modified TotalEnergyRate (B9PS switching of the target module)
-				double newrate = Lib.ReflectionValue<float>(panelModule, "TotalEnergyRate");
+				double newrate = Reflection.ReflectionValue<float>(panelModule, "TotalEnergyRate");
 				if (newrate != fixerModule.nominalRate)
 				{
 					OnStart(false, ref fixerModule.nominalRate);
 				}
 
-				string stateStr = Lib.ReflectionValue<string>(panelModule, "SavedState");
+				string stateStr = Reflection.ReflectionValue<string>(panelModule, "SavedState");
 				Type enumtype = typeof(ModuleDeployablePart.DeployState);
 				if (!Enum.IsDefined(enumtype, stateStr))
 				{
@@ -1177,17 +1177,17 @@ namespace KERBALISM
 				switch (state)
 				{
 					case PanelState.Retracted:
-						Lib.ReflectionValue(panelModule, "SavedState", "RETRACTED");
+						Reflection.ReflectionValue(panelModule, "SavedState", "RETRACTED");
 						break;
 					case PanelState.Extended:
-						Lib.ReflectionValue(panelModule, "SavedState", "EXTENDED");
+						Reflection.ReflectionValue(panelModule, "SavedState", "EXTENDED");
 						break;
 				}
 			}
 
-			protected override void Extend() { Lib.ReflectionCall(panelModule, "DeployPanels"); }
+			protected override void Extend() { Reflection.ReflectionCall(panelModule, "DeployPanels"); }
 
-			protected override void Retract() { Lib.ReflectionCall(panelModule, "RetractPanels"); }
+			protected override void Retract() { Reflection.ReflectionCall(panelModule, "RetractPanels"); }
 
 			internal override bool IsRetractable() { return true; }
 
@@ -1222,13 +1222,13 @@ namespace KERBALISM
 				{
 #endif
 					// method that parse the suncatchers "suncatcherTransforms" config string into a List<string>
-					Lib.ReflectionCall(panelModule, "parseTransformData");
+					Reflection.ReflectionCall(panelModule, "parseTransformData");
 					// method that get the transform list (panelData) from the List<string>
-					Lib.ReflectionCall(panelModule, "findTransforms");
+					Reflection.ReflectionCall(panelModule, "findTransforms");
 					// get the transforms
-					sunCatchers = Lib.ReflectionValue<List<Transform>>(panelModule, "panelData").ToArray();
+					sunCatchers = Reflection.ReflectionValue<List<Transform>>(panelModule, "panelData").ToArray();
 					// the nominal rate defined in SSTU is per transform
-					nominalRate = Lib.ReflectionValue<float>(panelModule, "resourceAmount") * sunCatchers.Length;
+					nominalRate = Reflection.ReflectionValue<float>(panelModule, "resourceAmount") * sunCatchers.Length;
 					return true;
 #if !DEBUG_SOLAR
 				}
@@ -1337,7 +1337,7 @@ namespace KERBALISM
 				internal int SuncatcherCount => suncatchers.Length;
 				internal Vector3 SuncatcherPosition(int index) => suncatchers[index].transform.position;
 				internal Vector3 SuncatcherAxisVector(int index) => GetDirection(suncatchers[index].transform, suncatchers[index].axis);
-				internal RaycastHit SuncatcherHit(int index) => Lib.ReflectionValue<RaycastHit>(suncatchers[index].objectRef, "hitData");
+				internal RaycastHit SuncatcherHit(int index) => Reflection.ReflectionValue<RaycastHit>(suncatchers[index].objectRef, "hitData");
 
 				internal enum Axis {XPlus, XNeg, YPlus, YNeg, ZPlus, ZNeg}
 				internal static Axis ParseSSTUAxis(object sstuAxis) { return (Axis)Enum.Parse(typeof(Axis), sstuAxis.ToString()); }
@@ -1369,24 +1369,24 @@ namespace KERBALISM
 					switch (panelModule.moduleName)
 					{
 						case "SSTUModularPart":
-						solarModuleSSTU = Lib.ReflectionValue<object>(panelModule, "solarFunctionsModule");
-						currentModularVariant = Lib.ReflectionValue<string>(panelModule, "currentSolar");
+						solarModuleSSTU = Reflection.ReflectionValue<object>(panelModule, "solarFunctionsModule");
+						currentModularVariant = Reflection.ReflectionValue<string>(panelModule, "currentSolar");
 						break;
 						case "SSTUSolarPanelDeployable":
-						solarModuleSSTU = Lib.ReflectionValue<object>(panelModule, "solarModule");
+						solarModuleSSTU = Reflection.ReflectionValue<object>(panelModule, "solarModule");
 						break;
 						default:
 						return false;
 					}
 
 					// Get animation module
-					animationModuleSSTU = Lib.ReflectionValue<object>(solarModuleSSTU, "animModule");
+					animationModuleSSTU = Reflection.ReflectionValue<object>(solarModuleSSTU, "animModule");
 					// Get animation state property delegate
 					PropertyInfo prop = animationModuleSSTU.GetType().GetProperty("persistentData");
 					getAnimationState = (Func<string>)Delegate.CreateDelegate(typeof(Func<string>), animationModuleSSTU, prop.GetGetMethod());
 
 					// SSTU stores the sum of the nominal output for all panels in the part, we retrieve it
-					float newNominalrate = Lib.ReflectionValue<float>(solarModuleSSTU, "standardPotentialOutput");
+					float newNominalrate = Reflection.ReflectionValue<float>(solarModuleSSTU, "standardPotentialOutput");
 					// OnStart can be called multiple times in the editor, but we might already have reset the rate
 					// In the editor, if the "no panel" variant is selected, newNominalrate will be 0.0, so also check initialized
 					if (newNominalrate > 0.0 || initialized == false)
@@ -1394,15 +1394,15 @@ namespace KERBALISM
 						nominalRate = newNominalrate;
 						// reset the rate sum in the SSTU module. This won't prevent SSTU from generating EC, but this way we can keep track of what we did
 						// don't doit in the editor as it isn't needed and we need it in case of variant switching
-						if (Lib.IsFlight()) Lib.ReflectionValue(solarModuleSSTU, "standardPotentialOutput", 0f); 
+						if (Lib.IsFlight()) Reflection.ReflectionValue(solarModuleSSTU, "standardPotentialOutput", 0f); 
 					}
 
 					panels = new List<SSTUPanelData>();
-					object[] panelDataArray = Lib.ReflectionValue<object[]>(solarModuleSSTU, "panelData"); // retrieve the PanelData class array that contain suncatchers and pivots data arrays
+					object[] panelDataArray = Reflection.ReflectionValue<object[]>(solarModuleSSTU, "panelData"); // retrieve the PanelData class array that contain suncatchers and pivots data arrays
 					foreach (object panel in panelDataArray)
 					{
-						object[] suncatchers = Lib.ReflectionValue<object[]>(panel, "suncatchers"); // retrieve the SuncatcherData class array
-						object[] pivots = Lib.ReflectionValue<object[]>(panel, "pivots"); // retrieve the SolarPivotData class array
+						object[] suncatchers = Reflection.ReflectionValue<object[]>(panel, "suncatchers"); // retrieve the SuncatcherData class array
+						object[] pivots = Reflection.ReflectionValue<object[]>(panel, "pivots"); // retrieve the SolarPivotData class array
 
 						int suncatchersCount = suncatchers.Length;
 						if (suncatchers == null || pivots == null || suncatchersCount == 0) continue;
@@ -1415,11 +1415,11 @@ namespace KERBALISM
 						for (int i = 0; i < suncatchersCount; i++)
 						{
 							object suncatcher = suncatchers[i];
-							if (Lib.IsFlight()) Lib.ReflectionValue(suncatcher, "resourceRate", 0f); // actually prevent SSTU modules from generating EC, but not in the editor
+							if (Lib.IsFlight()) Reflection.ReflectionValue(suncatcher, "resourceRate", 0f); // actually prevent SSTU modules from generating EC, but not in the editor
 							panelData.suncatchers[i] = new SSTUPanelData.SSTUSunCatcher();
 							panelData.suncatchers[i].objectRef = suncatcher; // keep a reference to the original suncatcher instance, for raycast hit acquisition
-							panelData.suncatchers[i].transform = Lib.ReflectionValue<Transform>(suncatcher, "suncatcher"); // get suncatcher transform
-							panelData.suncatchers[i].axis = SSTUPanelData.ParseSSTUAxis(Lib.ReflectionValue<object>(suncatcher, "suncatcherAxis")); // get suncatcher axis
+							panelData.suncatchers[i].transform = Reflection.ReflectionValue<Transform>(suncatcher, "suncatcher"); // get suncatcher transform
+							panelData.suncatchers[i].axis = SSTUPanelData.ParseSSTUAxis(Reflection.ReflectionValue<object>(suncatcher, "suncatcherAxis")); // get suncatcher axis
 						}
 
 						// get pivot transform and the pivot axis. Only needed for single-pivot tracking panels
@@ -1432,8 +1432,8 @@ namespace KERBALISM
 								trackingType = TrackingType.Fixed; break;
 							case 1:
 								trackingType = TrackingType.SinglePivot;
-								panelData.pivot = Lib.ReflectionValue<Transform>(pivots[0], "pivot");
-								panelData.pivotAxis = SSTUPanelData.ParseSSTUAxis(Lib.ReflectionValue<object>(pivots[0], "pivotRotationAxis"));
+								panelData.pivot = Reflection.ReflectionValue<Transform>(pivots[0], "pivot");
+								panelData.pivotAxis = SSTUPanelData.ParseSSTUAxis(Reflection.ReflectionValue<object>(pivots[0], "pivotRotationAxis"));
 								break;
 							case 2:
 								trackingType = TrackingType.DoublePivot; break;
@@ -1536,7 +1536,7 @@ namespace KERBALISM
 					// handle solar panel variant switching in SSTUModularPart
 					if (Lib.IsEditor() && panelModule.ClassName == "SSTUModularPart")
 					{
-						string newVariant = Lib.ReflectionValue<string>(panelModule, "currentSolar");
+						string newVariant = Reflection.ReflectionValue<string>(panelModule, "currentSolar");
 						if (newVariant != currentModularVariant)
 						{
 							currentModularVariant = newVariant;
@@ -1562,7 +1562,7 @@ namespace KERBALISM
 
 			internal override void SetTrackedBody(CelestialBody body)
 			{
-				Lib.ReflectionValue(solarModuleSSTU, "trackedBodyIndex", body.flightGlobalsIndex);
+				Reflection.ReflectionValue(solarModuleSSTU, "trackedBodyIndex", body.flightGlobalsIndex);
 			}
 
 			internal override bool SupportAutomation(PanelState state) { return false; }

@@ -521,7 +521,7 @@ namespace KERBALISM
 					else
 					{
 						// get identifier
-						string id = Lib.ReflectionValue<string>(m, cm.id_field);
+						string id = Reflection.ReflectionValue<string>(m, cm.id_field);
 
 						// if the identifier match
 						if (id == cm.id_value)

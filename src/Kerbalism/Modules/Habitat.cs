@@ -83,7 +83,7 @@ namespace KERBALISM
 					{
 						if (pm.moduleName == "SSTUModularPart")
 						{
-							Bounds bb = Lib.ReflectionCall<Bounds>(pm, "getModuleBounds", new Type[] { typeof(string) }, new string[] { "CORE" });
+							Bounds bb = Reflection.ReflectionCall<Bounds>(pm, "getModuleBounds", new Type[] { typeof(string) }, new string[] { "CORE" });
 							if (bb != null)
 							{
 								if (volume <= 0.0) volume = BoundsVolume(bb) * 0.785398; // assume it's a cylinder
@@ -642,7 +642,7 @@ namespace KERBALISM
                     if (m.moduleName == "ModuleConnectedLivingSpace")
                     {
                         Logging.LogDebug("Part '{0}', CLS has been {1}", Logging.LogLevel.Message, part.partInfo.title, isPassable ? "enabled" : "disabled");
-                        Lib.ReflectionValue(m, "passable", isPassable);
+                        Reflection.ReflectionValue(m, "passable", isPassable);
                     }
                 }
             }

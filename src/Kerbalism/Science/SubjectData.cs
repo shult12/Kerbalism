@@ -142,7 +142,7 @@ namespace KERBALISM
 					return;
 
 				// get subjects dictionary using reflection
-				subjectsDB = Lib.ReflectionValue<Dictionary<string, ScienceSubject>>
+				subjectsDB = Reflection.ReflectionValue<Dictionary<string, ScienceSubject>>
 				(
 					ResearchAndDevelopment.Instance,
 					"scienceSubjects"

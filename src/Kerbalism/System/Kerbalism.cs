@@ -848,7 +848,7 @@ namespace KERBALISM
 					ap.resourceInfos.Clear();
 					try
 					{
-						Lib.ReflectionCall(PartLoader.Instance, "CompilePartInfo", new Type[] { typeof(AvailablePart), typeof(Part) }, new object[] { ap, ap.partPrefab });
+						Reflection.ReflectionCall(PartLoader.Instance, "CompilePartInfo", new Type[] { typeof(AvailablePart), typeof(Part) }, new object[] { ap, ap.partPrefab });
 					}
 					catch (Exception ex)
 					{

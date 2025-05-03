@@ -34,7 +34,7 @@ namespace KERBALISM
 			}
 
 			if (scanner == null) return;
-			sensorType = Lib.ReflectionValue<int>(scanner, "sensorType");
+			sensorType = Reflection.ReflectionValue<int>(scanner, "sensorType");
 			expInfo = ScienceDB.GetExperimentInfo(experimentType);
 		}
 

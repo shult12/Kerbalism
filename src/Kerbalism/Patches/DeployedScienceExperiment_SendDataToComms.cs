@@ -15,10 +15,10 @@ namespace KERBALISM
 				return true;
 
 			// get private vars
-			ScienceSubject subject = Lib.ReflectionValue<ScienceSubject>(__instance, "subject");
-			float storedScienceData = Lib.ReflectionValue<float>(__instance, "storedScienceData");
-			float transmittedScienceData = Lib.ReflectionValue<float>(__instance, "transmittedScienceData");
-			Vessel ControllerVessel = Lib.ReflectionValue<Vessel>(__instance, "ControllerVessel");
+			ScienceSubject subject = Reflection.ReflectionValue<ScienceSubject>(__instance, "subject");
+			float storedScienceData = Reflection.ReflectionValue<float>(__instance, "storedScienceData");
+			float transmittedScienceData = Reflection.ReflectionValue<float>(__instance, "transmittedScienceData");
+			Vessel ControllerVessel = Reflection.ReflectionValue<Vessel>(__instance, "ControllerVessel");
 			//Logging.Log("SendDataToComms!: " + subject.title);
 			if (__instance.Experiment != null && !(__instance.ExperimentVessel == null) && subject != null && !(__instance.Cluster == null) && __instance.sciencePart.Enabled && !(storedScienceData <= 0f) && __instance.ExperimentSituationValid) {
 			/*	if (!__instance.TimeToSendStoredData())
@@ -30,8 +30,8 @@ namespace KERBALISM
 				
 				if(ControllerVessel == null && __instance.Cluster != null)
 				{
-					Lib.ReflectionCall(__instance, "SetControllerVessel");
-					ControllerVessel = Lib.ReflectionValue<Vessel>(__instance, "ControllerVessel");
+					Reflection.ReflectionCall(__instance, "SetControllerVessel");
+					ControllerVessel = Reflection.ReflectionValue<Vessel>(__instance, "ControllerVessel");
 				}
 
 				/*
@@ -61,8 +61,8 @@ namespace KERBALISM
 					if(drive.Record_file(subjectData, dataSize, true))
 					{
 						//Logging.Log("BREAKING GROUND -- file recorded!");
-						Lib.ReflectionValue<float>(__instance, "transmittedScienceData", transmittedScienceData + scienceValue);
-						Lib.ReflectionValue<float>(__instance, "storedScienceData", 0f);
+						Reflection.ReflectionValue<float>(__instance, "transmittedScienceData", transmittedScienceData + scienceValue);
+						Reflection.ReflectionValue<float>(__instance, "storedScienceData", 0f);
 						break;
 					}
 					else
