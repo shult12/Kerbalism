@@ -143,7 +143,7 @@ namespace KERBALISM
 				{
 					fail = true;
 #if DEBUG_RELIABILITY
-					Lib.DebugLog("Ignition check: " + part.partInfo.title + " ignitions " + ignitions + " turnon failure");
+					Lib.Log("Ignition check: " + part.partInfo.title + " ignitions " + ignitions + " turnon failure");
 #endif
 				}
 			}

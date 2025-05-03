@@ -2619,7 +2619,7 @@ namespace KERBALISM
 		}
 
 		///<summary>note: the resource must exist</summary>
-		static void SetResource( Part p, string res_name, double amount, double capacity )
+		internal static void SetResource( Part p, string res_name, double amount, double capacity ) //internal because it's used if compilation symbols KSP18 or KSP110 are true
 		{
 			// if the resource is not in the part, log a warning and do nothing
 			if (!p.Resources.Contains( res_name ))

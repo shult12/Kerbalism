@@ -16,13 +16,14 @@ namespace KERBALISM
 			mat = Lib.GetShader("AntiAliasedLine");
 		}
 
-		// for debug purpose
-		static void CommitWorldVector(Vector3d start, Vector3d direction, float lengthKm, Color color)
+#if DEBUG_SOLAR
+		internal static void CommitWorldVector(Vector3d start, Vector3d direction, float lengthKm, Color color)
 		{
 			Vector3d end = ScaledSpace.LocalToScaledSpace(start + (direction * (lengthKm * 1000.0)));
 			ScaledSpace.LocalToScaledSpace(ref start);
 			Commit(start, end, color);
 		}
+#endif
 
 		// commit a line
 		static void Commit(Vector3 a, Vector3 b, Color color)
