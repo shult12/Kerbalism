@@ -15,7 +15,7 @@ namespace KERBALISM
             version = new Version(versionStr);
 
             // if this is an unsupported version, print warning
-            if (version <= new Version(1, 2)) Lib.Log("loading save from unsupported version " + version);
+            if (version <= new Version(1, 2)) Logging.Log("loading save from unsupported version " + version);
 
             // get unique id (or generate one for new savegames)
             uid = Lib.ConfigValue(node, "uid", Lib.RandomInt(int.MaxValue));
@@ -48,13 +48,13 @@ namespace KERBALISM
 					if (pv.vesselID == Guid.Empty)
 					{
 						// It seems flags are saved with an empty GUID. skip them.
-						Lib.LogDebug("Skipping VesselData load for vessel with empty GUID :" + pv.vesselName);
+						Logging.LogDebug("Skipping VesselData load for vessel with empty GUID :" + pv.vesselName);
 						continue;
 					}
 
 					VesselData vd = new VesselData(pv, vesselsNode.GetNode(pv.vesselID.ToString()));
 					vessels.Add(pv.vesselID, vd);
-					Lib.LogDebug("VesselData loaded for vessel " + pv.vesselName);
+					Logging.LogDebug("VesselData loaded for vessel " + pv.vesselName);
 				}
 			}
 			UnityEngine.Profiling.Profiler.EndSample();
@@ -117,7 +117,7 @@ namespace KERBALISM
             }
 
 			// if an old savegame was imported, log some debug info
-			if (version != Lib.KerbalismVersion) Lib.Log("savegame converted from version " + version + " to " + Lib.KerbalismVersion);
+			if (version != Lib.KerbalismVersion) Logging.Log("savegame converted from version " + version + " to " + Lib.KerbalismVersion);
         }
 
 		internal static void Save(ConfigNode node)
@@ -144,7 +144,7 @@ namespace KERBALISM
 				if (pv.vesselID == Guid.Empty)
 				{
 					// It seems flags are saved with an empty GUID. skip them.
-					Lib.LogDebug("Skipping VesselData save for vessel with empty GUID :" + pv.vesselName);
+					Logging.LogDebug("Skipping VesselData save for vessel with empty GUID :" + pv.vesselName);
 					continue;
 				}
 
@@ -186,7 +186,7 @@ namespace KERBALISM
 			VesselData vd;
 			if (!vessels.TryGetValue(vessel.id, out vd))
 			{
-				Lib.LogDebug("Creating Vesseldata for new vessel " + vessel.vesselName);
+				Logging.LogDebug("Creating Vesseldata for new vessel " + vessel.vesselName);
 				vd = new VesselData(vessel);
 				vessels.Add(vessel.id, vd);
 			}
@@ -198,7 +198,7 @@ namespace KERBALISM
 			VesselData vd;
 			if (!vessels.TryGetValue(protoVessel.vesselID, out vd))
 			{
-				Lib.Log("VesselData for protovessel " + protoVessel.vesselName + ", ID=" + protoVessel.vesselID + " doesn't exist !", Lib.LogLevel.Warning);
+				Logging.Log("VesselData for protovessel " + protoVessel.vesselName + ", ID=" + protoVessel.vesselID + " doesn't exist !", Logging.LogLevel.Warning);
 				vd = new VesselData(protoVessel, null);
 				vessels.Add(protoVessel.vesselID, vd);
 			}
@@ -284,7 +284,7 @@ namespace KERBALISM
 		{
 			if (!vessels.TryGetValue(vessel.id, out vesselData))
 			{
-				Lib.LogStack($"Could not get VesselData for vessel {vessel.vesselName}", Lib.LogLevel.Error);
+				Logging.LogStack($"Could not get VesselData for vessel {vessel.vesselName}", Logging.LogLevel.Error);
 				return false;
 			}
 			return true;
@@ -310,7 +310,7 @@ namespace KERBALISM
 		{
 			if (!vessels.TryGetValue(vessel.id, out VesselData vesselData))
 			{
-				Lib.LogStack($"Could not get VesselData for vessel {vessel.vesselName}");
+				Logging.LogStack($"Could not get VesselData for vessel {vessel.vesselName}");
 				return null;
 			}
 			return vesselData;

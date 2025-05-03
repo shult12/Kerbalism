@@ -163,7 +163,7 @@ namespace KERBALISM
 
 			if (RnDSubject != null)
 			{
-				Lib.Log("CreateSubjectInRnD : ScienceSubject " + StockSubjectId + "exists already, this should not be happening !");
+				Logging.Log("CreateSubjectInRnD : ScienceSubject " + StockSubjectId + "exists already, this should not be happening !");
 			}
 			else
 			{

@@ -32,10 +32,10 @@ namespace KERBALISM
 			relax_message = Lib.ConfigValue(node, "relax_message", string.Empty);
 			broker = ResourceBroker.GetOrCreate(name, ResourceBroker.BrokerCategory.Kerbal, title);
 
-			if (warning_message.Length > 0 && warning_message[0] == '#') Lib.Log("Broken translation: " + warning_message, Lib.LogLevel.Warning);
-			if (danger_message.Length > 0 && danger_message[0] == '#') Lib.Log("Broken translation: " + danger_message, Lib.LogLevel.Warning);
-			if (fatal_message.Length > 0 && fatal_message[0] == '#') Lib.Log("Broken translation: " + fatal_message, Lib.LogLevel.Warning);
-			if (relax_message.Length > 0 && relax_message[0] == '#') Lib.Log("Broken translation: " + relax_message, Lib.LogLevel.Warning);
+			if (warning_message.Length > 0 && warning_message[0] == '#') Logging.Log("Broken translation: " + warning_message, Logging.LogLevel.Warning);
+			if (danger_message.Length > 0 && danger_message[0] == '#') Logging.Log("Broken translation: " + danger_message, Logging.LogLevel.Warning);
+			if (fatal_message.Length > 0 && fatal_message[0] == '#') Logging.Log("Broken translation: " + fatal_message, Logging.LogLevel.Warning);
+			if (relax_message.Length > 0 && relax_message[0] == '#') Logging.Log("Broken translation: " + relax_message, Logging.LogLevel.Warning);
 
             // check that name is specified
             if (name.Length == 0) throw new Exception("skipping unnamed rule");
@@ -203,7 +203,7 @@ namespace KERBALISM
 				if (rd.problem >= fatal_threshold)
 				{
 #if DEBUG || DEVBUILD
-					Lib.Log("Rule " + name + " kills " + c.name + " at " + rd.problem + " " + degeneration + "/" + k + "/" + step + "/" + Variance(name, c, variance));
+					Logging.Log("Rule " + name + " kills " + c.name + " at " + rd.problem + " " + degeneration + "/" + k + "/" + step + "/" + Variance(name, c, variance));
 #endif
 					if (fatal_message.Length > 0)
 						Message.Post(breakdown ? Severity.breakdown : Severity.fatality, Lib.ExpandMsg(fatal_message, v, c, variant));

@@ -197,7 +197,7 @@ namespace KERBALISM
 			if (ExpInfo == null)
 			{
 				enabled = isEnabled = moduleIsEnabled = false;
-				Lib.Log($"ExpInfo for experiment_id `{experiment_id}` is null, does the config definition exists ?", Lib.LogLevel.Error);
+				Logging.Log($"ExpInfo for experiment_id `{experiment_id}` is null, does the config definition exists ?", Logging.LogLevel.Error);
 				return;
 			}
 
@@ -227,7 +227,7 @@ namespace KERBALISM
 			{
 				remainingSampleMass = ExpInfo.SampleMass * sample_amount;
 				if (double.IsNaN(remainingSampleMass))
-					Lib.LogDebug("remainingSampleMass is NaN on first start " + ExpInfo.ExperimentId + " " + ExpInfo.SampleMass + " / " + sample_amount, Lib.LogLevel.Error);
+					Logging.LogDebug("remainingSampleMass is NaN on first start " + ExpInfo.ExperimentId + " " + ExpInfo.SampleMass + " / " + sample_amount, Logging.LogLevel.Error);
 			}
 		}
 
@@ -549,13 +549,13 @@ namespace KERBALISM
 			if (!expInfo.IsSample)
 			{
 				available = drive.FileCapacityAvailable();
-				if (double.IsNaN(available)) Lib.LogStack("drive.FileCapacityAvailable() returned NaN", Lib.LogLevel.Error);
+				if (double.IsNaN(available)) Logging.LogStack("drive.FileCapacityAvailable() returned NaN", Logging.LogLevel.Error);
 
 				if (drive.GetFileSend(subjectData.Id))
 				{
 					warpDrive = vd.TransmitBufferDrive;
 					available += warpDrive.FileCapacityAvailable();
-					if (double.IsNaN(available)) Lib.LogStack("warpDrive.FileCapacityAvailable() returned NaN", Lib.LogLevel.Error);
+					if (double.IsNaN(available)) Logging.LogStack("warpDrive.FileCapacityAvailable() returned NaN", Logging.LogLevel.Error);
 				}
 			}
 			else
@@ -597,10 +597,10 @@ namespace KERBALISM
 
 #if DEBUG || DEVBUILD
 			if (double.IsNaN(chunkSize))
-				Lib.Log("chunkSize is NaN " + expInfo.ExperimentId + " " + chunkSizeMax + " / " + prodFactor + " / " + available + " / " + ec.Amount + " / " + prefab.ec_rate + " / " + prefab.data_rate, Lib.LogLevel.Error);
+				Logging.Log("chunkSize is NaN " + expInfo.ExperimentId + " " + chunkSizeMax + " / " + prodFactor + " / " + available + " / " + ec.Amount + " / " + prefab.ec_rate + " / " + prefab.data_rate, Logging.LogLevel.Error);
 
 			if (double.IsNaN(massDelta))
-				Lib.Log("mass delta is NaN " + expInfo.ExperimentId + " " + expInfo.SampleMass + " / " + chunkSize + " / " + expInfo.DataSize, Lib.LogLevel.Error);
+				Logging.Log("mass delta is NaN " + expInfo.ExperimentId + " " + expInfo.SampleMass + " / " + chunkSize + " / " + expInfo.DataSize, Logging.LogLevel.Error);
 #endif
 
 			if (!expInfo.IsSample)
@@ -1217,7 +1217,7 @@ namespace KERBALISM
 			if (double.IsNaN(remainingSampleMass))
 			{
 #if DEBUG || DEVBUILD // this is logspammy, don't do it in releases
-				Lib.Log("Experiment remaining sample mass is NaN " + experiment_id, Lib.LogLevel.Error);
+				Logging.Log("Experiment remaining sample mass is NaN " + experiment_id, Logging.LogLevel.Error);
 #endif
 				return 0;
 			}

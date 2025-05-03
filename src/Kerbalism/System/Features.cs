@@ -48,20 +48,20 @@ namespace KERBALISM
 			Supplies = Profile.supplies.Find(k => k.resource != "ElectricCharge") != null;
 
 			// log features
-			Lib.Log("features:");
-			Lib.Log("- Reliability: " + Reliability);
-			Lib.Log("- Deploy: " + Deploy);
-			Lib.Log("- Science: " + Science);
-			Lib.Log("- SpaceWeather: " + SpaceWeather);
-			Lib.Log("- Automation: " + Automation);
-			Lib.Log("- Radiation: " + Radiation);
-			Lib.Log("- Shielding: " + Shielding);
-			Lib.Log("- LivingSpace: " + LivingSpace);
-			Lib.Log("- Comfort: " + Comfort);
-			Lib.Log("- Poisoning: " + Poisoning);
-			Lib.Log("- Pressure: " + Pressure);
-			Lib.Log("- Habitat: " + Habitat);
-			Lib.Log("- Supplies: " + Supplies);
+			Logging.Log("features:");
+			Logging.Log("- Reliability: " + Reliability);
+			Logging.Log("- Deploy: " + Deploy);
+			Logging.Log("- Science: " + Science);
+			Logging.Log("- SpaceWeather: " + SpaceWeather);
+			Logging.Log("- Automation: " + Automation);
+			Logging.Log("- Radiation: " + Radiation);
+			Logging.Log("- Shielding: " + Shielding);
+			Logging.Log("- LivingSpace: " + LivingSpace);
+			Logging.Log("- Comfort: " + Comfort);
+			Logging.Log("- Poisoning: " + Poisoning);
+			Logging.Log("- Pressure: " + Pressure);
+			Logging.Log("- Habitat: " + Habitat);
+			Logging.Log("- Supplies: " + Supplies);
 		}
 
 		// user-specified features

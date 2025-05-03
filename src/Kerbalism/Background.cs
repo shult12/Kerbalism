@@ -265,7 +265,7 @@ namespace KERBALISM
 			}
 			catch (Exception ex)
 			{
-				Lib.Log("BackgroundUpdate in PartModule " + module_prefab.moduleName + " excepted: " + ex.Message + "\n" + ex.ToString());
+				Logging.Log("BackgroundUpdate in PartModule " + module_prefab.moduleName + " excepted: " + ex.Message + "\n" + ex.ToString());
 			}
 		}
 
@@ -685,7 +685,7 @@ namespace KERBALISM
 
 			if (panelModule == null || protoPanelModule == null)
 			{
-				Lib.Log("Vessel " + v.name + " has solar panels that can't be converted automatically following Kerbalism 3.1 update. Load it to fix the issue.");
+				Logging.Log("Vessel " + v.name + " has solar panels that can't be converted automatically following Kerbalism 3.1 update. Load it to fix the issue.");
 				return;
 			}
 

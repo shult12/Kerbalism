@@ -635,7 +635,7 @@ namespace KERBALISM
 					case "SSTUModularPart": SolarPanel = new SSTUVeryComplexPanel(); break;
 					case "ModuleROSolar": SolarPanel = new ROConfigurablePanel(); break;
 					case "KopernicusSolarPanel":
-						Lib.Log("Part '" + part.partInfo.title + "' use the KopernicusSolarPanel module, please remove it from your config. Kerbalism has it's own support for Kopernicus", Lib.LogLevel.Warning);
+						Logging.Log("Part '" + part.partInfo.title + "' use the KopernicusSolarPanel module, please remove it from your config. Kerbalism has it's own support for Kopernicus", Logging.LogLevel.Warning);
 						continue;
 					default:
 						if (pm is ModuleDeployableSolarPanel)
@@ -651,7 +651,7 @@ namespace KERBALISM
 
 			if (SolarPanel == null)
 			{
-				Lib.Log("Could not find a supported solar panel module, disabling SolarPanelFixer module...", Lib.LogLevel.Warning);
+				Logging.Log("Could not find a supported solar panel module, disabling SolarPanelFixer module...", Logging.LogLevel.Warning);
 				enabled = isEnabled = moduleIsEnabled = false;
 				return false;
 			}
@@ -862,7 +862,7 @@ namespace KERBALISM
 
 				if (sunCatcherPosition == null)
 				{
-					Lib.Log("Could not find suncatcher transform `{0}` in part `{1}`", Lib.LogLevel.Error, panelModule.secondaryTransformName, panelModule.part.name);
+					Logging.Log("Could not find suncatcher transform `{0}` in part `{1}`", Logging.LogLevel.Error, panelModule.secondaryTransformName, panelModule.part.name);
 					return false;
 				}
 
@@ -1077,7 +1077,7 @@ namespace KERBALISM
 				}
 				catch (Exception ex) 
 				{
-					Lib.Log("SolarPanelFixer : exception while getting ModuleCurvedSolarPanel data : " + ex.Message);
+					Logging.Log("SolarPanelFixer : exception while getting ModuleCurvedSolarPanel data : " + ex.Message);
 					return false;
 				}
 #endif
@@ -1234,7 +1234,7 @@ namespace KERBALISM
 				}
 				catch (Exception ex)
 				{
-					Lib.Log("SolarPanelFixer : exception while getting SSTUSolarPanelStatic data : " + ex.Message);
+					Logging.Log("SolarPanelFixer : exception while getting SSTUSolarPanelStatic data : " + ex.Message);
 					return false;
 				}
 #endif
@@ -1457,7 +1457,7 @@ namespace KERBALISM
 				}
 				catch (Exception ex)
 				{
-					Lib.Log("SolarPanelFixer : exception while getting SSTUModularPart/SSTUSolarPanelDeployable solar panel data : " + ex.Message);
+					Logging.Log("SolarPanelFixer : exception while getting SSTUModularPart/SSTUSolarPanelDeployable solar panel data : " + ex.Message);
 					return false;
 				}
 #endif

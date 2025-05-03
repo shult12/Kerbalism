@@ -730,7 +730,7 @@ namespace KERBALISM
 						// clamp to max. surface radiation. when loading on a rescaled system, the vessel can appear to be within the sun for a few ticks
 						radiation += Math.Min(r1, rb.radiation_surface);
 #if DEBUG_RADIATION
-						if (v.loaded) Lib.Log("Radiation " + v + " from surface of " + body + ": " + Lib.HumanReadableRadiation(radiation) + " gamma: " + Lib.HumanReadableRadiation(r1));
+						if (v.loaded) Logging.Log("Radiation " + v + " from surface of " + body + ": " + Lib.HumanReadableRadiation(radiation) + " gamma: " + Lib.HumanReadableRadiation(r1));
 #endif
 					}
                 }
@@ -743,14 +743,14 @@ namespace KERBALISM
             radiation += Settings.ExternRadiation / 3600.0;
 
 #if DEBUG_RADIATION
-			if (v.loaded) Lib.Log("Radiation " + v + " extern: " + Lib.HumanReadableRadiation(radiation) + " gamma: " + Lib.HumanReadableRadiation(Settings.ExternRadiation));
+			if (v.loaded) Logging.Log("Radiation " + v + " extern: " + Lib.HumanReadableRadiation(radiation) + " gamma: " + Lib.HumanReadableRadiation(Settings.ExternRadiation));
 #endif
 
 			// apply gamma transparency if inside atmosphere
 			radiation *= gamma_transparency;
 
 #if DEBUG_RADIATION
-			if (v.loaded) Lib.Log("Radiation " + v + " after gamma: " + Lib.HumanReadableRadiation(radiation) + " transparency: " + gamma_transparency);
+			if (v.loaded) Logging.Log("Radiation " + v + " after gamma: " + Lib.HumanReadableRadiation(radiation) + " transparency: " + gamma_transparency);
 #endif
 			// add surface radiation of the body itself
 			if(Lib.IsSun(v.mainBody) && v.altitude < v.mainBody.Radius)
@@ -761,7 +761,7 @@ namespace KERBALISM
 			}
 
 #if DEBUG_RADIATION
-			if (v.loaded) Lib.Log("Radiation " + v + " from current main body: " + Lib.HumanReadableRadiation(radiation) + " gamma: " + Lib.HumanReadableRadiation(DistanceRadiation(RadiationR0(Info(v.mainBody)), v.altitude)));
+			if (v.loaded) Logging.Log("Radiation " + v + " from current main body: " + Lib.HumanReadableRadiation(radiation) + " gamma: " + Lib.HumanReadableRadiation(DistanceRadiation(RadiationR0(Info(v.mainBody)), v.altitude)));
 #endif
 
 			shieldedRadiation = radiation;
@@ -790,7 +790,7 @@ namespace KERBALISM
             shieldedRadiation += emitterRadiation;
 
 #if DEBUG_RADIATION
-			if (v.loaded) Lib.Log("Radiation " + v + " after emitters: " + Lib.HumanReadableRadiation(radiation) + " shielded " + Lib.HumanReadableRadiation(shieldedRadiation));
+			if (v.loaded) Logging.Log("Radiation " + v + " after emitters: " + Lib.HumanReadableRadiation(radiation) + " shielded " + Lib.HumanReadableRadiation(shieldedRadiation));
 #endif
 
 			// for EVAs, add the effect of nearby emitters
@@ -800,7 +800,7 @@ namespace KERBALISM
 				radiation += nearbyEmitters;
                 shieldedRadiation += nearbyEmitters;
 #if DEBUG_RADIATION
-				if (v.loaded) Lib.Log("Radiation " + v + " nearby emitters " + Lib.HumanReadableRadiation(nearbyEmitters));
+				if (v.loaded) Logging.Log("Radiation " + v + " nearby emitters " + Lib.HumanReadableRadiation(nearbyEmitters));
 #endif
 			}
 
@@ -808,8 +808,8 @@ namespace KERBALISM
 			shieldedRadiation -= passiveShielding;
 
 #if DEBUG_RADIATION
-			if (v.loaded) Lib.Log("Radiation " + v + " passiveShielding " + Lib.HumanReadableRadiation(passiveShielding));
-			if (v.loaded) Lib.Log("Radiation " + v + " before clamp: " + Lib.HumanReadableRadiation(radiation) + " shielded " + Lib.HumanReadableRadiation(shieldedRadiation));
+			if (v.loaded) Logging.Log("Radiation " + v + " passiveShielding " + Lib.HumanReadableRadiation(passiveShielding));
+			if (v.loaded) Logging.Log("Radiation " + v + " before clamp: " + Lib.HumanReadableRadiation(radiation) + " shielded " + Lib.HumanReadableRadiation(shieldedRadiation));
 #endif
 
 			// clamp radiation to positive range
@@ -818,7 +818,7 @@ namespace KERBALISM
             shieldedRadiation = Math.Max(shieldedRadiation, Nominal);
 
 #if DEBUG_RADIATION
-			if (v.loaded) Lib.Log("Radiation " + v + " after clamp: " + Lib.HumanReadableRadiation(radiation) + " shielded " + Lib.HumanReadableRadiation(shieldedRadiation));
+			if (v.loaded) Logging.Log("Radiation " + v + " after clamp: " + Lib.HumanReadableRadiation(radiation) + " shielded " + Lib.HumanReadableRadiation(shieldedRadiation));
 #endif
 			// return radiation
 			return radiation;
@@ -901,7 +901,7 @@ namespace KERBALISM
                     var r0 = RadiationR0(rb);
                     var r1 = DistanceRadiation(r0, distance);
 
-					// Lib.Log("Surface radiation on " + b + " from " + body + ": " + Lib.HumanReadableRadiation(r1) + " distance " + distance);
+					// Logging.Log("Surface radiation on " + b + " from " + body + ": " + Lib.HumanReadableRadiation(r1) + " distance " + distance);
 
 					// clamp to max. surface radiation. when loading on a rescaled system, the vessel can appear to be within the sun for a few ticks
 					radiation += Math.Min(r1, rb.radiation_surface);
@@ -914,20 +914,20 @@ namespace KERBALISM
             // add extern radiation
             radiation += Settings.ExternRadiation / 3600.0;
 
-            // Lib.Log("Radiation subtotal on " + b + ": " + Lib.HumanReadableRadiation(radiation) + ", gamma " + gamma_transparency);
+            // Logging.Log("Radiation subtotal on " + b + ": " + Lib.HumanReadableRadiation(radiation) + ", gamma " + gamma_transparency);
 
             // scale radiation by gamma transparency if inside atmosphere
             radiation *= gamma_transparency;
-			// Lib.Log("srf scaled on " + b + ": " + Lib.HumanReadableRadiation(radiation));
+			// Logging.Log("srf scaled on " + b + ": " + Lib.HumanReadableRadiation(radiation));
 
 			// add surface radiation of the body itself
 			RadiationBody bodyInfo = Info(b);
 			// clamp to max. bodyInfo.radiation_surface to avoid extreme radiation effects while loading a vessel on rescaled systems
             radiation += Math.Min(bodyInfo.radiation_surface, DistanceRadiation(RadiationR0(bodyInfo), b.Radius));
 
-            // Lib.Log("Radiation on " + b + ": " + Lib.HumanReadableRadiation(radiation) + ", own surface radiation " + Lib.HumanReadableRadiation(DistanceRadiation(RadiationR0(Info(b)), b.Radius)));
+            // Logging.Log("Radiation on " + b + ": " + Lib.HumanReadableRadiation(radiation) + ", own surface radiation " + Lib.HumanReadableRadiation(DistanceRadiation(RadiationR0(Info(b)), b.Radius)));
 
-            // Lib.Log("radiation " + radiation + " nominal " + Nominal);
+            // Logging.Log("radiation " + radiation + " nominal " + Nominal);
 
             // clamp radiation to positive range
             // note: we avoid radiation going to zero by using a small positive value

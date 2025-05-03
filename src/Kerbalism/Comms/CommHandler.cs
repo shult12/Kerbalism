@@ -41,22 +41,22 @@ namespace KERBALISM
 			if (API.Comm.handlers.Count > 0)
 			{
 				handler = new CommHandler();
-				Lib.LogDebug("Created new API CommHandler", Lib.LogLevel.Message);
+				Logging.LogDebug("Created new API CommHandler", Logging.LogLevel.Message);
 			}
 			else if (RemoteTech.Installed)
 			{
 				handler = new CommHandlerRemoteTech();
-				Lib.LogDebug("Created new CommHandlerRemoteTech", Lib.LogLevel.Message);
+				Logging.LogDebug("Created new CommHandlerRemoteTech", Logging.LogLevel.Message);
 			}
 			else if (isGroundController)
 			{
 				handler = new CommHandlerCommNetSerenity();
-				Lib.LogDebug("Created new CommHandlerCommNetSerenity", Lib.LogLevel.Message);
+				Logging.LogDebug("Created new CommHandlerCommNetSerenity", Logging.LogLevel.Message);
 			}
 			else
 			{
 				handler = new CommHandlerCommNetVessel();
-				Lib.LogDebug("Created new CommHandlerCommNetVessel", Lib.LogLevel.Message);
+				Logging.LogDebug("Created new CommHandlerCommNetVessel", Logging.LogLevel.Message);
 			}
 				
 			handler.vd = vd;
@@ -99,7 +99,7 @@ namespace KERBALISM
 				}
 				catch (Exception e)
 				{
-					Lib.Log("CommInfo handler threw exception " + e.Message + "\n" + e.ToString(), Lib.LogLevel.Error);
+					Logging.Log("CommInfo handler threw exception " + e.Message + "\n" + e.ToString(), Logging.LogLevel.Error);
 				}
 			}
 			UnityEngine.Profiling.Profiler.EndSample();

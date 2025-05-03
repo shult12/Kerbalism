@@ -143,7 +143,7 @@ namespace KERBALISM
 				{
 					fail = true;
 #if DEBUG_RELIABILITY
-					Lib.Log("Ignition check: " + part.partInfo.title + " ignitions " + ignitions + " turnon failure");
+					Logging.Log("Ignition check: " + part.partInfo.title + " ignitions " + ignitions + " turnon failure");
 #endif
 				}
 			}
@@ -161,7 +161,7 @@ namespace KERBALISM
 					q /= (ignitions - total_ignitions); // progressively increase the odds of a failure with every extra ignition
 
 #if DEBUG_RELIABILITY
-					Lib.Log("Reliability: ignition exceeded q=" + q + " ignitions=" + ignitions + " total_ignitions=" + total_ignitions);
+					Logging.Log("Reliability: ignition exceeded q=" + q + " ignitions=" + ignitions + " total_ignitions=" + total_ignitions);
 #endif
 
 					if (q < 0.3)
@@ -267,7 +267,7 @@ namespace KERBALISM
 				if (next > 0 && now > next && !broken)
 				{
 #if DEBUG_RELIABILITY
-					Lib.Log("Reliablity: breakdown for " + part.partInfo.title);
+					Logging.Log("Reliablity: breakdown for " + part.partInfo.title);
 #endif
 					Break();
 				}
@@ -337,7 +337,7 @@ namespace KERBALISM
 					var r = 1 - Math.Pow(Lib.RandomDouble(), 3);
 					next = now + guaranteed + mtbf * (quality ? Settings.QualityScale : 1.0) * r;
 #if DEBUG_RELIABILITY
-					Lib.Log("Reliability: MTBF failure in " + (now - next) + " for " + part.partInfo.title);
+					Logging.Log("Reliability: MTBF failure in " + (now - next) + " for " + part.partInfo.title);
 #endif
 				}
 
@@ -422,7 +422,7 @@ namespace KERBALISM
 
 					fail_duration = guaranteed_operation + f * p;
 #if DEBUG_RELIABILITY
-					Lib.Log(part.partInfo.title + " will fail after " + Lib.HumanReadableDuration(fail_duration) + " burn time");
+					Logging.Log(part.partInfo.title + " will fail after " + Lib.HumanReadableDuration(fail_duration) + " burn time");
 #endif
 				}
 
@@ -432,7 +432,7 @@ namespace KERBALISM
 					enforce_breakdown = true;
 					explode = Lib.RandomDouble() < 0.2;
 #if DEBUG_RELIABILITY
-					Lib.Log("Reliability: " + part.partInfo.title + " fails because of material fatigue");
+					Logging.Log("Reliability: " + part.partInfo.title + " fails because of material fatigue");
 #endif
 					FlightLogger.fetch?.LogEvent(Local.FlightLogger_MaterialFatigue.Format(part.partInfo.title));// <<1>> failed because of material fatigue"
 				}
@@ -463,7 +463,7 @@ namespace KERBALISM
 				Lib.Proto.Set(m, "last", now);
 				Lib.Proto.Set(m, "next", next);
 #if DEBUG_RELIABILITY
-				Lib.Log("Reliability: background MTBF failure in " + (now - next) + " for " + p);
+				Logging.Log("Reliability: background MTBF failure in " + (now - next) + " for " + p);
 #endif
 			}
 
@@ -479,7 +479,7 @@ namespace KERBALISM
 			if (now > next)
 			{
 #if DEBUG_RELIABILITY
-				Lib.Log("Reliablity: background MTBF failure for " + p);
+				Logging.Log("Reliablity: background MTBF failure for " + p);
 #endif
 					ProtoBreak(v, p, m);
 			}

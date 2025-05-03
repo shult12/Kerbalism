@@ -163,7 +163,7 @@ namespace KERBALISM
 						else
 						{
 							ppms = pps.FindModule("ModuleDataTransmitter");
-							Lib.LogDebug($"Could not find a ModuleDataTransmitter or derivative at index {i} on part {pps.partName} on vessel {v.protoVessel.vesselName}", Lib.LogLevel.Warning);
+							Logging.LogDebug($"Could not find a ModuleDataTransmitter or derivative at index {i} on part {pps.partName} on vessel {v.protoVessel.vesselName}", Logging.LogLevel.Warning);
 						}
 
 						if (ppms != null)

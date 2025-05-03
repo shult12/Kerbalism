@@ -27,12 +27,12 @@ namespace KERBALISM
 
 			if (transf_name.Length > 0)
 			{
-				//Lib.Log("Looking for : {0}", transf_name);
+				//Logging.Log("Looking for : {0}", transf_name);
 				transform = p.FindModelTransform(transf_name);
 				if (transform != null)
 				{
 					name = transf_name;
-					//Lib.Log("Transform {0} has been found", name);
+					//Logging.Log("Transform {0} has been found", name);
 
 					this.SpinRate = SpinRate;
 					this.spinAccel = spinAccel;
@@ -43,13 +43,13 @@ namespace KERBALISM
 
 		internal void Play()
 		{
-			//Lib.Log("Playing Transformation {0}", name);
+			//Logging.Log("Playing Transformation {0}", name);
 			if (transform != null) rotationRateGoal = 1.0f;
 		}
 
 		internal void Stop()
 		{
-			//Lib.Log("Stopping Transformation {0}", name);
+			//Logging.Log("Stopping Transformation {0}", name);
 			if (transform != null) rotationRateGoal = 0.0f;
 		}
 
@@ -57,7 +57,7 @@ namespace KERBALISM
 		{
 			CurrentSpinRate = Mathf.MoveTowards(CurrentSpinRate, rotationRateGoal * SpinRate, TimeWarp.deltaTime * spinAccel);
 			float spin = Mathf.Clamp(TimeWarp.deltaTime * CurrentSpinRate, -10.0f, 10.0f);
-			//Lib.Log("Transform {0} spin rate {1}", name, CurrentSpinRate);
+			//Logging.Log("Transform {0} spin rate {1}", name, CurrentSpinRate);
 			// Part rotation
 			if (transform != null) transform.Rotate(Vector3.forward * spin);
 

@@ -290,7 +290,7 @@ namespace KERBALISM
 					}
 					catch (Exception e)
 					{
-						Lib.Log("RadiationFieldChanged: Exception in event receiver " + e.Message + "\n" + e.ToString());
+						Logging.Log("RadiationFieldChanged: Exception in event receiver " + e.Message + "\n" + e.ToString());
 					}
 				}
 			}
@@ -548,7 +548,7 @@ namespace KERBALISM
 					}
 					catch (Exception e)
 					{
-						Lib.Log("ExperimentStateChanged: Exception in event receiver " + e.Message + "\n" + e.ToString());
+						Logging.Log("ExperimentStateChanged: Exception in event receiver " + e.Message + "\n" + e.ToString());
 					}
 				}
 			}
@@ -676,7 +676,7 @@ namespace KERBALISM
 			{
 				if(handler == null)
 				{
-					Lib.Log("Kerbalism CommInfo.Add called with null handler", Lib.LogLevel.Error);
+					Logging.Log("Kerbalism CommInfo.Add called with null handler", Logging.LogLevel.Error);
 					return;
 				}
 				//We only add it if it isn't already added. Just in case.
@@ -708,7 +708,7 @@ namespace KERBALISM
 						handler.Invoke(null, new object[] { antennaInfo, pv });
 						if (antennaInfo.strength > -1) return;
 					} catch(Exception e) {
-						Lib.Log("CommInfo handler threw exception " + e.Message + "\n" + e.ToString());
+						Logging.Log("CommInfo handler threw exception " + e.Message + "\n" + e.ToString());
 					}
 				}
 			}

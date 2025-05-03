@@ -109,7 +109,7 @@ namespace KERBALISM
 				// make sure we don't produce NaN values down the line because of odd/wrong configs
 				if (DataSize <= 0.0)
 				{
-					Lib.Log(ExperimentId + " has DataSize=" + DataSize + ", your configuration is broken!", Lib.LogLevel.Warning);
+					Logging.Log(ExperimentId + " has DataSize=" + DataSize + ", your configuration is broken!", Logging.LogLevel.Warning);
 					DataSize = 1.0;
 				}
 				MassPerMB = SampleMass / DataSize;
@@ -153,7 +153,7 @@ namespace KERBALISM
 				}
 				else
 				{
-					Lib.Log("Experiment definition `{0}` has unknown VirtualBiome={1}", Lib.LogLevel.Warning, ExperimentId, virtualBiomeStr);
+					Logging.Log("Experiment definition `{0}` has unknown VirtualBiome={1}", Logging.LogLevel.Warning, ExperimentId, virtualBiomeStr);
 				}
 			}
 
@@ -191,7 +191,7 @@ namespace KERBALISM
 					}
 					else
 					{
-						Lib.Log("Experiment definition `{0}` has unknown situation : `{1}`", Lib.LogLevel.Warning, ExperimentId, sitAtBiome[0]);
+						Logging.Log("Experiment definition `{0}` has unknown situation : `{1}`", Logging.LogLevel.Warning, ExperimentId, sitAtBiome[0]);
 					}
 				}
 			}
@@ -203,7 +203,7 @@ namespace KERBALISM
 
 			if (situationMask == 0)
 			{
-				Lib.Log("Experiment definition `{0}` : `0` situationMask is unsupported, patching to `BodyGlobal`", Lib.LogLevel.Message, ExperimentId);
+				Logging.Log("Experiment definition `{0}` : `0` situationMask is unsupported, patching to `BodyGlobal`", Logging.LogLevel.Message, ExperimentId);
 				situationMask = ScienceSituation.BodyGlobal.BitValue();
 				HasDBSubjects = false;
 			}
@@ -217,7 +217,7 @@ namespace KERBALISM
 			uint stockBiomeMask;
 			if (!ScienceSituationUtils.ValidateSituationBitMask(ref situationMask, biomeMask, out stockSituationMask, out stockBiomeMask, out error))
 			{
-				Lib.Log("Experiment definition `{0}` is incorrect :\n{1}", Lib.LogLevel.Error, ExperimentId, error);
+				Logging.Log("Experiment definition `{0}` is incorrect :\n{1}", Logging.LogLevel.Error, ExperimentId, error);
 			}
 
 			SituationMask = situationMask;
@@ -234,7 +234,7 @@ namespace KERBALISM
 				ExperimentInfo includedInfo = ScienceDB.GetExperimentInfo(expId);
 				if (includedInfo == null)
 				{
-					Lib.Log($"Experiment `{ExperimentId}` define a IncludedExperiment `{expId}`, but that experiment doesn't exist", Lib.LogLevel.Warning);
+					Logging.Log($"Experiment `{ExperimentId}` define a IncludedExperiment `{expId}`, but that experiment doesn't exist", Logging.LogLevel.Warning);
 					continue;
 				}
 					
@@ -262,7 +262,7 @@ namespace KERBALISM
 			foreach (ExperimentInfo loopedExperiment in loopedExperiments)
 			{
 				expInfoToCheck.IncludedExperiments.Remove(loopedExperiment);
-				Lib.Log($"IncludedExperiment `{loopedExperiment.ExperimentId}` in experiment `{expInfoToCheck.ExperimentId}` would result in an infinite loop in the chain and has been removed", Lib.LogLevel.Warning);
+				Logging.Log($"IncludedExperiment `{loopedExperiment.ExperimentId}` in experiment `{expInfoToCheck.ExperimentId}` would result in an infinite loop in the chain and has been removed", Logging.LogLevel.Warning);
 			}
 
 			foreach (ExperimentInfo includedExp in expInfoToCheck.IncludedExperiments)
@@ -289,7 +289,7 @@ namespace KERBALISM
 		{
 			if (PartLoader.LoadedPartsList == null)
 			{
-				Lib.Log("Dazed and confused: PartLoader.LoadedPartsList == null");
+				Logging.Log("Dazed and confused: PartLoader.LoadedPartsList == null");
 				return;
 			}
 
@@ -297,7 +297,7 @@ namespace KERBALISM
 			{
 				if (ap == null || ap.partPrefab == null)
 				{
-					Lib.Log("AvailablePart is null or without prefab: " + ap);
+					Logging.Log("AvailablePart is null or without prefab: " + ap);
 					continue;
 				}
 
@@ -375,7 +375,7 @@ namespace KERBALISM
 					// - an intermittent bug causing ROCManager.Instance to be null (seems caused by Kopernicus, see https://github.com/Kopernicus/Kopernicus/issues/499) 
 					if (ROCManager.Instance == null)
 					{
-						Lib.Log($"Can't parse ModuleInfo for {ExperimentId} on part={ap.name} : ROCManager is null", Lib.LogLevel.Warning);
+						Logging.Log($"Can't parse ModuleInfo for {ExperimentId} on part={ap.name} : ROCManager is null", Logging.LogLevel.Warning);
 						continue;
 					}
 
@@ -484,7 +484,7 @@ namespace KERBALISM
 						if (body.name.Equals(condition, StringComparison.OrdinalIgnoreCase))
 							return new SpecificBody(body.name);
 				}
-				Lib.Log("Invalid BodyCondition : '" + condition + "' defined in KERBALISM_EXPERIMENT node.");
+				Logging.Log("Invalid BodyCondition : '" + condition + "' defined in KERBALISM_EXPERIMENT node.");
 				return null;
 			}
 

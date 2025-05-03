@@ -25,7 +25,7 @@ namespace KERBALISM
 			this.size = size;
 			if (double.IsNaN(size))
 			{
-				Lib.LogStack($"File has a NaN size on creation : {subjectData.DebugStateInfo}", Lib.LogLevel.Error);
+				Logging.LogStack($"File has a NaN size on creation : {subjectData.DebugStateInfo}", Logging.LogLevel.Error);
 				this.size = 0.0;
 			}
 
@@ -52,7 +52,7 @@ namespace KERBALISM
 			double size = Lib.ConfigValue(node, "size", 0.0);
 			if (double.IsNaN(size))
 			{
-				Lib.LogStack($"File has a NaN size on load : {subjectData.DebugStateInfo}", Lib.LogLevel.Error);
+				Logging.LogStack($"File has a NaN size on load : {subjectData.DebugStateInfo}", Logging.LogLevel.Error);
 				return null;
 			}
 
@@ -73,7 +73,7 @@ namespace KERBALISM
 			double size = Lib.ConfigValue(node, "size", 0.0);
 			if (double.IsNaN(size))
 			{
-				Lib.LogStack($"File has a NaN size on load : {subjectData.DebugStateInfo}", Lib.LogLevel.Error);
+				Logging.LogStack($"File has a NaN size on load : {subjectData.DebugStateInfo}", Logging.LogLevel.Error);
 				return null;
 			}
 

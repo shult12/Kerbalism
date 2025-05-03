@@ -34,7 +34,7 @@ namespace KERBALISM
 		void Start()
 		{
 			// log version
-			Lib.Log("Version : " + Lib.KerbalismVersion + " - Build : " + Lib.KerbalismDevBuild);
+			Logging.Log("Version : " + Lib.KerbalismVersion + " - Build : " + Lib.KerbalismDevBuild);
 
 			if (LocalHelpers.GenerateEnglishLoc)
 				LocalHelpers.GenerateLoc();
@@ -42,7 +42,7 @@ namespace KERBALISM
 			if (LocalHelpers.UpdateNonEnglishLoc)
 				LocalHelpers.RegenerateNonEnglishLoc();
 
-			Lib.Log("Forcing KSP to load resources...");
+			Logging.Log("Forcing KSP to load resources...");
 			PartResourceLibrary.Instance.LoadDefinitions();
 
 			// parse settings
@@ -93,7 +93,7 @@ namespace KERBALISM
 		// inject an MM patch on-the-fly, so that NEEDS[TypeId] can be used in MM patches
 		static void Inject(UrlDir.UrlFile root, string type, string id)
 		{
-			Lib.Log(Lib.BuildString("Injecting ", type, id));
+			Logging.Log(Lib.BuildString("Injecting ", type, id));
 			if (ModuleManager.MM_major >= 4)
 			{
 				MM40Injector.AddInjector(type, id);

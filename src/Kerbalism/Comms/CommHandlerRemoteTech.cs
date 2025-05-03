@@ -298,7 +298,7 @@ namespace KERBALISM
 						else
 						{
 							ppms = pps.FindModule("ModuleRTAntenna");
-							Lib.LogDebug($"Could not find a ModuleRTAntenna at index {i} on part {pps.partName} on vessel {v.protoVessel.vesselName}", Lib.LogLevel.Warning);
+							Logging.LogDebug($"Could not find a ModuleRTAntenna at index {i} on part {pps.partName} on vessel {v.protoVessel.vesselName}", Logging.LogLevel.Warning);
 						}
 
 						if (ppms != null)
@@ -317,7 +317,7 @@ namespace KERBALISM
 						else
 						{
 							ppms = pps.FindModule("ModuleRTAntennaPassive");
-							Lib.LogDebug($"Could not find a ModuleRTAntennaPassive at index {i} on part {pps.partName} on vessel {v.protoVessel.vesselName}", Lib.LogLevel.Warning);
+							Logging.LogDebug($"Could not find a ModuleRTAntennaPassive at index {i} on part {pps.partName} on vessel {v.protoVessel.vesselName}", Logging.LogLevel.Warning);
 						}
 
 						if (ppms != null)

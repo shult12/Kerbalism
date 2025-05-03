@@ -440,7 +440,7 @@ namespace KERBALISM
 
 			if(Double.IsNaN(result))
 			{
-				Lib.Log("Drive mass is NaN: esc " + effectiveSampleCapacity + " scm " + sampleCapacityMass + " dedcm " + effectiveDataCapacity + " dcm " + dataCapacityMass + " tsm " + totalSampleMass);
+				Logging.Log("Drive mass is NaN: esc " + effectiveSampleCapacity + " scm " + sampleCapacityMass + " dedcm " + effectiveDataCapacity + " dcm " + dataCapacityMass + " tsm " + totalSampleMass);
 				return 0;
 			}
 

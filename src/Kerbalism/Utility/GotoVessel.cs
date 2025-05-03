@@ -24,7 +24,7 @@ namespace KERBALISM
 				}
 				else
 				{
-					Lib.Log("Invalid vessel Id:" + _idx);
+					Logging.Log("Invalid vessel Id:" + _idx);
 				}
 			}
 		}

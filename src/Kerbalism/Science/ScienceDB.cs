@@ -199,7 +199,7 @@ namespace KERBALISM
 
 		internal static void Init()
 		{
-			Lib.Log("ScienceDB init started");
+			Logging.Log("ScienceDB init started");
 			int subjectCount = 0;
 			double totalScience = 0.0;
 
@@ -228,7 +228,7 @@ namespace KERBALISM
 				ScienceExperiment stockDef = ResearchAndDevelopment.GetExperiment(experimentId);
 				if (stockDef == null)
 				{
-					Lib.Log("ScienceExperiment is null for experiment Id=" + experimentId + ", skipping...", Lib.LogLevel.Warning);
+					Logging.Log("ScienceExperiment is null for experiment Id=" + experimentId + ", skipping...", Logging.LogLevel.Warning);
 					continue;
 				}
 
@@ -353,7 +353,7 @@ namespace KERBALISM
 				experimentInfo.CompileModuleInfos();
 			}
 
-			Lib.Log($"ScienceDB init done : {subjectCount} subjects found, total science points : {totalScience.ToString("F1")}");
+			Logging.Log($"ScienceDB init done : {subjectCount} subjects found, total science points : {totalScience.ToString("F1")}");
 		}
 
 		internal static void Load(ConfigNode node)
@@ -386,7 +386,7 @@ namespace KERBALISM
 						ScienceSubject subject = ResearchAndDevelopment.GetSubjectByID(subjectId);
 						if (subject == null)
 						{
-							Lib.Log($"Warning : API subject '{subjectId}' not found in ResearchAndDevelopment");
+							Logging.Log($"Warning : API subject '{subjectId}' not found in ResearchAndDevelopment");
 							continue;
 						}
 						subjectsReceivedBuffer.Add(subject);
@@ -422,7 +422,7 @@ namespace KERBALISM
 			}
 
 			//if (ResearchAndDevelopment.Instance == null)
-			//	Lib.Log("ERROR : ResearchAndDevelopment.Instance is null on subjects load !");
+			//	Logging.Log("ERROR : ResearchAndDevelopment.Instance is null on subjects load !");
 
 			// remove unknown subjects from the database
 			foreach (SubjectData subjectData in unknownSubjectDatas.Values)
@@ -588,28 +588,28 @@ namespace KERBALISM
 
 			if (expAndSit.Length != 2)
 			{
-				Lib.Log("Could not get the SubjectData from subject '" + integerSubjectId + "' : bad format");
+				Logging.Log("Could not get the SubjectData from subject '" + integerSubjectId + "' : bad format");
 				return null;
 			}
 
 			ExperimentInfo expInfo = GetExperimentInfo(expAndSit[0]);
 			if (expInfo == null)
 			{
-				Lib.Log("Could not get the SubjectData from subject '" + integerSubjectId + "' : the experiment id '" + expAndSit[0] + "' doesn't exists");
+				Logging.Log("Could not get the SubjectData from subject '" + integerSubjectId + "' : the experiment id '" + expAndSit[0] + "' doesn't exists");
 				return null;
 			}
 
 			int situationId;
 			if (!int.TryParse(expAndSit[1], out situationId))
 			{
-				Lib.Log("Could not get the SubjectData from subject '" + integerSubjectId + "' : the situation id '" + expAndSit[1] + "' isn't a valid integer");
+				Logging.Log("Could not get the SubjectData from subject '" + integerSubjectId + "' : the situation id '" + expAndSit[1] + "' isn't a valid integer");
 				return null;
 			}
 
 			SubjectData subjectData;
 			if (!subjectByExpThenSituationId[expInfo].TryGetValue(situationId, out subjectData))
 			{
-				Lib.Log("Could not get the SubjectData from subject '" + integerSubjectId + "' : the situation id '" + expAndSit[1] + "' isn't valid");
+				Logging.Log("Could not get the SubjectData from subject '" + integerSubjectId + "' : the situation id '" + expAndSit[1] + "' isn't valid");
 				return null;
 			}
 
@@ -632,7 +632,7 @@ namespace KERBALISM
 
 			if (expAndSit.Length != 2)
 			{
-				Lib.Log("Could not parse the SubjectData from subjectId '" + stockSubjectId + "' : bad format");
+				Logging.Log("Could not parse the SubjectData from subjectId '" + stockSubjectId + "' : bad format");
 				return null;
 			}
 
@@ -644,7 +644,7 @@ namespace KERBALISM
 			ExperimentInfo expInfo = GetExperimentInfo(expAndSit[0]);
 			if (expInfo == null)
 			{
-				Lib.Log("Could not parse the SubjectData from subjectId '" + stockSubjectId + "' : the experiment id '" + expAndSit[0] + "' doesn't exists");
+				Logging.Log("Could not parse the SubjectData from subjectId '" + stockSubjectId + "' : the experiment id '" + expAndSit[0] + "' doesn't exists");
 				return null;
 			}
 
@@ -675,7 +675,7 @@ namespace KERBALISM
 				situation = expAndSit[1].Substring(bodyAndBiome[0].Length, expAndSit[1].Length - bodyAndBiome[0].Length - bodyAndBiome[1].Length);
 			else
 			{
-				Lib.Log("Could not parse the SubjectData from subjectId '" + stockSubjectId + "' : the situation doesn't exists");
+				Logging.Log("Could not parse the SubjectData from subjectId '" + stockSubjectId + "' : the situation doesn't exists");
 				return null;
 			}
 
@@ -694,7 +694,7 @@ namespace KERBALISM
 				// TODO : DMOS asteroid experiments are doing : "magScan@AsteroidInSpaceLowCarbonaceous7051371", those subjects will be discarded entirely here
 				// because the body "Asteroid" doesn't exists, consequently it's impossible to create the Situation object.
 				// To handle that, maybe we could implement a derived class "UnknownSituation" from Situation that can handle a completely random subject format
-				Lib.Log("Could not parse the SubjectData from subjectId '" + stockSubjectId + "' : the body '" + bodyAndBiome[0] + "' doesn't exist");
+				Logging.Log("Could not parse the SubjectData from subjectId '" + stockSubjectId + "' : the body '" + bodyAndBiome[0] + "' doesn't exist");
 				return null;
 			}
 
@@ -721,7 +721,7 @@ namespace KERBALISM
 							stockSubjects.Add(correctedSubjectId, RnDSubject);
 						}
 
-						Lib.Log("RnD subject load : misformatted subject '" + stockSubjectId + "' was corrected to '" + correctedSubjectId + "'");
+						Logging.Log("RnD subject load : misformatted subject '" + stockSubjectId + "' was corrected to '" + correctedSubjectId + "'");
 					}
 
 					if (subjectBody.BiomeMap.Attributes[i].name.Replace(" ", string.Empty).Equals(sanitizedBiome, StringComparison.OrdinalIgnoreCase))

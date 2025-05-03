@@ -15,61 +15,6 @@ namespace KERBALISM
 	{
 		#region UTILS
 
-		internal enum LogLevel
-		{
-			Message,
-			Warning,
-			Error
-		}
-
-		static void Log(MethodBase method, string message, LogLevel level)
-		{
-			switch (level)
-			{
-				default:
-					UnityEngine.Debug.Log(string.Format("[Kerbalism] {0}.{1} {2}", method.ReflectedType.Name, method.Name, message));
-					return;
-				case LogLevel.Warning:
-					UnityEngine.Debug.LogWarning(string.Format("[Kerbalism] {0}.{1} {2}", method.ReflectedType.Name, method.Name, message));
-					return;
-				case LogLevel.Error:
-					UnityEngine.Debug.LogError(string.Format("[Kerbalism] {0}.{1} {2}", method.ReflectedType.Name, method.Name, message));
-					return;
-			}
-		}
-
-		///<summary>write a message to the log</summary>
-		internal static void Log(string message, LogLevel level = LogLevel.Message, params object[] param)
-		{
-			StackTrace stackTrace = new StackTrace();
-			Log(stackTrace.GetFrame(1).GetMethod(), string.Format(message, param), level);
-		}
-
-		///<summary>write a message and the call stack to the log</summary>
-		internal static void LogStack(string message, LogLevel level = LogLevel.Message, params object[] param)
-		{
-			StackTrace stackTrace = new StackTrace();
-			Log(stackTrace.GetFrame(1).GetMethod(), string.Format(message, param), level);
-			UnityEngine.Debug.Log(stackTrace);
-		}
-
-		///<summary>write a message to the log, only on DEBUG and DEVBUILD builds</summary>
-		[Conditional("DEBUG"), Conditional("DEVBUILD")]
-		internal static void LogDebug(string message, LogLevel level = LogLevel.Message, params object[] param)
-		{
-			StackTrace stackTrace = new StackTrace();
-			Log(stackTrace.GetFrame(1).GetMethod(), string.Format(message, param), level);
-		}
-
-		///<summary>write a message and the full call stack to the log, only on DEBUG and DEVBUILD builds</summary>
-		[Conditional("DEBUG"), Conditional("DEVBUILD")]
-		internal static void LogDebugStack(string message, LogLevel level = LogLevel.Message, params object[] param)
-		{
-			StackTrace stackTrace = new StackTrace();
-			Log(stackTrace.GetFrame(1).GetMethod(), string.Format(message, param), level);
-			UnityEngine.Debug.Log(stackTrace);
-		}
-
 		/// <summary> This constant is being set by the build system when a dev release is requested</summary>
 #if DEVBUILD
 		internal static bool IsDevBuild => true ;
@@ -107,7 +52,7 @@ namespace KERBALISM
 				{
 					AssemblyLoader.LoadedAssembly bootstrap = AssemblyLoader.loadedAssemblies.FirstOrDefault(p => p.name == "KerbalismBootstrap");
 					if (bootstrap != null && bootstrap.assembly != null) kerbalismDevBuild = bootstrap.assembly.GetName().Version.Build;
-					else Lib.Log("This is a dev build but KerbalismBootstrap wasn't found!", Lib.LogLevel.Error);
+					else Logging.Log("This is a dev build but KerbalismBootstrap wasn't found!", Logging.LogLevel.Error);
 				}
 				return kerbalismDevBuild;
 			}
@@ -185,7 +130,7 @@ namespace KERBALISM
 			}
 			catch (Exception e)
 			{
-				Log("error while looking for directory '" + findpath + "' in 'GameData' directory. (" + e.Message + ")");
+				Logging.Log("error while looking for directory '" + findpath + "' in 'GameData' directory. (" + e.Message + ")");
 				return false;
 			}
 		}
@@ -872,7 +817,7 @@ namespace KERBALISM
 				if (info.IsValid)
 					resourceUnitInfos[info.Name.GetHashCode()] = info;
 			}
-			//Lib.Log("ResourceUnitInfo: Loaded " + resourceUnitInfos.Count + " infos from " + defs.Length + " nodes.");
+			//Logging.Log("ResourceUnitInfo: Loaded " + resourceUnitInfos.Count + " infos from " + defs.Length + " nodes.");
 		}
 
 		internal static ResourceUnitInfo GetResourceUnitInfo(PartResourceDefinition res)
@@ -1667,7 +1612,7 @@ namespace KERBALISM
 				}
 			}
 
-			Log("The node " + node.name + " is not valid.");
+			Logging.Log("The node " + node.name + " is not valid.");
 			return null;
 		}
 
@@ -1984,18 +1929,18 @@ namespace KERBALISM
 			bool ignoreSkinnedMeshes = false,
 			Transform rootTransform = null)
 		{
-			if (logAll) Log($"====== Volume and surface evaluation for part :{part.name} ======");
+			if (logAll) Logging.Log($"====== Volume and surface evaluation for part :{part.name} ======");
 
 			if (rootTransform == null) rootTransform = part.transform;
 
 			PartVolumeAndSurfaceInfo results = new PartVolumeAndSurfaceInfo();
 
-			if (logAll) Lib.Log("Searching for meshes...");
+			if (logAll) Logging.Log("Searching for meshes...");
 			List<MeshInfo> meshInfos = GetPartMeshesVolumeAndSurface(rootTransform, ignoreSkinnedMeshes);
 			int usedMeshCount = GetMeshesTotalVolumeAndSurface(meshInfos, out results.meshVolume, out results.meshSurface, logAll);
 
 
-			if (logAll) Lib.Log("Searching for colliders...");
+			if (logAll) Logging.Log("Searching for colliders...");
 			// Note that we only account for mesh colliders and ignore any box/sphere/capsule collider because :
 			// - they usually are used as an array of overlapping box colliders, giving very unreliable results
 			// - they are often used for hollow geometry like trusses
@@ -2078,12 +2023,12 @@ namespace KERBALISM
 
 				results.GetUsingBestMethod(out double volume, out double surface, true);
 
-				Log($"Evaluation results :");
-				Log($"Bounds method :   Volume:{results.boundsVolume.ToString("0.00m3")} - Surface:{results.boundsSurface.ToString("0.00m2")} - Max valid volume:{(results.boundsVolume * validityFactor).ToString("0.00m3")}");
-				Log($"Collider method : Volume:{results.colliderVolume.ToString("0.00m3")} - Surface:{results.colliderSurface.ToString("0.00m2")} - Raw volume:{rawColliderVolume.ToString("0.00m3")} - Raw surface:{rawColliderSurface.ToString("0.00m2")} - Meshes: {usedCollidersCount}/{colliderCount} (valid/raw)");
-				Log($"Mesh method :     Volume:{results.meshVolume.ToString("0.00m3")} - Surface:{results.meshSurface.ToString("0.00m2")} - Raw volume:{rawMeshVolume.ToString("0.00m3")} - Raw surface:{rawMeshSurface.ToString("0.00m2")} - Meshes: {usedMeshCount}/{meshCount} (valid/raw)");
-				Log($"Attach nodes surface : {results.attachNodesSurface.ToString("0.00m2")}");
-				Log($"Returned result : Volume:{volume.ToString("0.00m3")} - Surface:{surface.ToString("0.00m2")} - Method used : {results.bestMethod.ToString()}");
+				Logging.Log($"Evaluation results :");
+				Logging.Log($"Bounds method :   Volume:{results.boundsVolume.ToString("0.00m3")} - Surface:{results.boundsSurface.ToString("0.00m2")} - Max valid volume:{(results.boundsVolume * validityFactor).ToString("0.00m3")}");
+				Logging.Log($"Collider method : Volume:{results.colliderVolume.ToString("0.00m3")} - Surface:{results.colliderSurface.ToString("0.00m2")} - Raw volume:{rawColliderVolume.ToString("0.00m3")} - Raw surface:{rawColliderSurface.ToString("0.00m2")} - Meshes: {usedCollidersCount}/{colliderCount} (valid/raw)");
+				Logging.Log($"Mesh method :     Volume:{results.meshVolume.ToString("0.00m3")} - Surface:{results.meshSurface.ToString("0.00m2")} - Raw volume:{rawMeshVolume.ToString("0.00m3")} - Raw surface:{rawMeshSurface.ToString("0.00m2")} - Meshes: {usedMeshCount}/{meshCount} (valid/raw)");
+				Logging.Log($"Attach nodes surface : {results.attachNodesSurface.ToString("0.00m2")}");
+				Logging.Log($"Returned result : Volume:{volume.ToString("0.00m3")} - Surface:{surface.ToString("0.00m2")} - Method used : {results.bestMethod.ToString()}");
 			}
 
 			return results;
@@ -2126,7 +2071,7 @@ namespace KERBALISM
 
 				if (meshInfo.volume < minMeshVolume)
 				{
-					if (logAll) Lib.Log($"Found {meshInfo.ToString()} - INTERSECTED VOLUME={intersectedVolume.ToString("0.00m3")} - Mesh rejected : too small");
+					if (logAll) Logging.Log($"Found {meshInfo.ToString()} - INTERSECTED VOLUME={intersectedVolume.ToString("0.00m3")} - Mesh rejected : too small");
 					continue;
 				}
 
@@ -2134,11 +2079,11 @@ namespace KERBALISM
 				// always accept the first mesh (since it's the largest, we can assume it's other meshes that intersect it)
 				if (i > 0 && intersectedVolume / meshInfo.boundsVolume > 0.75)
 				{
-					if (logAll) Lib.Log($"Found {meshInfo.ToString()} - INTERSECTED VOLUME={intersectedVolume.ToString("0.00m3")} - Mesh rejected : it is inside another mesh");
+					if (logAll) Logging.Log($"Found {meshInfo.ToString()} - INTERSECTED VOLUME={intersectedVolume.ToString("0.00m3")} - Mesh rejected : it is inside another mesh");
 					continue;
 				}
 
-				if (logAll) Lib.Log($"Found {meshInfo.ToString()} - INTERSECTED VOLUME={intersectedVolume.ToString("0.00m3")} - Mesh accepted");
+				if (logAll) Logging.Log($"Found {meshInfo.ToString()} - INTERSECTED VOLUME={intersectedVolume.ToString("0.00m3")} - Mesh accepted");
 				usedMeshesCount++;
 				volume += meshInfo.volume;
 
@@ -2526,7 +2471,7 @@ namespace KERBALISM
 			// if the resource is not known, log a warning and do nothing
 			if (!reslib.Contains(res_name))
 			{
-				Lib.Log(Lib.BuildString("error while adding ", res_name, ": the resource doesn't exist"), Lib.LogLevel.Error);
+				Logging.Log(Lib.BuildString("error while adding ", res_name, ": the resource doesn't exist"), Logging.LogLevel.Error);
 				return null;
 			}
 			var resourceDefinition = reslib[res_name];
@@ -2608,7 +2553,7 @@ namespace KERBALISM
 			// if the resource is not in the part, log a warning and do nothing
 			if (!p.Resources.Contains( res_name ))
 			{
-				Lib.Log( Lib.BuildString( "error while setting capacity for ", res_name, ": the resource is not in the part" ), Lib.LogLevel.Error);
+				Logging.Log( Lib.BuildString( "error while setting capacity for ", res_name, ": the resource is not in the part" ), Logging.LogLevel.Error);
 				return;
 			}
 
@@ -2624,7 +2569,7 @@ namespace KERBALISM
 			// if the resource is not in the part, log a warning and do nothing
 			if (!p.Resources.Contains( res_name ))
 			{
-				Lib.Log( Lib.BuildString( "error while setting capacity for ", res_name, ": the resource is not in the part" ), Lib.LogLevel.Error);
+				Logging.Log( Lib.BuildString( "error while setting capacity for ", res_name, ": the resource is not in the part" ), Logging.LogLevel.Error);
 				return;
 			}
 
@@ -2644,7 +2589,7 @@ namespace KERBALISM
 				var res = p.Resources[res_name];
 				res.flowState = enable;
 			} else {
-				Lib.LogDebugStack("Resource " + res_name + " not in part " + p.name);
+				Logging.LogDebugStack("Resource " + res_name + " not in part " + p.name);
 			}
 		}
 
@@ -2658,7 +2603,7 @@ namespace KERBALISM
 				res.amount = res.maxAmount;
 			}
 			else {
-				Lib.LogDebugStack("Resource " + res_name + " not in part " + p.name); }
+				Logging.LogDebugStack("Resource " + res_name + " not in part " + p.name); }
 		}
 
 		/// <summary> Sets the amount of a resource in the specified part to zero </summary>
@@ -2668,7 +2613,7 @@ namespace KERBALISM
 			if (p.Resources.Contains(res_name))
 				p.Resources[res_name].amount = 0.0;
 			else {
-				Lib.LogDebugStack("Resource " + res_name + " not in part " + p.name); }
+				Logging.LogDebugStack("Resource " + res_name + " not in part " + p.name); }
 		}
 
 		/// <summary> Set the enabled/disabled state of a process
@@ -3006,7 +2951,7 @@ namespace KERBALISM
 			}
 			catch (Exception e)
 			{
-				Lib.Log( "error while trying to parse '" + key + "' from " + cfg.name + " (" + e.Message + ")", Lib.LogLevel.Warning);
+				Logging.Log( "error while trying to parse '" + key + "' from " + cfg.name + " (" + e.Message + ")", Logging.LogLevel.Warning);
 				return def_value;
 			}
 		}
@@ -3020,7 +2965,7 @@ namespace KERBALISM
 			}
 			catch (Exception e)
 			{
-				Lib.Log( "invalid enum in '" + key + "' from " + cfg.name + " (" + e.Message + ")", Lib.LogLevel.Warning);
+				Logging.Log( "invalid enum in '" + key + "' from " + cfg.name + " (" + e.Message + ")", Logging.LogLevel.Warning);
 				return def_value;
 			}
 		}

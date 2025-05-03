@@ -29,7 +29,7 @@ namespace KERBALISM
 				}
 				catch (Exception e)
 				{
-					Lib.Log("failed to load rule\n" + e.ToString(), Lib.LogLevel.Warning);
+					Logging.Log("failed to load rule\n" + e.ToString(), Logging.LogLevel.Warning);
 				}
 			}
 
@@ -50,7 +50,7 @@ namespace KERBALISM
 				}
 				catch (Exception e)
 				{
-					Lib.Log("failed to load supply\n" + e.ToString(), Lib.LogLevel.Warning);
+					Logging.Log("failed to load supply\n" + e.ToString(), Logging.LogLevel.Warning);
 				}
 			}
 
@@ -71,7 +71,7 @@ namespace KERBALISM
 				}
 				catch (Exception e)
 				{
-					Lib.Log("failed to load process\n" + e.ToString(), Lib.LogLevel.Warning);
+					Logging.Log("failed to load process\n" + e.ToString(), Logging.LogLevel.Warning);
 				}
 			}
 		}
@@ -96,7 +96,7 @@ namespace KERBALISM
 					if (Lib.GameDirectoryExist(moddir))
 					{
 						// log profile and mod name
-						Lib.Log(Lib.BuildString("importing Kerbalism Support profile for mod: ", modname));
+						Logging.Log(Lib.BuildString("importing Kerbalism Support profile for mod: ", modname));
 
 						// parse nodes
 						Nodeparse(profile_node);
@@ -126,7 +126,7 @@ namespace KERBALISM
 					if (name == Settings.Profile)
 					{
 						// log profile name
-						Lib.Log(Lib.BuildString("using profile: ", Settings.Profile));
+						Logging.Log(Lib.BuildString("using profile: ", Settings.Profile));
 
 						// parse nodes
 						Nodeparse(profile_node);
@@ -135,22 +135,22 @@ namespace KERBALISM
 						ParseSupport();
 
 						// log info
-						Lib.Log("supplies:");
-						foreach (Supply supply in supplies) Lib.Log(Lib.BuildString("- ", supply.resource));
-						if (supplies.Count == 0) Lib.Log("- none");
-						Lib.Log("rules:");
-						foreach (Rule rule in rules) Lib.Log(Lib.BuildString("- ", rule.name));
-						if (rules.Count == 0) Lib.Log("- none");
-						Lib.Log("processes:");
-						foreach (Process process in processes) Lib.Log(Lib.BuildString("- ", process.name));
-						if (processes.Count == 0) Lib.Log("- none");
+						Logging.Log("supplies:");
+						foreach (Supply supply in supplies) Logging.Log(Lib.BuildString("- ", supply.resource));
+						if (supplies.Count == 0) Logging.Log("- none");
+						Logging.Log("rules:");
+						foreach (Rule rule in rules) Logging.Log(Lib.BuildString("- ", rule.name));
+						if (rules.Count == 0) Logging.Log("- none");
+						Logging.Log("processes:");
+						foreach (Process process in processes) Logging.Log(Lib.BuildString("- ", process.name));
+						if (processes.Count == 0) Logging.Log("- none");
 
 						// we are done here
 						return;
 					}
 				}
 				// if we reach this point, the profile was not found
-				Lib.Log(Lib.BuildString("profile '", Settings.Profile, "' was not found"), Lib.LogLevel.Warning);
+				Logging.Log(Lib.BuildString("profile '", Settings.Profile, "' was not found"), Logging.LogLevel.Warning);
 			}
 		}
 

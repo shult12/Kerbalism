@@ -46,11 +46,11 @@ namespace KERBALISM
 
 
 #if DEBUG_RADIATION
-					Lib.Log("Storm on " + body + " will start in " + Lib.HumanReadableDuration(bd.storm_time - now) + " and last for " + Lib.HumanReadableDuration(bd.storm_duration));
+					Logging.Log("Storm on " + body + " will start in " + Lib.HumanReadableDuration(bd.storm_time - now) + " and last for " + Lib.HumanReadableDuration(bd.storm_duration));
 				}
 				else
 				{
-					Lib.Log("No storm on " + body + ", will retry in " + Lib.HumanReadableDuration(bd.storm_generation - now));
+					Logging.Log("No storm on " + body + ", will retry in " + Lib.HumanReadableDuration(bd.storm_generation - now));
 #endif
                 }
             }

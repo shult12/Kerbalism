@@ -17,7 +17,7 @@ namespace KERBALISM
 
 		protected void ToggleActions(PartModule partModule, bool value)
 		{
-			Lib.LogDebugStack("Part '{0}'.'{1}', setting actions to {2}", Lib.LogLevel.Message, partModule.part.partInfo.title, partModule.moduleName, value ? "ON" : "OFF");
+			Logging.LogDebugStack("Part '{0}'.'{1}', setting actions to {2}", Logging.LogLevel.Message, partModule.part.partInfo.title, partModule.moduleName, value ? "ON" : "OFF");
 			foreach (BaseAction ac in partModule.Actions)
 			{
 				ac.active = value;

@@ -328,7 +328,7 @@ namespace KERBALISM
 			UnityEngine.Profiling.Profiler.EndSample();
 
 			double sunFactor = (double)sunSamples / (double)sampleCount;
-			//Lib.Log("Vessel " + v + " sun factor: " + sunFactor + " " + sunSamples + "/" + sampleCount + " #s=" + sampleCount + " e=" + elapsedSeconds + " step=" + stepLength);
+			//Logging.Log("Vessel " + v + " sun factor: " + sunFactor + " " + sunSamples + "/" + sampleCount + " #s=" + sampleCount + " e=" + elapsedSeconds + " step=" + stepLength);
 			return sunFactor;
 		}
 
@@ -1208,7 +1208,7 @@ namespace KERBALISM
 				// exponent = log_strengthAt2AU(dataRate / baseRate)
 				dampingExponent = Math.Log(desiredRateAt2AU / baseRate, strengthAt2AU);
 
-				Lib.Log($"Calculated DataRateDampingExponent: {dampingExponent.ToString("F4")} (max. DSN range: {maxDsnRange.ToString("F0")}, strength at 2 AU: {strengthAt2AU.ToString("F3")})");
+				Logging.Log($"Calculated DataRateDampingExponent: {dampingExponent.ToString("F4")} (max. DSN range: {maxDsnRange.ToString("F0")}, strength at 2 AU: {strengthAt2AU.ToString("F3")})");
 
 				return dampingExponent;
 			}

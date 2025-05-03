@@ -26,7 +26,7 @@ namespace KERBALISM
 
 		internal override void GUI_Update(bool isEnabled)
 		{
-			Lib.LogDebugStack("Buttons is '{0}' for '{1}' landingGear", Lib.LogLevel.Message, (isEnabled == true ? "ON" : "OFF"), landingGear.part.partInfo.title);
+			Logging.LogDebugStack("Buttons is '{0}' for '{1}' landingGear", Logging.LogLevel.Message, (isEnabled == true ? "ON" : "OFF"), landingGear.part.partInfo.title);
 			landingGear.Events["EventToggle"].active = isEnabled;
 		}
 

@@ -261,7 +261,7 @@ namespace KERBALISM
 						// key/value requirements
 						if (!Enum.IsDefined(typeof(Require), reqString[0]))
 						{
-							Lib.Log("Could not parse the experiment requires '" + s + "'", Lib.LogLevel.Warning);
+							Logging.Log("Could not parse the experiment requires '" + s + "'", Logging.LogLevel.Warning);
 							continue;
 						}
 						Require reqEnum = (Require)Enum.Parse(typeof(Require), reqString[0]);
@@ -275,7 +275,7 @@ namespace KERBALISM
 						// boolean condition, no value
 						if (!Enum.IsDefined(typeof(Require), reqString[0]))
 						{
-							Lib.Log("Could not parse the experiment requires '" + s + "'", Lib.LogLevel.Warning);
+							Logging.Log("Could not parse the experiment requires '" + s + "'", Logging.LogLevel.Warning);
 							continue;
 						}
 						Require reqEnum = (Require)Enum.Parse(typeof(Require), reqString[0]);

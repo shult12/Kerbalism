@@ -62,7 +62,7 @@ namespace KERBALISM
 
 		void Init()
 		{
-			Lib.Log("Science Archive init started");
+			Logging.Log("Science Archive init started");
 
 			window = new KsmGuiWindow(
 				KsmGuiWindow.LayoutGroupType.Vertical,
@@ -127,7 +127,7 @@ namespace KERBALISM
 
 			//window.RebuildLayout();
 			window.Close();
-			Lib.Log("Science Archive init done");
+			Logging.Log("Science Archive init done");
 		}
 
 		static void Update()

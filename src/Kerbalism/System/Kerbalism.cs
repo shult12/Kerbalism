@@ -142,7 +142,7 @@ namespace KERBALISM
 						fatalError += "\n\n";
 
 					fatalError += "FATAL ERROR : Kerbalism core init has failed :" + "\n" + e.ToString();
-					Lib.Log(fatalError, Lib.LogLevel.Error);
+					Logging.Log(fatalError, Logging.LogLevel.Error);
 					LoadFailedPopup(fatalError);
 				}
 
@@ -171,7 +171,7 @@ namespace KERBALISM
 				catch (Exception e)
 				{
 					string fatalError = "FATAL ERROR : Kerbalism save game init has failed :" + "\n" + e.ToString();
-					Lib.Log(fatalError, Lib.LogLevel.Error);
+					Logging.Log(fatalError, Logging.LogLevel.Error);
 					LoadFailedPopup(fatalError);
 				}
 
@@ -202,7 +202,7 @@ namespace KERBALISM
 			catch (Exception e)
 			{
 				string fatalError = "FATAL ERROR : Kerbalism save game load has failed :" + "\n" + e.ToString();
-				Lib.Log(fatalError, Lib.LogLevel.Error);
+				Logging.Log(fatalError, Logging.LogLevel.Error);
 				LoadFailedPopup(fatalError);
 			}
 
@@ -589,7 +589,7 @@ namespace KERBALISM
 
 			ScreenMessages.PostScreenMessage(sm);
 			ScreenMessages.PostScreenMessage(msg, true);
-			Lib.Log("Sanity check: " + msg);
+			Logging.Log("Sanity check: " + msg);
 		}
 	}
 
@@ -852,7 +852,7 @@ namespace KERBALISM
 					}
 					catch (Exception ex)
 					{
-						Lib.Log("Could not patch the moduleInfo for part " + ap.name + " - " + ex.Message + "\n" + ex.StackTrace);
+						Logging.Log("Could not patch the moduleInfo for part " + ap.name + " - " + ex.Message + "\n" + ex.StackTrace);
 					}
 				}
 			}

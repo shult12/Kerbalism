@@ -72,7 +72,7 @@ namespace KERBALISM
 			}
 			else if (hasEnergyChanged != hasEnergy)
 			{
-				Lib.LogDebugStack("Energy state has changed: {0}", Lib.LogLevel.Message, hasEnergy);
+				Logging.LogDebugStack("Energy state has changed: {0}", Logging.LogLevel.Message, hasEnergy);
 
 				hasEnergyChanged = hasEnergy;
 				lastBrokenState = false;
@@ -132,7 +132,7 @@ namespace KERBALISM
 			}
 			catch (Exception e)
 			{
-				Lib.Log("'" + part.partInfo.title + "' : " + e.Message);
+				Logging.Log("'" + part.partInfo.title + "' : " + e.Message);
 			}
 			actualCost = extra_Deploy;
 			return true;
@@ -151,7 +151,7 @@ namespace KERBALISM
 			}
 			catch (Exception e)
 			{
-				Lib.Log("'" + part.partInfo.title + "' : " + e.Message);
+				Logging.Log("'" + part.partInfo.title + "' : " + e.Message);
 			}
 		}
 
@@ -168,7 +168,7 @@ namespace KERBALISM
 			}
 			catch (Exception e)
 			{
-				Lib.Log("'" + part.partInfo.title + "' : " + e.Message);
+				Logging.Log("'" + part.partInfo.title + "' : " + e.Message);
 			}
 		}
 
@@ -182,14 +182,14 @@ namespace KERBALISM
 			}
 			catch (Exception e)
 			{
-				Lib.Log("'" + part.partInfo.title + "' : " + e.Message);
+				Logging.Log("'" + part.partInfo.title + "' : " + e.Message);
 			}
 			*/
 		}
 
 		void ToggleActions(PartModule partModule, bool value)
 		{
-			//Lib.LogDebugStack("Part '{0}'.'{1}', setting actions to {2}", partModule.part.partInfo.title, partModule.moduleName, value ? "ON" : "OFF");
+			//Logging.LogDebugStack("Part '{0}'.'{1}', setting actions to {2}", partModule.part.partInfo.title, partModule.moduleName, value ? "ON" : "OFF");
 			foreach (BaseAction ac in partModule.Actions)
 			{
 				ac.active = value;

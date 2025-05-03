@@ -20,9 +20,9 @@ namespace KERBALISM
 			empty_message = Lib.ConfigValue(node, "empty_message", string.Empty);
 			refill_message = Lib.ConfigValue(node, "refill_message", string.Empty);
 
-			if (low_message.Length > 0 && low_message[0] == '#') Lib.Log("Broken translation: " + low_message);
-			if (empty_message.Length > 0 && empty_message[0] == '#') Lib.Log("Broken translation: " + empty_message);
-			if (refill_message.Length > 0 && refill_message[0] == '#') Lib.Log("Broken translation: " + refill_message);
+			if (low_message.Length > 0 && low_message[0] == '#') Logging.Log("Broken translation: " + low_message);
+			if (empty_message.Length > 0 && empty_message[0] == '#') Logging.Log("Broken translation: " + empty_message);
+			if (refill_message.Length > 0 && refill_message[0] == '#') Logging.Log("Broken translation: " + refill_message);
 
 			// check that resource is specified
 			if (resource.Length == 0) throw new Exception("skipping resource-less supply");

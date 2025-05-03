@@ -34,7 +34,7 @@ namespace KERBALISM
 							catch (Exception)
 							{
 								deepFreezeIsInstalled = false;
-								Lib.Log("DeepFreeze is installed but the CustomParameterNode type wasn't found, make sure the \"Unloaded Vessel Processing\" DeepFreeze difficulty setting is disabled", Lib.LogLevel.Warning);
+								Logging.Log("DeepFreeze is installed but the CustomParameterNode type wasn't found, make sure the \"Unloaded Vessel Processing\" DeepFreeze difficulty setting is disabled", Logging.LogLevel.Warning);
 							}
 						}
 						else if (a.name == "TacLifeSupport")
@@ -47,7 +47,7 @@ namespace KERBALISM
 							catch (Exception)
 							{
 								taclsIsInstalled = false;
-								Lib.Log("TAC-LS is installed but the CustomParameterNode type wasn't found, make sure the \"Unloaded Vessel Processing\" TAC-LS difficulty setting is disabled", Lib.LogLevel.Warning);
+								Logging.Log("TAC-LS is installed but the CustomParameterNode type wasn't found, make sure the \"Unloaded Vessel Processing\" TAC-LS difficulty setting is disabled", Logging.LogLevel.Warning);
 							}
 						}
 					}
@@ -79,7 +79,7 @@ namespace KERBALISM
 					}
 					catch (Exception)
 					{
-						Lib.Log("DeepFreeze is installed but couldn't disable BackgroundResources, make sure the \"Unloaded Vessel Processing\" DeepFreeze difficulty setting is disabled", Lib.LogLevel.Warning);
+						Logging.Log("DeepFreeze is installed but couldn't disable BackgroundResources, make sure the \"Unloaded Vessel Processing\" DeepFreeze difficulty setting is disabled", Logging.LogLevel.Warning);
 					}
 				}
 
@@ -98,7 +98,7 @@ namespace KERBALISM
 					}
 					catch (Exception)
 					{
-						Lib.Log("TAC-LS is installed but we couldn't disable BackgroundResources, make sure the \"Unloaded Vessel Processing\" TAC-LS difficulty setting is disabled", Lib.LogLevel.Warning);
+						Logging.Log("TAC-LS is installed but we couldn't disable BackgroundResources, make sure the \"Unloaded Vessel Processing\" TAC-LS difficulty setting is disabled", Logging.LogLevel.Warning);
 					}
 				}
 

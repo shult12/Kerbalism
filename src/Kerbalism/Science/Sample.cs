@@ -32,7 +32,7 @@ namespace KERBALISM
 
 			if (double.IsNaN(size))
 			{
-				Lib.LogStack($"Sample has a NaN size on creation : {subjectData.DebugStateInfo}", Lib.LogLevel.Error);
+				Logging.LogStack($"Sample has a NaN size on creation : {subjectData.DebugStateInfo}", Logging.LogLevel.Error);
 				this.size = 0.0;
 			}
 
@@ -61,7 +61,7 @@ namespace KERBALISM
 			double size = Lib.ConfigValue(node, "size", 0.0);
 			if (double.IsNaN(size))
 			{
-				Lib.LogStack($"Sample has a NaN size on load : {subjectData.DebugStateInfo}", Lib.LogLevel.Error);
+				Logging.LogStack($"Sample has a NaN size on load : {subjectData.DebugStateInfo}", Logging.LogLevel.Error);
 				return null;
 			}
 
@@ -87,7 +87,7 @@ namespace KERBALISM
 			double size = Lib.ConfigValue(node, "size", 0.0);
 			if (double.IsNaN(size))
 			{
-				Lib.LogStack($"Sample has a NaN size on load : {subjectData.DebugStateInfo}", Lib.LogLevel.Error);
+				Logging.LogStack($"Sample has a NaN size on load : {subjectData.DebugStateInfo}", Logging.LogLevel.Error);
 				return null;
 			}
 
