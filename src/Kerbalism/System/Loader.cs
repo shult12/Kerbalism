@@ -113,7 +113,7 @@ namespace KERBALISM
 		{
 			ConfigNode fakeNode = new ConfigNode();
 
-			foreach (KeyValuePair<string, Lib.PartVolumeAndSurfaceInfo> habInfo in Habitat.habitatDatabase)
+			foreach (KeyValuePair<string, Habitat.PartVolumeAndSurfaceInfo> habInfo in Habitat.habitatDatabase)
 			{
 				ConfigNode node = new ConfigNode(Habitat.habitatDataCacheNodeName);
 				node.AddValue("partName", habInfo.Key.Replace('.', '_'));
