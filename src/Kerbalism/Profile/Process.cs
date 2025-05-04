@@ -28,7 +28,7 @@ namespace KERBALISM
 				List<string> tok = Lib.Tokenize(input, '@');
 				if (tok.Count != 2) throw new Exception("malformed input on process " + name);
 				string input_res = tok[0];
-				double input_rate = Lib.Parse.ToDouble(tok[1]);
+				double input_rate = Parse.ToDouble(tok[1]);
 
 				// check that resource is specified
 				if (input_res.Length == 0)
@@ -49,7 +49,7 @@ namespace KERBALISM
 				List<string> tok = Lib.Tokenize(output, '@');
 				if (tok.Count != 2) throw new Exception("malformed output on process " + name);
 				string output_res = tok[0];
-				double output_rate = Lib.Parse.ToDouble(tok[1]);
+				double output_rate = Parse.ToDouble(tok[1]);
 
 				// check that resource is specified
 				if (output_res.Length == 0)
@@ -70,7 +70,7 @@ namespace KERBALISM
 				List<string> tok = Lib.Tokenize(output, '@');
 				if (tok.Count != 2) throw new Exception("malformed cure on process " + name);
 				string cure = tok[0];
-				double cure_rate = Lib.Parse.ToDouble(tok[1]);
+				double cure_rate = Parse.ToDouble(tok[1]);
 
 				// check that resource is specified
 				if (cure.Length == 0) throw new Exception("skipping resource-less process " + name);

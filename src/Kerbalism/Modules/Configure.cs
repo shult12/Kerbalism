@@ -248,8 +248,8 @@ namespace KERBALISM
 					double unit_cost = reslib[cr.name].unitCost;
 
 					// parse resource amount and capacity
-					double amount = Lib.Parse.ToDouble(cr.amount);
-					double capacity = Lib.Parse.ToDouble(cr.maxAmount);
+					double amount = Parse.ToDouble(cr.amount);
+					double capacity = Parse.ToDouble(cr.maxAmount);
 
 					// add/remove resource
 					if ((prev_active != (active && capacity > 0.0)) || (reconfigure_cs && initialized) || (count != prev_count))
@@ -755,7 +755,7 @@ namespace KERBALISM
 				foreach (ConfigureResource cr in visible_resources)
 				{
 					// add capacity info
-					details.Add(new Detail(Lib.GetResourceDisplayName(cr.name), Lib.Parse.ToDouble(cr.maxAmount).ToString("F2")));
+					details.Add(new Detail(Lib.GetResourceDisplayName(cr.name), Parse.ToDouble(cr.maxAmount).ToString("F2")));
 				}
 			}
 

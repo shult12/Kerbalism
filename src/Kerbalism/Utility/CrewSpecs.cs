@@ -44,7 +44,7 @@ namespace KERBALISM
 
 				var tokens = Lib.Tokenize(value, separator);
 				trait = tokens.Count > 0 ? tokens[0] : string.Empty;
-				level = tokens.Count > 1 ? Lib.Parse.ToUInt(tokens[1]) : 0;
+				level = tokens.Count > 1 ? Parse.ToUInt(tokens[1]) : 0;
 				enabled = true;
 				crewOnly = false;
 			}

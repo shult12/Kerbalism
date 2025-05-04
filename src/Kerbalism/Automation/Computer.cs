@@ -40,7 +40,7 @@ namespace KERBALISM
 			// load scripts
 			foreach (var script_node in node.GetNode("scripts").GetNodes())
 			{
-				scripts.Add((ScriptType)Lib.Parse.ToUInt(script_node.name), new Script(script_node));
+				scripts.Add((ScriptType)Parse.ToUInt(script_node.name), new Script(script_node));
 			}
 		}
 

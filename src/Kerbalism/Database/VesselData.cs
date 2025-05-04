@@ -793,7 +793,7 @@ namespace KERBALISM
 			scansat_id = new List<uint>();
 			foreach (string s in node.GetValues("scansat_id"))
 			{
-				scansat_id.Add(Lib.Parse.ToUInt(s));
+				scansat_id.Add(Parse.ToUInt(s));
 			}
 
 			ConfigNode partsNode = new ConfigNode();
@@ -802,7 +802,7 @@ namespace KERBALISM
 				foreach (ConfigNode partDataNode in partsNode.nodes)
 				{
 					PartData partData;
-					if (parts.TryGetValue(Lib.Parse.ToUInt(partDataNode.name), out partData))
+					if (parts.TryGetValue(Parse.ToUInt(partDataNode.name), out partData))
 						partData.Load(partDataNode);
 				}
 			}

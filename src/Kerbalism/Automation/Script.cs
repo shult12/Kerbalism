@@ -20,7 +20,7 @@ namespace KERBALISM
 			{
 				var tokens = Lib.Tokenize(s, '@');
 				if (tokens.Count != 2) continue;
-				states.Add(Lib.Parse.ToUInt(tokens[0]), Lib.Parse.ToBool(tokens[1]));
+				states.Add(Parse.ToUInt(tokens[0]), Parse.ToBool(tokens[1]));
 			}
 			prev = Lib.ConfigValue(node, "prev", string.Empty);
 		}

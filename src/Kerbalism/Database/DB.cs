@@ -78,7 +78,7 @@ namespace KERBALISM
 
 				foreach (var drive_node in node.GetNode("drives").GetNodes())
 				{
-					uint driveId = Lib.Parse.ToUInt(drive_node.name);
+					uint driveId = Parse.ToUInt(drive_node.name);
 					if (allParts.ContainsKey(driveId))
 					{
 						allParts[driveId].Drive = new Drive(drive_node);

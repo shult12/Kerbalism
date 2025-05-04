@@ -34,7 +34,7 @@ namespace KERBALISM
 		{
 			string s;
 			Load(out s);
-			value = Lib.Parse.ToDouble(s);
+			value = Parse.ToDouble(s);
 		}
 
 		string data;
