@@ -165,6 +165,12 @@
     <Compile Include="Modules\AntennaDataTransmitterRemoteTech.cs" />
     <Compile Include="Modules\KebalismSentinel.cs" />
     <Compile Include="Patches\RefillEVAPropellant.cs" />
+    <Compile Include="Resource\ResourceBalance.cs" />
+    <Compile Include="Resource\ResourceBroker.cs" />
+    <Compile Include="Resource\ResourceCache.cs" />
+    <Compile Include="Resource\ResourceInfo.cs" />
+    <Compile Include="Resource\ResourceRecipe.cs" />
+    <Compile Include="Resource\VesselResources.cs" />
     <Compile Include="Science\SubjectData.cs" />
     <Compile Include="Database\SupplyData.cs" />
     <Compile Include="Database\UIData.cs" />
@@ -260,7 +266,6 @@
     <Compile Include="Modules\Habitat.cs" />
     <Compile Include="Modules\PlannerController.cs" />
     <Compile Include="EVA.cs" />
-    <Compile Include="Resource.cs" />
     <Compile Include="Profile\Profile.cs" />
     <Compile Include="Profile\Supply.cs" />
     <Compile Include="Profile\Rule.cs" />
