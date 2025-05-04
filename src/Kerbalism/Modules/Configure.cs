@@ -197,7 +197,7 @@ namespace KERBALISM
 			// - we avoid corner case when cfg was never set up (because craft was never in VAB)
 			if (Lib.IsEditor() || selected.Count == 0)
 			{
-				while (selected.Count < Math.Min(slots, (uint)unlocked.Count))
+				while (selected.Count < System.Math.Min(slots, (uint)unlocked.Count))
 				{
 					selected.Add(unlocked.Find(k => selected.IndexOf(k.name) == -1).name);
 				}

@@ -44,13 +44,13 @@ namespace KERBALISM.Planner
 				switch (c.trait)
 				{
 					case "Engineer":
-						crew_engineer_maxlevel = Math.Max(crew_engineer_maxlevel, (uint)c.experienceLevel);
+						crew_engineer_maxlevel = System.Math.Max(crew_engineer_maxlevel, (uint)c.experienceLevel);
 						break;
 					case "Scientist":
-						crew_scientist_maxlevel = Math.Max(crew_scientist_maxlevel, (uint)c.experienceLevel);
+						crew_scientist_maxlevel = System.Math.Max(crew_scientist_maxlevel, (uint)c.experienceLevel);
 						break;
 					case "Pilot":
-						crew_pilot_maxlevel = Math.Max(crew_pilot_maxlevel, (uint)c.experienceLevel);
+						crew_pilot_maxlevel = System.Math.Max(crew_pilot_maxlevel, (uint)c.experienceLevel);
 						break;
 				}
 			}
@@ -96,7 +96,7 @@ namespace KERBALISM.Planner
 					if (m.moduleName == "Habitat")
 					{
 						Habitat h = m as Habitat;
-						max_pressure = Math.Min(max_pressure, h.max_pressure);
+						max_pressure = System.Math.Min(max_pressure, h.max_pressure);
 					}
 				}
 			}
@@ -226,13 +226,13 @@ namespace KERBALISM.Planner
 			}
 
 			// calculate high quality percentage
-			high_quality /= Math.Max(components, 1u);
+			high_quality /= System.Math.Max(components, 1u);
 		}
 
 		void Analyze_qol(List<Part> parts, ResourceSimulator sim, EnvironmentAnalyzer env)
 		{
 			// calculate living space factor
-			living_space = Lib.Clamp((volume / Math.Max(crew_count, 1u)) / PreferencesComfort.Instance.livingSpace, 0.1, 1.0);
+			living_space = Math.Clamp((volume / System.Math.Max(crew_count, 1u)) / PreferencesComfort.Instance.livingSpace, 0.1, 1.0);
 
 			// calculate comfort factor
 			comforts = new Comforts(parts, env.landed, crew_count > 1, has_comms);

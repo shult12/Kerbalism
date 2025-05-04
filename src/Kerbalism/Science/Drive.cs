@@ -147,7 +147,7 @@ namespace KERBALISM
 			foreach (var d in drives)
 			{
 				var available = d.FileCapacityAvailable();
-				var chunk = Math.Min(size, available);
+				var chunk = System.Math.Min(size, available);
 				if (!d.Record_file(subjectData, chunk, true))
 					break;
 				size -= chunk;
@@ -250,7 +250,7 @@ namespace KERBALISM
 				if (amount == 0.0)
 					amount = file.size;
 				else
-					amount = Math.Min(amount, file.size);
+					amount = System.Math.Min(amount, file.size);
 
 				file.size -= amount;
 
@@ -273,7 +273,7 @@ namespace KERBALISM
 				if (amount == 0.0)
 					amount = sample.size;
 				else
-					amount = Math.Min(amount, sample.size);
+					amount = System.Math.Min(amount, sample.size);
 
 				double massDelta = sample.mass * amount / sample.size;
 				sample.size -= amount;
@@ -309,7 +309,7 @@ namespace KERBALISM
 			List<SubjectData> filesList = new List<SubjectData>();
 			foreach (File file in files.Values)
 			{
-				double size = Math.Min(file.size, destination.FileCapacityAvailable());
+				double size = System.Math.Min(file.size, destination.FileCapacityAvailable());
 				if (destination.Record_file(file.subjectData, size, true, file.useStockCrediting))
 				{
 					file.size -= size;
@@ -338,7 +338,7 @@ namespace KERBALISM
 			List<SubjectData> samplesList = new List<SubjectData>();
 			foreach (Sample sample in samples.Values)
 			{
-				double size = Math.Min(sample.size, destination.SampleCapacityAvailable(sample.subjectData));
+				double size = System.Math.Min(sample.size, destination.SampleCapacityAvailable(sample.subjectData));
 				if (size < double.Epsilon)
 				{
 					result = false;
@@ -376,7 +376,7 @@ namespace KERBALISM
 		internal double FileCapacityAvailable()
 		{
 			if (dataCapacity < 0) return double.MaxValue;
-			return Math.Max(dataCapacity - FilesSize(), 0.0); // clamp to 0 due to fp precision in FilesSize()
+			return System.Math.Max(dataCapacity - FilesSize(), 0.0); // clamp to 0 due to fp precision in FilesSize()
 		}
 
 		internal double FilesSize()

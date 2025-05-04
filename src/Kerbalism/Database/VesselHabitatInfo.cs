@@ -95,7 +95,7 @@ namespace KERBALISM
 					// gives a very rough approximation of the thickness, assuming it's a cube.
 					// So a 40.000 kg fuel tank would be equivalent to 2.45m aluminium.
 
-					var thickness = Math.Pow(mass / 2699.0, 1.0 / 3.0);
+					var thickness = System.Math.Pow(mass / 2699.0, 1.0 / 3.0);
 
 					sunShieldingParts.Add(new SunShieldingPartData(hit.distance, thickness));
 				}
@@ -133,10 +133,10 @@ namespace KERBALISM
 					// However, what you lose in particle radiation you gain in gamma radiation (Bremsstrahlung)
 
 					var incomingRadiation = remainingRadiation;
-					remainingRadiation *= Math.Exp(shieldingInfo.thickness * linearAttenuation * -1);
+					remainingRadiation *= System.Math.Exp(shieldingInfo.thickness * linearAttenuation * -1);
 					var bremsstrahlung = incomingRadiation - remainingRadiation;
 
-					result += Radiation.DistanceRadiation(bremsstrahlung, Math.Max(1,shieldingInfo.distance)) / 10; //Gamma radiation has 1/10 the quality factor of SEP
+					result += Radiation.DistanceRadiation(bremsstrahlung, System.Math.Max(1,shieldingInfo.distance)) / 10; //Gamma radiation has 1/10 the quality factor of SEP
 				}
 
 				result += remainingRadiation;
@@ -154,7 +154,7 @@ namespace KERBALISM
 				habitats = Lib.FindModules<Habitat>(v);
 				maxPressure = 1.0;
 				foreach (var habitat in habitats)
-					maxPressure = Math.Min(maxPressure, habitat.max_pressure);
+					maxPressure = System.Math.Min(maxPressure, habitat.max_pressure);
 			}
 
 			if (!Features.Radiation || habitats.Count == 0)

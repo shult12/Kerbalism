@@ -73,7 +73,7 @@ namespace KERBALISM
 			}
 
 			// horizontal position : clamp to screen rect
-			float offset_x = Math.Max(0.0f, -tooltip_rect.xMin) + Math.Min(0.0f, screen_rect.width - tooltip_rect.xMax);
+			float offset_x = System.Math.Max(0.0f, -tooltip_rect.xMin) + System.Math.Min(0.0f, screen_rect.width - tooltip_rect.xMax);
 			tooltip_rect.xMin += offset_x;
 			tooltip_rect.xMax += offset_x;
 

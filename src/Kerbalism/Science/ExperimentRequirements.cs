@@ -350,7 +350,7 @@ namespace KERBALISM
 
 			double maxlevel = ScenarioUpgradeableFacilities.GetFacilityLevelCount(facility);
 			if (maxlevel <= 0) maxlevel = 2; // not sure why, but GetFacilityLevelCount return -1 in career
-			return (int)Math.Round(ScenarioUpgradeableFacilities.GetFacilityLevel(facility) * maxlevel + 1); // They start counting at 0
+			return (int)System.Math.Round(ScenarioUpgradeableFacilities.GetFacilityLevel(facility) * maxlevel + 1); // They start counting at 0
 		}
 
 		double TestAsteroidDistance(Vessel vessel)

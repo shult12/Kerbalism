@@ -120,7 +120,7 @@ namespace KERBALISM
 				if (rule.modifiers.Contains("radiation"))
 				{
 					RuleData rd = kd.rules[rule.name];
-					rd.problem = Math.Max(rd.problem + amount, 0.0);
+					rd.problem = System.Math.Max(rd.problem + amount, 0.0);
 				}
 			}
 		}
@@ -337,7 +337,7 @@ namespace KERBALISM
 		/// <param name="quality">Quality.</param>
 		public static void SetStormObservationQuality(float quality)
 		{
-			Storm.sun_observation_quality = Lib.Clamp(quality, 0.0f, 1.0f);
+			Storm.sun_observation_quality = Math.Clamp(quality, 0.0f, 1.0f);
 		}
 
 		// --- RELIABILITY ----------------------------------------------------------

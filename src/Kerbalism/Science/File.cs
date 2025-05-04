@@ -12,7 +12,7 @@ namespace KERBALISM
 		internal bool useStockCrediting;
 
 		//public double scienceValueRatio;
-		//public double ScienceMaxValue => Math.Max((subjectData.ScienceMaxValue * scienceValueRatio) - subjectData.ScienceRetrievedInKSC, 0.0);
+		//public double ScienceMaxValue => System.Math.Max((subjectData.ScienceMaxValue * scienceValueRatio) - subjectData.ScienceRetrievedInKSC, 0.0);
 		//public double SciencePerMB => subjectData.SciencePerMB * scienceValueRatio;
 
 		internal SubjectData subjectData;

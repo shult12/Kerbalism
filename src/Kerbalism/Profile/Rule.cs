@@ -52,7 +52,7 @@ namespace KERBALISM
 			{
 				var input_density = Lib.GetDefinition(input).density;
 				var output_density = Lib.GetDefinition(output).density;
-				ratio = Math.Min(input_density, output_density) > double.Epsilon ? input_density / output_density : 1.0;
+				ratio = System.Math.Min(input_density, output_density) > double.Epsilon ? input_density / output_density : 1.0;
 			}
 		}
 
@@ -99,7 +99,7 @@ namespace KERBALISM
 					rd.time_since += elapsed_s;
 
 					// determine number of intervals that has passed (can be 2 or more if elapsed_s > interval * 2)
-					step = Math.Floor(rd.time_since / interval);
+					step = System.Math.Floor(rd.time_since / interval);
 
 					// consume time
 					rd.time_since -= step * interval;
@@ -164,7 +164,7 @@ namespace KERBALISM
 					// else slowly recover
 					else
 					{
-						rd.problem *= 1.0 / (1.0 + Math.Max(interval, 1.0) * step * 0.002);
+						rd.problem *= 1.0 / (1.0 + System.Math.Max(interval, 1.0) * step * 0.002);
 					}
 				}
 
@@ -178,7 +178,7 @@ namespace KERBALISM
 
 					// stress level
 					double breakdown_probability = rd.problem / warning_threshold;
-					breakdown_probability = Lib.Clamp(breakdown_probability, 0.0, 1.0);
+					breakdown_probability = Math.Clamp(breakdown_probability, 0.0, 1.0);
 
 					// use the stupidity of a kerbal.
 					// however, nobody is perfect - not even a kerbal with a stupidity of 0.
@@ -266,7 +266,7 @@ namespace KERBALISM
 			double k = (double)Lib.Hash32(name + c.courage.ToString() + c.stupidity.ToString()) / (double)UInt32.MaxValue;
 
 			// move in [-1..+1] range
-			//k = Lib.Clamp(k * 2.0 - 1.0, -1.0, 1.0);
+			//k = Math.Clamp(k * 2.0 - 1.0, -1.0, 1.0);
 			k = k * 2.0 - 1.0;
 
 			// return kerbal-specific variance in range [1-n .. 1+n]

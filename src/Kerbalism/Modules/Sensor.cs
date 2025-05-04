@@ -75,11 +75,11 @@ namespace KERBALISM
 		{
 			switch (type)
 			{
-				case "temperature": return Math.Min(vd.EnvTemperature / 11000.0, 1.0);
-				case "radiation": return Math.Min(vd.EnvRadiation * 3600.0 / 11.0, 1.0);
-				case "habitat_radiation": return Math.Min(HabitatRadiation(vd) * 3600.0 / 11.0, 1.0);
-				case "pressure": return Math.Min(v.mainBody.GetPressure(v.altitude) / Sim.PressureAtSeaLevel() / 11.0, 1.0);
-				case "gravioli": return Math.Min(vd.EnvGravioli, 1.0);
+				case "temperature": return System.Math.Min(vd.EnvTemperature / 11000.0, 1.0);
+				case "radiation": return System.Math.Min(vd.EnvRadiation * 3600.0 / 11.0, 1.0);
+				case "habitat_radiation": return System.Math.Min(HabitatRadiation(vd) * 3600.0 / 11.0, 1.0);
+				case "pressure": return System.Math.Min(v.mainBody.GetPressure(v.altitude) / Sim.PressureAtSeaLevel() / 11.0, 1.0);
+				case "gravioli": return System.Math.Min(vd.EnvGravioli, 1.0);
 			}
 			return 0.0;
 		}

@@ -95,7 +95,7 @@ namespace KERBALISM
 			// regardless of level. efficiency will raise further with higher levels.
 			int bonus = engineer_cs.Bonus(crew, -2);
 			double crew_gain = 1 + bonus * Settings.HarvesterCrewLevelBonus;
-			crew_gain = Lib.Clamp(crew_gain, 1, Settings.MaxHarvesterBonus);
+			crew_gain = Math.Clamp(crew_gain, 1, Settings.MaxHarvesterBonus);
 
 			return harvester.rate * crew_gain * (abundance / harvester.abundance_rate);
 		}

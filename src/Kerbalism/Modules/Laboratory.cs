@@ -99,7 +99,7 @@ namespace KERBALISM
 					if(researcher_cs) {
 						int bonus = researcher_cs.Bonus(part.protoModuleCrew);
 						double crew_gain = 1 + bonus * Settings.LaboratoryCrewLevelBonus;
-						crew_gain = Lib.Clamp(crew_gain, 1, Settings.MaxLaborartoryBonus);
+						crew_gain = Math.Clamp(crew_gain, 1, Settings.MaxLaborartoryBonus);
 						rate *= crew_gain;
 					}
 
@@ -144,7 +144,7 @@ namespace KERBALISM
 					if(background_researcher_cs) {
 						int bonus = background_researcher_cs.Bonus(p.protoModuleCrew);
 						double crew_gain = 1 + bonus * Settings.LaboratoryCrewLevelBonus;
-						crew_gain = Lib.Clamp(crew_gain, 1, Settings.MaxLaborartoryBonus);
+						crew_gain = Math.Clamp(crew_gain, 1, Settings.MaxLaborartoryBonus);
 						rate *= crew_gain;
 					}
 
@@ -266,7 +266,7 @@ namespace KERBALISM
 			if(sample != null)
 			{
 				completed = amount > sample.size;
-				amount = Math.Min(amount, sample.size);
+				amount = System.Math.Min(amount, sample.size);
 			}
 
 			Drive fileDrive = Drive.FileDrive(v.KerbalismData(), amount);

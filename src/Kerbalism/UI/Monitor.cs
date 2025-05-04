@@ -160,7 +160,7 @@ namespace KERBALISM
 			h += panel.Height();
 
 			// clamp to screen height
-			return Math.Min(h, Screen.height * 0.75f);
+			return System.Math.Min(h, Screen.height * 0.75f);
 		}
 
 		bool Filter_match(Vessel vessel, string tags)
@@ -441,14 +441,14 @@ namespace KERBALISM
 					RuleData rd = kd.Rule(r.name);
 					if (rd.problem > r.danger_threshold)
 					{
-						if (!r.breakdown) health_severity = Math.Max(health_severity, 2);
-						else stress_severity = Math.Max(stress_severity, 2);
+						if (!r.breakdown) health_severity = System.Math.Max(health_severity, 2);
+						else stress_severity = System.Math.Max(stress_severity, 2);
 						tooltips.Add(Lib.BuildString(c.name, ": <b>", r.title, "</b>"));
 					}
 					else if (rd.problem > r.warning_threshold)
 					{
-						if (!r.breakdown) health_severity = Math.Max(health_severity, 1);
-						else stress_severity = Math.Max(stress_severity, 1);
+						if (!r.breakdown) health_severity = System.Math.Max(health_severity, 1);
+						else stress_severity = System.Math.Max(stress_severity, 1);
 						tooltips.Add(Lib.BuildString(c.name, ": <b>", r.title, "</b>"));
 					}
 				}
@@ -588,7 +588,7 @@ namespace KERBALISM
 						));
 
 						uint severity = res.Level <= 0.005 ? 2u : res.Level <= supply.low_threshold ? 1u : 0;
-						max_severity = Math.Max(max_severity, severity);
+						max_severity = System.Math.Max(max_severity, severity);
 					}
 				}
 			}
@@ -630,7 +630,7 @@ namespace KERBALISM
 			ConnectionInfo conn = vd.Connection;
 
 			// signal strength
-			var strength = Math.Ceiling(conn.strength * 10000) / 10000;
+			var strength = System.Math.Ceiling(conn.strength * 10000) / 10000;
 			string signal_str = strength > 0.001 ? Lib.HumanReadablePerc(strength, "F2") : Lib.Color(Lib.Italic(Local.Generic_NO), Lib.Kolor.Orange);
 
 			// target name

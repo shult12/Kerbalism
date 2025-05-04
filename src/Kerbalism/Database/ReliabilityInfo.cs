@@ -30,13 +30,13 @@ namespace KERBALISM
 			if(module.rated_operation_duration > 0)
 			{
 				rel_duration = module.operation_duration / Reliability.EffectiveDuration(module.quality, module.rated_operation_duration);
-				rel_duration = Lib.Clamp(rel_duration, 0, 1);
+				rel_duration = Math.Clamp(rel_duration, 0, 1);
 			}
 
 			if(module.rated_ignitions > 0)
 			{
 				rel_ignitions = (double)module.ignitions / Reliability.EffectiveIgnitions(module.quality, module.rated_ignitions);
-				rel_ignitions = Lib.Clamp(rel_ignitions, 0, 1);
+				rel_ignitions = Math.Clamp(rel_ignitions, 0, 1);
 			}
 
 			if (mtbf > 0)
@@ -60,14 +60,14 @@ namespace KERBALISM
 			{
 				var operation_duration = Lib.Proto.GetDouble(m, "operation_duration", 0);
 				rel_duration = operation_duration / Reliability.EffectiveDuration(quality, module_prefab.rated_operation_duration);
-				rel_duration = Lib.Clamp(rel_duration, 0, 1);
+				rel_duration = Math.Clamp(rel_duration, 0, 1);
 			}
 
 			if (module_prefab.rated_ignitions > 0)
 			{
 				var ignitions = Lib.Proto.GetInt(m, "ignitions", 0);
 				rel_ignitions = (double)ignitions / Reliability.EffectiveDuration(quality, module_prefab.rated_ignitions);
-				rel_ignitions = Lib.Clamp(rel_ignitions, 0, 1);
+				rel_ignitions = Math.Clamp(rel_ignitions, 0, 1);
 			}
 
 			mtbf = Reliability.EffectiveMTBF(quality, module_prefab.mtbf);

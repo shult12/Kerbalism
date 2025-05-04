@@ -53,13 +53,13 @@ namespace KERBALISM
 		internal double ScienceCollectedTotal => ScienceCollectedInFlight + ScienceRetrievedInKSC;
 
 		/// <summary> science value remaining to collect. </summary>
-		internal double ScienceRemainingToCollect => Math.Max(ScienceMaxValue - ScienceCollectedTotal, 0.0);
+		internal double ScienceRemainingToCollect => System.Math.Max(ScienceMaxValue - ScienceCollectedTotal, 0.0);
 
 		/// <summary> science value remaining to retrieve. </summary>
-		internal double ScienceRemainingToRetrieve => Math.Max(ScienceMaxValue - ScienceRetrievedInKSC, 0.0);
+		internal double ScienceRemainingToRetrieve => System.Math.Max(ScienceMaxValue - ScienceRetrievedInKSC, 0.0);
 
 		/// <summary> science value remaining (accounting for retrieved in KSC and collected in flight) </summary>
-		internal double ScienceRemainingTotal => Math.Max(ScienceMaxValue - ScienceCollectedTotal, 0.0);
+		internal double ScienceRemainingTotal => System.Math.Max(ScienceMaxValue - ScienceCollectedTotal, 0.0);
 
 		/// <summary> percentage [0;1] of science collected. </summary>
 		internal double PercentCollectedTotal => ScienceMaxValue == 0.0 ? 0.0 : (ScienceCollectedInFlight / ScienceMaxValue) + PercentRetrieved;
@@ -70,9 +70,9 @@ namespace KERBALISM
 		internal double ScienceValue(double dataSize, bool clampByScienceRetrieved = false, bool clampByScienceRetrievedAndCollected = false)
 		{
 			if (clampByScienceRetrievedAndCollected)
-				return Math.Min(dataSize * SciencePerMB, ScienceRemainingToCollect);
+				return System.Math.Min(dataSize * SciencePerMB, ScienceRemainingToCollect);
 			if (clampByScienceRetrieved)
-				return Math.Min(dataSize * SciencePerMB, ScienceRemainingToRetrieve);
+				return System.Math.Min(dataSize * SciencePerMB, ScienceRemainingToRetrieve);
 
 			return dataSize * SciencePerMB;
 		}
@@ -125,7 +125,7 @@ namespace KERBALISM
 
 		int GetTimesCompleted(double percentRetrieved)
 		{
-			double decimalPart = percentRetrieved - Math.Truncate(percentRetrieved);
+			double decimalPart = percentRetrieved - System.Math.Truncate(percentRetrieved);
 			return ((int)percentRetrieved) + (decimalPart < 1.0 - (Science.scienceLeftForSubjectCompleted / ScienceMaxValue) ? 0 : 1);
 		}
 
@@ -241,7 +241,7 @@ namespace KERBALISM
 			if (!ExistsInRnD)
 				CreateSubjectInRnD();
 
-			double scienceRetrieved = Math.Min(ScienceRemainingToRetrieve, scienceValue);
+			double scienceRetrieved = System.Math.Min(ScienceRemainingToRetrieve, scienceValue);
 
 			if (!API.preventScienceCrediting)
 				ScienceDB.uncreditedScience += scienceRetrieved;
@@ -251,7 +251,7 @@ namespace KERBALISM
 			if (timesCompleted > 0)
 				OnSubjectCompleted(showMessage, fromVessel, file);
 
-			RnDSubject.science = Math.Min((float)(RnDSubject.science + scienceValue), RnDSubject.scienceCap);
+			RnDSubject.science = System.Math.Min((float)(RnDSubject.science + scienceValue), RnDSubject.scienceCap);
 			RnDSubject.scientificValue = ResearchAndDevelopment.GetSubjectValue(RnDSubject.science, RnDSubject);
 
 			if (API.subjectsReceivedEventEnabled)

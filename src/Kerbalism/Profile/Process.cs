@@ -87,7 +87,7 @@ namespace KERBALISM
 		void ExecuteRecipe(double k, VesselData vd, VesselResources resources, double elapsed_s)
 		{
 			// only execute processes if necessary
-			if (Math.Abs(k) < double.Epsilon) return;
+			if (System.Math.Abs(k) < double.Epsilon) return;
 
 			ResourceRecipe recipe = new ResourceRecipe(broker);
 

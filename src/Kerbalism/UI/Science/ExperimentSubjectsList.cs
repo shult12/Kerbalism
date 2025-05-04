@@ -353,13 +353,13 @@ namespace KERBALISM
 				return Lib.BuildString
 				(
 					"<pos=10>",
-					Lib.Color(Math.Round(SubjectData.ScienceRetrievedInKSC, 1).ToString("0.0;--;--"), Lib.Kolor.Science, true),
+					Lib.Color(System.Math.Round(SubjectData.ScienceRetrievedInKSC, 1).ToString("0.0;--;--"), Lib.Kolor.Science, true),
 					"<pos=60>",
-					Lib.Color(Math.Round(SubjectData.ScienceCollectedInFlight, 1).ToString("+0.0;--;--"), Lib.Kolor.Science, true),
+					Lib.Color(System.Math.Round(SubjectData.ScienceCollectedInFlight, 1).ToString("+0.0;--;--"), Lib.Kolor.Science, true),
 					"<pos=110>",
-					Lib.Color(Math.Round(SubjectData.ScienceRemainingTotal, 1).ToString("0.0;--;--"), Lib.Kolor.Science, true),
+					Lib.Color(System.Math.Round(SubjectData.ScienceRemainingTotal, 1).ToString("0.0;--;--"), Lib.Kolor.Science, true),
 					"<pos=160>",
-					Lib.Color(Math.Round(SubjectData.PercentRetrieved, 1).ToString("0.0x;--;--"), Lib.Kolor.Yellow, true),
+					Lib.Color(System.Math.Round(SubjectData.PercentRetrieved, 1).ToString("0.0x;--;--"), Lib.Kolor.Yellow, true),
 					"<pos=200>",
 					SubjectData.BiomeTitle
 				);

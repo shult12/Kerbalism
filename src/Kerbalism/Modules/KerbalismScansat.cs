@@ -221,7 +221,7 @@ namespace KERBALISM
 						foreach (var d in Drive.GetDrives(vd))
 						{
 							var available = d.FileCapacityAvailable();
-							var chunk = Math.Min(size, available);
+							var chunk = System.Math.Min(size, available);
 							if (!d.Record_file(subject, chunk, true))
 								break;
 							size -= chunk;

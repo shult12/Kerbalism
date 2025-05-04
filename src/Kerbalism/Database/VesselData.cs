@@ -905,9 +905,9 @@ namespace KERBALISM
 			habitatInfo.Update(Vessel);
 			volume = Habitat.Tot_volume(Vessel);
 			surface = Habitat.Tot_surface(Vessel);
-			pressure = Math.Min(Habitat.Pressure(Vessel), habitatInfo.MaxPressure);
+			pressure = System.Math.Min(Habitat.Pressure(Vessel), habitatInfo.MaxPressure);
 
-			evas = (uint)(Math.Max(0, ResourceCache.GetResource(Vessel, "Nitrogen").Amount - 330) / Settings.LifeSupportAtmoLoss);
+			evas = (uint)(System.Math.Max(0, ResourceCache.GetResource(Vessel, "Nitrogen").Amount - 330) / Settings.LifeSupportAtmoLoss);
 			poisoning = Habitat.Poisoning(Vessel);
 			shielding = Habitat.Shielding(Vessel);
 			livingSpace = Habitat.Living_space(Vessel);

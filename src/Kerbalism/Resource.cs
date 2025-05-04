@@ -799,7 +799,7 @@ namespace KERBALISM
 			Deferred += quantity;
 
 			// keep track of every producer contribution for UI/debug purposes
-			if (Math.Abs(quantity) < 1e-10) return;
+			if (System.Math.Abs(quantity) < 1e-10) return;
 
 			if (brokersResourceAmounts.ContainsKey(broker))
 				brokersResourceAmounts[broker] += quantity;
@@ -814,7 +814,7 @@ namespace KERBALISM
 			Deferred -= quantity;
 
 			// keep track of every consumer contribution for UI/debug purposes
-			if (Math.Abs(quantity) < 1e-10) return;
+			if (System.Math.Abs(quantity) < 1e-10) return;
 
 			if (brokersResourceAmounts.ContainsKey(broker))
 				brokersResourceAmounts[broker] -= quantity;
@@ -873,7 +873,7 @@ namespace KERBALISM
 			// As we haven't yet synchronized anything, changes to amount can only come from non-Kerbalism producers or consumers
 			double unsupportedBrokersRate = Amount - oldAmount;
 			// Avoid false detection due to precision errors
-			if (Math.Abs(unsupportedBrokersRate) < 1e-05) unsupportedBrokersRate = 0.0;
+			if (System.Math.Abs(unsupportedBrokersRate) < 1e-05) unsupportedBrokersRate = 0.0;
 			// Calculate the resulting rate
 			unsupportedBrokersRate /= elapsed_s;
 
@@ -883,13 +883,13 @@ namespace KERBALISM
 			// clamp consumption/production to vessel amount/capacity
 			// - if deferred is negative, then amount is guaranteed to be greater than zero
 			// - if deferred is positive, then capacity - amount is guaranteed to be greater than zero
-			Deferred = Lib.Clamp(Deferred, -Amount, Capacity - Amount);
+			Deferred = Math.Clamp(Deferred, -Amount, Capacity - Amount);
 
 			// apply deferred consumption/production to all parts
 			// If the resource has a flowmode that respects priority, we'll be doing this in
 			// order. If it doesn't, there will only be one priority.
 			// - avoid very small values in deferred consumption/production
-			if (Math.Abs(Deferred) > 1e-10)
+			if (System.Math.Abs(Deferred) > 1e-10)
 				pts.ApplyDelta(Deferred);
 
 			// update amount, to get correct rate and levels at all times
@@ -1116,20 +1116,20 @@ namespace KERBALISM
 						{
 							Entry sec_e = inputs.Find(x => x.name.Contains(e.combined));
 							ResourceInfo sec = resources.GetResource(v, sec_e.name);
-							double pri_worst = Lib.Clamp((res.Amount + res.Deferred) * e.inv_quantity, 0.0, worst_input);
+							double pri_worst = Math.Clamp((res.Amount + res.Deferred) * e.inv_quantity, 0.0, worst_input);
 							if (pri_worst > 0.0)
 							{
 								worst_input = pri_worst;
 							}
 							else
 							{
-								worst_input = Lib.Clamp((sec.Amount + sec.Deferred) * sec_e.inv_quantity, 0.0, worst_input);
+								worst_input = Math.Clamp((sec.Amount + sec.Deferred) * sec_e.inv_quantity, 0.0, worst_input);
 							}
 						}
 					}
 					else
 					{
-						worst_input = Lib.Clamp((res.Amount + res.Deferred) * e.inv_quantity, 0.0, worst_input);
+						worst_input = Math.Clamp((res.Amount + res.Deferred) * e.inv_quantity, 0.0, worst_input);
 					}
 				}
 			}
@@ -1145,13 +1145,13 @@ namespace KERBALISM
 					if (!e.dump) // ignore outputs that can dump overboard
 					{
 						ResourceInfo res = resources.GetResource(v, e.name);
-						worst_output = Lib.Clamp((res.Capacity - (res.Amount + res.Deferred)) * e.inv_quantity, 0.0, worst_output);
+						worst_output = Math.Clamp((res.Capacity - (res.Amount + res.Deferred)) * e.inv_quantity, 0.0, worst_output);
 					}
 				}
 			}
 
 			// determine worst-io
-			double worst_io = Math.Min(worst_input, worst_output);
+			double worst_io = System.Math.Min(worst_input, worst_output);
 
 			// consume inputs
 			for (int i = 0; i < inputs.Count; ++i)
@@ -1207,7 +1207,7 @@ namespace KERBALISM
 				foreach(RuleData rd in curingRules)
 				{
 					rd.problem -= entry.quantity * worst_io / curingRules.Count;
-					rd.problem = Math.Max(rd.problem, 0);
+					rd.problem = System.Math.Max(rd.problem, 0);
 				}
 			}
 
@@ -1355,7 +1355,7 @@ namespace KERBALISM
 								//	2 case: has depressurizing habitat
 								//	3 case: dropping everything into the priority habitats
 
-								if ((Math.Abs(res_level[i] - (t.amount / t.maxAmount)) > precision && !Lib.IsCrewed(partHabitat.part))
+								if ((System.Math.Abs(res_level[i] - (t.amount / t.maxAmount)) > precision && !Lib.IsCrewed(partHabitat.part))
 									|| ((partHabitat.state == Habitat.State.depressurizing
 									|| mannedisPriority[i]) && t.amount > double.Epsilon))
 								{
@@ -1401,7 +1401,7 @@ namespace KERBALISM
 									}
 									else if (mannedisPriority[i] && !Lib.IsCrewed(partHabitat.part))
 									{
-										flowController = Math.Min(perctToMaxType - perctToAll, (t.maxAmount - t.amount) / totalAmount[i]);
+										flowController = System.Math.Min(perctToMaxType - perctToAll, (t.maxAmount - t.amount) / totalAmount[i]);
 									}
 									else
 									{
@@ -1425,13 +1425,13 @@ namespace KERBALISM
 
 									amountAffected *= equalize_speed;
 
-									amountAffected = Math.Sign(amountAffected) >= 0 ? Math.Max(Math.Sign(amountAffected) * precision, amountAffected) : Math.Min(Math.Sign(amountAffected) * precision, amountAffected);
+									amountAffected = System.Math.Sign(amountAffected) >= 0 ? System.Math.Max(System.Math.Sign(amountAffected) * precision, amountAffected) : System.Math.Min(System.Math.Sign(amountAffected) * precision, amountAffected);
 
 									double va = amountAffected < 0.0
-										? Math.Abs(amountAffected) > t.amount                // If negative, habitat can't send more than it has
+										? System.Math.Abs(amountAffected) > t.amount                // If negative, habitat can't send more than it has
 										? t.amount * (-1)
 										: amountAffected
-										: Math.Min(amountAffected, t.maxAmount - t.amount);  // if positive, habitat can't receive more than max
+										: System.Math.Min(amountAffected, t.maxAmount - t.amount);  // if positive, habitat can't receive more than max
 
 									va = Double.IsNaN(va) ? 0.0 : va;
 

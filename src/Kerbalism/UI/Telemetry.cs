@@ -169,8 +169,8 @@ namespace KERBALISM
 				if (res.AverageRate != 0.0)
 				{
 					sb.Append(Lib.Color(res.AverageRate > 0.0,
-						Lib.BuildString("+", Lib.HumanOrSIRate(Math.Abs(res.AverageRate), resource.id)), Lib.Kolor.PosRate,
-						Lib.BuildString("-", Lib.HumanOrSIRate(Math.Abs(res.AverageRate), resource.id)), Lib.Kolor.NegRate,
+						Lib.BuildString("+", Lib.HumanOrSIRate(System.Math.Abs(res.AverageRate), resource.id)), Lib.Kolor.PosRate,
+						Lib.BuildString("-", Lib.HumanOrSIRate(System.Math.Abs(res.AverageRate), resource.id)), Lib.Kolor.NegRate,
 						true));
 				}
 				else
@@ -211,8 +211,8 @@ namespace KERBALISM
 					{
 						sb.Append("\n");
 						sb.Append(Lib.Color(rb.rate > 0.0,
-							Lib.BuildString("+", Lib.HumanOrSIRate(Math.Abs(rb.rate), resource.id), "   "), Lib.Kolor.PosRate, // spaces to mitigate alignement issues
-							Lib.BuildString("-", Lib.HumanOrSIRate(Math.Abs(rb.rate), resource.id), "   "), Lib.Kolor.NegRate, // spaces to mitigate alignement issues
+							Lib.BuildString("+", Lib.HumanOrSIRate(System.Math.Abs(rb.rate), resource.id), "   "), Lib.Kolor.PosRate, // spaces to mitigate alignement issues
+							Lib.BuildString("-", Lib.HumanOrSIRate(System.Math.Abs(rb.rate), resource.id), "   "), Lib.Kolor.NegRate, // spaces to mitigate alignement issues
 							true)); 
 						sb.Append("\t");
 						sb.Append(rb.broker.Title);
@@ -259,13 +259,13 @@ namespace KERBALISM
 					// analyze issue
 					if (rd.problem > r.danger_threshold)
 					{
-						if (!r.breakdown) health_severity = Math.Max(health_severity, 2);
-						else stress_severity = Math.Max(stress_severity, 2);
+						if (!r.breakdown) health_severity = System.Math.Max(health_severity, 2);
+						else stress_severity = System.Math.Max(stress_severity, 2);
 					}
 					else if (rd.problem > r.warning_threshold)
 					{
-						if (!r.breakdown) health_severity = Math.Max(health_severity, 1);
-						else stress_severity = Math.Max(stress_severity, 1);
+						if (!r.breakdown) health_severity = System.Math.Max(health_severity, 1);
+						else stress_severity = System.Math.Max(stress_severity, 1);
 					}
 				}
 				string tooltip = Lib.BuildString("<align=left />", String.Join("\n", tooltips.ToArray()));

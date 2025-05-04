@@ -259,7 +259,7 @@ namespace KERBALISM
 			double fixedDeltaTime = TimeWarp.fixedDeltaTime;
 
 			// and detect warp blending
-			if (Math.Abs(fixedDeltaTime - elapsed_s) < 0.001)
+			if (System.Math.Abs(fixedDeltaTime - elapsed_s) < 0.001)
 				warp_blending = 0;
 			else
 				++warp_blending;

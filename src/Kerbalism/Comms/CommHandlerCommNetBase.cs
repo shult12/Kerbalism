@@ -47,7 +47,7 @@ namespace KERBALISM
 			connection.Status = firstLink.hopType == HopType.Home ? LinkStatus.direct_link : LinkStatus.indirect_link;
 			connection.strength = firstLink.signalStrength;
 
-			connection.rate = baseRate * Math.Pow(firstLink.signalStrength, Sim.DataRateDampingExponent);
+			connection.rate = baseRate * System.Math.Pow(firstLink.signalStrength, Sim.DataRateDampingExponent);
 
 			connection.target_name = Lib.Ellipsis(Localizer.Format(v.connection.ControlPath.First.end.displayName).Replace("Kerbin", "DSN"), 20);
 
@@ -58,7 +58,7 @@ namespace KERBALISM
 				if (firstHop == null || !firstHop.TryGetVesselData(out VesselData vd))
 					connection.rate = 0.0;
 				else
-					connection.rate = Math.Min(vd.Connection.rate, connection.rate);
+					connection.rate = System.Math.Min(vd.Connection.rate, connection.rate);
 			}
 
 			connection.control_path.Clear();
@@ -66,10 +66,10 @@ namespace KERBALISM
 			{
 				double antennaPower = link.end.isHome ? link.start.antennaTransmit.power + link.start.antennaRelay.power : link.start.antennaTransmit.power;
 				double linkDistance = (link.start.position - link.end.position).magnitude;
-				double linkMaxDistance = Math.Sqrt(antennaPower * link.end.antennaRelay.power);
+				double linkMaxDistance = System.Math.Sqrt(antennaPower * link.end.antennaRelay.power);
 				double signalStrength = 1 - (linkDistance / linkMaxDistance);
-				signalStrength = (3 - (2 * signalStrength)) * Math.Pow(signalStrength, 2);
-				signalStrength = Math.Pow(signalStrength, Sim.DataRateDampingExponent);
+				signalStrength = (3 - (2 * signalStrength)) * System.Math.Pow(signalStrength, 2);
+				signalStrength = System.Math.Pow(signalStrength, Sim.DataRateDampingExponent);
 
 				string[] controlPoint = new string[3];
 
@@ -80,7 +80,7 @@ namespace KERBALISM
 				controlPoint[0] = Lib.Ellipsis(controlPoint[0], 35);
 
 				// signal strength
-				controlPoint[1] = Lib.HumanReadablePerc(Math.Ceiling(signalStrength * 10000) / 10000, "F2");
+				controlPoint[1] = Lib.HumanReadablePerc(System.Math.Ceiling(signalStrength * 10000) / 10000, "F2");
 
 				// extra info
 				controlPoint[2] = Lib.BuildString(
@@ -147,7 +147,7 @@ namespace KERBALISM
 			{
 				___inPlasma = true;
 				___plasmaMult = vd.EnvStormRadiation * 2.0 / PreferencesRadiation.Instance.StormRadiation; // We should probably have a threshold setting instead of this hardcoded formula
-				___plasmaMult = Math.Max(1.0 - ___plasmaMult, 0.0);
+				___plasmaMult = System.Math.Max(1.0 - ___plasmaMult, 0.0);
 			}
 		}
 

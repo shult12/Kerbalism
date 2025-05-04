@@ -67,15 +67,15 @@ namespace KERBALISM.Planner
 						{
 							ResourceRecipe.Entry sec_e = inputs.Find(x => x.name.Contains(e.combined));
 							SimulatedResourceView sec = sim.Resource(sec_e.name).GetSimulatedResourceView(loaded_part);
-							double pri_worst = Lib.Clamp(res.amount * e.inv_quantity, 0.0, worst_input);
+							double pri_worst = Math.Clamp(res.amount * e.inv_quantity, 0.0, worst_input);
 							if (pri_worst > 0.0)
 								worst_input = pri_worst;
 							else
-								worst_input = Lib.Clamp(sec.amount * sec_e.inv_quantity, 0.0, worst_input);
+								worst_input = Math.Clamp(sec.amount * sec_e.inv_quantity, 0.0, worst_input);
 						}
 					}
 					else
-						worst_input = Lib.Clamp(res.amount * e.inv_quantity, 0.0, worst_input);
+						worst_input = Math.Clamp(res.amount * e.inv_quantity, 0.0, worst_input);
 				}
 			}
 
@@ -89,13 +89,13 @@ namespace KERBALISM.Planner
 					if (!e.dump) // ignore outputs that can dump overboard
 					{
 						SimulatedResourceView res = sim.Resource(e.name).GetSimulatedResourceView(loaded_part);
-						worst_output = Lib.Clamp((res.capacity - res.amount) * e.inv_quantity, 0.0, worst_output);
+						worst_output = Math.Clamp((res.capacity - res.amount) * e.inv_quantity, 0.0, worst_output);
 					}
 				}
 			}
 
 			// determine worst-io
-			double worst_io = Math.Min(worst_input, worst_output);
+			double worst_io = System.Math.Min(worst_input, worst_output);
 
 			// consume inputs
 			for (int i = 0; i < inputs.Count; ++i)

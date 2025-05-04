@@ -126,7 +126,7 @@ namespace KERBALISM
 					break;
 
 				// determine how much data is transmitted
-				double transmitted = xmitFile.isInWarpCache ? xmitFile.file.size : Math.Min(xmitFile.file.size, remainingTransmitCapacity);
+				double transmitted = xmitFile.isInWarpCache ? xmitFile.file.size : System.Math.Min(xmitFile.file.size, remainingTransmitCapacity);
 
 				if (transmitted == 0.0)
 					continue;

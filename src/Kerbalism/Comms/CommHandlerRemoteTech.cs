@@ -67,8 +67,8 @@ namespace KERBALISM
 				{
 					double dist = RemoteTech.GetCommsDistance(vd.VesselId, controlPath[0]);
 					double maxDist = RemoteTech.GetCommsMaxDistance(vd.VesselId, controlPath[0]);
-					connection.strength = maxDist > 0.0 ? 1.0 - (dist / Math.Max(maxDist, 1.0)) : 0.0;
-					connection.strength = Math.Pow(connection.strength, Sim.DataRateDampingExponentRT);
+					connection.strength = maxDist > 0.0 ? 1.0 - (dist / System.Math.Max(maxDist, 1.0)) : 0.0;
+					connection.strength = System.Math.Pow(connection.strength, Sim.DataRateDampingExponentRT);
 
 					connection.rate = baseRate * connection.strength;
 
@@ -81,7 +81,7 @@ namespace KERBALISM
 						Vessel target = FlightGlobals.FindVessel(controlPath[0]);
 						target.TryGetVesselDataTemp(out VesselData vd);
 						ConnectionInfo ci = vd.Connection;
-						connection.rate = Math.Min(ci.rate, connection.rate);
+						connection.rate = System.Math.Min(ci.rate, connection.rate);
 					}
 				}
 
@@ -92,14 +92,14 @@ namespace KERBALISM
 					double linkDistance = RemoteTech.GetCommsDistance(i, id);
 					double linkMaxDistance = RemoteTech.GetCommsMaxDistance(i, id);
 					double signalStrength = 1 - (linkDistance / linkMaxDistance);
-					signalStrength = Math.Pow(signalStrength, Sim.DataRateDampingExponentRT);
+					signalStrength = System.Math.Pow(signalStrength, Sim.DataRateDampingExponentRT);
 
 					string[] controlPoint = new string[3];
 
 					// satellite name
 					controlPoint[0] = Lib.Ellipsis(RemoteTech.GetSatelliteName(i) + " \\ " + RemoteTech.GetSatelliteName(id), 50);
 					// signal strength
-					controlPoint[1] = Lib.HumanReadablePerc(Math.Ceiling(signalStrength * 10000) / 10000, "F2");
+					controlPoint[1] = Lib.HumanReadablePerc(System.Math.Ceiling(signalStrength * 10000) / 10000, "F2");
 					// tooltip info
 					controlPoint[2] = Lib.BuildString("Distance: ", Lib.HumanReadableDistance(linkDistance),
 						" (Max: ", Lib.HumanReadableDistance(linkMaxDistance), ")");

@@ -359,25 +359,25 @@ namespace KERBALISM
 					lifetime = false;
 					stormFrequency = Settings.StormFrequency * 0.9f;
 					stormRadiation = Settings.StormRadiation * 0.9f;
-					shieldingEfficiency = Lib.Clamp(Settings.ShieldingEfficiency * Settings.ShieldingEfficiencyEasyMult, 0.0f, 0.99f);
+					shieldingEfficiency = Math.Clamp(Settings.ShieldingEfficiency * Settings.ShieldingEfficiencyEasyMult, 0.0f, 0.99f);
 					break;
 				case GameParameters.Preset.Normal:
 					lifetime = false;
 					stormFrequency = Settings.StormFrequency;
 					stormRadiation = Settings.StormRadiation;
-					shieldingEfficiency = Lib.Clamp(Settings.ShieldingEfficiency, 0.0f, 0.99f);
+					shieldingEfficiency = Math.Clamp(Settings.ShieldingEfficiency, 0.0f, 0.99f);
 					break;
 				case GameParameters.Preset.Moderate:
 					lifetime = true;
 					stormFrequency = Settings.StormFrequency * 1.3f;
 					stormRadiation = Settings.StormRadiation * 1.2f;
-					shieldingEfficiency = Lib.Clamp(Settings.ShieldingEfficiency * Settings.ShieldingEfficiencyModerateMult, 0.0f, 0.99f);
+					shieldingEfficiency = Math.Clamp(Settings.ShieldingEfficiency * Settings.ShieldingEfficiencyModerateMult, 0.0f, 0.99f);
 					break;
 				case GameParameters.Preset.Hard:
 					lifetime = true;
 					stormFrequency = Settings.StormFrequency * 1.5f;
 					stormRadiation = Settings.StormRadiation * 1.5f;
-					shieldingEfficiency = Lib.Clamp(Settings.ShieldingEfficiency * Settings.ShieldingEfficiencyHardMult, 0.0f, 0.99f);
+					shieldingEfficiency = Math.Clamp(Settings.ShieldingEfficiency * Settings.ShieldingEfficiencyHardMult, 0.0f, 0.99f);
 					break;
 				default:
 					break;

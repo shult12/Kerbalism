@@ -69,7 +69,7 @@ namespace KERBALISM
 				return;
 
 			// update ui
-			Status = deployed ? Lib.BuildString(Local.PassiveShield_absorbing ," ", Lib.HumanReadableRadiation(Math.Abs(radiation))) : disabledTitle;//"absorbing
+			Status = deployed ? Lib.BuildString(Local.PassiveShield_absorbing ," ", Lib.HumanReadableRadiation(System.Math.Abs(radiation))) : disabledTitle;//"absorbing
 			Events["Toggle"].guiName = Lib.StatusToggle(title, deployed ? disengageActionTitle : engageActionTitle);
 		}
 

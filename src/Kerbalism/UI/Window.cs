@@ -71,12 +71,12 @@ namespace KERBALISM
 
 			// adapt window size to panel
 			// - clamp to screen height
-			win_rect.width = Math.Min(panel.Width(), Screen.width * 0.8f);
-			win_rect.height = Math.Min(Styles.ScaleFloat(20.0f) + panel.Height(), Screen.height * 0.8f);
+			win_rect.width = System.Math.Min(panel.Width(), Screen.width * 0.8f);
+			win_rect.height = System.Math.Min(Styles.ScaleFloat(20.0f) + panel.Height(), Screen.height * 0.8f);
 
 			// clamp the window to the screen, so it can't be dragged outside
-			float offset_x = Math.Max(0.0f, -win_rect.xMin) + Math.Min(0.0f, Screen.width - win_rect.xMax);
-			float offset_y = Math.Max(0.0f, -win_rect.yMin) + Math.Min(0.0f, Screen.height - win_rect.yMax);
+			float offset_x = System.Math.Max(0.0f, -win_rect.xMin) + System.Math.Min(0.0f, Screen.width - win_rect.xMax);
+			float offset_y = System.Math.Max(0.0f, -win_rect.yMin) + System.Math.Min(0.0f, Screen.height - win_rect.yMax);
 			win_rect.xMin += offset_x;
 			win_rect.xMax += offset_x;
 			win_rect.yMin += offset_y;

@@ -103,7 +103,7 @@ namespace KERBALISM
 			if (exercise) factor += PreferencesComfort.Instance.exercise;
 			if (panorama) factor += PreferencesComfort.Instance.panorama;
 			if (plants) factor += PreferencesComfort.Instance.plants;
-			factor = Lib.Clamp(factor, 0.1, 1.0);
+			factor = Math.Clamp(factor, 0.1, 1.0);
 		}
 
 
@@ -154,7 +154,7 @@ namespace KERBALISM
 			if (call_home) factor += PreferencesComfort.Instance.callHome;
 			if (exercise) factor += PreferencesComfort.Instance.exercise;
 			if (panorama) factor += PreferencesComfort.Instance.panorama;
-			factor = Lib.Clamp(factor, 0.1, 1.0);
+			factor = Math.Clamp(factor, 0.1, 1.0);
 		}
 
 

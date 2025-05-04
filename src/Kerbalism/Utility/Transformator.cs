@@ -71,12 +71,12 @@ namespace KERBALISM
 
 		internal bool IsRotating()
 		{
-			return Math.Abs(CurrentSpinRate) > Math.Abs(float.Epsilon * SpinRate);
+			return System.Math.Abs(CurrentSpinRate) > System.Math.Abs(float.Epsilon * SpinRate);
 		}
 
 		internal bool IsStopping()
 		{
-			return Math.Abs(rotationRateGoal) <= float.Epsilon;
+			return System.Math.Abs(rotationRateGoal) <= float.Epsilon;
 		}
 	}
 }

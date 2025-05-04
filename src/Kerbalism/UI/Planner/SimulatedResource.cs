@@ -200,7 +200,7 @@ namespace KERBALISM.Planner
 		/// <summary>clamp resource amount to capacity for the per-part bookkeeping</summary>
 		void Clamp(Resource_location location)
 		{
-			_amount[location] = Lib.Clamp(_amount[location], 0.0, _capacity[location]);
+			_amount[location] = Math.Clamp(_amount[location], 0.0, _capacity[location]);
 		}
 
 		/// <summary>determine how long a resource will last at simulated consumption/production levels</summary>

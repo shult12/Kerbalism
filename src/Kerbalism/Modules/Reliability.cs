@@ -137,7 +137,7 @@ namespace KERBALISM
 				var q = quality ? Settings.QualityScale : 1.0;
 				if (launchpad) q /= 2.5; // the very first ignition is more likely to fail
 
-				q += Lib.Clamp(ignitions - 1, 0.0, 6.0) / 20.0; // subsequent ignition failures become less and less likely, reducing by up to 30%
+				q += Math.Clamp(ignitions - 1, 0.0, 6.0) / 20.0; // subsequent ignition failures become less and less likely, reducing by up to 30%
 
 				if (Lib.RandomDouble() < (turnon_failure_probability * PreferencesReliability.Instance.ignitionFailureChance) / q)
 				{
@@ -227,14 +227,14 @@ namespace KERBALISM
 							if (rated_operation_duration > 0)
 							{
 								double effective_duration = EffectiveDuration(quality, rated_operation_duration);
-								Status = Lib.BuildString(Local.Reliability_burnremaining, " ", Lib.HumanReadableDuration(Math.Max(0, effective_duration - operation_duration)));//"remaining burn:"
+								Status = Lib.BuildString(Local.Reliability_burnremaining, " ", Lib.HumanReadableDuration(System.Math.Max(0, effective_duration - operation_duration)));//"remaining burn:"
 							}
 							if (rated_ignitions > 0)
 							{
 								int effective_ignitions = EffectiveIgnitions(quality, rated_ignitions);
 								Status = Lib.BuildString(Status,
 									(string.IsNullOrEmpty(Status) ? "" : ", "),
-									Local.Reliability_ignitions, " ", Math.Max(0, effective_ignitions - ignitions).ToString());//"ignitions:"
+									Local.Reliability_ignitions, " ", System.Math.Max(0, effective_ignitions - ignitions).ToString());//"ignitions:"
 							}
 						}
 
@@ -334,7 +334,7 @@ namespace KERBALISM
 				{
 					last = now;
 					var guaranteed = mtbf / 2.0;
-					var r = 1 - Math.Pow(Lib.RandomDouble(), 3);
+					var r = 1 - System.Math.Pow(Lib.RandomDouble(), 3);
 					next = now + guaranteed + mtbf * (quality ? Settings.QualityScale : 1.0) * r;
 #if DEBUG_RELIABILITY
 					Logging.Log("Reliability: MTBF failure in " + (now - next) + " for " + part.partInfo.title);
@@ -412,7 +412,7 @@ namespace KERBALISM
 					f /= PreferencesReliability.Instance.engineOperationFailureChance;
 
 					// random^r so we get an exponentially increasing failure probability
-					var p = Math.Pow(Lib.RandomDouble(), r);
+					var p = System.Math.Pow(Lib.RandomDouble(), r);
 
 					// 1-p turns the probability of failure into one of non-failure
 					p = 1 - p;
@@ -458,7 +458,7 @@ namespace KERBALISM
 			if (next <= 0)
 			{
 				var guaranteed = reliability.mtbf / 2.0;
-				var r = 1 - Math.Pow(Lib.RandomDouble(), 3);
+				var r = 1 - System.Math.Pow(Lib.RandomDouble(), 3);
 				next = now + guaranteed + reliability.mtbf * (quality ? Settings.QualityScale : 1.0) * r;
 				Lib.Proto.Set(m, "last", now);
 				Lib.Proto.Set(m, "next", next);
@@ -517,7 +517,7 @@ namespace KERBALISM
 			double time_k = (Planetarium.GetUniversalTime() - last) / (next - last);
 			needMaintenance = mtbf > 0 && time_k > 0.35;
 
-			if (rated_ignitions > 0 && ignitions >= Math.Ceiling(EffectiveIgnitions(quality, rated_ignitions) * 0.4)) needMaintenance = true;
+			if (rated_ignitions > 0 && ignitions >= System.Math.Ceiling(EffectiveIgnitions(quality, rated_ignitions) * 0.4)) needMaintenance = true;
 			if (rated_operation_duration > 0 && operation_duration >= EffectiveDuration(quality, rated_operation_duration) * 0.4) needMaintenance = true;
 
 			v.KerbalismData().ResetReliabilityStatus();
@@ -768,7 +768,7 @@ namespace KERBALISM
 
 		internal static int EffectiveIgnitions(bool quality, int ignitions)
 		{
-			if(quality) return ignitions + (int)Math.Ceiling(ignitions * Settings.QualityScale * 0.2);
+			if(quality) return ignitions + (int)System.Math.Ceiling(ignitions * Settings.QualityScale * 0.2);
 			return ignitions;
 		}
 

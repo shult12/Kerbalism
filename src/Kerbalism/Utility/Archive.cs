@@ -46,14 +46,14 @@ namespace KERBALISM
 	{
 		internal void Save(int integer)
 		{
-			integer = Lib.Clamp(integer + 32, 32, 255);
+			integer = Math.Clamp(integer + 32, 32, 255);
 			sb.Append((char)integer);
 		}
 
 		internal void Save(string text)
 		{
 			Save(text.Length);
-			sb.Append(text.Substring(0, Math.Min(255 - 32, text.Length)));
+			sb.Append(text.Substring(0, System.Math.Min(255 - 32, text.Length)));
 		}
 
 		internal void Save(double value)

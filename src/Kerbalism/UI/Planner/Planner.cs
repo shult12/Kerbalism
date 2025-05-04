@@ -366,7 +366,7 @@ namespace KERBALISM.Planner
 			// generate details tooltips
 			string living_space_tooltip = Lib.BuildString
 			(
-				Local.Planner_volumepercapita ,"<b>\t", Lib.HumanReadableVolume(vessel_analyzer.volume / Math.Max(vessel_analyzer.crew_count, 1)), "</b>\n",//"volume per-capita:
+				Local.Planner_volumepercapita ,"<b>\t", Lib.HumanReadableVolume(vessel_analyzer.volume / System.Math.Max(vessel_analyzer.crew_count, 1)), "</b>\n",//"volume per-capita:
 				Local.Planner_ideallivingspace ,"<b>\t", Lib.HumanReadableVolume(PreferencesComfort.Instance.livingSpace), "</b>"//"ideal living space:
 			);
 			p.AddContent(Local.Planner_livingspace, Habitat.Living_space_to_string(vessel_analyzer.living_space), living_space_tooltip);//"living space"
@@ -413,13 +413,13 @@ namespace KERBALISM.Planner
 			// calculate various radiation levels
 			double[] levels = new[]
 			{
-				Math.Max(Radiation.Nominal, (env_analyzer.surface_rad + vessel_analyzer.emitted)),        // surface
-				Math.Max(Radiation.Nominal, (env_analyzer.magnetopause_rad + vessel_analyzer.emitted)),   // inside magnetopause
-				Math.Max(Radiation.Nominal, (env_analyzer.inner_rad + vessel_analyzer.emitted)),          // inside inner belt
-				Math.Max(Radiation.Nominal, (env_analyzer.outer_rad + vessel_analyzer.emitted)),          // inside outer belt
-				Math.Max(Radiation.Nominal, (env_analyzer.heliopause_rad + vessel_analyzer.emitted)),     // interplanetary
-				Math.Max(Radiation.Nominal, (env_analyzer.extern_rad + vessel_analyzer.emitted)),         // interstellar
-				Math.Max(Radiation.Nominal, (env_analyzer.storm_rad + vessel_analyzer.emitted))           // storm
+				System.Math.Max(Radiation.Nominal, (env_analyzer.surface_rad + vessel_analyzer.emitted)),        // surface
+				System.Math.Max(Radiation.Nominal, (env_analyzer.magnetopause_rad + vessel_analyzer.emitted)),   // inside magnetopause
+				System.Math.Max(Radiation.Nominal, (env_analyzer.inner_rad + vessel_analyzer.emitted)),          // inside inner belt
+				System.Math.Max(Radiation.Nominal, (env_analyzer.outer_rad + vessel_analyzer.emitted)),          // inside outer belt
+				System.Math.Max(Radiation.Nominal, (env_analyzer.heliopause_rad + vessel_analyzer.emitted)),     // interplanetary
+				System.Math.Max(Radiation.Nominal, (env_analyzer.extern_rad + vessel_analyzer.emitted)),         // interstellar
+				System.Math.Max(Radiation.Nominal, (env_analyzer.storm_rad + vessel_analyzer.emitted))           // storm
 			};
 
 			// evaluate modifiers (except radiation)

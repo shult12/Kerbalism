@@ -541,7 +541,7 @@ namespace KERBALISM
 			// get wear factor (time based output degradation)
 			wearFactor = 1.0;
 			if (timeEfficCurve?.Curve.keys.Length > 1)
-				wearFactor = Lib.Clamp(timeEfficCurve.Evaluate((float)((Planetarium.GetUniversalTime() - launchUT) / 3600.0)), 0.0, 1.0);
+				wearFactor = Math.Clamp(timeEfficCurve.Evaluate((float)((Planetarium.GetUniversalTime() - launchUT) / 3600.0)), 0.0, 1.0);
 
 			// get final output rate in EC/s
 			currentOutput = nominalRate * wearFactor * distanceFactor * exposureFactor;
@@ -593,7 +593,7 @@ namespace KERBALISM
 			{
 				teCurve.Load(m.moduleValues.GetNode("timeEfficCurve"));
 				double launchUT = Lib.Proto.GetDouble(m, "launchUT");
-				efficiencyFactor *= Lib.Clamp(teCurve.Evaluate((float)((Planetarium.GetUniversalTime() - launchUT) / 3600.0)), 0.0, 1.0);
+				efficiencyFactor *= Math.Clamp(teCurve.Evaluate((float)((Planetarium.GetUniversalTime() - launchUT) / 3600.0)), 0.0, 1.0);
 			}
 
 			// get nominal panel charge rate at 1 AU
@@ -941,15 +941,15 @@ namespace KERBALISM
 				{
 					case ModuleDeployableSolarPanel.PanelType.FLAT:
 						if (!analytic)
-							return Math.Max(Vector3d.Dot(sunDir, panelModule.trackingDotTransform.forward), 0.0);
+							return System.Math.Max(Vector3d.Dot(sunDir, panelModule.trackingDotTransform.forward), 0.0);
 
 						if (panelModule.isTracking)
-							return Math.Cos(1.57079632679 - Math.Acos(Vector3d.Dot(sunDir, sunCatcherPivot.up)));
+							return System.Math.Cos(1.57079632679 - System.Math.Acos(Vector3d.Dot(sunDir, sunCatcherPivot.up)));
 						else
-							return Math.Max(Vector3d.Dot(sunDir, sunCatcherPivot.forward), 0.0);
+							return System.Math.Max(Vector3d.Dot(sunDir, sunCatcherPivot.forward), 0.0);
 
 					case ModuleDeployableSolarPanel.PanelType.CYLINDRICAL:
-						return Math.Max((1.0 - Math.Abs(Vector3d.Dot(sunDir, panelModule.trackingDotTransform.forward))) * (1.0 / Math.PI), 0.0);
+						return System.Math.Max((1.0 - System.Math.Abs(Vector3d.Dot(sunDir, panelModule.trackingDotTransform.forward))) * (1.0 / System.Math.PI), 0.0);
 					case ModuleDeployableSolarPanel.PanelType.SPHERICAL:
 						return 0.25;
 					default:
@@ -1119,7 +1119,7 @@ namespace KERBALISM
 
 				foreach (Transform panel in sunCatchers)
 				{
-					cosineFactor += Math.Max(Vector3d.Dot(sunDir, panel.forward), 0.0);
+					cosineFactor += System.Math.Max(Vector3d.Dot(sunDir, panel.forward), 0.0);
 #if DEBUG_SOLAR
 					SolarDebugDrawer.DebugLine(panel.position, panel.position + panel.forward, Color.yellow);
 #endif
@@ -1247,7 +1247,7 @@ namespace KERBALISM
 
 				foreach (Transform panel in sunCatchers)
 				{
-					cosineFactor += Math.Max(Vector3d.Dot(sunDir, panel.forward), 0.0);
+					cosineFactor += System.Math.Max(Vector3d.Dot(sunDir, panel.forward), 0.0);
 #if DEBUG_SOLAR
 					SolarDebugDrawer.DebugLine(panel.position, panel.position + panel.forward, Color.yellow);
 #endif
@@ -1478,12 +1478,12 @@ namespace KERBALISM
 						if (trackingType == TrackingType.SinglePivot) SolarDebugDrawer.DebugLine(panel.pivot.position, panel.pivot.position + (panel.PivotAxisVector * -1f), Color.blue);
 #endif
 
-						if (!analytic) { cosineFactor += Math.Max(Vector3d.Dot(sunDir, panel.SuncatcherAxisVector(i)), 0.0); continue; }
+						if (!analytic) { cosineFactor += System.Math.Max(Vector3d.Dot(sunDir, panel.SuncatcherAxisVector(i)), 0.0); continue; }
 
 						switch (trackingType)
 						{
-							case TrackingType.Fixed:		cosineFactor += Math.Max(Vector3d.Dot(sunDir, panel.SuncatcherAxisVector(i)), 0.0); continue;
-							case TrackingType.SinglePivot:	cosineFactor += Math.Cos(1.57079632679 - Math.Acos(Vector3d.Dot(sunDir, panel.PivotAxisVector))); continue;
+							case TrackingType.Fixed:		cosineFactor += System.Math.Max(Vector3d.Dot(sunDir, panel.SuncatcherAxisVector(i)), 0.0); continue;
+							case TrackingType.SinglePivot:	cosineFactor += System.Math.Cos(1.57079632679 - System.Math.Acos(Vector3d.Dot(sunDir, panel.PivotAxisVector))); continue;
 							case TrackingType.DoublePivot:	cosineFactor += 1.0; continue;
 						}
 					}

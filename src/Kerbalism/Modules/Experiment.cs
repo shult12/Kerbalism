@@ -535,7 +535,7 @@ namespace KERBALISM
 			double chunkSize = chunkSizeMax * reqScalar;
 
 			if (expState != RunningState.Forced)
-				chunkSize = Math.Min(chunkSize, scienceRemaining / subjectData.SciencePerMB);
+				chunkSize = System.Math.Min(chunkSize, scienceRemaining / subjectData.SciencePerMB);
 
 			Drive drive = GetDrive(vd, hdId, chunkSize, subjectData);
 			if (drive == null)
@@ -569,20 +569,20 @@ namespace KERBALISM
 				return 0.0;
 			}
 
-			chunkSize = Math.Min(chunkSize, available);
+			chunkSize = System.Math.Min(chunkSize, available);
 
 			// TODO : prodfactor rely on resource capacity, resulting in wrong (lower) rate at high timewarp speeds if resource capacity is too low
 			// There is no way to fix that currently, this is another example of why virtual ressource recipes are needed
 			double prodFactor = chunkSize / chunkSizeMax;
 
 			if (prefab.ec_rate > 0.0)
-				prodFactor = Math.Min(prodFactor, Lib.Clamp(ec.Amount / (prefab.ec_rate * elapsed_s), 0.0, 1.0));
+				prodFactor = System.Math.Min(prodFactor, Math.Clamp(ec.Amount / (prefab.ec_rate * elapsed_s), 0.0, 1.0));
 
 			foreach (ObjectPair<string, double> p in resourceDefs)
 			{
 				if (p.Value <= 0.0) continue;
 				ResourceInfo ri = resources.GetResource(v, p.Key);
-				prodFactor = Math.Min(prodFactor, Lib.Clamp(ri.Amount / (p.Value * elapsed_s), 0.0, 1.0));
+				prodFactor = System.Math.Min(prodFactor, Math.Clamp(ri.Amount / (p.Value * elapsed_s), 0.0, 1.0));
 			}
 
 			if (prodFactor == 0.0)
@@ -607,7 +607,7 @@ namespace KERBALISM
 			{
 				if (warpDrive != null)
 				{
-					double s = Math.Min(chunkSize, warpDrive.FileCapacityAvailable());
+					double s = System.Math.Min(chunkSize, warpDrive.FileCapacityAvailable());
 					warpDrive.Record_file(subjectData, s, true);
 
 					if (chunkSize > s) // only write to persisted drive if the data cannot be transmitted in this tick
@@ -633,7 +633,7 @@ namespace KERBALISM
 			if (!prefab.sample_collecting)
 			{
 				remainingSampleMass -= massDelta;
-				remainingSampleMass = Math.Max(remainingSampleMass, 0.0);
+				remainingSampleMass = System.Math.Max(remainingSampleMass, 0.0);
 			}
 
 			return prodFactor;
@@ -1017,7 +1017,7 @@ namespace KERBALISM
 		{
 			double count;
 			if (subjectData != null)
-				count = Math.Max(1.0 - subjectData.PercentCollectedTotal, 0.0) * (expInfo.DataSize / dataRate);
+				count = System.Math.Max(1.0 - subjectData.PercentCollectedTotal, 0.0) * (expInfo.DataSize / dataRate);
 			else
 				count = expInfo.DataSize / dataRate;
 
@@ -1182,9 +1182,9 @@ namespace KERBALISM
 			double sample_reservoir = Lib.Proto.GetDouble(m, "sample_reservoir", 0.0);
 			if (remainingSampleMass >= sample_reservoir) return 0;
 
-			double delta = Math.Max(restoredAmount, sample_reservoir - remainingSampleMass);
+			double delta = System.Math.Max(restoredAmount, sample_reservoir - remainingSampleMass);
 			remainingSampleMass += delta;
-			remainingSampleMass = Math.Min(sample_reservoir, remainingSampleMass);
+			remainingSampleMass = System.Math.Min(sample_reservoir, remainingSampleMass);
 			Lib.Proto.Set(m, "remainingSampleMass", remainingSampleMass);
 			return delta;
 		}
@@ -1195,9 +1195,9 @@ namespace KERBALISM
 			if (sample_collecting || experiment_id != id) return 0;
 			double maxSampleMass = ExpInfo.SampleMass * sample_amount;
 			if (remainingSampleMass >= maxSampleMass) return 0;
-			double delta = Math.Max(restoredAmount, maxSampleMass - remainingSampleMass);
+			double delta = System.Math.Max(restoredAmount, maxSampleMass - remainingSampleMass);
 			remainingSampleMass += delta;
-			remainingSampleMass = Math.Min(maxSampleMass, remainingSampleMass);
+			remainingSampleMass = System.Math.Min(maxSampleMass, remainingSampleMass);
 			return delta;
 		}
 

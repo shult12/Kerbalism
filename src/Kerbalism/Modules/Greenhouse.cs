@@ -149,7 +149,7 @@ namespace KERBALISM
 
 				// calculate natural and artificial lighting
 				natural = vd.EnvSolarFluxTotal;
-				artificial = Math.Max(light_tolerance - natural, 0.0);
+				artificial = System.Math.Max(light_tolerance - natural, 0.0);
 
 				// consume EC for the lamps, scaled by artificial light intensity
 				if (artificial > double.Epsilon) ec.Consume(ec_rate * (artificial / light_tolerance) * Kerbalism.elapsed_s, ResourceBroker.Greenhouse);
@@ -219,7 +219,7 @@ namespace KERBALISM
 				{
 					// increase growth
 					growth += crop_rate * Kerbalism.elapsed_s;
-					growth = Math.Min(growth, 1.0);
+					growth = System.Math.Min(growth, 1.0);
 
 					// notify the user when crop can be harvested
 					if (growth >= 0.99)
@@ -258,7 +258,7 @@ namespace KERBALISM
 
 				// calculate natural and artificial lighting
 				double natural = vd.EnvSolarFluxTotal;
-				double artificial = Math.Max(g.light_tolerance - natural, 0.0);
+				double artificial = System.Math.Max(g.light_tolerance - natural, 0.0);
 
 				// consume EC for the lamps, scaled by artificial light intensity
 				if (artificial > double.Epsilon) ec.Consume(g.ec_rate * (artificial / g.light_tolerance) * elapsed_s, ResourceBroker.Greenhouse);
@@ -329,7 +329,7 @@ namespace KERBALISM
 				{
 					// increase growth
 					growth += g.crop_rate * elapsed_s;
-					growth = Math.Min(growth, 1.0);
+					growth = System.Math.Min(growth, 1.0);
 
 					// notify the user when crop can be harvested
 					if (growth >= 0.99)

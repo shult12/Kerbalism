@@ -285,7 +285,7 @@ namespace KERBALISM
 		// - width never shrink
 		internal void Width(float w)
 		{
-			min_width = Math.Max(w, min_width);
+			min_width = System.Math.Max(w, min_width);
 		}
 
 		// get medata

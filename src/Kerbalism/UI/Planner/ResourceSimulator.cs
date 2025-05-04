@@ -389,7 +389,7 @@ namespace KERBALISM.Planner
 
 			// calculate natural and artificial lighting
 			double natural = env.solar_flux;
-			double artificial = Math.Max(g.light_tolerance - natural, 0.0);
+			double artificial = System.Math.Max(g.light_tolerance - natural, 0.0);
 
 			// if lamps are on and artificial lighting is required
 			if (artificial > 0.0)

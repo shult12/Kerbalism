@@ -35,7 +35,7 @@ namespace KERBALISM
 			get
 			{
 				if (id == uint.MaxValue)
-					id = PartId + (uint)Math.Abs(Name.GetHashCode());
+					id = PartId + (uint)System.Math.Abs(Name.GetHashCode());
 
 				return id;
 			}

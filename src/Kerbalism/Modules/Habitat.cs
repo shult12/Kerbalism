@@ -199,8 +199,8 @@ namespace KERBALISM
             }
             else
             {
-                SetPassable(Math.Truncate(Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 <= ResourceBalance.precision);
-                UpdateIVA(Math.Truncate(Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 <= ResourceBalance.precision);
+                SetPassable(System.Math.Truncate(System.Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 <= ResourceBalance.precision);
+                UpdateIVA(System.Math.Truncate(System.Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 <= ResourceBalance.precision);
             }
 
             if (Lib.IsFlight())
@@ -326,7 +326,7 @@ namespace KERBALISM
             if (Lib.IsFlight())
             {
                 // full pressure the level is 99.9999% deployed or more
-                if (Math.Truncate(Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 <= ResourceBalance.precision)
+                if (System.Math.Truncate(System.Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 <= ResourceBalance.precision)
                 {
                     SetPassable(true);
                     UpdateIVA(true);
@@ -387,7 +387,7 @@ namespace KERBALISM
 				{
 					case State.enabled:
 						// No inflatable can be enabled been pressurizing
-						if (Math.Truncate(Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 > ResourceBalance.precision)
+						if (System.Math.Truncate(System.Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 > ResourceBalance.precision)
 							status_str = Local.Habitat_pressurizing;
 						else
 							status_str = Local.Generic_ENABLED;
@@ -443,8 +443,8 @@ namespace KERBALISM
                 else
                 {
                     // Inflatable modules shows IVA and are passable only in 99.9999% deployed
-                    SetPassable(Lib.IsCrewed(part) || Math.Truncate(Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 <= ResourceBalance.precision);
-                    UpdateIVA(Math.Truncate(Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 <= ResourceBalance.precision);
+                    SetPassable(Lib.IsCrewed(part) || System.Math.Truncate(System.Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 <= ResourceBalance.precision);
+                    UpdateIVA(System.Math.Truncate(System.Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 <= ResourceBalance.precision);
                 }
                 FixIVA = false;
             }
@@ -484,7 +484,7 @@ namespace KERBALISM
         void Set_inflation()
         {
             // if there is an inflate animation, set still animation from pressure
-            if (Get_inflate_anim_backwards()) Get_inflate_anim().Still(Math.Abs(Lib.Level(part, "Atmosphere", true) - 1));
+            if (Get_inflate_anim_backwards()) Get_inflate_anim().Still(System.Math.Abs(Lib.Level(part, "Atmosphere", true) - 1));
             else Get_inflate_anim().Still(Lib.Level(part, "Atmosphere", true));
         }
 
@@ -589,13 +589,13 @@ namespace KERBALISM
 		internal static double Living_space(Vessel v)
         {
             // living space is the volume per-capita normalized against an 'ideal living space' and clamped in an acceptable range
-            return Lib.Clamp(Volume_per_crew(v) / PreferencesComfort.Instance.livingSpace, 0.1, 1.0);
+            return Math.Clamp(Volume_per_crew(v) / PreferencesComfort.Instance.livingSpace, 0.1, 1.0);
         }
 
 		internal static double Volume_per_crew(Vessel v)
         {
             // living space is the volume per-capita normalized against an 'ideal living space' and clamped in an acceptable range
-            return Tot_volume(v) / Math.Max(1, Lib.CrewCount(v));
+            return Tot_volume(v) / System.Math.Max(1, Lib.CrewCount(v));
         }
 
 		// return a verbose description of shielding capability
@@ -763,9 +763,9 @@ namespace KERBALISM
 			Vector3 bMax = b.max;
 
 			Vector3 intersectionSize = default;
-			intersectionSize.x = Math.Max(Math.Min(aMax.x, bMax.x) - Math.Max(aMin.x, bMin.x), 0f);
-			intersectionSize.y = Math.Max(Math.Min(aMax.y, bMax.y) - Math.Max(aMin.y, bMin.y), 0f);
-			intersectionSize.z = Math.Max(Math.Min(aMax.z, bMax.z) - Math.Max(aMin.z, bMin.z), 0f);
+			intersectionSize.x = System.Math.Max(System.Math.Min(aMax.x, bMax.x) - System.Math.Max(aMin.x, bMin.x), 0f);
+			intersectionSize.y = System.Math.Max(System.Math.Min(aMax.y, bMax.y) - System.Math.Max(aMin.y, bMin.y), 0f);
+			intersectionSize.z = System.Math.Max(System.Math.Min(aMax.z, bMax.z) - System.Math.Max(aMin.z, bMin.z), 0f);
 
 			return intersectionSize.x * intersectionSize.y * intersectionSize.z;
 		}
@@ -870,7 +870,7 @@ namespace KERBALISM
 
 			double SubstractNodesSurface(double surface, double nodesSurface)
 			{
-				return Math.Max(surface * 0.5, surface - nodesSurface);
+				return System.Math.Max(surface * 0.5, surface - nodesSurface);
 			}
 		}
 
@@ -982,7 +982,7 @@ namespace KERBALISM
 			else
 			{
 				// we consider that both methods are accurate if the volume difference is less than 10%
-				double volumeDifference = Math.Abs(results.colliderVolume - results.meshVolume) / Math.Max(results.colliderVolume, results.meshVolume);
+				double volumeDifference = System.Math.Abs(results.colliderVolume - results.meshVolume) / System.Math.Max(results.colliderVolume, results.meshVolume);
 
 				// in case the returned volumes are similar, the method that use the less collider / mesh count will be more accurate for surface
 				if (volumeDifference < 0.2 && (usedCollidersCount != usedMeshCount))
@@ -1062,7 +1062,7 @@ namespace KERBALISM
 			meshInfos.Sort((x, y) => y.volume.CompareTo(x.volume));
 
 			// only account for meshes that are have at least 25% the volume of the biggest mesh, or are at least 0.5 m3, whatever is smaller
-			double minMeshVolume = Math.Min(meshInfos[0].volume * 0.25, 0.5);
+			double minMeshVolume = System.Math.Min(meshInfos[0].volume * 0.25, 0.5);
 
 			for (int i = 0; i < meshInfos.Count; i++)
 			{
@@ -1273,7 +1273,7 @@ namespace KERBALISM
 				Vector3 p3 = vertices[triangles[i + 2]];
 				volume += SignedVolumeOfTriangle(p1, p2, p3, o);
 			}
-			return Math.Abs(volume);
+			return System.Math.Abs(volume);
 		}
 
 		static float SignedVolumeOfTriangle(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 o)

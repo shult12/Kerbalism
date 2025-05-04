@@ -65,7 +65,7 @@ namespace KERBALISM
 		{
 			if (altitude <= double.Epsilon) return body.rotationPeriod;
 			double Ra = altitude + body.Radius;
-			return 2.0 * Math.PI * Math.Sqrt(Ra * Ra * Ra / body.gravParameter);
+			return 2.0 * System.Math.PI * System.Math.Sqrt(Ra * Ra * Ra / body.gravParameter);
 		}
 
 		/// <summary>period in shadow of an orbit at specified altitude over a body</summary>
@@ -73,8 +73,8 @@ namespace KERBALISM
 		{
 			if (altitude <= double.Epsilon) return body.rotationPeriod * 0.5;
 			double Ra = altitude + body.Radius;
-			double h = Math.Sqrt(Ra * body.gravParameter);
-			return (2.0 * Ra * Ra / h) * Math.Asin(body.Radius / Ra);
+			double h = System.Math.Sqrt(Ra * body.gravParameter);
+			return (2.0 * Ra * Ra / h) * System.Math.Asin(body.Radius / Ra);
 		}
 
 		/// <summary>orbital period of the specified vessel</summary>
@@ -140,8 +140,8 @@ namespace KERBALISM
 				return 0;
 			}
 			Vector3d planeNormal = Vector3d.Cross(v.orbitDriver.vel, -v.orbitDriver.pos).normalized;
-			double sunDot = Math.Abs(Vector3d.Dot(sunVec, planeNormal));
-			double betaAngle = Math.PI * 0.5d - Math.Acos(sunDot);
+			double sunDot = System.Math.Abs(Vector3d.Dot(sunVec, planeNormal));
+			double betaAngle = System.Math.PI * 0.5d - System.Math.Acos(sunDot);
 
 			double a = obt.semiMajorAxis;
 			double R = obt.referenceBody.Radius;
@@ -170,12 +170,12 @@ namespace KERBALISM
 		{
 			// from https://commons.erau.edu/cgi/viewcontent.cgi?article=1412&context=ijaaa
 			// beta* is the angle above which there is no occlusion of the orbit
-			double betaStar = Math.Asin(R / sma);
-			if (Math.Abs(betaAngle) >= betaStar)
+			double betaStar = System.Math.Asin(R / sma);
+			if (System.Math.Abs(betaAngle) >= betaStar)
 				return 0;
 
 			double avgHeight = sma - R;
-			return (1.0 / Math.PI) * Math.Acos(Math.Sqrt(avgHeight * avgHeight + 2.0 * R * avgHeight) / (sma * Math.Cos(betaAngle)));
+			return (1.0 / System.Math.PI) * System.Math.Acos(System.Math.Sqrt(avgHeight * avgHeight + 2.0 * R * avgHeight) / (sma * System.Math.Cos(betaAngle)));
 		}
 
 		/// <summary>
@@ -202,32 +202,32 @@ namespace KERBALISM
 			Vector3d orthog = Vector3d.Cross(obt.referenceBody.GetFrameVel().xzy.normalized, sunVec);
 			Vector3d PeToBodyProj = (PeToBody - orthog * Vector3d.Dot(PeToBody, orthog)).normalized;
 			// Use these to calculate true anomaly for this projected orbit
-			double tA = Math.Acos(Vector3d.Dot(sunVec, PeToBodyProj));
+			double tA = System.Math.Acos(Vector3d.Dot(sunVec, PeToBodyProj));
 
 			// Get distance to ellipse edge
-			double r = a * (1.0 - e * e) / (1.0 + e * Math.Cos(tA));
+			double r = a * (1.0 - e * e) / (1.0 + e * System.Math.Cos(tA));
 
-			double betaStar = Math.Asin(R / r);
-			double absBeta = Math.Abs(betaAngle);
+			double betaStar = System.Math.Asin(R / r);
+			double absBeta = System.Math.Abs(betaAngle);
 			if (absBeta >= betaStar)
 				return 0d;
 
 			// Get the vector to the center of the eclipse
-			double vecToHalfEclipsePortion = Math.Asin(R / r);
+			double vecToHalfEclipsePortion = System.Math.Asin(R / r);
 			// Get the true anomalies at the front and rear of the eclipse portion
 			double vAhead = tA + vecToHalfEclipsePortion;
 			double vBehind = tA - vecToHalfEclipsePortion;
 			vAhead *= 0.5;
 			vBehind *= 0.5;
-			double ePlusOneSqrt = Math.Sqrt(1 + e);
-			double eMinusOneSqrt = Math.Sqrt(1 - e);
+			double ePlusOneSqrt = System.Math.Sqrt(1 + e);
+			double eMinusOneSqrt = System.Math.Sqrt(1 - e);
 			// Calculate eccentric and mean anomalies
-			double EAAhead = 2.0 * Math.Atan2(eMinusOneSqrt * Math.Sin(vAhead), ePlusOneSqrt * Math.Cos(vAhead));
-			double MAhead = EAAhead - e * Math.Sin(EAAhead);
-			double EABehind = 2.0 * Math.Atan2(eMinusOneSqrt * Math.Sin(vBehind), ePlusOneSqrt * Math.Cos(vBehind));
-			double Mbehind = EABehind - e * Math.Sin(EABehind);
+			double EAAhead = 2.0 * System.Math.Atan2(eMinusOneSqrt * System.Math.Sin(vAhead), ePlusOneSqrt * System.Math.Cos(vAhead));
+			double MAhead = EAAhead - e * System.Math.Sin(EAAhead);
+			double EABehind = 2.0 * System.Math.Atan2(eMinusOneSqrt * System.Math.Sin(vBehind), ePlusOneSqrt * System.Math.Cos(vBehind));
+			double Mbehind = EABehind - e * System.Math.Sin(EABehind);
 			// Finally, calculate the eclipse fraction from mean anomalies
-			double eclipseFrac = (MAhead - Mbehind) / (2.0 * Math.PI);
+			double eclipseFrac = (MAhead - Mbehind) / (2.0 * System.Math.PI);
 			// This is not quite correct I think, but it'll be close enough.
 			// We just lerp between 0 occlusion at beta = betaStar, and full occlusion
 			// at beta = 0. This takes advantage of the difference 1 degree makes being larger
@@ -282,13 +282,13 @@ namespace KERBALISM
 			else
 			{
 				semiLatusRectum = v.orbit.semiLatusRectum;
-				maxCalculation = Math.Min(maxCalculation, v.orbit.period);
+				maxCalculation = System.Math.Min(maxCalculation, v.orbit.period);
 				surfPos = new Vector3d();
 				polarAxis = new Vector3d();
 			}
 
 			// Set up timimg
-			double stepLength = Math.Max(120d, elapsedSeconds * (1d / 40d));
+			double stepLength = System.Math.Max(120d, elapsedSeconds * (1d / 40d));
 			int sampleCount;
 			if (stepLength > maxCalculation)
 			{
@@ -297,7 +297,7 @@ namespace KERBALISM
 			}
 			else
 			{
-				sampleCount = (int)Math.Ceiling(maxCalculation / stepLength);
+				sampleCount = (int)System.Math.Ceiling(maxCalculation / stepLength);
 				stepLength = maxCalculation / (double)sampleCount;
 			}
 
@@ -400,7 +400,7 @@ namespace KERBALISM
 		// return rotation speed at body surface
 		static double SurfaceSpeed(CelestialBody body)
 		{
-			return 2.0 * Math.PI * body.Radius / body.rotationPeriod;
+			return 2.0 * System.Math.PI * body.Radius / body.rotationPeriod;
 		}
 
 		// return gravity at body surface
@@ -557,7 +557,7 @@ namespace KERBALISM
 			// This must be called after "suns" SunData list is populated (because it use AU > Lib.IsSun)
 			internal void InitSolarFluxTotal()
 			{
-				this.solarFluxTotal = solarFluxAtAU * AU * AU * Math.PI * 4.0;
+				this.solarFluxTotal = solarFluxAtAU * AU * AU * System.Math.PI * 4.0;
 			}
 
 			/// <summary>Luminosity in W/m² at the given distance from this sun/star</summary>
@@ -569,7 +569,7 @@ namespace KERBALISM
 				if (fromSunSurface) distance += body.Radius;
 
 				// calculate solar flux
-				return solarFluxTotal / (Math.PI * 4 * distance * distance);
+				return solarFluxTotal / (System.Math.PI * 4 * distance * distance);
 			}
 		}
 
@@ -710,8 +710,8 @@ namespace KERBALISM
 			double E = orbit.solveEccentricAnomaly(M, orbit.eccentricity);
 			double v = orbit.GetTrueAnomaly(E);
 
-			double cos = Math.Cos(v);
-			double sin = Math.Sin(v);
+			double cos = System.Math.Cos(v);
+			double sin = System.Math.Sin(v);
 			Vector3d pos = semiLatusRectum / (1.0 + orbit.eccentricity * cos) * (orbit.OrbitFrame.X * cos + orbit.OrbitFrame.Y * sin);
 			return Planetarium.Zup.WorldToLocal(pos).xzy;
 		}
@@ -791,7 +791,7 @@ namespace KERBALISM
 		// calculate temperature in K from irradiance in W/m2, as per Stefan-Boltzmann equation
 		internal static double BlackBodyTemperature(double flux)
 		{
-			return Math.Pow(flux / PhysicsGlobals.StefanBoltzmanConstant, 0.25);
+			return System.Math.Pow(flux / PhysicsGlobals.StefanBoltzmanConstant, 0.25);
 		}
 
 		// calculate irradiance in W/m2 from solar flux reflected on a celestial body in direction of the vessel
@@ -809,11 +809,11 @@ namespace KERBALISM
 			body_dist -= body.Radius;
 
 			// used to scale with distance
-			double d = Math.Min((body.Radius + body.atmosphereDepth) / (body.Radius + body_dist), 1.0);
+			double d = System.Math.Min((body.Radius + body.atmosphereDepth) / (body.Radius + body_dist), 1.0);
 
 			return suns.Find(p => p.body == sun).SolarFlux(sun_dist)	// solar radiation
 			  * body.albedo												// reflected
-			  * Math.Max(0.0, Vector3d.Dot(sun_dir, body_dir))			// clamped cosine
+			  * System.Math.Max(0.0, Vector3d.Dot(sun_dir, body_dir))			// clamped cosine
 			  * d * d;													// scale with distance
 		}
 
@@ -895,7 +895,7 @@ namespace KERBALISM
 			double half_day = body.solarDayLength * 0.5;
 
 			// flux stored by surface during daylight, and re-emitted during whole day
-			double surf_flux = Math.Min
+			double surf_flux = System.Math.Min
 			(
 				solar_flux              // incoming flux
 			  * (1.0 - body.albedo)     // not reflected
@@ -906,7 +906,7 @@ namespace KERBALISM
 			) / body.solarDayLength;    // released during whole day
 
 			// flux stored by atmosphere during daylight, and re-emitted during whole day
-			double atmo_flux = Math.Min
+			double atmo_flux = System.Math.Min
 			(
 				solar_flux              // incoming flux
 			  * (1.0 - body.albedo)     // not reflected
@@ -916,7 +916,7 @@ namespace KERBALISM
 			) / body.solarDayLength;    // released during whole day
 
 			// used to scale with distance
-			double d = Math.Min((body.Radius + body.atmosphereDepth) / (body.Radius + altitude), 1.0);
+			double d = System.Math.Min((body.Radius + body.atmosphereDepth) / (body.Radius + altitude), 1.0);
 
 			// return radiative cooling flux from the body
 			return (surf_flux + atmo_flux) * d * d;
@@ -953,7 +953,7 @@ namespace KERBALISM
 				double atmo_temp = body.GetTemperature(v.altitude);
 
 				// mix between our temperature and the stock atmospheric model
-				temp = Lib.Mix(atmo_temp, temp, Lib.Clamp(v.altitude / body.atmosphereDepth, 0.0, 1.0));
+				temp = Math.Mix(atmo_temp, temp, Math.Clamp(v.altitude / body.atmosphereDepth, 0.0, 1.0));
 			}
 
 			// finally, return the temperature
@@ -965,7 +965,7 @@ namespace KERBALISM
 		internal static double TempDiff(double k, CelestialBody body, bool landed)
 		{
 			if (body.flightGlobalsIndex == FlightGlobals.GetHomeBodyIndex() && landed) return 0.0;
-			return Math.Max(Math.Abs(k - Settings.LifeSupportSurvivalTemperature) - Settings.LifeSupportSurvivalRange, 0.0);
+			return System.Math.Max(System.Math.Abs(k - Settings.LifeSupportSurvivalTemperature) - Settings.LifeSupportSurvivalRange, 0.0);
 		}
 		#endregion
 
@@ -982,7 +982,7 @@ namespace KERBALISM
 			double altitude = up.magnitude;
 			up /= altitude;
 			altitude -= body.Radius;
-			altitude = Math.Abs(altitude); //< deal with underwater & fp precision issues
+			altitude = System.Math.Abs(altitude); //< deal with underwater & fp precision issues
 
 			double static_pressure = body.GetPressure(altitude);
 			if (static_pressure > 0.0)
@@ -1025,7 +1025,7 @@ namespace KERBALISM
 			double altitude = radialOut.magnitude;
 			radialOut /= altitude; // normalize
 			altitude -= body.Radius;
-			altitude = Math.Abs(altitude); //< deal with underwater & fp precision issues
+			altitude = System.Math.Abs(altitude); //< deal with underwater & fp precision issues
 
 			double static_pressure = body.GetPressure(altitude);
 			if (static_pressure > 0.0)
@@ -1061,7 +1061,7 @@ namespace KERBALISM
 		internal static double GammaTransparency(CelestialBody body, double altitude)
 		{
 			// deal with underwater & fp precision issues
-			altitude = Math.Abs(altitude);
+			altitude = System.Math.Abs(altitude);
 
 			// get pressure
 			double static_pressure = body.GetPressure(altitude);
@@ -1073,13 +1073,13 @@ namespace KERBALISM
 				// math, you know
 				double Ra = body.Radius + altitude;
 				double Ya = body.atmosphereDepth - altitude;
-				double path = Math.Sqrt(Ra * Ra + 2.0 * Ra * Ya + Ya * Ya) - Ra;
+				double path = System.Math.Sqrt(Ra * Ra + 2.0 * Ra * Ya + Ya * Ya) - Ra;
 				double factor = body.GetSolarPowerFactor(density) * Ya / path;
 
 				// poor man atmosphere composition contribution
 				if (body.atmosphereContainsOxygen || body.ocean)
 				{
-					factor = 1.0 - Math.Pow(1.0 - factor, 0.015);
+					factor = 1.0 - System.Math.Pow(1.0 - factor, 0.015);
 				}
 				return factor;
 			}
@@ -1147,7 +1147,7 @@ namespace KERBALISM
 		{
 			double dist = Vector3d.Distance(v.GetWorldPos3D(), Lib.GetParentSun(v.mainBody).position);
 			double au = dist / FlightGlobals.GetHomeBody().orbit.semiMajorAxis;
-			return 1.0 - Math.Min(AU, 1.0); // 0 at 1AU -> 1 at sun position
+			return 1.0 - System.Math.Min(AU, 1.0); // 0 at 1AU -> 1 at sun position
 		}
 		#endregion
 
@@ -1206,7 +1206,7 @@ namespace KERBALISM
 				// dataRate = baseRate * (strengthAt2AU ^ exponent)
 				// so...
 				// exponent = log_strengthAt2AU(dataRate / baseRate)
-				dampingExponent = Math.Log(desiredRateAt2AU / baseRate, strengthAt2AU);
+				dampingExponent = System.Math.Log(desiredRateAt2AU / baseRate, strengthAt2AU);
 
 				Logging.Log($"Calculated DataRateDampingExponent: {dampingExponent.ToString("F4")} (max. DSN range: {maxDsnRange.ToString("F0")}, strength at 2 AU: {strengthAt2AU.ToString("F3")})");
 
@@ -1262,7 +1262,7 @@ namespace KERBALISM
 				// dataRate = baseRate * (strengthAt2AU ^ exponent)
 				// so...
 				// exponent = log_strengthAt2AU(dataRate / baseRate)
-				dampingExponent = Math.Log(desiredRateAt2AU / baseRate, strengthAt2AU);
+				dampingExponent = System.Math.Log(desiredRateAt2AU / baseRate, strengthAt2AU);
 
 				// 2.4 seems good for RemoteTech
 				return DataRateDampingExponent;

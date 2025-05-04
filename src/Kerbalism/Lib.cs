@@ -90,12 +90,12 @@ namespace KERBALISM
 				double hSqrMag = o.h.sqrMagnitude;
 				if (hSqrMag == 0d)
 				{
-					return Math.Acos(Vector3d.Dot(polarAxis, o.pos) / o.pos.magnitude) * (180.0 / Math.PI);
+					return System.Math.Acos(Vector3d.Dot(polarAxis, o.pos) / o.pos.magnitude) * (180.0 / System.Math.PI);
 				}
 				else
 				{
-					Vector3d orbitZ = o.h / Math.Sqrt(hSqrMag);
-					return Math.Atan2((orbitZ - polarAxis).magnitude, (orbitZ + polarAxis).magnitude) * (2d * (180.0 / Math.PI));
+					Vector3d orbitZ = o.h / System.Math.Sqrt(hSqrMag);
+					return System.Math.Atan2((orbitZ - polarAxis).magnitude, (orbitZ + polarAxis).magnitude) * (2d * (180.0 / System.Math.PI));
 				}
 			}
 			else
@@ -133,38 +133,6 @@ namespace KERBALISM
 				Logging.Log("error while looking for directory '" + findpath + "' in 'GameData' directory. (" + e.Message + ")");
 				return false;
 			}
-		}
-		#endregion
-
-		#region MATH
-		///<summary>clamp a value</summary>
-		internal static int Clamp(int value, int min, int max)
-		{
-			return Math.Max(min, Math.Min(value, max));
-		}
-
-		///<summary>clamp a value</summary>
-		internal static float Clamp(float value, float min, float max)
-		{
-			return Math.Max(min, Math.Min(value, max));
-		}
-
-		///<summary>clamp a value</summary>
-		internal static double Clamp(double value, double min, double max)
-		{
-			return Math.Max(min, Math.Min(value, max));
-		}
-
-		///<summary>blend between two values</summary>
-		internal static float Mix(float a, float b, float k)
-		{
-			return a * (1.0f - k) + b * k;
-		}
-
-		///<summary>blend between two values</summary>
-		internal static double Mix(double a, double b, double k)
-		{
-			return a * (1.0 - k) + b * k;
 		}
 		#endregion
 
@@ -262,7 +230,7 @@ namespace KERBALISM
 					if (FlightGlobals.ready || IsEditor())
 					{
 						var homeBody = FlightGlobals.GetHomeBody();
-						hoursInDay = Math.Round(homeBody.rotationPeriod / 3600, 0);
+						hoursInDay = System.Math.Round(homeBody.rotationPeriod / 3600, 0);
 					}
 					else
 					{
@@ -288,7 +256,7 @@ namespace KERBALISM
 					if (FlightGlobals.ready || IsEditor())
 					{
 						var homeBody = FlightGlobals.GetHomeBody();
-						daysInYear = Math.Floor(homeBody.orbit.period / (HoursInDay * 60.0 * 60.0));
+						daysInYear = System.Math.Floor(homeBody.orbit.period / (HoursInDay * 60.0 * 60.0));
 					}
 					else
 					{
@@ -356,13 +324,13 @@ namespace KERBALISM
 			double len_day = len_hour * Lib.HoursInDay;
 			double len_year = len_day * Lib.DaysInYear;
 
-			double year = Math.Floor(t / len_year);
+			double year = System.Math.Floor(t / len_year);
 			t -= year * len_year;
-			double day = Math.Floor(t / len_day);
+			double day = System.Math.Floor(t / len_day);
 			t -= day * len_day;
-			double hour = Math.Floor(t / len_hour);
+			double hour = System.Math.Floor(t / len_hour);
 			t -= hour * len_hour;
-			double min = Math.Floor(t / len_min);
+			double min = System.Math.Floor(t / len_min);
 
 			return BuildString
 			(
@@ -389,7 +357,7 @@ namespace KERBALISM
 		/// <summary> return string limited to len, with ... at the end</summary>
 		internal static string Ellipsis(string s, uint len)
 		{
-			len = Math.Max(len, 3u);
+			len = System.Math.Max(len, 3u);
 			return s.Length <= len ? s : Lib.BuildString(s.Substring(0, (int)len - 3), "...");
 		}
 
@@ -812,7 +780,7 @@ namespace KERBALISM
 		internal static string SIRate(double rate, string unit, int sigFigs = 3, bool longPrefix = false)
 		{
 			if (rate == 0.0) return Local.Generic_NONE;//"none"
-			rate = Math.Abs(rate);
+			rate = System.Math.Abs(rate);
 
 			return KSPUtil.PrintSI(rate, unit, sigFigs, longPrefix);
 		}
@@ -891,7 +859,7 @@ namespace KERBALISM
 		internal static string HumanReadableRate(double rate, string precision = "F3", string unit = "")
 		{
 			if (rate == 0.0) return Local.Generic_NONE;//"none"
-			rate = Math.Abs(rate);
+			rate = System.Math.Abs(rate);
 			if (rate >= 0.01) return BuildString(rate.ToString(precision), unit, Local.Generic_perSecond);//"/s"
 			rate *= 60.0; // per-minute
 			if (rate >= 0.01) return BuildString(rate.ToString(precision), unit, Local.Generic_perMinute);//"/m"
@@ -908,7 +876,7 @@ namespace KERBALISM
 			if (!fullprecison)
 			{
 				if (double.IsInfinity(d) || double.IsNaN(d)) return Local.Generic_PERPETUAL;//"perpetual"
-				d = Math.Round(d);
+				d = System.Math.Round(d);
 				if (d <= 0.0) return Local.Generic_NONE;//"none"
 
 				ulong hours_in_day = (ulong)HoursInDay;
@@ -949,7 +917,7 @@ namespace KERBALISM
 			else
 			{
 				if (double.IsInfinity(d) || double.IsNaN(d)) return Local.Generic_NEVER;//"never"
-				d = Math.Round(d);
+				d = System.Math.Round(d);
 				if (d <= 0.0) return Local.Generic_NONE;//"none"
 
 				double hours_in_day = HoursInDay;
@@ -1116,13 +1084,13 @@ namespace KERBALISM
 		///<summary> Format a value to 2 decimal places, or return 'none' </summary>
 		internal static string HumanReadableAmount(double value, string append = "")
 		{
-			return (Math.Abs(value) <= double.Epsilon ? Local.Generic_NONE : BuildString(value.ToString("F2"), append));//"none"
+			return (System.Math.Abs(value) <= double.Epsilon ? Local.Generic_NONE : BuildString(value.ToString("F2"), append));//"none"
 		}
 
 		///<summary> Format an integer value, or return 'none' </summary>
 		internal static string HumanReadableInteger(uint value, string append = "")
 		{
-			return (Math.Abs(value) <= 0 ? Local.Generic_NONE : BuildString(value.ToString("F0"), append));//"none"
+			return (System.Math.Abs(value) <= 0 ? Local.Generic_NONE : BuildString(value.ToString("F0"), append));//"none"
 		}
 		// Note : config / code base unit for data rate / size is in megabyte (1000^2 bytes)
 		// For UI purposes we use the decimal units (B/kB/MB...), not the binary (1024^2 bytes) units
@@ -1844,8 +1812,8 @@ namespace KERBALISM
 			}
 			var resourceDefinition = reslib[res_name];
 
-			amount = Math.Min(amount, capacity);
-			amount = Math.Max(amount, 0);
+			amount = System.Math.Min(amount, capacity);
+			amount = System.Math.Max(amount, 0);
 			PartResource resource = p.Resources[resourceDefinition.name];
 
 			if (resource == null)
@@ -1900,7 +1868,7 @@ namespace KERBALISM
 			res.maxAmount -= capacity;
 
 			// clamp amount to capacity just in case
-			res.amount = Math.Min(res.amount, res.maxAmount);
+			res.amount = System.Math.Min(res.amount, res.maxAmount);
 
 			// if the resource is empty
 			if (res.maxAmount <= 0.005) //< deal with precision issues
@@ -1928,7 +1896,7 @@ namespace KERBALISM
 			// set capacity and clamp amount
 			var res = p.Resources[res_name];
 			res.maxAmount = capacity;
-			res.amount = Math.Min( res.amount, capacity );
+			res.amount = System.Math.Min( res.amount, capacity );
 		}
 
 		///<summary>note: the resource must exist</summary>
@@ -1944,7 +1912,7 @@ namespace KERBALISM
 			// set capacity and clamp amount
 			var res = p.Resources[res_name];
 			res.maxAmount = capacity;
-			res.amount = Math.Min( amount, capacity );
+			res.amount = System.Math.Min( amount, capacity );
 		}
 
 		/// <summary> Set flow of a resource in the specified part. Does nothing if the resource does not exist in the part </summary>

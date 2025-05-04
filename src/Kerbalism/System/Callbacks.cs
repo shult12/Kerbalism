@@ -196,7 +196,7 @@ namespace KERBALISM
 					continue;
 				}
 
-				double quantity = Math.Min(resources.GetResource(data.from.vessel, res.resourceName).Amount / tot_crew, res.maxAmount);
+				double quantity = System.Math.Min(resources.GetResource(data.from.vessel, res.resourceName).Amount / tot_crew, res.maxAmount);
 				// remove resource from vessel
 				quantity = data.from.RequestResource(res.resourceName, quantity);
 
@@ -281,7 +281,7 @@ namespace KERBALISM
 						if (vesselPropTransferred > 0.0)
 						{
 							transferred = true;
-							propContainer.amount = Math.Min(propContainer.amount + vesselPropTransferred, propContainer.maxAmount);
+							propContainer.amount = System.Math.Min(propContainer.amount + vesselPropTransferred, propContainer.maxAmount);
 						}
 					}
 					evaPropQuantity += propContainer.amount;
@@ -345,10 +345,10 @@ namespace KERBALISM
 
 					foreach (ProtoPartResourceSnapshot propContainer in propContainers)
 					{
-						double stored = Math.Min(propContainer.amount, storageAvailable);
+						double stored = System.Math.Min(propContainer.amount, storageAvailable);
 						storageAvailable -= stored;
 						evaPropOnVessel.Produce(stored, ResourceBroker.Generic);
-						propContainer.amount = Math.Max(propContainer.amount - stored, 0.0);
+						propContainer.amount = System.Math.Max(propContainer.amount - stored, 0.0);
 
 						if (storageAvailable <= 0.0)
 							break;

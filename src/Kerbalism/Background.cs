@@ -349,7 +349,7 @@ namespace KERBALISM
 						{
 							if (c.experienceTrait.Effects.Find(k => k.Name == converter.ExperienceEffect) != null)
 							{
-								exp_level = Math.Max(exp_level, c.experienceLevel);
+								exp_level = System.Math.Max(exp_level, c.experienceLevel);
 							}
 						}
 					}
@@ -398,7 +398,7 @@ namespace KERBALISM
 						{
 							if (c.experienceTrait.Effects.Find(k => k.Name == harvester.ExperienceEffect) != null)
 							{
-								exp_level = Math.Max(exp_level, c.experienceLevel);
+								exp_level = System.Math.Max(exp_level, c.experienceLevel);
 							}
 						}
 					}
@@ -479,7 +479,7 @@ namespace KERBALISM
 							{
 								if (c.experienceTrait.Effects.Find(k => k.Name == asteroid_drill.ExperienceEffect) != null)
 								{
-									exp_level = Math.Max(exp_level, c.experienceLevel);
+									exp_level = System.Math.Max(exp_level, c.experienceLevel);
 								}
 							}
 						}
@@ -607,7 +607,7 @@ namespace KERBALISM
 			double power = Reflection.ReflectionValue<float>(radioisotope_generator, "BasePower");
 			double half_life = Reflection.ReflectionValue<float>(radioisotope_generator, "HalfLife");
 			double mission_time = v.missionTime / (3600.0 * Lib.HoursInDay * Lib.DaysInYear);
-			double remaining = Math.Pow(2.0, (-mission_time) / half_life);
+			double remaining = System.Math.Pow(2.0, (-mission_time) / half_life);
 			ec.Produce(power * remaining * elapsed_s, ResourceBroker.RTG);
 		}
 
@@ -668,7 +668,7 @@ namespace KERBALISM
 						boiloff_rate = Reflection.ReflectionValue<float>(item, "boiloffRate") / 360000.0f;
 
 						// let it boil off
-						fuel.Consume(amount * (1.0 - Math.Pow(1.0 - boiloff_rate, elapsed_s)), ResourceBroker.Boiloff);
+						fuel.Consume(amount * (1.0 - System.Math.Pow(1.0 - boiloff_rate, elapsed_s)), ResourceBroker.Boiloff);
 					}
 				}
 			}

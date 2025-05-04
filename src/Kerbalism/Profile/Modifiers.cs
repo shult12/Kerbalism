@@ -70,7 +70,7 @@ namespace KERBALISM
 						break;
 
 					case "per_capita":
-						k /= (double)Math.Max(vd.CrewCount, 1);
+						k /= (double)System.Math.Max(vd.CrewCount, 1);
 						break;
 
 					default:
@@ -111,7 +111,7 @@ namespace KERBALISM
 						break;
 
 					case "radiation":
-						k *= Math.Max(Radiation.Nominal, (env.landed ? env.surface_rad : env.magnetopause_rad) + va.emitted);
+						k *= System.Math.Max(Radiation.Nominal, (env.landed ? env.surface_rad : env.magnetopause_rad) + va.emitted);
 						break;
 
 					case "shielding":
@@ -143,7 +143,7 @@ namespace KERBALISM
 						break;
 
 					case "per_capita":
-						k /= (double)Math.Max(va.crew_count, 1);
+						k /= (double)System.Math.Max(va.crew_count, 1);
 						break;
 
 					default:

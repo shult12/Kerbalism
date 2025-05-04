@@ -205,8 +205,8 @@ namespace KERBALISM
             // get the body
             this.body = body;
 
-            float lat = (float)(geomagnetic_pole_lat * Math.PI / 180.0);
-            float lon = (float)(geomagnetic_pole_lon * Math.PI / 180.0);
+            float lat = (float)(geomagnetic_pole_lat * System.Math.PI / 180.0);
+            float lon = (float)(geomagnetic_pole_lon * System.Math.PI / 180.0);
 
             float x = Mathf.Cos(lat) * Mathf.Cos(lon);
             float y = Mathf.Sin(lat);
@@ -229,7 +229,7 @@ namespace KERBALISM
 
             // calculate point emitter strength r0 at center of body
             if (radiation_surface > 0)
-                radiation_r0 = radiation_surface * 4 * Math.PI * body.Radius * body.Radius;
+                radiation_r0 = radiation_surface * 4 * System.Math.PI * body.Radius * body.Radius;
         }
 
         string name;            // name of the body
@@ -273,12 +273,12 @@ namespace KERBALISM
         {
             if (solar_cycle <= 0) return 0;
 
-            var t = (solar_cycle_offset + Planetarium.GetUniversalTime()) / solar_cycle * 2 * Math.PI; // Math.Sin/Cos works with radians
+            var t = (solar_cycle_offset + Planetarium.GetUniversalTime()) / solar_cycle * 2 * System.Math.PI; // System.Math.Sin/Cos works with radians
 
             // this gives a pseudo-erratic curve, see https://www.desmos.com/calculator/q5flvzvxia
             // in range -0.15 .. 1.05
-            var r = (-Math.Cos(t) + Math.Sin(t * 75) / 5 + 0.9) / 2.0;
-            if (clamp) r = Lib.Clamp(r, 0.0, 1.0);
+            var r = (-System.Math.Cos(t) + System.Math.Sin(t * 75) / 5 + 0.9) / 2.0;
+            if (clamp) r = Math.Clamp(r, 0.0, 1.0);
             return r;
         }
     }
@@ -617,7 +617,7 @@ namespace KERBALISM
 		internal static double DistanceRadiation(double radiation, double distance)
         {
             // result = radiation / (4 * Pi * r^2)
-            return radiation / Math.Max(1.0, 4 * Math.PI * distance * distance);
+            return radiation / System.Math.Max(1.0, 4 * System.Math.PI * distance * distance);
         }
 
         /// <summary> Returns the radiation emitted by the body at the center, adjusted by solar activity cycle </summary>
@@ -711,7 +711,7 @@ namespace KERBALISM
                         p = gsm.Transform_in(scaled_position);
                         D = mf.Pause_func(p);
 
-                        radiation += Lib.Clamp(D / -0.1332f, 0.0f, 1.0f) * rb.RadiationPause();
+                        radiation += Math.Clamp(D / -0.1332f, 0.0f, 1.0f) * rb.RadiationPause();
 
                         magnetosphere |= D < 0.0f && !Lib.IsSun(rb.body); //< ignore heliopause
                         interstellar |= D > 0.0f && Lib.IsSun(rb.body); //< outside heliopause
@@ -728,7 +728,7 @@ namespace KERBALISM
 						var r1 = DistanceRadiation(r0, distance);
 
 						// clamp to max. surface radiation. when loading on a rescaled system, the vessel can appear to be within the sun for a few ticks
-						radiation += Math.Min(r1, rb.radiation_surface);
+						radiation += System.Math.Min(r1, rb.radiation_surface);
 #if DEBUG_RADIATION
 						if (v.loaded) Logging.Log("Radiation " + v + " from surface of " + body + ": " + Lib.HumanReadableRadiation(radiation) + " gamma: " + Lib.HumanReadableRadiation(r1));
 #endif
@@ -814,8 +814,8 @@ namespace KERBALISM
 
 			// clamp radiation to positive range
 			// note: we avoid radiation going to zero by using a small positive value
-			radiation = Math.Max(radiation, Nominal);
-            shieldedRadiation = Math.Max(shieldedRadiation, Nominal);
+			radiation = System.Math.Max(radiation, Nominal);
+            shieldedRadiation = System.Math.Max(shieldedRadiation, Nominal);
 
 #if DEBUG_RADIATION
 			if (v.loaded) Logging.Log("Radiation " + v + " after clamp: " + Lib.HumanReadableRadiation(radiation) + " shielded " + Lib.HumanReadableRadiation(shieldedRadiation));
@@ -832,7 +832,7 @@ namespace KERBALISM
         /// <param name="gradient">represents how steeply the value will increase</param>
         static double RadiationInBelt(double depth, double scale, double gradient = 1.5)
         {
-            return Lib.Clamp(gradient * -depth / scale, 0.0, 1.0);
+            return Math.Clamp(gradient * -depth / scale, 0.0, 1.0);
         }
 
 		// return the surface radiation for the body specified (used by body info panel)
@@ -890,7 +890,7 @@ namespace KERBALISM
                         gsm = Gsm_space(rb, false);
                         p = gsm.Transform_in(position);
                         D = mf.Pause_func(p);
-                        radiation += Lib.Clamp(D / -0.1332f, 0.0f, 1.0f) * rb.RadiationPause();
+                        radiation += Math.Clamp(D / -0.1332f, 0.0f, 1.0f) * rb.RadiationPause();
                     }
                 }
 
@@ -904,7 +904,7 @@ namespace KERBALISM
 					// Logging.Log("Surface radiation on " + b + " from " + body + ": " + Lib.HumanReadableRadiation(r1) + " distance " + distance);
 
 					// clamp to max. surface radiation. when loading on a rescaled system, the vessel can appear to be within the sun for a few ticks
-					radiation += Math.Min(r1, rb.radiation_surface);
+					radiation += System.Math.Min(r1, rb.radiation_surface);
                 }
 
                 // avoid loops in the chain
@@ -923,7 +923,7 @@ namespace KERBALISM
 			// add surface radiation of the body itself
 			RadiationBody bodyInfo = Info(b);
 			// clamp to max. bodyInfo.radiation_surface to avoid extreme radiation effects while loading a vessel on rescaled systems
-            radiation += Math.Min(bodyInfo.radiation_surface, DistanceRadiation(RadiationR0(bodyInfo), b.Radius));
+            radiation += System.Math.Min(bodyInfo.radiation_surface, DistanceRadiation(RadiationR0(bodyInfo), b.Radius));
 
             // Logging.Log("Radiation on " + b + ": " + Lib.HumanReadableRadiation(radiation) + ", own surface radiation " + Lib.HumanReadableRadiation(DistanceRadiation(RadiationR0(Info(b)), b.Radius)));
 
@@ -931,7 +931,7 @@ namespace KERBALISM
 
             // clamp radiation to positive range
             // note: we avoid radiation going to zero by using a small positive value
-            radiation = Math.Max(radiation, Nominal);
+            radiation = System.Math.Max(radiation, Nominal);
 
             return radiation;
         }
@@ -1004,7 +1004,7 @@ namespace KERBALISM
 		/// </summary>
 		internal static double ShieldingEfficiency(double shielding)
         {
-            return 1 - Math.Pow(1 - PreferencesRadiation.Instance.shieldingEfficiency, Lib.Clamp(shielding, 0.0, 1.0));
+            return 1 - System.Math.Pow(1 - PreferencesRadiation.Instance.shieldingEfficiency, Math.Clamp(shielding, 0.0, 1.0));
         }
 
         static Dictionary<string, RadiationModel> models = new Dictionary<string, RadiationModel>(16);
