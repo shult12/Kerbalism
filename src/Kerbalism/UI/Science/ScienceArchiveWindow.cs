@@ -132,9 +132,9 @@ namespace KERBALISM
 
 		static void Update()
 		{
-			if (Lib.IsEditor())
+			if (GameLogic.IsEditor())
 				vesselParts = EditorLogic.fetch.ship.Parts;
-			else if (Lib.IsFlight())
+			else if (GameLogic.IsFlight())
 				vesselParts = FlightGlobals.ActiveVessel?.Parts;
 			else
 				vesselParts = null;

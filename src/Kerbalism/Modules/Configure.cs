@@ -57,7 +57,7 @@ namespace KERBALISM
 		public override void OnStart(StartState state)
 		{
 			// don't break tutorial scenarios
-			if (Lib.DisableScenario(this)) return;
+			if (GameLogic.DisableScenario(this)) return;
 
 			// parse all setups from string data
 			var archive = new ReadArchive(data);
@@ -96,7 +96,7 @@ namespace KERBALISM
 			Events["ToggleWindow"].guiName = Lib.BuildString(Local.Module_Configure, " <b>", title, "</b>");//"Configure"
 
 			// only show toggle in flight if this is reconfigurable
-			Events["ToggleWindow"].active = Lib.IsEditor() || reconfigure_cs;
+			Events["ToggleWindow"].active = GameLogic.IsEditor() || reconfigure_cs;
 
 			// store configuration changes
 			changes = new Dictionary<int, int>();
@@ -195,7 +195,7 @@ namespace KERBALISM
 			// this also create default configuration
 			// - we do it only in the editor
 			// - we avoid corner case when cfg was never set up (because craft was never in VAB)
-			if (Lib.IsEditor() || selected.Count == 0)
+			if (GameLogic.IsEditor() || selected.Count == 0)
 			{
 				while (selected.Count < System.Math.Min(slots, (uint)unlocked.Count))
 				{
@@ -273,7 +273,7 @@ namespace KERBALISM
 
 							// add the resources
 							// - in flight, do not add amount
-							Lib.AddResource(part, cr.name, Lib.IsFlight() ? 0.0 : amount * count, capacity * count);
+							Lib.AddResource(part, cr.name, GameLogic.IsFlight() ? 0.0 : amount * count, capacity * count);
 						}
 					}
 
@@ -306,7 +306,7 @@ namespace KERBALISM
 			prev_cfg = archive.Serialize();
 
 			// in the editor
-			if (Lib.IsEditor())
+			if (GameLogic.IsEditor())
 			{
 				// for each part in the symmetry group (avoid infinite recursion)
 				if (!avoid_inf_recursion && symmetric)
@@ -331,7 +331,7 @@ namespace KERBALISM
 			MonoUtilities.RefreshContextWindows(part);
 
 			// refresh VAB ui
-			if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+			if (GameLogic.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
 
 			Callbacks.onConfigure.Fire(part, this);
 
@@ -351,7 +351,7 @@ namespace KERBALISM
 			// - in the editor
 		    // - if we don't propagate the configure setup to symmetry counterparts
 			// - if there are symmetry counterparts
-			if (!Lib.IsEditor() || symmetric || part.symmetryCounterparts.Count == 0) return;
+			if (!GameLogic.IsEditor() || symmetric || part.symmetryCounterparts.Count == 0) return;
 
 			// only if the resource is visible/tweakeable
 			PartResourceDefinition res = PartResourceLibrary.Instance.GetDefinition(resName);
@@ -392,7 +392,7 @@ namespace KERBALISM
 		public void ToggleWindow()
 		{
 			// in flight
-			if (Lib.IsFlight())
+			if (GameLogic.IsFlight())
 			{
 				// disable for dead eva kerbals
 				Vessel v = FlightGlobals.ActiveVessel;
@@ -542,7 +542,7 @@ namespace KERBALISM
 		void Window_body(Panel p)
 		{
 			// outside the editor
-			if (!Lib.IsEditor())
+			if (!GameLogic.IsEditor())
 			{
 				// if part doesn't exist anymore
 				if (part.flightID == 0 || FlightGlobals.FindPartByID(part.flightID) == null) return;

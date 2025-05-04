@@ -142,7 +142,7 @@ namespace KERBALISM
 		internal void OnPartWillDie(Part p)
 		{
 			// do nothing in the editor
-			if (Lib.IsEditor())
+			if (GameLogic.IsEditor())
 				return;
 
 			// remove part from vesseldata

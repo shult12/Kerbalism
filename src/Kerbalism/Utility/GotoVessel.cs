@@ -10,7 +10,7 @@ namespace KERBALISM
 			// Keep until 3 backups of Goto
 			if (version++ > 3) version = 0;
 
-			if (Lib.IsFlight())
+			if (GameLogic.IsFlight())
 			{
 				FlightGlobals.SetActiveVessel(v);
 			}

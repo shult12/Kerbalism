@@ -43,7 +43,7 @@ namespace KERBALISM
 			}
 
 			// refresh VAB/SPH ui
-			if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+			if (GameLogic.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
 		}
 
 		[KSPAction("_")] public void Action(KSPActionParam param) { Toggle(); }
@@ -62,7 +62,7 @@ namespace KERBALISM
 		void Start()
 		{
 			// don't break tutorial scenarios
-			if (Lib.DisableScenario(this))
+			if (GameLogic.DisableScenario(this))
 				return;
 
 			if (slots > MAX_SLOTS)
@@ -173,7 +173,7 @@ namespace KERBALISM
 			Events["Toggle"].active = slots > 0 || cureEverybody;
 			Events["Toggle"].guiName = Lib.StatusToggle(title, running ? Local.Sickbay_running : Local.Sickbay_stopped);//"running""stopped"
 
-			if (!Lib.IsFlight())
+			if (!GameLogic.IsFlight())
 				return;
 
 			int i;

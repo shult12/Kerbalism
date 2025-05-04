@@ -56,7 +56,7 @@ namespace KERBALISM
 		void Start()
 		{
 			// don't break tutorial scenarios
-			if (Lib.DisableScenario(this))
+			if (GameLogic.DisableScenario(this))
 				return;
 
 			// configure on start, must be executed with enabled true on parts first load.
@@ -73,7 +73,7 @@ namespace KERBALISM
 			// whatever the setting is on the loaded craft. This isn't really fixable without
 			// implementing a vessel-level persistence mechanism for ShipConstructs.
 			Process process = Profile.processes.Find(x => x.modifiers.Contains(resource));
-			if (Lib.IsEditor() || vessel == null)
+			if (GameLogic.IsEditor() || vessel == null)
 			{
 				dumpValve = process.defaultDumpValve;
 				if (persistentValveIndex > -1)
@@ -158,7 +158,7 @@ namespace KERBALISM
 			dumpValve.NextValve();
 
 			// refresh VAB/SPH ui
-			if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+			if (GameLogic.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
 		}
 
 		internal void SetRunning(bool value)
@@ -171,7 +171,7 @@ namespace KERBALISM
 			Lib.SetProcessEnabledDisabled(part, resource, running, capacity);
 
 			// refresh VAB/SPH ui
-			if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+			if (GameLogic.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
 		}
 
 		// action groups

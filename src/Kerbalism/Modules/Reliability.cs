@@ -50,7 +50,7 @@ namespace KERBALISM
 		public override void OnStart(StartState state)
 		{
 			// don't break tutorial scenarios
-			if (Lib.DisableScenario(this)) return;
+			if (GameLogic.DisableScenario(this)) return;
 
 			Fields["Status"].guiName = title;
 #if DEBUG_RELIABILITY
@@ -58,7 +58,7 @@ namespace KERBALISM
 #endif
 
 			// do nothing in the editors and when compiling parts
-			if (!Lib.IsFlight()) return;
+			if (!GameLogic.IsFlight()) return;
 
 			if (last_inspection <= 0) last_inspection = Planetarium.GetUniversalTime();
 
@@ -198,7 +198,7 @@ namespace KERBALISM
 
 		void Update()
 		{
-			if (Lib.IsFlight())
+			if (GameLogic.IsFlight())
 			{
 				// enforce state
 				// - required as things like Configure or AnimationGroup can re-enable broken modules
@@ -322,7 +322,7 @@ namespace KERBALISM
 		void FixedUpdate()
 		{
 			// do nothing in the editor
-			if (Lib.IsEditor()) return;
+			if (GameLogic.IsEditor()) return;
 
 			var now = Planetarium.GetUniversalTime();
 
@@ -502,7 +502,7 @@ namespace KERBALISM
 			}
 
 			// refresh VAB/SPH ui
-			if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+			if (GameLogic.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
 		}
 
 		[KSPEvent(guiActiveUnfocused = true, unfocusedRange = 3.5f, guiName = "_", active = false, groupName = "Reliability", groupDisplayName = "#KERBALISM_Group_Reliability")]//Reliability

@@ -32,7 +32,7 @@ namespace KERBALISM
 		public override void OnStart(StartState state)
 		{
 			// don't break tutorial scenarios & do something only in Flight scenario
-			if (Lib.DisableScenario(this) || !Lib.IsFlight()) return;
+			if (GameLogic.DisableScenario(this) || !GameLogic.IsFlight()) return;
 
 			// cache list of modules
 			module = part.FindModulesImplementing<PartModule>().FindLast(k => k.moduleName == type);
@@ -55,7 +55,7 @@ namespace KERBALISM
 
 		public override void OnUpdate()
 		{
-			if (!Lib.IsFlight() || module == null) return;
+			if (!GameLogic.IsFlight() || module == null) return;
 
 			// get energy from cache
 			resources = ResourceCache.GetResource(vessel, "ElectricCharge");
@@ -96,7 +96,7 @@ namespace KERBALISM
 
 		void FixedUpdate()
 		{
-			if (!Lib.IsFlight() || module == null) return;
+			if (!GameLogic.IsFlight() || module == null) return;
 
 			if (isBroken)
 			{

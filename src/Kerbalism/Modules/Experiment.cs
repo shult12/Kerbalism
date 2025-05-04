@@ -204,7 +204,7 @@ namespace KERBALISM
 			Actions["StartAction"].guiName = Local.Generic_START + ": " + ExpInfo.Title;
 			Actions["StopAction"].guiName = Local.Generic_STOP + ": " + ExpInfo.Title;
 
-			if (Lib.IsFlight())
+			if (GameLogic.IsFlight())
 			{
 				foreach (var hd in part.FindModulesImplementing<HardDrive>())
 				{
@@ -263,7 +263,7 @@ namespace KERBALISM
 				return;
 
 			// in flight
-			if (Lib.IsFlight())
+			if (GameLogic.IsFlight())
 			{
 				VesselData vd = vessel.KerbalismData();
 				if (!vd.IsSimulated) return;
@@ -299,7 +299,7 @@ namespace KERBALISM
 				Events["Reset"].active = resetActive;
 			}
 			// in the editor
-			else if (Lib.IsEditor())
+			else if (GameLogic.IsEditor())
 			{
 				// update ui
 				Events["ToggleEvent"].guiName = Lib.StatusToggle(ExpInfo.Title, StatusInfo(status, issue));
@@ -313,7 +313,7 @@ namespace KERBALISM
 			UnityEngine.Profiling.Profiler.BeginSample("Kerbalism.Experiment.FixedUpdate");
 
 			// basic sanity checks
-			if (Lib.IsEditor())
+			if (GameLogic.IsEditor())
 			{
 				UnityEngine.Profiling.Profiler.EndSample();
 				return;
@@ -685,7 +685,7 @@ namespace KERBALISM
 			if (State == RunningState.Broken)
 				return State;
 
-			if (Lib.IsEditor())
+			if (GameLogic.IsEditor())
 			{
 				if (Running)
 				{
@@ -717,7 +717,7 @@ namespace KERBALISM
 				return State;
 			}
 
-			if (Lib.IsFlight() && !vessel.IsControllable)
+			if (GameLogic.IsFlight() && !vessel.IsControllable)
 				return State;
 
 			// nervous clicker? wait for it, goddamnit.
@@ -1204,7 +1204,7 @@ namespace KERBALISM
 		// IPartMassModifier
 		public float GetModuleMass(float defaultMass, ModifierStagingSituation sit)
 		{
-			if (Lib.IsEditor())
+			if (GameLogic.IsEditor())
 			{
 				if (ExpInfo != null && ExpInfo.SampleMass > 0.0 && !sample_collecting)
 				{

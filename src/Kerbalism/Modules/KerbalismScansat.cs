@@ -21,8 +21,8 @@ namespace KERBALISM
 
 		public override void OnStart(StartState state)
 		{
-			if (Lib.DisableScenario(this)) return;
-			if (Lib.IsEditor()) return;
+			if (GameLogic.DisableScenario(this)) return;
+			if (GameLogic.IsEditor()) return;
 
 			foreach(var module in part.Modules)
 			{

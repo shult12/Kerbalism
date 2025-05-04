@@ -26,7 +26,7 @@ namespace KERBALISM
 		public override void OnStart(StartState state)
 		{
 			// don't break tutorial scenarios
-			if (Lib.DisableScenario(this)) return;
+			if (GameLogic.DisableScenario(this)) return;
 
 			// update RMB ui
 			if (string.IsNullOrEmpty(title))
@@ -73,7 +73,7 @@ namespace KERBALISM
 
 			List<Habitat> habitats;
 
-			if (Lib.IsEditor())
+			if (GameLogic.IsEditor())
 			{
 				habitats = new List<Habitat>();
 
@@ -189,7 +189,7 @@ namespace KERBALISM
 			active_anim.Play(running, false);
 
 			// refresh VAB/SPH ui
-			if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+			if (GameLogic.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
 		}
 
 

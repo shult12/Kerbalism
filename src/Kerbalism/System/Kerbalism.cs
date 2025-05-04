@@ -252,7 +252,7 @@ namespace KERBALISM
 			Misc.ClearLocks();
 
 			// do nothing if paused
-			if (Lib.IsPaused())
+			if (GameLogic.IsPaused())
 				return;
 
 			// convert elapsed time to double only once

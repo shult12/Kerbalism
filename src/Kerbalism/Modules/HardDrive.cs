@@ -42,9 +42,9 @@ namespace KERBALISM
 		public override void OnStart(StartState state)
 		{
 			// don't break tutorial scenarios
-			if (Lib.DisableScenario(this)) return;
+			if (GameLogic.DisableScenario(this)) return;
 
-			if (Lib.IsEditor())
+			if (GameLogic.IsEditor())
 			{
 				if (effectiveDataCapacity == -1.0)
 					effectiveDataCapacity = dataCapacity;
@@ -99,11 +99,11 @@ namespace KERBALISM
 				}
 			}
 
-			if (Lib.IsFlight() && hdId == 0) hdId = part.flightID;
+			if (GameLogic.IsFlight() && hdId == 0) hdId = part.flightID;
 
 			if (drive == null)
 			{
-				if (!Lib.IsFlight())
+				if (!GameLogic.IsFlight())
 				{
 					drive = new Drive(title, effectiveDataCapacity, effectiveSampleCapacity, !string.IsNullOrEmpty(experiment_id));
 				}
@@ -151,7 +151,7 @@ namespace KERBALISM
 			if (drive == null)
 				return;
 
-			if (Lib.IsEditor())
+			if (GameLogic.IsEditor())
 			{
 				bool update = false;
 				if(dataCapacities != null)
@@ -187,7 +187,7 @@ namespace KERBALISM
 				}
 			}
 
-			if (part.IsPAWVisible() && Lib.IsFlight())
+			if (part.IsPAWVisible() && GameLogic.IsFlight())
 			{
 				// show DATA UI button, with size info
 				Events["ToggleUI"].guiName = Lib.StatusToggle(Local.HardDrive_Data, drive.Empty() ? Local.HardDrive_Dataempty : drive.Size());//"Data""empty"
@@ -235,7 +235,7 @@ namespace KERBALISM
 			double availableDataCapacity = effectiveDataCapacity;
 			int availableSlots = effectiveSampleCapacity;
 
-			if (Lib.IsFlight())
+			if (GameLogic.IsFlight())
 			{
 				availableDataCapacity = drive.FileCapacityAvailable();
 				availableSlots = Lib.SampleSizeToSlots(drive.SampleCapacityAvailable());
@@ -250,7 +250,7 @@ namespace KERBALISM
 				Capacity += Lib.HumanReadableSampleSize(availableSlots);
 			}
 
-			if(Lib.IsFlight() && totalSampleMass > double.Epsilon)
+			if(GameLogic.IsFlight() && totalSampleMass > double.Epsilon)
 			{
 				Capacity += " " + Lib.HumanReadableMass(totalSampleMass);
 			}

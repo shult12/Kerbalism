@@ -174,7 +174,7 @@ namespace KERBALISM
 			if (SolarPanel == null && !GetSolarPanelModule())
 				return;
 
-			if (Lib.IsEditor()) return;
+			if (GameLogic.IsEditor()) return;
 
 			// apply states changes we have done trough automation
 			if ((state == PanelState.Retracted || state == PanelState.Extended || state == PanelState.ExtendedFixed) && state != SolarPanel.GetState())
@@ -195,7 +195,7 @@ namespace KERBALISM
 
 			// don't break tutorial scenarios
 			// TODO : does this actually work ?
-			if (Lib.DisableScenario(this)) return;
+			if (GameLogic.DisableScenario(this)) return;
 
 			if (SolarPanel == null && !GetSolarPanelModule())
 			{
@@ -212,7 +212,7 @@ namespace KERBALISM
 			if (!prefabDefinesTimeEfficCurve)
 				timeEfficCurve = SolarPanel.GetTimeCurve();
 
-			if (Lib.IsFlight() && launchUT < 0.0)
+			if (GameLogic.IsFlight() && launchUT < 0.0)
 				launchUT = Planetarium.GetUniversalTime();
 
 			// setup star selection GUI
@@ -232,7 +232,7 @@ namespace KERBALISM
 		public override void OnSave(ConfigNode node)
 		{
 			// vessel can be null in OnSave (ex : on vessel creation)
-			if (!Lib.IsFlight()
+			if (!GameLogic.IsFlight()
 				|| vessel == null
 				|| !isInitialized
 				|| SolarPanel == null
@@ -261,7 +261,7 @@ namespace KERBALISM
 			SolarPanel.OnUpdate();
 
 			// Do nothing else in the editor
-			if (Lib.IsEditor()) return;
+			if (GameLogic.IsEditor()) return;
 
 			// Don't update PAW if not needed
 			if (!part.IsPAWVisible()) return;
@@ -380,7 +380,7 @@ namespace KERBALISM
 			}
 
 			// Keep resetting launchUT in prelaunch state. It is possible for that value to come from craft file which could result in panels being degraded from the start.
-			if (Lib.IsFlight() && vessel != null && vessel.situation == Vessel.Situations.PRELAUNCH)
+			if (GameLogic.IsFlight() && vessel != null && vessel.situation == Vessel.Situations.PRELAUNCH)
 				launchUT = Planetarium.GetUniversalTime();
 
 			// can't produce anything if not deployed, broken, etc
@@ -388,7 +388,7 @@ namespace KERBALISM
 			if (state != newState)
 			{
 				state = newState;
-				if (Lib.IsEditor() && (newState == PanelState.Extended || newState == PanelState.ExtendedFixed || newState == PanelState.Retracted))
+				if (GameLogic.IsEditor() && (newState == PanelState.Extended || newState == PanelState.ExtendedFixed || newState == PanelState.Retracted))
 					Lib.RefreshPlanner();
 			}
 
@@ -401,7 +401,7 @@ namespace KERBALISM
 			}
 
 			// do nothing else in editor
-			if (Lib.IsEditor())
+			if (GameLogic.IsEditor())
 			{
 				UnityEngine.Profiling.Profiler.EndSample();
 				return;
@@ -1394,7 +1394,7 @@ namespace KERBALISM
 						nominalRate = newNominalrate;
 						// reset the rate sum in the SSTU module. This won't prevent SSTU from generating EC, but this way we can keep track of what we did
 						// don't doit in the editor as it isn't needed and we need it in case of variant switching
-						if (Lib.IsFlight()) Reflection.ReflectionValue(solarModuleSSTU, "standardPotentialOutput", 0f); 
+						if (GameLogic.IsFlight()) Reflection.ReflectionValue(solarModuleSSTU, "standardPotentialOutput", 0f); 
 					}
 
 					panels = new List<SSTUPanelData>();
@@ -1415,7 +1415,7 @@ namespace KERBALISM
 						for (int i = 0; i < suncatchersCount; i++)
 						{
 							object suncatcher = suncatchers[i];
-							if (Lib.IsFlight()) Reflection.ReflectionValue(suncatcher, "resourceRate", 0f); // actually prevent SSTU modules from generating EC, but not in the editor
+							if (GameLogic.IsFlight()) Reflection.ReflectionValue(suncatcher, "resourceRate", 0f); // actually prevent SSTU modules from generating EC, but not in the editor
 							panelData.suncatchers[i] = new SSTUPanelData.SSTUSunCatcher();
 							panelData.suncatchers[i].objectRef = suncatcher; // keep a reference to the original suncatcher instance, for raycast hit acquisition
 							panelData.suncatchers[i].transform = Reflection.ReflectionValue<Transform>(suncatcher, "suncatcher"); // get suncatcher transform
@@ -1534,7 +1534,7 @@ namespace KERBALISM
 				{
 #endif
 					// handle solar panel variant switching in SSTUModularPart
-					if (Lib.IsEditor() && panelModule.ClassName == "SSTUModularPart")
+					if (GameLogic.IsEditor() && panelModule.ClassName == "SSTUModularPart")
 					{
 						string newVariant = Reflection.ReflectionValue<string>(panelModule, "currentSolar");
 						if (newVariant != currentModularVariant)
@@ -1591,7 +1591,7 @@ namespace KERBALISM
 				// We set the resHandler rate to 0 in StockPanel.OnStart(), and ModuleROSolar set it back
 				// to the new nominal rate after some switching/resizing has been done (see ModuleROSolar.RecalculateStats()),
 				// so don't complicate things by using events and just call StockPanel.OnStart() if we detect a non-zero rate.
-				if (Lib.IsEditor() && panelModule.resHandler.outputResources[0].rate != 0.0)
+				if (GameLogic.IsEditor() && panelModule.resHandler.outputResources[0].rate != 0.0)
 					OnStart(false, ref fixerModule.nominalRate);
 
 				return base.GetState();

@@ -61,7 +61,7 @@ namespace KERBALISM
 		public override void OnStart(StartState state)
 		{
 			// don't break tutorial scenarios
-			if (Lib.DisableScenario(this)) return;
+			if (GameLogic.DisableScenario(this)) return;
 
 			// create animators
 			if (shutters.Length > 0) shutters_anim = new Animator(part, shutters);
@@ -92,12 +92,12 @@ namespace KERBALISM
 			// set lamps emissive object
 			if (lamps_rdr != null)
 			{
-				float intensity = Lib.IsFlight() ? (active ? (float)(artificial / light_tolerance) : 0.0f) : (active ? 1.0f : 0.0f);
+				float intensity = GameLogic.IsFlight() ? (active ? (float)(artificial / light_tolerance) : 0.0f) : (active ? 1.0f : 0.0f);
 				lamps_rdr.material.SetColor("_EmissiveColor", new Color(intensity, intensity, intensity, 1.0f));
 			}
 
 			// in flight
-			if (Lib.IsFlight())
+			if (GameLogic.IsFlight())
 			{
 				// still-play plants animation
 				if (plants_anim != null) plants_anim.Still(growth);
@@ -131,7 +131,7 @@ namespace KERBALISM
 		void FixedUpdate()
 		{
 			// do nothing in the editor
-			if (Lib.IsEditor()) return;
+			if (GameLogic.IsEditor()) return;
 
 			// if enabled and not ready for harvest
 			if (active && growth < 0.99)
@@ -372,7 +372,7 @@ namespace KERBALISM
 			if (shutters_anim != null) shutters_anim.Play(deactivating ^ animBackwards, false);
 
 			// refresh VAB/SPH ui
-			if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+			if (GameLogic.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
 		}
 
 		[KSPEvent(guiActive = true, guiActiveUnfocused = true, guiName = "#KERBALISM_Greenhouse_Harvest", active = false, groupName = "Greenhouse", groupDisplayName = "#KERBALISM_Group_Greenhouse")]//Greenhouse

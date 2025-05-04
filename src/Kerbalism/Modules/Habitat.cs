@@ -141,7 +141,7 @@ namespace KERBALISM
 		public override void OnStart(StartState state)
         {
             // don't break tutorial scenarios
-            if (Lib.DisableScenario(this)) return;
+            if (GameLogic.DisableScenario(this)) return;
 
             // check if has Connected Living Space mod
             hasCLS = Lib.HasAssembly("ConnectedLivingSpace");
@@ -203,7 +203,7 @@ namespace KERBALISM
                 UpdateIVA(System.Math.Truncate(System.Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 <= ResourceBalance.precision);
             }
 
-            if (Lib.IsFlight())
+            if (GameLogic.IsFlight())
             {
                 // For fix IVA when crewTransfered occur, add event to define flag for FixedUpdate
                 GameEvents.onCrewTransferred.Add(UpdateCrew);
@@ -287,7 +287,7 @@ namespace KERBALISM
         State Depressurizing()
         {
             // in flight
-            if (Lib.IsFlight())
+            if (GameLogic.IsFlight())
             {
                 // All module are empty
                 bool cond1 = true;
@@ -323,7 +323,7 @@ namespace KERBALISM
         State Pressurizing()
         {
             // in flight
-            if (Lib.IsFlight())
+            if (GameLogic.IsFlight())
             {
                 // full pressure the level is 99.9999% deployed or more
                 if (System.Math.Truncate(System.Math.Abs((perctDeployed + ResourceBalance.precision) - 1.0) * 100000) / 100000 <= ResourceBalance.precision)
@@ -426,7 +426,7 @@ namespace KERBALISM
                 state = State.pressurizing;
 
                 // Equalize run only in Flight mode
-                needEqualize = Lib.IsFlight();
+                needEqualize = GameLogic.IsFlight();
             }
 
             perctDeployed = Lib.Level(part, "Atmosphere", true);
@@ -510,7 +510,7 @@ namespace KERBALISM
 
 				// GOT 12-2020 : Disabling ability to disable habs due to pressurization bugs that I'm not willing to investigate
                 case State.enabled:
-					if (Lib.IsFlight())
+					if (GameLogic.IsFlight())
 						break;
 
 					Set_flow(false);
@@ -522,7 +522,7 @@ namespace KERBALISM
             }
 
             // refresh VAB/SPH ui
-            if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+            if (GameLogic.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
         }
 
 		// action groups
@@ -620,7 +620,7 @@ namespace KERBALISM
             if (HighLogic.LoadedSceneIsEditor)
             {
                 GameEvents.onEditorPartEvent.Fire(ConstructionEventType.PartTweaked, part);
-                if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+                if (GameLogic.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
             }
             else if (HighLogic.LoadedSceneIsFlight)
             {
@@ -657,7 +657,7 @@ namespace KERBALISM
         // Enable/Disable IVA
         void UpdateIVA(bool ative)
         {
-            if (Lib.IsFlight())
+            if (GameLogic.IsFlight())
             {
                 if (vessel.isActiveVessel)
                 {

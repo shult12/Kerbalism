@@ -50,14 +50,14 @@ namespace KERBALISM
 		public override void OnStart(StartState state)
 		{
 			// don't break tutorial scenarios
-			if (Lib.DisableScenario(this)) return;
+			if (GameLogic.DisableScenario(this)) return;
 
 			// set UI text
 			Actions["Action"].guiName = Local.Laboratory_Action;
 			Events["CleanExperiments"].guiName = Local.Laboratory_Clean;
 
 			// do nothing in the editors and when compiling parts
-			if (!Lib.IsFlight()) return;
+			if (!GameLogic.IsFlight()) return;
 
 			// parse crew specs
 			researcher_cs = new CrewSpecs(researcher);
@@ -68,7 +68,7 @@ namespace KERBALISM
 			if (!part.IsPAWVisible())
 				return;
 
-			if (Lib.IsFlight())
+			if (GameLogic.IsFlight())
 			{
 				// get status text
 				SetStatusText();
@@ -84,7 +84,7 @@ namespace KERBALISM
 		void FixedUpdate()
 		{
 			// do nothing in the editor
-			if (Lib.IsEditor()) return;
+			if (GameLogic.IsEditor()) return;
 
 			// if enabled
 			if (running)
@@ -177,7 +177,7 @@ namespace KERBALISM
 			running = !running;
 
 			// refresh VAB/SPH ui
-			if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+			if (GameLogic.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
 		}
 
 		[KSPEvent(guiActive = true, guiActiveEditor = false, guiName = "#KERBALISM_Laboratory_Clean", active = true, groupName = "Science", groupDisplayName = "#KERBALISM_Group_Science")]//Clean Lab""Science

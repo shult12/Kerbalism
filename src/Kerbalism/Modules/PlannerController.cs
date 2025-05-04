@@ -14,9 +14,9 @@ namespace KERBALISM
 		public override void OnStart(StartState state)
 		{
 			// don't break tutorial scenarios
-			if (Lib.DisableScenario(this)) return;
+			if (GameLogic.DisableScenario(this)) return;
 
-			if (Lib.IsEditor())
+			if (GameLogic.IsEditor())
 			{
 				Events["Toggle"].active = toggle;
 			}
@@ -45,7 +45,7 @@ namespace KERBALISM
 			considered = !considered;
 
 			// refresh VAB/SPH ui
-			if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+			if (GameLogic.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
 		}
 	}
 

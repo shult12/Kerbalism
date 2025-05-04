@@ -20,7 +20,7 @@ namespace KERBALISM
 		public override void OnStart(StartState state)
 		{
 			// don't break tutorial scenarios
-			if (Lib.DisableScenario(this)) return;
+			if (GameLogic.DisableScenario(this)) return;
 
 			// create animator
 			pin_anim = new Animator(part, pin);
@@ -33,7 +33,7 @@ namespace KERBALISM
 		void Update()
 		{
 			// in flight
-			if (Lib.IsFlight())
+			if (GameLogic.IsFlight())
 			{
 				// get info from cache
 				VesselData vd = vessel.KerbalismData();

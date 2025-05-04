@@ -83,7 +83,7 @@ namespace KERBALISM
 				{
 					foreach (File file in drive.Value.files.Values)
 					{
-						Render_file(p, drive.Key, file, drive.Value, short_strings && Lib.IsFlight(), v);
+						Render_file(p, drive.Key, file, drive.Value, short_strings && GameLogic.IsFlight(), v);
 					}
 				}
 
@@ -100,7 +100,7 @@ namespace KERBALISM
 				{
 					foreach (Sample sample in drive.Value.samples.Values)
 					{
-						Render_sample(p, drive.Key, sample, drive.Value, short_strings && Lib.IsFlight());
+						Render_sample(p, drive.Key, sample, drive.Value, short_strings && GameLogic.IsFlight());
 					}
 				}
 

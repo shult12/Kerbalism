@@ -37,7 +37,7 @@ namespace KERBALISM
 		public override void OnStart(StartState state)
 		{
 			// don't break tutorial scenarios
-			if (Lib.DisableScenario(this)) return;
+			if (GameLogic.DisableScenario(this)) return;
 
 			// get animations
 			deploy_anim = new Animator(part, deploy);
@@ -163,7 +163,7 @@ namespace KERBALISM
 			}
 
 			// in flight
-			if (Lib.IsFlight())
+			if (GameLogic.IsFlight())
 			{
 				// if deployed
 				if (deployed)
@@ -220,7 +220,7 @@ namespace KERBALISM
 		void FixedUpdate()
 		{
 			// do nothing in the editor
-			if (Lib.IsEditor()) return;
+			if (GameLogic.IsEditor()) return;
 
 			// if has any animation playing, consume energy.
 			if (Is_consuming_energy())
@@ -269,7 +269,7 @@ namespace KERBALISM
 			}
 
 			// refresh VAB/SPH ui
-			if (Lib.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
+			if (GameLogic.IsEditor()) GameEvents.onEditorShipModified.Fire(EditorLogic.fetch.ship);
 		}
 
 		// action groups

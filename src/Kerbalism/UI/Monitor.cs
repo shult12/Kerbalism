@@ -144,7 +144,7 @@ namespace KERBALISM
 
 		internal float Width()
 		{
-			//if ((page == MonitorPage.data || page == MonitorPage.log || selected_id == Guid.Empty) && !Lib.IsFlight())
+			//if ((page == MonitorPage.data || page == MonitorPage.log || selected_id == Guid.Empty) && !GameLogic.IsFlight())
 			//	return Styles.ScaleWidthFloat(465.0f);
 			//return Styles.ScaleWidthFloat(355.0f);
 			return Styles.ScaleWidthFloat(370.0f);
@@ -214,7 +214,7 @@ namespace KERBALISM
 			p.AddHeader
 			(
 			  Lib.BuildString("<b>",
-			  Lib.Ellipsis(vessel_name, Styles.ScaleStringLength(((page == MonitorPage.data || page == MonitorPage.log || selected_id == Guid.Empty) && !Lib.IsFlight()) ? 45 : 25)),
+			  Lib.Ellipsis(vessel_name, Styles.ScaleStringLength(((page == MonitorPage.data || page == MonitorPage.log || selected_id == Guid.Empty) && !GameLogic.IsFlight()) ? 45 : 25)),
 			  "</b> <size=", Styles.ScaleInteger(9).ToString(), ">", Lib.Color(Lib.Ellipsis(body_name, Styles.ScaleStringLength(8)), Lib.Kolor.LightGrey), "</size>"),
 			  string.Empty,
 			  () => { selected_id = selected_id != v.id ? v.id : Guid.Empty; }
@@ -227,7 +227,7 @@ namespace KERBALISM
 			{
 				if (FlightGlobals.ActiveVessel != v)
 				{
-					if (Lib.IsFlight())
+					if (GameLogic.IsFlight())
 					{
 						p.SetLeftIcon(GetVesselTypeIcon(v.vesselType), Local.Monitor_Gotovessel, () => Lib.Popup//"Go to vessel!"
 						(Local.Monitor_Warning_title,//"Warning!"
