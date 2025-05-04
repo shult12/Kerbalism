@@ -106,7 +106,7 @@ namespace KERBALISM
 
 		public static void ModuleManagerPostLoad() //needs to be public so it's called by Module Manager
 		{
-			Lib.LoadResourceUnitInfo();
+			ResourceUnitInfo.LoadResourceUnitInfo();
 		}
 
 		void SaveHabitatData()

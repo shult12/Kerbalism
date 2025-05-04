@@ -442,7 +442,7 @@ namespace KERBALISM
 			specs.Add(Local.Greenhouse_info3, Lib.HumanReadableFlux(light_tolerance));//"Lighting tolerance"
 			if (pressure_tolerance > double.Epsilon) specs.Add(Local.Greenhouse_info4, Lib.HumanReadablePressure(Sim.PressureAtSeaLevel() * pressure_tolerance));//"Pressure tolerance"
 			if (radiation_tolerance > double.Epsilon) specs.Add(Local.Greenhouse_info5, Lib.HumanReadableRadiation(radiation_tolerance));//"Radiation tolerance"
-			specs.Add(Local.Greenhouse_info6, Lib.HumanOrSIRate(ec_rate, Lib.ECResID));//"Lamps EC rate"
+			specs.Add(Local.Greenhouse_info6, Lib.HumanOrSIRate(ec_rate, ResourceUnitInfo.ECResID));//"Lamps EC rate"
 			specs.Add(string.Empty);
 			specs.Add("<color=#00ffff>" + Local.Greenhouse_info7 + "</color>");//Required resources
 

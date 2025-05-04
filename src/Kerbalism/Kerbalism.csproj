@@ -159,6 +159,7 @@
     <Compile Include="Lib\Math.cs" />
     <Compile Include="Lib\Parse.cs" />
     <Compile Include="Lib\Reflection.cs" />
+    <Compile Include="Lib\ResourceUnitInfo.cs" />
     <Compile Include="LocalizationCache.cs" />
     <Compile Include="Lib\Logging.cs" />
     <Compile Include="Modules\AntennaDataTransmitterRemoteTech.cs" />

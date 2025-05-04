@@ -252,7 +252,7 @@ namespace KERBALISM
 			// NOTE: we aren't using SI here.
 			specs.Add(Local.Harvester_info5, Lib.HumanReadableRate(rate));//"extraction rate"
 			specs.Add(Local.Harvester_info6, Lib.HumanReadablePerc(abundance_rate, "F2"));//"at abundance"
-			if (ec_rate > double.Epsilon) specs.Add(Local.Harvester_info7, Lib.HumanOrSIRate(ec_rate, Lib.ECResID));//"ec consumption"
+			if (ec_rate > double.Epsilon) specs.Add(Local.Harvester_info7, Lib.HumanOrSIRate(ec_rate, ResourceUnitInfo.ECResID));//"ec consumption"
 			return specs;
 		}
 

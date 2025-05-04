@@ -215,7 +215,7 @@ namespace KERBALISM
 			if (ec_rate > double.Epsilon)
 			{
 				if (Settings.UseSIUnits)
-					specs.Add(Local.Deploy_actualCost, Lib.SIRate(ec_rate, Lib.ECResID));
+					specs.Add(Local.Deploy_actualCost, Lib.SIRate(ec_rate, ResourceUnitInfo.ECResID));
 				else
 					specs.Add("EC/s", Lib.HumanReadableRate(ec_rate));
 			}

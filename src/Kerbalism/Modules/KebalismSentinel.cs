@@ -159,7 +159,7 @@ namespace KERBALISM
 		{
 			Specifics specs = new Specifics();
 			specs.Add(Lib.Color(Local.Module_Experiment_Specifics_info8, Lib.Kolor.Cyan, true));//"Needs:"
-			if (ec_rate > 0.0) specs.Add(Local.Module_Experiment_Specifics_info9, Lib.HumanOrSIRate(ec_rate, Lib.ECResID));//"EC"
+			if (ec_rate > 0.0) specs.Add(Local.Module_Experiment_Specifics_info9, Lib.HumanOrSIRate(ec_rate, ResourceUnitInfo.ECResID));//"EC"
 			if (comms_rate > 0.0) specs.Add(Local.Module_Experiment_Specifics_info2, Lib.HumanReadableDataRate(comms_rate)); // "Data rate"
 
 			return specs.Info();

@@ -317,9 +317,9 @@ namespace KERBALISM.Planner
 
 			// render the panel section
 			p.AddSection(Local.Planner_ELECTRICCHARGE);//"ELECTRIC CHARGE"
-			p.AddContent(Local.Planner_storage, Lib.HumanOrSIAmount(res.storage, Lib.ECResID), tooltip);//"storage"
-			p.AddContent(Local.Planner_consumed, Lib.HumanOrSIRate(res.consumed, Lib.ECResID), tooltip);//"consumed"
-			p.AddContent(Local.Planner_produced, Lib.HumanOrSIRate(res.produced, Lib.ECResID), tooltip);//"produced"
+			p.AddContent(Local.Planner_storage, Lib.HumanOrSIAmount(res.storage, ResourceUnitInfo.ECResID), tooltip);//"storage"
+			p.AddContent(Local.Planner_consumed, Lib.HumanOrSIRate(res.consumed, ResourceUnitInfo.ECResID), tooltip);//"consumed"
+			p.AddContent(Local.Planner_produced, Lib.HumanOrSIRate(res.produced, ResourceUnitInfo.ECResID), tooltip);//"produced"
 			p.AddContent(Local.Planner_duration, Lib.HumanReadableDuration(res.Lifetime()));//"duration"
 		}
 

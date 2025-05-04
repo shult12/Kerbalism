@@ -163,7 +163,7 @@ namespace KERBALISM
 				prefabDefinesTimeEfficCurve = node.HasNode("timeEfficCurve");
 				if (string.IsNullOrEmpty(EcUIUnit))
 				{
-					var rui = Lib.GetResourceUnitInfo(Lib.ECResID);
+					var rui = ResourceUnitInfo.GetResourceUnitInfo(ResourceUnitInfo.ECResID);
 					hasRUI = rui != null;
 					if (hasRUI)
 						EcUIUnit = rui.RateUnit;
@@ -319,7 +319,7 @@ namespace KERBALISM
 					if (Settings.UseSIUnits)
 					{
 						if (hasRUI)
-							sb.Append(Lib.SIRate(currentOutput, Lib.ECResID));
+							sb.Append(Lib.SIRate(currentOutput, ResourceUnitInfo.ECResID));
 						else
 							sb.Append(Lib.SIRate(currentOutput, EcUIUnit));
 					}
@@ -358,7 +358,7 @@ namespace KERBALISM
 				if (Settings.UseSIUnits)
 				{
 					if (hasRUI)
-						Lib.BuildString(Lib.SIRate(currentOutput, Lib.ECResID), ", ", panelStatus);
+						Lib.BuildString(Lib.SIRate(currentOutput, ResourceUnitInfo.ECResID), ", ", panelStatus);
 					else
 						Lib.BuildString(Lib.SIRate(currentOutput, EcUIUnit), ", ", panelStatus);
 				}
