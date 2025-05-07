@@ -319,9 +319,9 @@ namespace KERBALISM
 					if (Settings.UseSIUnits)
 					{
 						if (hasRUI)
-							sb.Append(Lib.SIRate(currentOutput, ResourceUnitInfo.ECResID));
+							sb.Append(SI.SIRate(currentOutput, ResourceUnitInfo.ECResID));
 						else
-							sb.Append(Lib.SIRate(currentOutput, EcUIUnit));
+							sb.Append(SI.SIRate(currentOutput, EcUIUnit));
 					}
 					else
 					{
@@ -358,9 +358,9 @@ namespace KERBALISM
 				if (Settings.UseSIUnits)
 				{
 					if (hasRUI)
-						Lib.BuildString(Lib.SIRate(currentOutput, ResourceUnitInfo.ECResID), ", ", panelStatus);
+						Lib.BuildString(SI.SIRate(currentOutput, ResourceUnitInfo.ECResID), ", ", panelStatus);
 					else
-						Lib.BuildString(Lib.SIRate(currentOutput, EcUIUnit), ", ", panelStatus);
+						Lib.BuildString(SI.SIRate(currentOutput, EcUIUnit), ", ", panelStatus);
 				}
 				else
 				{

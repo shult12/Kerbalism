@@ -169,8 +169,8 @@ namespace KERBALISM
 				if (res.AverageRate != 0.0)
 				{
 					sb.Append(Lib.Color(res.AverageRate > 0.0,
-						Lib.BuildString("+", Lib.HumanOrSIRate(System.Math.Abs(res.AverageRate), resource.id)), Lib.Kolor.PosRate,
-						Lib.BuildString("-", Lib.HumanOrSIRate(System.Math.Abs(res.AverageRate), resource.id)), Lib.Kolor.NegRate,
+						Lib.BuildString("+", SI.HumanOrSIRate(System.Math.Abs(res.AverageRate), resource.id)), Lib.Kolor.PosRate,
+						Lib.BuildString("-", SI.HumanOrSIRate(System.Math.Abs(res.AverageRate), resource.id)), Lib.Kolor.NegRate,
 						true));
 				}
 				else
@@ -196,9 +196,9 @@ namespace KERBALISM
 				else sb.Append("   "); // spaces to prevent alignement issues
 
 				sb.Append("\t");
-				sb.Append(Lib.HumanOrSIAmount(res.Amount, resource.id));
+				sb.Append(SI.HumanOrSIAmount(res.Amount, resource.id));
 				sb.Append("/");
-				sb.Append(Lib.HumanOrSIAmount(res.Capacity, resource.id));
+				sb.Append(SI.HumanOrSIAmount(res.Capacity, resource.id));
 				sb.Append(" (");
 				sb.Append(res.Level.ToString("P0"));
 				sb.Append(")");
@@ -211,8 +211,8 @@ namespace KERBALISM
 					{
 						sb.Append("\n");
 						sb.Append(Lib.Color(rb.rate > 0.0,
-							Lib.BuildString("+", Lib.HumanOrSIRate(System.Math.Abs(rb.rate), resource.id), "   "), Lib.Kolor.PosRate, // spaces to mitigate alignement issues
-							Lib.BuildString("-", Lib.HumanOrSIRate(System.Math.Abs(rb.rate), resource.id), "   "), Lib.Kolor.NegRate, // spaces to mitigate alignement issues
+							Lib.BuildString("+", SI.HumanOrSIRate(System.Math.Abs(rb.rate), resource.id), "   "), Lib.Kolor.PosRate, // spaces to mitigate alignement issues
+							Lib.BuildString("-", SI.HumanOrSIRate(System.Math.Abs(rb.rate), resource.id), "   "), Lib.Kolor.NegRate, // spaces to mitigate alignement issues
 							true)); 
 						sb.Append("\t");
 						sb.Append(rb.broker.Title);
