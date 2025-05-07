@@ -1000,7 +1000,7 @@ namespace KERBALISM
 			ResourceInfo res = null;
 			if (Profile.supplies.Count > 0)
 			{
-				Supply supply = Profile.supplies[Lib.RandomInt(Profile.supplies.Count)];
+				Supply supply = Profile.supplies[Random.RandomInt(Profile.supplies.Count)];
 				res = ResourceCache.GetResource(v, supply.resource);
 			}
 
@@ -1017,7 +1017,7 @@ namespace KERBALISM
 				events.Add(KerbalBreakdown.wrong_valve);
 
 			// choose a breakdown event
-			KerbalBreakdown breakdown = events[Lib.RandomInt(events.Count)];
+			KerbalBreakdown breakdown = events[Random.RandomInt(events.Count)];
 
 			// generate message
 			string text = "";

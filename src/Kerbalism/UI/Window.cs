@@ -18,7 +18,7 @@ namespace KERBALISM
 		internal Window(uint width, uint left, uint top)
 		{
 			// generate unique id
-			win_id = Lib.RandomInt(int.MaxValue);
+			win_id = Random.RandomInt(int.MaxValue);
 
 			// setup window geometry
 			win_rect = new Rect((float)left, (float)top, (float)width, 0.0f);

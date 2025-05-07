@@ -191,7 +191,7 @@ namespace KERBALISM
 					// individual stupidity and stress level of the kerbal.
 
 					breakdown_probability = (breakdown_probability * elapsed_s) / (Lib.DaysInYear * Lib.HoursInDay * 3600);
-					if (breakdown_probability > Lib.RandomDouble()) {
+					if (breakdown_probability > Random.RandomDouble()) {
 						do_breakdown = true;
 
 						// we're stressed out and just made a major mistake, this further increases the stress level...

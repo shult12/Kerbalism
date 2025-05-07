@@ -136,42 +136,6 @@ namespace KERBALISM
 		}
 		#endregion
 
-		#region RANDOM
-		// store the random number generator
-		static System.Random rng = new System.Random();
-
-		///<summary>return random integer</summary>
-		internal static int RandomInt(int max_value)
-		{
-			return rng.Next(max_value);
-		}
-
-		///<summary>return random float [0..1]</summary>
-		internal static float RandomFloat()
-		{
-			return (float)rng.NextDouble();
-		}
-
-		///<summary>return random double [0..1]</summary>
-		internal static double RandomDouble()
-		{
-			return rng.NextDouble();
-		}
-
-
-		static int fast_float_seed = 1;
-		/// <summary>
-		/// return random float in [-1,+1] range
-		/// - it is less random than the c# RNG, but is way faster
-		/// - the seed is meant to overflow! (turn off arithmetic overflow/underflow exceptions)
-		/// </summary>
-		internal static float FastRandomFloat()
-		{
-			fast_float_seed *= 16807;
-			return fast_float_seed * 4.6566129e-010f;
-		}
-		#endregion
-
 		#region HASH
 		///<summary>combine two guid, irregardless of their order (eg: Combine(a,b) == Combine(b,a))</summary>
 		internal static Guid CombineGuid(Guid a, Guid b)
@@ -529,7 +493,7 @@ namespace KERBALISM
 		///<summary>select a string at random</summary>
 		internal static string TextVariant(params string[] list)
 		{
-			return list.Length == 0 ? string.Empty : list[RandomInt(list.Length)];
+			return list.Length == 0 ? string.Empty : list[Random.RandomInt(list.Length)];
 		}
 
 
@@ -1915,9 +1879,9 @@ namespace KERBALISM
 					// remove a data sample at random
 					if (modules.Count > 0)
 					{
-						IScienceDataContainer container = modules[Lib.RandomInt( modules.Count )];
+						IScienceDataContainer container = modules[Random.RandomInt( modules.Count )];
 						ScienceData[] data = container.GetData();
-						container.DumpData( data[Lib.RandomInt( data.Length )] );
+						container.DumpData( data[Random.RandomInt( data.Length )] );
 					}
 				}
 				// if not loaded
@@ -1931,9 +1895,9 @@ namespace KERBALISM
 					// remove a data sample at random
 					if (modules.Count > 0)
 					{
-						ProtoPartModuleSnapshot container = modules[Lib.RandomInt( modules.Count )];
+						ProtoPartModuleSnapshot container = modules[Random.RandomInt( modules.Count )];
 						ConfigNode[] data = container.moduleValues.GetNodes( "ScienceData" );
-						container.moduleValues.RemoveNode( data[Lib.RandomInt( data.Length )] );
+						container.moduleValues.RemoveNode( data[Random.RandomInt( data.Length )] );
 					}
 				}
 			}
@@ -1946,7 +1910,7 @@ namespace KERBALISM
 					if (drive.files.Count > 0) //< it should always be the case
 					{
 						SubjectData filename = null;
-						int i = Lib.RandomInt(drive.files.Count);
+						int i = Random.RandomInt(drive.files.Count);
 						foreach (File file in drive.files.Values)
 						{
 							if (i-- == 0)

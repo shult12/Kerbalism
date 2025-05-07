@@ -18,12 +18,12 @@ namespace KERBALISM
                 var avgDuration = PreferencesRadiation.Instance.AvgStormDuration;
 
                 // retry after 5 * average storm duration + jitter (to avoid recalc spikes)
-                bd.storm_generation = now + avgDuration * 5 + avgDuration * Lib.RandomDouble();
+                bd.storm_generation = now + avgDuration * 5 + avgDuration * Random.RandomDouble();
 
                 var rb = Radiation.Info(sun);
                 var activity = rb.solar_cycle > 0 ? rb.SolarActivity() : 1.0;
 
-                if (Lib.RandomDouble() < activity * PreferencesRadiation.Instance.stormFrequency)
+                if (Random.RandomDouble() < activity * PreferencesRadiation.Instance.stormFrequency)
                 {
                     // storm duration depends on current solar activity
                     bd.storm_duration = avgDuration / 2.0 + avgDuration * activity * 2;
@@ -38,11 +38,11 @@ namespace KERBALISM
                     bd.storm_generation += bd.storm_duration;
 
                     // add a random error to the estimated storm duration if we don't observe the sun too well
-                    var error = bd.storm_duration * 3 * Lib.RandomDouble() * (1 - sun_observation_quality);
+                    var error = bd.storm_duration * 3 * Random.RandomDouble() * (1 - sun_observation_quality);
                     bd.displayed_duration = bd.storm_duration + error;
 
                     // show warning message only if you're lucky...
-                    bd.display_warning = Lib.RandomFloat() < sun_observation_quality;
+                    bd.display_warning = Random.RandomFloat() < sun_observation_quality;
 
 
 #if DEBUG_RADIATION

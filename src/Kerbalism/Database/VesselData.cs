@@ -440,7 +440,7 @@ namespace KERBALISM
 				{
 					Logging.LogDebug("VesselData : id '" + VesselId + "' (" + Vessel.vesselName + ") is now simulated (wasn't previously)");
 					IsSimulated = true;
-					Evaluate(true, Lib.RandomDouble());
+					Evaluate(true, Random.RandomDouble());
 				}
 			}
 

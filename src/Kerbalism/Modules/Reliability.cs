@@ -139,7 +139,7 @@ namespace KERBALISM
 
 				q += Math.Clamp(ignitions - 1, 0.0, 6.0) / 20.0; // subsequent ignition failures become less and less likely, reducing by up to 30%
 
-				if (Lib.RandomDouble() < (turnon_failure_probability * PreferencesReliability.Instance.ignitionFailureChance) / q)
+				if (Random.RandomDouble() < (turnon_failure_probability * PreferencesReliability.Instance.ignitionFailureChance) / q)
 				{
 					fail = true;
 #if DEBUG_RELIABILITY
@@ -156,7 +156,7 @@ namespace KERBALISM
 				if (ignitions >= total_ignitions * 0.9) needMaintenance = true;
 				if (ignitions > total_ignitions)
 				{
-					var q = (quality ? Settings.QualityScale : 1.0) * Lib.RandomDouble();
+					var q = (quality ? Settings.QualityScale : 1.0) * Random.RandomDouble();
 					q /= PreferencesReliability.Instance.ignitionFailureChance;
 					q /= (ignitions - total_ignitions); // progressively increase the odds of a failure with every extra ignition
 
@@ -174,18 +174,18 @@ namespace KERBALISM
 			if (fail)
 			{
 				enforce_breakdown = true;
-				explode = Lib.RandomDouble() < 0.1;
+				explode = Random.RandomDouble() < 0.1;
 
-				next = Planetarium.GetUniversalTime() + Lib.RandomDouble() * 2.0;
+				next = Planetarium.GetUniversalTime() + Random.RandomDouble() * 2.0;
 
 				var fuelSystemFailureProbability = 0.1;
 				if (launchpad) fuelSystemFailureProbability = 0.5;
 
-				if(Lib.RandomDouble() < fuelSystemFailureProbability)
+				if(Random.RandomDouble() < fuelSystemFailureProbability)
 				{
 					// broken fuel line -> delayed kaboom
 					explode = true;
-					next += Lib.RandomDouble() * 10 + 4;
+					next += Random.RandomDouble() * 10 + 4;
 					FlightLogger.fetch?.LogEvent(Local.FlightLogger_Destruction.Format(part.partInfo.title));// <<1>> fuel system leak caused destruction of the engine"
 				}
 				else
@@ -334,7 +334,7 @@ namespace KERBALISM
 				{
 					last = now;
 					var guaranteed = mtbf / 2.0;
-					var r = 1 - System.Math.Pow(Lib.RandomDouble(), 3);
+					var r = 1 - System.Math.Pow(Random.RandomDouble(), 3);
 					next = now + guaranteed + mtbf * (quality ? Settings.QualityScale : 1.0) * r;
 #if DEBUG_RELIABILITY
 					Logging.Log("Reliability: MTBF failure in " + (now - next) + " for " + part.partInfo.title);
@@ -412,7 +412,7 @@ namespace KERBALISM
 					f /= PreferencesReliability.Instance.engineOperationFailureChance;
 
 					// random^r so we get an exponentially increasing failure probability
-					var p = System.Math.Pow(Lib.RandomDouble(), r);
+					var p = System.Math.Pow(Random.RandomDouble(), r);
 
 					// 1-p turns the probability of failure into one of non-failure
 					p = 1 - p;
@@ -430,7 +430,7 @@ namespace KERBALISM
 				{
 					next = now;
 					enforce_breakdown = true;
-					explode = Lib.RandomDouble() < 0.2;
+					explode = Random.RandomDouble() < 0.2;
 #if DEBUG_RELIABILITY
 					Logging.Log("Reliability: " + part.partInfo.title + " fails because of material fatigue");
 #endif
@@ -458,7 +458,7 @@ namespace KERBALISM
 			if (next <= 0)
 			{
 				var guaranteed = reliability.mtbf / 2.0;
-				var r = 1 - System.Math.Pow(Lib.RandomDouble(), 3);
+				var r = 1 - System.Math.Pow(Random.RandomDouble(), 3);
 				next = now + guaranteed + reliability.mtbf * (quality ? Settings.QualityScale : 1.0) * r;
 				Lib.Proto.Set(m, "last", now);
 				Lib.Proto.Set(m, "next", next);
@@ -650,13 +650,13 @@ namespace KERBALISM
 			}
 
 			// if enforced, manned, or if safemode didn't trigger
-			if (enforce_breakdown || vessel.KerbalismData().CrewCapacity > 0 || Lib.RandomDouble() > PreferencesReliability.Instance.safeModeChance)
+			if (enforce_breakdown || vessel.KerbalismData().CrewCapacity > 0 || Random.RandomDouble() > PreferencesReliability.Instance.safeModeChance)
 			{
 				// flag as broken
 				broken = true;
 
 				// determine if this is a critical failure
-				critical = Lib.RandomDouble() < PreferencesReliability.Instance.criticalChance;
+				critical = Random.RandomDouble() < PreferencesReliability.Instance.criticalChance;
 
 				// disable module
 				foreach (PartModule m in modules)
@@ -701,13 +701,13 @@ namespace KERBALISM
 			bool enforce_breakdown = Lib.Proto.GetBool(m, "enforce_breakdown", false);
 
 			// if manned, or if safemode didn't trigger
-			if (enforce_breakdown || v.KerbalismData().CrewCapacity > 0 || Lib.RandomDouble() > PreferencesReliability.Instance.safeModeChance)
+			if (enforce_breakdown || v.KerbalismData().CrewCapacity > 0 || Random.RandomDouble() > PreferencesReliability.Instance.safeModeChance)
 			{
 				// flag as broken
 				Lib.Proto.Set(m, "broken", true);
 
 				// determine if this is a critical failure
-				bool critical = Lib.RandomDouble() < PreferencesReliability.Instance.criticalChance;
+				bool critical = Random.RandomDouble() < PreferencesReliability.Instance.criticalChance;
 				Lib.Proto.Set(m, "critical", critical);
 
 				// for each associated module
@@ -1072,7 +1072,7 @@ namespace KERBALISM
 				// choose a module at random
 				var modules = Lib.FindModules<Reliability>(v).FindAll(k => !k.broken);
 				if (modules.Count == 0) return;
-				var m = modules[Lib.RandomInt(modules.Count)];
+				var m = modules[Random.RandomInt(modules.Count)];
 
 				// break it
 				m.Break();
@@ -1083,7 +1083,7 @@ namespace KERBALISM
 				// choose a module at random
 				var modules = Lib.FindModules(v.protoVessel, "Reliability").FindAll(k => !Lib.Proto.GetBool(k, "broken"));
 				if (modules.Count == 0) return;
-				var m = modules[Lib.RandomInt(modules.Count)];
+				var m = modules[Random.RandomInt(modules.Count)];
 
 				// find its part
 				ProtoPartSnapshot p = v.protoVessel.protoPartSnapshots.Find(k => k.modules.Contains(m));

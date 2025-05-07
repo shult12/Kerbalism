@@ -18,7 +18,7 @@ namespace KERBALISM
             if (version <= new Version(1, 2)) Logging.Log("loading save from unsupported version " + version);
 
             // get unique id (or generate one for new savegames)
-            uid = Lib.ConfigValue(node, "uid", Lib.RandomInt(int.MaxValue));
+            uid = Lib.ConfigValue(node, "uid", Random.RandomInt(int.MaxValue));
 
 			// load kerbals data
 			kerbals = new Dictionary<string, KerbalData>();

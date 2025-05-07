@@ -39,9 +39,9 @@ namespace KERBALISM
 			while (i < particle_count && samples < sample_limit)
 			{
 				// generate random position inside bounding volume
-				p.x = Lib.FastRandomFloat() * domain_hsize.x + domain_offset.x;
-				p.y = Lib.FastRandomFloat() * domain_hsize.y + domain_offset.y;
-				p.z = Lib.FastRandomFloat() * domain_hsize.z + domain_offset.z;
+				p.x = Random.FastRandomFloat() * domain_hsize.x + domain_offset.x;
+				p.y = Random.FastRandomFloat() * domain_hsize.y + domain_offset.y;
+				p.z = Random.FastRandomFloat() * domain_hsize.z + domain_offset.z;
 
 				// calculate signed distance
 				D = dist_func(p);
