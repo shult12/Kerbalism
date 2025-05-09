@@ -158,8 +158,8 @@ namespace KERBALISM
 			}
 
 			// set RMB UI status strings
-			Volume = Lib.HumanReadableVolume(volume);
-            Surface = Lib.HumanReadableSurface(surface);
+			Volume = HumanReadable.Volume(volume);
+            Surface = HumanReadable.Surface(surface);
 
             // hide toggle if specified
             Events["Toggle"].active = toggle;
@@ -539,12 +539,12 @@ namespace KERBALISM
         public Specifics Specs()
         {
             Specifics specs = new Specifics();
-            specs.Add(Local.Habitat_info1, Lib.HumanReadableVolume(volume > 0.0 ? volume : PartBoundsVolume(part)) + (volume > 0.0 ? "" : " (bounds)"));//"Volume"
-            specs.Add(Local.Habitat_info2, Lib.HumanReadableSurface(surface > 0.0 ? surface : PartBoundsSurface(part)) + (surface > 0.0 ? "" : " (bounds)"));//"Surface"
+            specs.Add(Local.Habitat_info1, HumanReadable.Volume(volume > 0.0 ? volume : PartBoundsVolume(part)) + (volume > 0.0 ? "" : " (bounds)"));//"Volume"
+            specs.Add(Local.Habitat_info2, HumanReadable.Surface(surface > 0.0 ? surface : PartBoundsSurface(part)) + (surface > 0.0 ? "" : " (bounds)"));//"Surface"
             specs.Add(Local.Habitat_info3, max_pressure >= Settings.PressureThreshold ? Local.Habitat_yes : Local.Habitat_no);//"Pressurized""yes""no"
             if (inflate.Length > 0) specs.Add(Local.Habitat_info4, Local.Habitat_yes);//"Inflatable""yes"
             if (PhysicsGlobals.KerbalCrewMass > 0)
-                specs.Add(Local.Habitat_info5, Lib.HumanReadableMass(PhysicsGlobals.KerbalCrewMass));//"Added mass per crew"
+                specs.Add(Local.Habitat_info5, HumanReadable.Mass(PhysicsGlobals.KerbalCrewMass));//"Added mass per crew"
 
             return specs;
         }
@@ -709,7 +709,7 @@ namespace KERBALISM
 			return Lib.BuildString(
 				Lib.Bold(Local.Habitat + " " + Local.Habitat_info1), // "Habitat" + "Volume"
 				" : ",
-				Lib.HumanReadableVolume(volume > 0.0 ? volume : PartBoundsVolume(part)),
+				HumanReadable.Volume(volume > 0.0 ? volume : PartBoundsVolume(part)),
 				volume > 0.0 ? "" : " (bounds)");
 		}
 

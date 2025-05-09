@@ -34,7 +34,7 @@ namespace KERBALISM.Planner
 
 #if DEBUG_RADIATION
 			Logging.Log("Planner/EA: " + body + " sun " + mainSun + " alt " + altitude + " sol flux " + solar_flux + " aalbedo flux " + albedo_flux + " body flux " + body_flux + " total flux " + total_flux);
-			Logging.Log("Planner/EA: body surface radiation " + Lib.HumanReadableRadiation(gamma_radiation, false));
+			Logging.Log("Planner/EA: body surface radiation " + HumanReadable.Radiation(gamma_radiation, false));
 #endif
 
 			var b = body;
@@ -46,7 +46,7 @@ namespace KERBALISM.Planner
 
 				gamma_radiation += Radiation.DistanceRadiation(Radiation.Info(b).radiation_r0, dist) / 3600.0;
 #if DEBUG_RADIATION
-				Logging.Log("Planner/EA: with gamma radiation from " + b + " " + Lib.HumanReadableRadiation(gamma_radiation, false));
+				Logging.Log("Planner/EA: with gamma radiation from " + b + " " + HumanReadable.Radiation(gamma_radiation, false));
 				Logging.Log("Planner/EA: semi major axis " + dist);
 #endif
 			}
@@ -60,13 +60,13 @@ namespace KERBALISM.Planner
 			storm_rad = heliopause_rad + PreferencesRadiation.Instance.StormRadiation * (solar_flux > double.Epsilon ? 1.0 : 0.0);
 
 #if DEBUG_RADIATION
-			Logging.Log("Planner/EA: extern_rad " + Lib.HumanReadableRadiation(extern_rad, false));
-			Logging.Log("Planner/EA: heliopause_rad " + Lib.HumanReadableRadiation(heliopause_rad, false));
-			Logging.Log("Planner/EA: magnetopause_rad " + Lib.HumanReadableRadiation(magnetopause_rad, false));
-			Logging.Log("Planner/EA: inner_rad " + Lib.HumanReadableRadiation(inner_rad, false));
-			Logging.Log("Planner/EA: outer_rad " + Lib.HumanReadableRadiation(outer_rad, false));
-			Logging.Log("Planner/EA: surface_rad " + Lib.HumanReadableRadiation(surface_rad, false));
-			Logging.Log("Planner/EA: storm_rad " + Lib.HumanReadableRadiation(storm_rad, false));
+			Logging.Log("Planner/EA: extern_rad " + HumanReadable.Radiation(extern_rad, false));
+			Logging.Log("Planner/EA: heliopause_rad " + HumanReadable.Radiation(heliopause_rad, false));
+			Logging.Log("Planner/EA: magnetopause_rad " + HumanReadable.Radiation(magnetopause_rad, false));
+			Logging.Log("Planner/EA: inner_rad " + HumanReadable.Radiation(inner_rad, false));
+			Logging.Log("Planner/EA: outer_rad " + HumanReadable.Radiation(outer_rad, false));
+			Logging.Log("Planner/EA: surface_rad " + HumanReadable.Radiation(surface_rad, false));
+			Logging.Log("Planner/EA: storm_rad " + HumanReadable.Radiation(storm_rad, false));
 #endif
 		}
 

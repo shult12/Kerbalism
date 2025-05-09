@@ -1024,13 +1024,13 @@ namespace KERBALISM
 			if (prodFactor <= 0.0)
 				prodFactor = 1.0;
 
-			return Lib.HumanReadableCountdown(count / prodFactor, compact);
+			return HumanReadable.Countdown(count / prodFactor, compact);
 		}
 
 		internal static string ScienceValue(SubjectData subjectData)
 		{
 			if (subjectData != null)
-				return Lib.BuildString(Lib.HumanReadableScience(subjectData.ScienceCollectedTotal), " / ", Lib.HumanReadableScience(subjectData.ScienceMaxValue));
+				return Lib.BuildString(HumanReadable.Science(subjectData.ScienceCollectedTotal), " / ", HumanReadable.Science(subjectData.ScienceMaxValue));
 			else
 				return Lib.Color(Local.Module_Experiment_ScienceValuenone, Lib.Kolor.Science, true);//"none"
 		}
@@ -1069,17 +1069,17 @@ namespace KERBALISM
 			double expSize = expInfo.DataSize;
 			if (expInfo.SampleMass == 0.0)
 			{
-				specs.Add(Local.Module_Experiment_Specifics_info1, Lib.HumanReadableDataSize(expSize));//"Data size"
-				specs.Add(Local.Module_Experiment_Specifics_info2, Lib.HumanReadableDataRate(prefab.data_rate));//"Data rate"
-				specs.Add(Local.Module_Experiment_Specifics_info3, Lib.HumanReadableDuration(expSize / prefab.data_rate));//"Duration"
+				specs.Add(Local.Module_Experiment_Specifics_info1, HumanReadable.DataSize(expSize));//"Data size"
+				specs.Add(Local.Module_Experiment_Specifics_info2, HumanReadable.DataRate(prefab.data_rate));//"Data rate"
+				specs.Add(Local.Module_Experiment_Specifics_info3, HumanReadable.Duration(expSize / prefab.data_rate));//"Duration"
 			}
 			else
 			{
-				specs.Add(Local.Module_Experiment_Specifics_info4, Lib.HumanReadableSampleSize(expSize));//"Sample size"
-				specs.Add(Local.Module_Experiment_Specifics_info5, Lib.HumanReadableMass(expInfo.SampleMass));//"Sample mass"
+				specs.Add(Local.Module_Experiment_Specifics_info4, HumanReadable.SampleSize(expSize));//"Sample size"
+				specs.Add(Local.Module_Experiment_Specifics_info5, HumanReadable.Mass(expInfo.SampleMass));//"Sample mass"
 				if (expInfo.SampleMass > 0.0 && !prefab.sample_collecting)
 					specs.Add(Local.Module_Experiment_Specifics_info6, prefab.sample_amount.ToString("F2"));//"Samples"
-				specs.Add(Local.Module_Experiment_Specifics_info7_sample, Lib.HumanReadableDuration(expSize / prefab.data_rate));//"Duration"
+				specs.Add(Local.Module_Experiment_Specifics_info7_sample, HumanReadable.Duration(expSize / prefab.data_rate));//"Duration"
 			}
 
 			if (expInfo.IncludedExperiments.Count > 0)

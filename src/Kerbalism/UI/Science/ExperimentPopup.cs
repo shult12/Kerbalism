@@ -215,7 +215,7 @@ namespace KERBALISM
 				sb.Append(" :<pos=20em>");
 				sb.Append(Lib.Color((remainingSampleMass / expInfo.SampleMass).ToString("F1"), Lib.Kolor.Yellow, true));
 				sb.Append(" (");
-				sb.Append(Lib.Color(Lib.HumanReadableMass(remainingSampleMass), Lib.Kolor.Yellow, true));
+				sb.Append(Lib.Color(HumanReadable.Mass(remainingSampleMass), Lib.Kolor.Yellow, true));
 				sb.Append(")");
 			}
 
@@ -262,14 +262,14 @@ namespace KERBALISM
 				sb.Append(Local.SCIENCEARCHIVE_collected);//collected
 				sb.Append(" :<pos=20em>");
 				sb.Append(Lib.Color(subjectData.ScienceRetrievedInKSC.ToString("F1"), Lib.Kolor.Science, true));
-				sb.Append(Lib.InlineSpriteScience);
+				sb.Append(HumanReadable.InlineSpriteScience);
 				sb.Append(" ");
 				sb.Append(Local.SCIENCEARCHIVE_inRnD);//in RnD
 				if (subjectData.ScienceCollectedInFlight > 0.05)
 				{
 					sb.Append(" (");
 					sb.Append(Lib.Color(Lib.BuildString("+", subjectData.ScienceCollectedInFlight.ToString("F1")), Lib.Kolor.Science, true));
-					sb.Append(Lib.InlineSpriteScience);
+					sb.Append(HumanReadable.InlineSpriteScience);
 					sb.Append(" ");
 					sb.Append(Local.SCIENCEARCHIVE_inflight);//in flight)
 				}
@@ -278,7 +278,7 @@ namespace KERBALISM
 				sb.Append(Local.SCIENCEARCHIVE_value);//value
 				sb.Append(" :<pos=20em>");
 				sb.Append(Lib.Color(subjectData.ScienceMaxValue.ToString("F1"), Lib.Kolor.Science, true));
-				sb.Append(Lib.InlineSpriteScience);
+				sb.Append(HumanReadable.InlineSpriteScience);
 			}
 
 			statusBox.Text = sb.ToString();

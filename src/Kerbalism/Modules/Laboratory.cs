@@ -221,7 +221,7 @@ namespace KERBALISM
 			specs.Add(Local.Laboratory_Researcher, new CrewSpecs(researcher).Info());
 			if (cleaner) specs.Add(Local.Laboratory_CanClean);
 			specs.Add(Local.Laboratory_ECrate, SI.HumanOrSIRate(ec_rate, ResourceUnitInfo.ECResID));
-			specs.Add(Local.Laboratory_rate, Lib.HumanReadableDataRate(analysis_rate));
+			specs.Add(Local.Laboratory_rate, HumanReadable.DataRate(analysis_rate));
 			return specs;
 		}
 

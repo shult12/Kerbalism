@@ -199,7 +199,7 @@ namespace KERBALISM
 					if (!process.modifiers.Contains(pair.Key))
 						specs.Add(Lib.GetResourceDisplayName(pair.Key), Lib.BuildString(" <color=#ffaa00>", SI.HumanOrSIRate(pair.Value * capacity, pair.Key.GetHashCode()), "</color>"));
 					else
-						specs.Add(Local.ProcessController_info1, Lib.HumanReadableDuration(0.5 / pair.Value));//"Half-life"
+						specs.Add(Local.ProcessController_info1, HumanReadable.Duration(0.5 / pair.Value));//"Half-life"
 				}
 				foreach (KeyValuePair<string, double> pair in process.outputs)
 				{

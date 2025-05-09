@@ -46,11 +46,11 @@ namespace KERBALISM
 
 
 #if DEBUG_RADIATION
-					Logging.Log("Storm on " + body + " will start in " + Lib.HumanReadableDuration(bd.storm_time - now) + " and last for " + Lib.HumanReadableDuration(bd.storm_duration));
+					Logging.Log("Storm on " + body + " will start in " + HumanReadable.Duration(bd.storm_time - now) + " and last for " + HumanReadable.Duration(bd.storm_duration));
 				}
 				else
 				{
-					Logging.Log("No storm on " + body + ", will retry in " + Lib.HumanReadableDuration(bd.storm_generation - now));
+					Logging.Log("No storm on " + body + ", will retry in " + HumanReadable.Duration(bd.storm_generation - now));
 #endif
                 }
             }
@@ -90,7 +90,7 @@ namespace KERBALISM
                         if (bd.msg_storm < 2)
                         {
 							Message.Post(Severity.danger, Local.Storm_msg1.Format("<b>" + body.name + "</b>"),//"The coronal mass ejection hit <<1>> system  //Lib.BuildString( )
-								Lib.BuildString(Local.Storm_msg1text, " ", Lib.HumanReadableDuration(bd.displayed_duration)));//"Storm duration:"
+								Lib.BuildString(Local.Storm_msg1text, " ", HumanReadable.Duration(bd.displayed_duration)));//"Storm duration:"
                         }
                         break;
 
@@ -99,7 +99,7 @@ namespace KERBALISM
                         {
                             var tti = bd.storm_time - Planetarium.GetUniversalTime();
 							Message.Post(Severity.warning, Local.Storm_msg2.Format("<b>" + body.name + "</b>"),//Lib.BuildString("Our observatories report a coronal mass ejection directed toward <<1>> system")
-								Lib.BuildString(Local.Storm_msg2text," ", Lib.HumanReadableDuration(tti)));//"Time to impact:"
+								Lib.BuildString(Local.Storm_msg2text," ", HumanReadable.Duration(tti)));//"Time to impact:"
                         }
                         break;
 
@@ -146,7 +146,7 @@ namespace KERBALISM
                         if (bd.msg_storm < 2)
                         {
 							Message.Post(Severity.danger, Local.Storm_msg5.Format("<b>" + v.vesselName + "</b>"),//Lib.BuildString("The coronal mass ejection hit <<1>>)
-							  Lib.BuildString(Local.Storm_msg1text, " ", Lib.HumanReadableDuration(bd.displayed_duration)));//"Storm duration:"
+							  Lib.BuildString(Local.Storm_msg1text, " ", HumanReadable.Duration(bd.displayed_duration)));//"Storm duration:"
                         }
                         break;
 
@@ -155,7 +155,7 @@ namespace KERBALISM
                         {
                             var tti = bd.storm_time - Planetarium.GetUniversalTime();
 							Message.Post(Severity.warning, Local.Storm_msg6.Format("<b>" + v.vesselName + "</b>"),//Lib.BuildString("Our observatories report a coronal mass ejection directed toward <<1>>)
-								Lib.BuildString(Local.Storm_msg2text, " ", Lib.HumanReadableDuration(tti)));//"Time to impact:
+								Lib.BuildString(Local.Storm_msg2text, " ", HumanReadable.Duration(tti)));//"Time to impact:
                         }
 						break;
                 }

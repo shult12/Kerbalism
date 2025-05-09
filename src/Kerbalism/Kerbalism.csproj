@@ -157,6 +157,7 @@
     <Compile Include="Database\VesselSituations.cs" />
     <Compile Include="External\BackgroundResources.cs" />
     <Compile Include="Lib\GameLogic.cs" />
+    <Compile Include="Lib\HumanReadable.cs" />
     <Compile Include="Lib\Math.cs" />
     <Compile Include="Lib\Parse.cs" />
     <Compile Include="Lib\Random.cs" />

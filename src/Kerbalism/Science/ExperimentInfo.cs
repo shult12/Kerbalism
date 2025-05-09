@@ -329,12 +329,12 @@ namespace KERBALISM
 						{
 							ModuleInfo = Lib.Color(Title, Lib.Kolor.Cyan, true);
 							ModuleInfo += "\n"+Local.Experimentinfo_Datasize +": ";//Data size
-							ModuleInfo += Lib.HumanReadableDataSize(DataSize);
+							ModuleInfo += HumanReadable.DataSize(DataSize);
 							if (stockExpModule.xmitDataScalar < Science.maxXmitDataScalarForSample)
 							{
 								ModuleInfo += "\n"+Local.Experimentinfo_generatesample;//Will generate a sample.
 								ModuleInfo += "\n" + Local.Experimentinfo_Samplesize + " ";//Sample size:
-								ModuleInfo += Lib.HumanReadableSampleSize(DataSize);
+								ModuleInfo += HumanReadable.SampleSize(DataSize);
 							}
 							ModuleInfo += "\n\n";
 							ModuleInfo += Lib.Color(Local.Experimentinfo_Situations, Lib.Kolor.Cyan, true);//"Situations:\n"
@@ -352,7 +352,7 @@ namespace KERBALISM
 						{
 							ModuleInfo = Lib.Color(Title, Lib.Kolor.Cyan, true);
 							ModuleInfo += "\n" + Local.Experimentinfo_Datasize + ": ";//Data size
-							ModuleInfo += Lib.HumanReadableDataSize(DataSize);
+							ModuleInfo += HumanReadable.DataSize(DataSize);
 							ModuleInfo += "\n\n";
 							ModuleInfo += groundExpModule.GetInfo();
 						}
@@ -364,9 +364,9 @@ namespace KERBALISM
 				{
 					ModuleInfo = Local.Experimentinfo_Asteroid;//"Asteroid samples can be taken by kerbals on EVA"
 					ModuleInfo += "\n"+Local.Experimentinfo_Samplesize +" ";//Sample size:
-					ModuleInfo += Lib.HumanReadableSampleSize(DataSize);
+					ModuleInfo += HumanReadable.SampleSize(DataSize);
 					ModuleInfo += "\n"+Local.Experimentinfo_Samplemass +" ";//Sample mass:
-					ModuleInfo += Lib.HumanReadableMass(DataSize * Settings.AsteroidSampleMassPerMB);
+					ModuleInfo += HumanReadable.Mass(DataSize * Settings.AsteroidSampleMassPerMB);
 				}
 				else if (IsROC)
 				{
@@ -386,13 +386,13 @@ namespace KERBALISM
 						ModuleInfo = Lib.Color(rocDef.displayName, Lib.Kolor.Cyan, true);
 						ModuleInfo += "\n- " + Local.Experimentinfo_scannerarm;//Analyse with a scanner arm
 						ModuleInfo += "\n  "+Local.Experimentinfo_Datasize +": ";//Data size
-						ModuleInfo += Lib.HumanReadableDataSize(DataSize);
+						ModuleInfo += HumanReadable.DataSize(DataSize);
 
 						if (rocDef.smallRoc)
 						{
 							ModuleInfo += "\n- " + Local.Experimentinfo_smallRoc;//Collectable on EVA as a sample"
 							ModuleInfo += "\n"+Local.Experimentinfo_Samplesize +" ";//Sample size:
-							ModuleInfo += Lib.HumanReadableSampleSize(DataSize);
+							ModuleInfo += HumanReadable.SampleSize(DataSize);
 						}
 						else
 						{

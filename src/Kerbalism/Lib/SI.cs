@@ -7,7 +7,7 @@
 			if (Settings.UseSIUnits)
 				return SIRate(rate, unit, sigFigs, longPrefix);
 
-			return Lib.HumanReadableRate(rate, precision);
+			return HumanReadable.Rate(rate, precision);
 		}
 
 		internal static string HumanOrSIRate(double rate, int resID, int sigFigs = 3, string precision = "F3", bool longPrefix = false)
@@ -15,11 +15,11 @@
 			if (Settings.UseSIUnits && ResourceUnitInfo.GetResourceUnitInfo(resID) is ResourceUnitInfo rui)
 			{
 				if (rui.UseHuman)
-					Lib.HumanReadableRate(rate, precision, rui.RateUnit);
+					HumanReadable.Rate(rate, precision, rui.RateUnit);
 				else
 					return SIRate(rate, rui, sigFigs, longPrefix);
 			}
-			return Lib.HumanReadableRate(rate, precision);
+			return HumanReadable.Rate(rate, precision);
 		}
 
 		internal static string HumanOrSIAmount(double amount, int resID, int sigFigs = 3, string append = "", bool longPrefix = false)
@@ -27,11 +27,11 @@
 			if (Settings.UseSIUnits && ResourceUnitInfo.GetResourceUnitInfo(resID) is ResourceUnitInfo rui)
 			{
 				if (rui.UseHuman)
-					return Lib.HumanReadableAmount(amount, rui.AmountUnit);
+					return HumanReadable.Amount(amount, rui.AmountUnit);
 				else
 					return SIAmount(amount, rui, sigFigs, longPrefix);
 			}
-			return Lib.HumanReadableAmount(amount, append);
+			return HumanReadable.Amount(amount, append);
 		}
 
 

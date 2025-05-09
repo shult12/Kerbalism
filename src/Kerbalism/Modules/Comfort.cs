@@ -172,7 +172,7 @@ namespace KERBALISM
 				String.Format("{0,-14}\t{1}\n", Local.Comfort_callhome, call_home ? yes : no),
 				String.Format("{0,-14}\t{1}\n", Local.Comfort_panorama, panorama ? yes : no),
 				String.Format("{0,-14}\t{1}\n", Local.Comfort_plants, plants ? yes : no),
-				String.Format("<i>{0,-14}</i>\t{1}", Local.Comfort_factor, Lib.HumanReadablePerc(factor))
+				String.Format("<i>{0,-14}</i>\t{1}", Local.Comfort_factor, HumanReadable.Percentage(factor))
 			);
 		}
 

@@ -62,7 +62,7 @@ namespace KERBALISM
 
 			// DO NOT LOG FROM A THREAD
 			// some feedback on the samples going above the limit
-			// if (i < particle_count) Logging.Log("particle-fitting reached hard limit at " + Lib.HumanReadablePerc((double)i / (double)particle_count));
+			// if (i < particle_count) Logging.Log("particle-fitting reached hard limit at " + HumanReadable.Perc((double)i / (double)particle_count));
 		}
 
 

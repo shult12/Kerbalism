@@ -54,7 +54,7 @@
 						specs.Add(Local.DataTransmitter_ECidle, Lib.Color(SI.HumanOrSIRate(idleEnergyCost, ResourceUnitInfo.ECResID), Lib.Kolor.Orange));//"EC (idle)"
 						specs.Add(Local.DataTransmitter_ECTX + " Max", Lib.Color(SI.HumanOrSIRate(transmissionEnergyCost + idleEnergyCost, ResourceUnitInfo.ECResID), Lib.Kolor.Orange));//"EC (transmitting)"
 						specs.Add("");
-						specs.Add(Local.DataTransmitter_Maxspeed, Lib.HumanReadableDataRate(dataRate));//"Max. speed"
+						specs.Add(Local.DataTransmitter_Maxspeed, HumanReadable.DataRate(dataRate));//"Max. speed"
 						break;
 					}
 				}

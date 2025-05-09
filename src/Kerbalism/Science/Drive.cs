@@ -215,8 +215,8 @@ namespace KERBALISM
 				// test if adding the amount to the sample would exceed our capacity
 				sample = samples[subjectData];
 
-				int existingSampleSlots = Lib.SampleSizeToSlots(sample.size);
-				int newSampleSlots = Lib.SampleSizeToSlots(sample.size + amount);
+				int existingSampleSlots = HumanReadable.SampleSizeToSlots(sample.size);
+				int newSampleSlots = HumanReadable.SampleSizeToSlots(sample.size + amount);
 				if (currentSampleSlots - existingSampleSlots + newSampleSlots > sampleCapacity)
 					return false;
 			}
@@ -393,11 +393,11 @@ namespace KERBALISM
 		{
 			if (sampleCapacity < 0) return double.MaxValue;
 
-			double result = Lib.SlotsToSampleSize(sampleCapacity - SamplesSize());
+			double result = HumanReadable.SlotsToSampleSize(sampleCapacity - SamplesSize());
 			if (subject != null && samples.ContainsKey(subject))
 			{
-				int slotsForMyFile = Lib.SampleSizeToSlots(samples[subject].size);
-				double amountLostToSlotting = Lib.SlotsToSampleSize(slotsForMyFile) - samples[subject].size;
+				int slotsForMyFile = HumanReadable.SampleSizeToSlots(samples[subject].size);
+				double amountLostToSlotting = HumanReadable.SlotsToSampleSize(slotsForMyFile) - samples[subject].size;
 				result += amountLostToSlotting;
 			}
 			return result;
@@ -408,7 +408,7 @@ namespace KERBALISM
 			int amount = 0;
 			foreach (var p in samples)
 			{
-				amount += Lib.SampleSizeToSlots(p.Value.size);
+				amount += HumanReadable.SampleSizeToSlots(p.Value.size);
 			}
 			return amount;
 		}
@@ -418,9 +418,9 @@ namespace KERBALISM
 		{
 			var f = FilesSize();
 			var s = SamplesSize();
-			var result = f > double.Epsilon ? Lib.HumanReadableDataSize(f) : "";
+			var result = f > double.Epsilon ? HumanReadable.DataSize(f) : "";
 			if (result.Length > 0) result += " ";
-			if (s > 0) result += Lib.HumanReadableSampleSize(s);
+			if (s > 0) result += HumanReadable.SampleSize(s);
 			return result;
 		}
 
@@ -513,7 +513,7 @@ namespace KERBALISM
 			if (allMoved)
 				Message.Post
 				(
-					Lib.HumanReadableDataSize(dataAmount) + " " + Local.Science_ofdatatransfer,
+					HumanReadable.DataSize(dataAmount) + " " + Local.Science_ofdatatransfer,
 				 	Lib.BuildString(Local.Generic_FROM, " <b>", src.vesselName, "</b> ", Local.Generic_TO, " <b>", dst.vesselName, "</b>")
 				);
 			else

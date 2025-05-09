@@ -98,16 +98,16 @@ namespace KERBALISM
 
 			// render panel, add some content based on enabled features
 			p.AddSection(Local.TELEMETRY_HABITAT);//"HABITAT"
-			if (Features.Poisoning) p.AddContent(Local.TELEMETRY_co2level, Lib.Color(vd.Poisoning > Settings.PoisoningThreshold, Lib.HumanReadablePerc(vd.Poisoning, "F2"), Lib.Kolor.Yellow));//"co2 level"
-			if (Features.Radiation && v.isEVA) p.AddContent(Local.TELEMETRY_radiation, Lib.HumanReadableRadiation(vd.EnvHabitatRadiation));//"radiation"
+			if (Features.Poisoning) p.AddContent(Local.TELEMETRY_co2level, Lib.Color(vd.Poisoning > Settings.PoisoningThreshold, HumanReadable.Percentage(vd.Poisoning, "F2"), Lib.Kolor.Yellow));//"co2 level"
+			if (Features.Radiation && v.isEVA) p.AddContent(Local.TELEMETRY_radiation, HumanReadable.Radiation(vd.EnvHabitatRadiation));//"radiation"
 
 			if (!v.isEVA)
 			{
-				if (Features.Pressure) p.AddContent(Local.TELEMETRY_pressure, Lib.HumanReadablePressure(vd.Pressure * Sim.PressureAtSeaLevel()));//"pressure"
+				if (Features.Pressure) p.AddContent(Local.TELEMETRY_pressure, HumanReadable.Pressure(vd.Pressure * Sim.PressureAtSeaLevel()));//"pressure"
 				if (Features.Shielding) p.AddContent(Local.TELEMETRY_shielding, Habitat.Shielding_to_string(vd.Shielding));//"shielding"
 				if (Features.LivingSpace) p.AddContent(Local.TELEMETRY_livingspace, Habitat.Living_space_to_string(vd.LivingSpace));//"living space"
 				if (Features.Comfort) p.AddContent(Local.TELEMETRY_comfort, vd.Comforts.Summary(), vd.Comforts.Tooltip());//"comfort"
-				if (Features.Pressure) p.AddContent(Local.TELEMETRY_EVAsavailable, vd.EnvBreathable ? Local.TELEMETRY_EnvBreathable : Lib.HumanReadableInteger(vd.Evas), vd.EnvBreathable ? Local.TELEMETRY_Breathableatm : Local.TELEMETRY_approx);//"EVA's available""infinite""breathable atmosphere""approx (derived from stored N2)"
+				if (Features.Pressure) p.AddContent(Local.TELEMETRY_EVAsavailable, vd.EnvBreathable ? Local.TELEMETRY_EnvBreathable : HumanReadable.Integer(vd.Evas), vd.EnvBreathable ? Local.TELEMETRY_Breathableatm : Local.TELEMETRY_approx);//"EVA's available""infinite""breathable atmosphere""approx (derived from stored N2)"
 			}
 		}
 
@@ -127,21 +127,21 @@ namespace KERBALISM
 				for (int i = 0; i < vd.filesTransmitted.Count; i++)
 				{
 					transmitRate += vd.filesTransmitted[i].transmitRate;
-					tooltip.Append(string.Format("{0,-15}\t{1}", Lib.HumanReadableDataRate(vd.filesTransmitted[i].transmitRate), Lib.Ellipsis(vd.filesTransmitted[i].subjectData.FullTitle, 40u)));
+					tooltip.Append(string.Format("{0,-15}\t{1}", HumanReadable.DataRate(vd.filesTransmitted[i].transmitRate), Lib.Ellipsis(vd.filesTransmitted[i].subjectData.FullTitle, 40u)));
 					if (i < vd.filesTransmitted.Count - 1) tooltip.Append("\n");
 				}
 				
-				p.AddContent(Local.TELEMETRY_transmitting, Lib.BuildString(vd.filesTransmitted.Count.ToString(), vd.filesTransmitted.Count > 1 ? " files at " : " file at ",  Lib.HumanReadableDataRate(transmitRate)), tooltip.ToString());//"transmitting"
+				p.AddContent(Local.TELEMETRY_transmitting, Lib.BuildString(vd.filesTransmitted.Count.ToString(), vd.filesTransmitted.Count > 1 ? " files at " : " file at ",  HumanReadable.DataRate(transmitRate)), tooltip.ToString());//"transmitting"
 			}
 			else
 			{
-				p.AddContent(Local.TELEMETRY_maxtransmissionrate, Lib.HumanReadableDataRate(vd.Connection.rate));//"max transmission rate"
+				p.AddContent(Local.TELEMETRY_maxtransmissionrate, HumanReadable.DataRate(vd.Connection.rate));//"max transmission rate"
 			}
 
 			p.AddContent(Local.TELEMETRY_target, vd.Connection.target_name);//"target"
 
 			// total science gained by vessel
-			p.AddContent(Local.TELEMETRY_totalsciencetransmitted, Lib.HumanReadableScience(vd.scienceTransmitted, false));//"total science transmitted"
+			p.AddContent(Local.TELEMETRY_totalsciencetransmitted, HumanReadable.Science(vd.scienceTransmitted, false));//"total science transmitted"
 		}
 
 		static void Render_supplies(Panel p, Vessel v, VesselData vd, VesselResources resources)
@@ -222,7 +222,7 @@ namespace KERBALISM
 				string rate_tooltip = sb.ToString();
 
 				// finally, render resource supply
-				p.AddContent(label, Lib.HumanReadableDuration(res.DepletionTime()), rate_tooltip);
+				p.AddContent(label, HumanReadable.Duration(res.DepletionTime()), rate_tooltip);
 				++supplies;
 			}
 		}
@@ -254,7 +254,7 @@ namespace KERBALISM
 					RuleData rd = kd.Rule(r.name);
 
 					// add to the tooltip
-					tooltips.Add(Lib.BuildString("<b>", Lib.HumanReadablePerc(rd.problem / r.fatal_threshold), "</b>\t", r.title));
+					tooltips.Add(Lib.BuildString("<b>", HumanReadable.Percentage(rd.problem / r.fatal_threshold), "</b>\t", r.title));
 
 					// analyze issue
 					if (rd.problem > r.danger_threshold)
@@ -304,10 +304,10 @@ namespace KERBALISM
 				string tooltip = greenhouse.growth < 0.99 ? Lib.BuildString
 				(
 				  "<align=left />",
-				  Local.TELEMETRY_timetoharvest, "\t<b>", Lib.HumanReadableDuration(greenhouse.tta), "</b>\n",//"time to harvest"
-				  Local.TELEMETRY_growth, "\t\t<b>", Lib.HumanReadablePerc(greenhouse.growth), "</b>\n",//"growth"
-				  Local.TELEMETRY_naturallighting, "\t<b>", Lib.HumanReadableFlux(greenhouse.natural), "</b>\n",//"natural lighting"
-				  Local.TELEMETRY_artificiallighting, "\t<b>", Lib.HumanReadableFlux(greenhouse.artificial), "</b>"//"artificial lighting"
+				  Local.TELEMETRY_timetoharvest, "\t<b>", HumanReadable.Duration(greenhouse.tta), "</b>\n",//"time to harvest"
+				  Local.TELEMETRY_growth, "\t\t<b>", HumanReadable.Percentage(greenhouse.growth), "</b>\n",//"growth"
+				  Local.TELEMETRY_naturallighting, "\t<b>", HumanReadable.Flux(greenhouse.natural), "</b>\n",//"natural lighting"
+				  Local.TELEMETRY_artificiallighting, "\t<b>", HumanReadable.Flux(greenhouse.artificial), "</b>"//"artificial lighting"
 				) : string.Empty;
 
 				// render it

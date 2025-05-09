@@ -83,7 +83,7 @@ namespace KERBALISM
 								: Lib.BuildString("<color=yellow>", issue, "</color>");
 
 						Events["Toggle"].guiName = Lib.StatusToggle(title, status);
-						Abundance = abundance > double.Epsilon ? Lib.HumanReadablePerc(abundance, "F2") : Local.Harvester_none;//"none"
+						Abundance = abundance > double.Epsilon ? HumanReadable.Percentage(abundance, "F2") : Local.Harvester_none;//"none"
 					}
 				}
 			}
@@ -247,11 +247,11 @@ namespace KERBALISM
 			Specifics specs = new Specifics();
 			specs.Add(Local.Harvester_info1, ((HarvestTypes)type).ToString());//"type"
 			specs.Add(Local.Harvester_info2, Lib.GetResourceDisplayName(resource));//"resource"
-			if (min_abundance > double.Epsilon) specs.Add(Local.Harvester_info3, Lib.HumanReadablePerc(min_abundance, "F2"));//"min abundance"
-			if (type == 2 && min_pressure > double.Epsilon) specs.Add(Local.Harvester_info4, Lib.HumanReadablePressure(min_pressure));//"min pressure"
+			if (min_abundance > double.Epsilon) specs.Add(Local.Harvester_info3, HumanReadable.Percentage(min_abundance, "F2"));//"min abundance"
+			if (type == 2 && min_pressure > double.Epsilon) specs.Add(Local.Harvester_info4, HumanReadable.Pressure(min_pressure));//"min pressure"
 			// NOTE: we aren't using SI here.
-			specs.Add(Local.Harvester_info5, Lib.HumanReadableRate(rate));//"extraction rate"
-			specs.Add(Local.Harvester_info6, Lib.HumanReadablePerc(abundance_rate, "F2"));//"at abundance"
+			specs.Add(Local.Harvester_info5, HumanReadable.Rate(rate));//"extraction rate"
+			specs.Add(Local.Harvester_info6, HumanReadable.Percentage(abundance_rate, "F2"));//"at abundance"
 			if (ec_rate > double.Epsilon) specs.Add(Local.Harvester_info7, SI.HumanOrSIRate(ec_rate, ResourceUnitInfo.ECResID));//"ec consumption"
 			return specs;
 		}

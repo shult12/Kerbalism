@@ -110,9 +110,9 @@ namespace KERBALISM
 					Fields["status_natural"].guiActive = active && growth < 0.99;
 					Fields["status_artificial"].guiActive = active && growth < 0.99;
 					Fields["status_tta"].guiActive = active && growth < 0.99;
-					status_natural = Lib.HumanReadableFlux(natural);
-					status_artificial = Lib.HumanReadableFlux(artificial);
-					status_tta = Lib.HumanReadableDuration(tta);
+					status_natural = HumanReadable.Flux(natural);
+					status_artificial = HumanReadable.Flux(artificial);
+					status_tta = HumanReadable.Duration(tta);
 
 					// show/hide harvest buttons
 					bool manned = FlightGlobals.ActiveVessel.isEVA || Lib.CrewCount(vessel) > 0;
@@ -437,11 +437,11 @@ namespace KERBALISM
 		{
 			Specifics specs = new Specifics();
 
-			specs.Add(Local.Greenhouse_info1, Lib.HumanReadableAmount(crop_size, " " + Lib.GetResourceDisplayName(crop_resource)));//"Harvest size"
-			specs.Add(Local.Greenhouse_info2, Lib.HumanReadableDuration(1.0 / crop_rate));//"Harvest time"
-			specs.Add(Local.Greenhouse_info3, Lib.HumanReadableFlux(light_tolerance));//"Lighting tolerance"
-			if (pressure_tolerance > double.Epsilon) specs.Add(Local.Greenhouse_info4, Lib.HumanReadablePressure(Sim.PressureAtSeaLevel() * pressure_tolerance));//"Pressure tolerance"
-			if (radiation_tolerance > double.Epsilon) specs.Add(Local.Greenhouse_info5, Lib.HumanReadableRadiation(radiation_tolerance));//"Radiation tolerance"
+			specs.Add(Local.Greenhouse_info1, HumanReadable.Amount(crop_size, " " + Lib.GetResourceDisplayName(crop_resource)));//"Harvest size"
+			specs.Add(Local.Greenhouse_info2, HumanReadable.Duration(1.0 / crop_rate));//"Harvest time"
+			specs.Add(Local.Greenhouse_info3, HumanReadable.Flux(light_tolerance));//"Lighting tolerance"
+			if (pressure_tolerance > double.Epsilon) specs.Add(Local.Greenhouse_info4, HumanReadable.Pressure(Sim.PressureAtSeaLevel() * pressure_tolerance));//"Pressure tolerance"
+			if (radiation_tolerance > double.Epsilon) specs.Add(Local.Greenhouse_info5, HumanReadable.Radiation(radiation_tolerance));//"Radiation tolerance"
 			specs.Add(Local.Greenhouse_info6, SI.HumanOrSIRate(ec_rate, ResourceUnitInfo.ECResID));//"Lamps EC rate"
 			specs.Add(string.Empty);
 			specs.Add("<color=#00ffff>" + Local.Greenhouse_info7 + "</color>");//Required resources

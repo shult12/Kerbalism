@@ -75,8 +75,8 @@ namespace KERBALISM
 
 			if(filesCount > 0 || totalDataCapacity > 0)
 			{
-				var title = Local.FILEMANAGER_DataCapacity + " " + Lib.HumanReadableDataSize(usedDataCapacity);//"DATA " 
-				if (!unlimitedData) title += Local.FILEMANAGER_DataAvailable.Format(Lib.HumanReadablePerc((totalDataCapacity - usedDataCapacity) / totalDataCapacity));//Lib.BuildString(" (", Lib.HumanReadablePerc((totalDataCapacity - usedDataCapacity) / totalDataCapacity), " available)");
+				var title = Local.FILEMANAGER_DataCapacity + " " + HumanReadable.DataSize(usedDataCapacity);//"DATA " 
+				if (!unlimitedData) title += Local.FILEMANAGER_DataAvailable.Format(HumanReadable.Percentage((totalDataCapacity - usedDataCapacity) / totalDataCapacity));//Lib.BuildString(" (", HumanReadable.Percentage((totalDataCapacity - usedDataCapacity) / totalDataCapacity), " available)");
 				p.AddSection(title);
 
 				foreach (var drive in drives)
@@ -92,8 +92,8 @@ namespace KERBALISM
 
 			if(samplesCount > 0 || totalSlots > 0)
 			{
-				var title = Local.FILEMANAGER_SAMPLESMass.Format(Lib.HumanReadableMass(totalMass)) + " " + Lib.HumanReadableSampleSize(usedSlots);//"SAMPLES " + 
-				if (totalSlots > 0 && !unlimitedSamples) title += ", " + Lib.HumanReadableSampleSize(totalSlots) + " "+ Local.FILEMANAGER_SAMPLESAvailable;//available
+				var title = Local.FILEMANAGER_SAMPLESMass.Format(HumanReadable.Mass(totalMass)) + " " + HumanReadable.SampleSize(usedSlots);//"SAMPLES " + 
+				if (totalSlots > 0 && !unlimitedSamples) title += ", " + HumanReadable.SampleSize(totalSlots) + " "+ Local.FILEMANAGER_SAMPLESAvailable;//available
 				p.AddSection(title);
 
 				foreach (var drive in drives)
@@ -127,16 +127,16 @@ namespace KERBALISM
 
 			double exp_value = file.size * file.subjectData.SciencePerMB;
 			if (file.subjectData.ScienceRemainingToRetrieve > 0f && file.size > 0.0)
-				exp_tooltip = Lib.BuildString(exp_tooltip, "\n<b>", Lib.HumanReadableScience(exp_value, false), "</b>");
+				exp_tooltip = Lib.BuildString(exp_tooltip, "\n<b>", HumanReadable.Science(exp_value, false), "</b>");
 			if (file.transmitRate > 0.0)
 			{
 				if (file.size > 0.0)
-					exp_tooltip = Lib.Color(Lib.BuildString(exp_tooltip, "\n", Local.FILEMANAGER_TransmittingRate.Format(Lib.HumanReadableDataRate(file.transmitRate)), " : <i>", Lib.HumanReadableCountdown(file.size / file.transmitRate), "</i>"), Lib.Kolor.Cyan);//Transmitting at <<1>>
+					exp_tooltip = Lib.Color(Lib.BuildString(exp_tooltip, "\n", Local.FILEMANAGER_TransmittingRate.Format(HumanReadable.DataRate(file.transmitRate)), " : <i>", HumanReadable.Countdown(file.size / file.transmitRate), "</i>"), Lib.Kolor.Cyan);//Transmitting at <<1>>
 				else
-					exp_tooltip = Lib.Color(Lib.BuildString(exp_tooltip, "\n", Local.FILEMANAGER_TransmittingRate.Format(Lib.HumanReadableDataRate(file.transmitRate))), Lib.Kolor.Cyan);//Transmitting at <<1>>
+					exp_tooltip = Lib.Color(Lib.BuildString(exp_tooltip, "\n", Local.FILEMANAGER_TransmittingRate.Format(HumanReadable.DataRate(file.transmitRate))), Lib.Kolor.Cyan);//Transmitting at <<1>>
 			}
 			else if (v.KerbalismData().Connection.rate > 0.0)
-				exp_tooltip = Lib.BuildString(exp_tooltip, "\n", Local.FILEMANAGER_Transmitduration, "<i>", Lib.HumanReadableDuration(file.size / v.KerbalismData().Connection.rate), "</i>");//Transmit duration : 
+				exp_tooltip = Lib.BuildString(exp_tooltip, "\n", Local.FILEMANAGER_Transmitduration, "<i>", HumanReadable.Duration(file.size / v.KerbalismData().Connection.rate), "</i>");//Transmit duration : 
 			if (!string.IsNullOrEmpty(file.resultText))
 				exp_tooltip = Lib.BuildString(exp_tooltip, "\n", Lib.WordWrapAtLength(file.resultText, 50));
 
@@ -144,13 +144,13 @@ namespace KERBALISM
 			if (file.transmitRate > 0.0 )
 			{
 				if (file.size == 0.0)
-					size = Lib.Color(Lib.BuildString("↑ ", Lib.HumanReadableDataRate(file.transmitRate)), Lib.Kolor.Cyan);
+					size = Lib.Color(Lib.BuildString("↑ ", HumanReadable.DataRate(file.transmitRate)), Lib.Kolor.Cyan);
 				else
-					size = Lib.Color(Lib.BuildString("↑ ", Lib.HumanReadableDataSize(file.size)), Lib.Kolor.Cyan);
+					size = Lib.Color(Lib.BuildString("↑ ", HumanReadable.DataSize(file.size)), Lib.Kolor.Cyan);
 			}
 			else
 			{
-				size = Lib.HumanReadableDataSize(file.size);
+				size = HumanReadable.DataSize(file.size);
 			}
 
 			p.AddContent(exp_label, size, exp_tooltip, (Action)null, () => Highlighter.Set(partId, Color.cyan));
@@ -185,11 +185,11 @@ namespace KERBALISM
 			);
 
 			double exp_value = sample.size * sample.subjectData.SciencePerMB;
-			if (exp_value >= 0.1) exp_tooltip = Lib.BuildString(exp_tooltip, "\n<b>", Lib.HumanReadableScience(exp_value, false), "</b>");
-			if (sample.mass > Double.Epsilon) exp_tooltip = Lib.BuildString(exp_tooltip, "\n<b>", Lib.HumanReadableMass(sample.mass), "</b>");
+			if (exp_value >= 0.1) exp_tooltip = Lib.BuildString(exp_tooltip, "\n<b>", HumanReadable.Science(exp_value, false), "</b>");
+			if (sample.mass > Double.Epsilon) exp_tooltip = Lib.BuildString(exp_tooltip, "\n<b>", HumanReadable.Mass(sample.mass), "</b>");
 			if (!string.IsNullOrEmpty(sample.resultText)) exp_tooltip = Lib.BuildString(exp_tooltip, "\n", Lib.WordWrapAtLength(sample.resultText, 50));
 
-			p.AddContent(exp_label, Lib.HumanReadableSampleSize(sample.size), exp_tooltip, (Action)null, () => Highlighter.Set(partId, Color.cyan));
+			p.AddContent(exp_label, HumanReadable.SampleSize(sample.size), exp_tooltip, (Action)null, () => Highlighter.Set(partId, Color.cyan));
 			p.AddRightIcon(sample.analyze ? Textures.lab_cyan : Textures.lab_black, Local.FILEMANAGER_analysis, () => { sample.analyze = !sample.analyze; });//"Flag the file for analysis in a <b>laboratory</b>"
 			p.AddRightIcon(Textures.toggle_red, Local.FILEMANAGER_Dumpsample, () =>//"Dump the sample"
 				{

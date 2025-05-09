@@ -22,15 +22,15 @@ namespace KERBALISM
 			string result = Localizer.Format("#autoLOC_7001005", text);
 
 			// Antenna rating: 500km
-			result += Localizer.Format("#autoLOC_7001006", Lib.HumanReadableDistance(__instance.antennaPower));
+			result += Localizer.Format("#autoLOC_7001006", HumanReadable.Distance(__instance.antennaPower));
 			result += "\n";
 
 			var dsn1 = CommNet.CommNetScenario.RangeModel.GetMaximumRange(__instance.antennaPower, GameVariables.Instance.GetDSNRange(0f));
 			var dsn2 = CommNet.CommNetScenario.RangeModel.GetMaximumRange(__instance.antennaPower, GameVariables.Instance.GetDSNRange(0.5f));
 			var dsn3 = CommNet.CommNetScenario.RangeModel.GetMaximumRange(__instance.antennaPower, GameVariables.Instance.GetDSNRange(1f));
-			result += Lib.BuildString(Localizer.Format("#autoLOC_236834"), " ", Lib.HumanReadableDistance(dsn1));
-			result += Lib.BuildString(Localizer.Format("#autoLOC_236835"), " ", Lib.HumanReadableDistance(dsn2));
-			result += Lib.BuildString(Localizer.Format("#autoLOC_236836"), " ", Lib.HumanReadableDistance(dsn3));
+			result += Lib.BuildString(Localizer.Format("#autoLOC_236834"), " ", HumanReadable.Distance(dsn1));
+			result += Lib.BuildString(Localizer.Format("#autoLOC_236835"), " ", HumanReadable.Distance(dsn2));
+			result += Lib.BuildString(Localizer.Format("#autoLOC_236836"), " ", HumanReadable.Distance(dsn3));
 
 			double ec = __instance.DataResourceCost * __instance.DataRate;
 
@@ -41,7 +41,7 @@ namespace KERBALISM
 			{
 				specs.Add(Local.DataTransmitter_ECTX, Lib.Color(SI.HumanOrSIRate(ec * Settings.TransmitterActiveEcFactor, ResourceUnitInfo.ECResID), Lib.Kolor.Orange));//"EC (transmitting)"
 				specs.Add("");
-				specs.Add(Local.DataTransmitter_Maxspeed, Lib.HumanReadableDataRate(__instance.DataRate));//"Max. speed"
+				specs.Add(Local.DataTransmitter_Maxspeed, HumanReadable.DataRate(__instance.DataRate));//"Max. speed"
 			}
 
 			__result = Lib.BuildString(result, "\n\n", specs.Info());

@@ -763,8 +763,8 @@ namespace KERBALISM
 			if (mass > double.Epsilon || cost > double.Epsilon)
 			{
 				details.Add(new Detail("<b><color=#00ffff>"+Local.Module_Extra +"</color></b>"));//Extra
-				if (mass > double.Epsilon) details.Add(new Detail(Local.Module_mass, Lib.HumanReadableMass(mass)));//"mass"
-				if (cost > double.Epsilon) details.Add(new Detail(Local.Module_cost, Lib.HumanReadableCost(cost)));//"cost"
+				if (mass > double.Epsilon) details.Add(new Detail(Local.Module_mass, HumanReadable.Mass(mass)));//"mass"
+				if (cost > double.Epsilon) details.Add(new Detail(Local.Module_cost, HumanReadable.Cost(cost)));//"cost"
 			}
 		}
 

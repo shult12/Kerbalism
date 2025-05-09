@@ -322,7 +322,7 @@ namespace KERBALISM
 			Message.Post(Lib.BuildString(
 				FullTitle,
 				" ", Local.Scienctransmitted_title, "\n",//transmitted
-				TimesCompleted == 1 ? Lib.HumanReadableScience(ScienceMaxValue, false) : Lib.Color(Local.Nosciencegain, Lib.Kolor.Orange, true)),//"no science gain : we already had this data"
+				TimesCompleted == 1 ? HumanReadable.Science(ScienceMaxValue, false) : Lib.Color(Local.Nosciencegain, Lib.Kolor.Orange, true)),//"no science gain : we already had this data"
 				subjectResultText);
 		}
 	}

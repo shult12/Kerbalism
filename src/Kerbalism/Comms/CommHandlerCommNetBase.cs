@@ -80,19 +80,19 @@ namespace KERBALISM
 				controlPoint[0] = Lib.Ellipsis(controlPoint[0], 35);
 
 				// signal strength
-				controlPoint[1] = Lib.HumanReadablePerc(System.Math.Ceiling(signalStrength * 10000) / 10000, "F2");
+				controlPoint[1] = HumanReadable.Percentage(System.Math.Ceiling(signalStrength * 10000) / 10000, "F2");
 
 				// extra info
 				controlPoint[2] = Lib.BuildString(
-					"Distance: ", Lib.HumanReadableDistance(linkDistance),
-					" (Max: ", Lib.HumanReadableDistance(linkMaxDistance), ")");
+					"Distance: ", HumanReadable.Distance(linkDistance),
+					" (Max: ", HumanReadable.Distance(linkMaxDistance), ")");
 
 				connection.control_path.Add(controlPoint);
 			}
 
 			// set minimal data rate to what is defined in Settings (1 bit/s by default) 
-			if (connection.rate > 0.0 && connection.rate * Lib.bitsPerMB < Settings.DataRateMinimumBitsPerSecond)
-				connection.rate = Settings.DataRateMinimumBitsPerSecond / Lib.bitsPerMB;
+			if (connection.rate > 0.0 && connection.rate * HumanReadable.bitsPerMB < Settings.DataRateMinimumBitsPerSecond)
+				connection.rate = Settings.DataRateMinimumBitsPerSecond / HumanReadable.bitsPerMB;
 		}
 
 		static Vessel CommNodeToVessel(CommNode node)

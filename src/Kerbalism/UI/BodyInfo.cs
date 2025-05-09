@@ -38,20 +38,20 @@ namespace KERBALISM
 
 				// surface panel
 				string temperature_str = body.atmosphere
-				  ? Lib.HumanReadableTemp(temperature)
-				  : Lib.BuildString(Lib.HumanReadableTemp(temperature_min), " / ", Lib.HumanReadableTemp(temperature));
+				  ? HumanReadable.Temp(temperature)
+				  : Lib.BuildString(HumanReadable.Temp(temperature_min), " / ", HumanReadable.Temp(temperature));
 				p.AddSection(Local.BodyInfo_SURFACE);//"SURFACE"
 				p.AddContent(Local.BodyInfo_temperature, temperature_str);//"temperature"
-				p.AddContent(Local.BodyInfo_solarflux, Lib.HumanReadableFlux(solar_flux));//"solar flux"
-				if (Features.Radiation) p.AddContent(Local.BodyInfo_radiation, Lib.HumanReadableRadiation(surfaceRadiation));//"radiation"
+				p.AddContent(Local.BodyInfo_solarflux, HumanReadable.Flux(solar_flux));//"solar flux"
+				if (Features.Radiation) p.AddContent(Local.BodyInfo_radiation, HumanReadable.Radiation(surfaceRadiation));//"radiation"
 
 				// atmosphere panel
 				if (body.atmosphere)
 				{
 					p.AddSection(Local.BodyInfo_ATMOSPHERE);//"ATMOSPHERE"
 					p.AddContent(Local.BodyInfo_breathable, Sim.Breathable(body) ? Local.BodyInfo_breathable_yes : Local.BodyInfo_breathable_no);//"breathable""yes""no"
-					p.AddContent(Local.BodyInfo_lightabsorption, Lib.HumanReadablePerc(1.0 - Sim.AtmosphereFactor(body, 0.7071)));//"light absorption"
-					if (Features.Radiation) p.AddContent(Local.BodyInfo_gammaabsorption, Lib.HumanReadablePerc(1.0 - Sim.GammaTransparency(body, 0.0)));//"gamma absorption"
+					p.AddContent(Local.BodyInfo_lightabsorption, HumanReadable.Percentage(1.0 - Sim.AtmosphereFactor(body, 0.7071)));//"light absorption"
+					if (Features.Radiation) p.AddContent(Local.BodyInfo_gammaabsorption, HumanReadable.Percentage(1.0 - Sim.GammaTransparency(body, 0.0)));//"gamma absorption"
 				}
 			}
 
@@ -70,15 +70,15 @@ namespace KERBALISM
 
 					if(Storm.sun_observation_quality > 0.7)
 					{
-						title = Lib.BuildString(title, ": ", Lib.Color(Local.BodyInfo_stormcycle.Format(Lib.HumanReadableDuration(cycle)), Lib.Kolor.LightGrey));// <<1>> cycle
+						title = Lib.BuildString(title, ": ", Lib.Color(Local.BodyInfo_stormcycle.Format(HumanReadable.Duration(cycle)), Lib.Kolor.LightGrey));// <<1>> cycle
 					}
 
-					p.AddContent(title, Lib.HumanReadablePerc(activity));
+					p.AddContent(title, HumanReadable.Percentage(activity));
 				}
 
 				if (Storm.sun_observation_quality > 0.8)
 				{
-					p.AddContent(Local.BodyInfo_radiationonsurface, Lib.HumanReadableRadiation(surfaceRadiation));//"radiation on surface:"
+					p.AddContent(Local.BodyInfo_radiationonsurface, HumanReadable.Radiation(surfaceRadiation));//"radiation on surface:"
 				}
 
 				p.AddContent(Lib.BuildString(Local.BodyInfo_innerbelt , " ", Lib.Color(inner, Lib.Kolor.LightGrey)),//"inner belt: "
@@ -107,17 +107,17 @@ namespace KERBALISM
 			rad += rbSun.radiation_pause;
 
 			if (rb.inner_visible)
-				inner = rb.model.has_inner ? "~" + Lib.HumanReadableRadiation(System.Math.Max(0, rad + rb.radiation_inner)) : "n/a";
+				inner = rb.model.has_inner ? "~" + HumanReadable.Radiation(System.Math.Max(0, rad + rb.radiation_inner)) : "n/a";
 			else
 				inner = Local.BodyInfo_unknown;//"unknown"
 
 			if (rb.outer_visible)
-				outer = rb.model.has_outer ? "~" + Lib.HumanReadableRadiation(System.Math.Max(0, rad + rb.radiation_outer)) : "n/a";
+				outer = rb.model.has_outer ? "~" + HumanReadable.Radiation(System.Math.Max(0, rad + rb.radiation_outer)) : "n/a";
 			else
 				outer = Local.BodyInfo_unknown;//"unknown"
 
 			if (rb.pause_visible)
-				pause = rb.model.has_pause ? "∆" + Lib.HumanReadableRadiation(System.Math.Abs(rb.radiation_pause)) : "n/a";
+				pause = rb.model.has_pause ? "∆" + HumanReadable.Radiation(System.Math.Abs(rb.radiation_pause)) : "n/a";
 			else
 				pause = Local.BodyInfo_unknown;//"unknown"
 

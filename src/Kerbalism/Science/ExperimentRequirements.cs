@@ -406,36 +406,36 @@ namespace KERBALISM
 				case Require.SunAngleMax:
 				case Require.OrbitMinInclination:
 				case Require.OrbitMaxInclination:
-					return Lib.HumanReadableAngle((double)reqValue);
+					return HumanReadable.Angle((double)reqValue);
 				case Require.TemperatureMin:
 				case Require.TemperatureMax:
-					return Lib.HumanReadableTemp((double)reqValue);
+					return HumanReadable.Temp((double)reqValue);
 				case Require.AltitudeMin:
 				case Require.AltitudeMax:
 				case Require.AltAboveGroundMin:
 				case Require.AltAboveGroundMax:
 				case Require.MaxAsteroidDistance:
-					return Lib.HumanReadableDistance((double)reqValue);
+					return HumanReadable.Distance((double)reqValue);
 				case Require.RadiationMin:
 				case Require.RadiationMax:
-					return Lib.HumanReadableRadiation((double)reqValue);
+					return HumanReadable.Radiation((double)reqValue);
 				case Require.VolumePerCrewMin:
 				case Require.VolumePerCrewMax:
-					return Lib.HumanReadableVolume((double)reqValue);
+					return HumanReadable.Volume((double)reqValue);
 				case Require.SurfaceSpeedMin:
 				case Require.SurfaceSpeedMax:
 				case Require.VerticalSpeedMin:
 				case Require.VerticalSpeedMax:
 				case Require.SpeedMin:
 				case Require.SpeedMax:
-					return Lib.HumanReadableSpeed((double)reqValue);
+					return HumanReadable.Speed((double)reqValue);
 				case Require.DynamicPressureMin:
 				case Require.DynamicPressureMax:
 				case Require.StaticPressureMin:
 				case Require.StaticPressureMax:
 				case Require.AtmDensityMin:
 				case Require.AtmDensityMax:
-					return Lib.HumanReadablePressure((double)reqValue);
+					return HumanReadable.Pressure((double)reqValue);
 				case Require.CrewMin:
 				case Require.CrewMax:
 				case Require.CrewCapacityMin:

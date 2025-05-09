@@ -103,10 +103,10 @@ namespace KERBALISM
 		{
 			switch (type)
 			{
-				case "temperature": return Lib.HumanReadableTemp(vd.EnvTemperature);
-				case "radiation": return Lib.HumanReadableRadiation(vd.EnvRadiation);
-				case "habitat_radiation": return Lib.HumanReadableRadiation(HabitatRadiation(vd));
-				case "pressure": return Lib.HumanReadablePressure(v.mainBody.GetPressure(v.altitude));
+				case "temperature": return HumanReadable.Temp(vd.EnvTemperature);
+				case "radiation": return HumanReadable.Radiation(vd.EnvRadiation);
+				case "habitat_radiation": return HumanReadable.Radiation(HabitatRadiation(vd));
+				case "pressure": return HumanReadable.Pressure(v.mainBody.GetPressure(v.altitude));
 				case "gravioli": return vd.EnvGravioli < 0.33 ? Local.Sensor_shorttextinfo1 : vd.EnvGravioli < 0.66 ? Local.Sensor_shorttextinfo2 : Local.Sensor_shorttextinfo3;//"nothing here""almost one""WOW!"
 			}
 			return string.Empty;
@@ -126,9 +126,9 @@ namespace KERBALISM
 					return Lib.BuildString
 					(
 						"<align=left />",
-						String.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_solarflux, Lib.HumanReadableFlux(vd.EnvSolarFluxTotal)),//"solar flux"
-						String.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_albedoflux, Lib.HumanReadableFlux(vd.EnvAlbedoFlux)),//"albedo flux"
-						String.Format("{0,-14}\t<b>{1}</b>", Local.Sensor_bodyflux, Lib.HumanReadableFlux(vd.EnvBodyFlux))//"body flux"
+						String.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_solarflux, HumanReadable.Flux(vd.EnvSolarFluxTotal)),//"solar flux"
+						String.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_albedoflux, HumanReadable.Flux(vd.EnvAlbedoFlux)),//"albedo flux"
+						String.Format("{0,-14}\t<b>{1}</b>", Local.Sensor_bodyflux, HumanReadable.Flux(vd.EnvBodyFlux))//"body flux"
 					);
 
 				case "radiation":
@@ -138,8 +138,8 @@ namespace KERBALISM
 					return Lib.BuildString
 					(
 						"<align=left />",
-						String.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_environment, Lib.HumanReadableRadiation(vd.EnvRadiation, false)),//"environment"
-						String.Format("{0,-14}\t<b>{1}</b>", Local.Sensor_habitats, Lib.HumanReadableRadiation(HabitatRadiation(vd), false))//"habitats"
+						String.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_environment, HumanReadable.Radiation(vd.EnvRadiation, false)),//"environment"
+						String.Format("{0,-14}\t<b>{1}</b>", Local.Sensor_habitats, HumanReadable.Radiation(HabitatRadiation(vd), false))//"habitats"
 					);
 
 				case "pressure":

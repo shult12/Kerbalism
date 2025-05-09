@@ -68,7 +68,7 @@ namespace KERBALISM
 
 					string[] dataOptions = new string[dataCapacities.Count];
 					for(int i = 0; i < dataCapacities.Count; i++)
-						dataOptions[i] = Lib.HumanReadableDataSize(dataCapacities[i].Value);
+						dataOptions[i] = HumanReadable.DataSize(dataCapacities[i].Value);
 					o.options = dataOptions;
 				}
 
@@ -94,7 +94,7 @@ namespace KERBALISM
 
 					string[] sampleOptions = new string[sampleCapacities.Count];
 					for (int i = 0; i < sampleCapacities.Count; i++)
-						sampleOptions[i] = Lib.HumanReadableSampleSize(sampleCapacities[i].Value);
+						sampleOptions[i] = HumanReadable.SampleSize(sampleCapacities[i].Value);
 					o.options = sampleOptions;
 				}
 			}
@@ -129,7 +129,7 @@ namespace KERBALISM
 		{
 			List<KeyValuePair<string, double>> result = new List<KeyValuePair<string, double>>();
 			for(var i = 1; i <= maxDataCapacityFactor; i++)
-				result.Add(new KeyValuePair<string, double>(Lib.HumanReadableDataSize(dataCapacity * i), dataCapacity * i));
+				result.Add(new KeyValuePair<string, double>(HumanReadable.DataSize(dataCapacity * i), dataCapacity * i));
 			return result;
 		}
 
@@ -137,7 +137,7 @@ namespace KERBALISM
 		{
 			List<KeyValuePair<string, int>> result = new List<KeyValuePair<string, int>>();
 			for (var i = 1; i <= maxSampleCapacityFactor; i++)
-				result.Add(new KeyValuePair<string, int>(Lib.HumanReadableSampleSize(sampleCapacity * i), sampleCapacity * i));
+				result.Add(new KeyValuePair<string, int>(HumanReadable.SampleSize(sampleCapacity * i), sampleCapacity * i));
 			return result;
 		}
 
@@ -238,21 +238,21 @@ namespace KERBALISM
 			if (GameLogic.IsFlight())
 			{
 				availableDataCapacity = drive.FileCapacityAvailable();
-				availableSlots = Lib.SampleSizeToSlots(drive.SampleCapacityAvailable());
+				availableSlots = HumanReadable.SampleSizeToSlots(drive.SampleCapacityAvailable());
 			}
 
 			Capacity = string.Empty;
 			if(availableDataCapacity > double.Epsilon)
-				Capacity = Lib.HumanReadableDataSize(availableDataCapacity);
+				Capacity = HumanReadable.DataSize(availableDataCapacity);
 			if(availableSlots > 0)
 			{
 				if (Capacity.Length > 0) Capacity += " ";
-				Capacity += Lib.HumanReadableSampleSize(availableSlots);
+				Capacity += HumanReadable.SampleSize(availableSlots);
 			}
 
 			if(GameLogic.IsFlight() && totalSampleMass > double.Epsilon)
 			{
-				Capacity += " " + Lib.HumanReadableMass(totalSampleMass);
+				Capacity += " " + HumanReadable.Mass(totalSampleMass);
 			}
 		}
 
@@ -411,8 +411,8 @@ namespace KERBALISM
 		public Specifics Specs()
 		{
 			Specifics specs = new Specifics();
-			specs.Add(Local.HardDrive_info1, dataCapacity >= 0 ? Lib.HumanReadableDataSize(dataCapacity) : Local.HardDrive_Capacityunlimited);//"File capacity""unlimited"
-			specs.Add(Local.HardDrive_info2, sampleCapacity >= 0 ? Lib.HumanReadableSampleSize(sampleCapacity) : Local.HardDrive_Capacityunlimited);//"Sample capacity""unlimited"
+			specs.Add(Local.HardDrive_info1, dataCapacity >= 0 ? HumanReadable.DataSize(dataCapacity) : Local.HardDrive_Capacityunlimited);//"File capacity""unlimited"
+			specs.Add(Local.HardDrive_info2, sampleCapacity >= 0 ? HumanReadable.SampleSize(sampleCapacity) : Local.HardDrive_Capacityunlimited);//"Sample capacity""unlimited"
 			return specs;
 		}
 

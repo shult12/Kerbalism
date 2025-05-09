@@ -134,7 +134,7 @@ namespace KERBALISM
 			if (!part.IsPAWVisible())
 				return;
 
-			Status = running ? Lib.HumanReadableRadiation(System.Math.Abs(radiation)) : Local.Emitter_none;//"none"
+			Status = running ? HumanReadable.Radiation(System.Math.Abs(radiation)) : Local.Emitter_none;//"none"
 			Events["Toggle"].guiName = Lib.StatusToggle(part.partInfo.title, running ? Local.Generic_ACTIVE : Local.Generic_DISABLED);
 		}
 
@@ -211,13 +211,13 @@ namespace KERBALISM
 		public Specifics Specs()
 		{
 			Specifics specs = new Specifics();
-			specs.Add(radiation >= 0.0 ? Local.Emitter_Emitted : Local.Emitter_ActiveShielding, Lib.HumanReadableRadiation(System.Math.Abs(radiation)));
+			specs.Add(radiation >= 0.0 ? Local.Emitter_Emitted : Local.Emitter_ActiveShielding, HumanReadable.Radiation(System.Math.Abs(radiation)));
 			if (ec_rate > double.Epsilon)
 			{
 				if (Settings.UseSIUnits)
 					specs.Add(Local.Deploy_actualCost, SI.SIRate(ec_rate, ResourceUnitInfo.ECResID));
 				else
-					specs.Add("EC/s", Lib.HumanReadableRate(ec_rate));
+					specs.Add("EC/s", HumanReadable.Rate(ec_rate));
 			}
 			return specs;
 		}

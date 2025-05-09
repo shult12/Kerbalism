@@ -227,7 +227,7 @@ namespace KERBALISM
 							if (rated_operation_duration > 0)
 							{
 								double effective_duration = EffectiveDuration(quality, rated_operation_duration);
-								Status = Lib.BuildString(Local.Reliability_burnremaining, " ", Lib.HumanReadableDuration(System.Math.Max(0, effective_duration - operation_duration)));//"remaining burn:"
+								Status = Lib.BuildString(Local.Reliability_burnremaining, " ", HumanReadable.Duration(System.Math.Max(0, effective_duration - operation_duration)));//"remaining burn:"
 							}
 							if (rated_ignitions > 0)
 							{
@@ -288,7 +288,7 @@ namespace KERBALISM
 						double effective_mtbf = EffectiveMTBF(quality, mtbf);
 						Status = Lib.BuildString(Status,
 							(string.IsNullOrEmpty(Status) ? "" : ", "),
-							Local.Reliability_MTBF + " ", Lib.HumanReadableDuration(effective_mtbf));//"MTBF:"
+							Local.Reliability_MTBF + " ", HumanReadable.Duration(effective_mtbf));//"MTBF:"
 					}
 
 					if (rated_operation_duration > 0 && PreferencesReliability.Instance.engineFailures)
@@ -297,7 +297,7 @@ namespace KERBALISM
 						Status = Lib.BuildString(Status,
 							(string.IsNullOrEmpty(Status) ? "" : ", "),
 							Local.Reliability_Burntime + " ",//"Burn time:
-							Lib.HumanReadableDuration(effective_duration));
+							HumanReadable.Duration(effective_duration));
 					}
 
 					if (rated_ignitions > 0 && PreferencesReliability.Instance.engineFailures)
@@ -313,7 +313,7 @@ namespace KERBALISM
 						var r = quality ? rated_radiation * Settings.QualityScale : rated_radiation;
 						Status = Lib.BuildString(Status,
 							(string.IsNullOrEmpty(Status) ? "" : ", "),
-							Lib.HumanReadableRadiation(r / 3600.0));
+							HumanReadable.Radiation(r / 3600.0));
 					}
 				}
 			}
@@ -422,7 +422,7 @@ namespace KERBALISM
 
 					fail_duration = guaranteed_operation + f * p;
 #if DEBUG_RELIABILITY
-					Logging.Log(part.partInfo.title + " will fail after " + Lib.HumanReadableDuration(fail_duration) + " burn time");
+					Logging.Log(part.partInfo.title + " will fail after " + HumanReadable.Duration(fail_duration) + " burn time");
 #endif
 				}
 
@@ -794,21 +794,21 @@ namespace KERBALISM
 
 			specs.Add(string.Empty);
 			specs.Add("<color=#00ffff>"+Local.Reliability_info3 +"</color>");//Standard quality
-			if(mtbf > 0) specs.Add(Local.Reliability_info4, Lib.HumanReadableDuration(EffectiveMTBF(false, mtbf)));//"MTBF"
-			if (turnon_failure_probability > 0) specs.Add(Local.Reliability_info5, Lib.HumanReadablePerc(turnon_failure_probability, "F1"));//"Ignition failures"
-			if (rated_operation_duration > 0) specs.Add(Local.Reliability_info6, Lib.HumanReadableDuration(EffectiveDuration(false, rated_operation_duration)));//"Rated burn duration"
+			if(mtbf > 0) specs.Add(Local.Reliability_info4, HumanReadable.Duration(EffectiveMTBF(false, mtbf)));//"MTBF"
+			if (turnon_failure_probability > 0) specs.Add(Local.Reliability_info5, HumanReadable.Percentage(turnon_failure_probability, "F1"));//"Ignition failures"
+			if (rated_operation_duration > 0) specs.Add(Local.Reliability_info6, HumanReadable.Duration(EffectiveDuration(false, rated_operation_duration)));//"Rated burn duration"
 			if (rated_ignitions > 0) specs.Add(Local.Reliability_info7, EffectiveIgnitions(false, rated_ignitions).ToString());//"Rated ignitions"
-			if (mtbf > 0 && rated_radiation > 0) specs.Add(Local.Reliability_info8, Lib.HumanReadableRadiation(rated_radiation / 3600.0));//"Radiation rating"
+			if (mtbf > 0 && rated_radiation > 0) specs.Add(Local.Reliability_info8, HumanReadable.Radiation(rated_radiation / 3600.0));//"Radiation rating"
 
 			specs.Add(string.Empty);
 			specs.Add("<color=#00ffff>"+Local.Reliability_info9 +"</color>");//High quality
-			if (extra_cost > double.Epsilon) specs.Add(Local.Reliability_info10, Lib.HumanReadableCost(extra_cost * part.partInfo.cost));//"Extra cost"
-			if (extra_mass > double.Epsilon) specs.Add(Local.Reliability_info11, Lib.HumanReadableMass(extra_mass * part.partInfo.partPrefab.mass));//"Extra mass"
-			if (mtbf > 0) specs.Add(Local.Reliability_info4, Lib.HumanReadableDuration(EffectiveMTBF(true, mtbf)));//"MTBF"
-			if (turnon_failure_probability > 0) specs.Add(Local.Reliability_info5, Lib.HumanReadablePerc(turnon_failure_probability / Settings.QualityScale, "F1"));//"Ignition failures"
-			if (rated_operation_duration > 0) specs.Add(Local.Reliability_info6, Lib.HumanReadableDuration(EffectiveDuration(true, rated_operation_duration)));//"Rated burn duration"
+			if (extra_cost > double.Epsilon) specs.Add(Local.Reliability_info10, HumanReadable.Cost(extra_cost * part.partInfo.cost));//"Extra cost"
+			if (extra_mass > double.Epsilon) specs.Add(Local.Reliability_info11, HumanReadable.Mass(extra_mass * part.partInfo.partPrefab.mass));//"Extra mass"
+			if (mtbf > 0) specs.Add(Local.Reliability_info4, HumanReadable.Duration(EffectiveMTBF(true, mtbf)));//"MTBF"
+			if (turnon_failure_probability > 0) specs.Add(Local.Reliability_info5, HumanReadable.Percentage(turnon_failure_probability / Settings.QualityScale, "F1"));//"Ignition failures"
+			if (rated_operation_duration > 0) specs.Add(Local.Reliability_info6, HumanReadable.Duration(EffectiveDuration(true, rated_operation_duration)));//"Rated burn duration"
 			if (rated_ignitions > 0) specs.Add(Local.Reliability_info7, EffectiveIgnitions(true, rated_ignitions).ToString());//"Rated ignitions"
-			if (mtbf > 0 && rated_radiation > 0) specs.Add(Local.Reliability_info8, Lib.HumanReadableRadiation(Settings.QualityScale * rated_radiation / 3600.0));//"Radiation rating"
+			if (mtbf > 0 && rated_radiation > 0) specs.Add(Local.Reliability_info8, HumanReadable.Radiation(Settings.QualityScale * rated_radiation / 3600.0));//"Radiation rating"
 
 			return specs;
 		}

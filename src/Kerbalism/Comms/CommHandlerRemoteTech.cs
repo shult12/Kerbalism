@@ -99,10 +99,10 @@ namespace KERBALISM
 					// satellite name
 					controlPoint[0] = Lib.Ellipsis(RemoteTech.GetSatelliteName(i) + " \\ " + RemoteTech.GetSatelliteName(id), 50);
 					// signal strength
-					controlPoint[1] = Lib.HumanReadablePerc(System.Math.Ceiling(signalStrength * 10000) / 10000, "F2");
+					controlPoint[1] = HumanReadable.Percentage(System.Math.Ceiling(signalStrength * 10000) / 10000, "F2");
 					// tooltip info
-					controlPoint[2] = Lib.BuildString("Distance: ", Lib.HumanReadableDistance(linkDistance),
-						" (Max: ", Lib.HumanReadableDistance(linkMaxDistance), ")");
+					controlPoint[2] = Lib.BuildString("Distance: ", HumanReadable.Distance(linkDistance),
+						" (Max: ", HumanReadable.Distance(linkMaxDistance), ")");
 					
 					connection.control_path.Add(controlPoint);
 					i = id;

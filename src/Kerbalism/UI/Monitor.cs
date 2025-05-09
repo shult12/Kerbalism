@@ -482,7 +482,7 @@ namespace KERBALISM
 
 		void Problem_poisoning(VesselData vd, ref List<Texture2D> icons, ref List<string> tooltips)
 		{
-			string poisoning_str = Lib.BuildString(Local.Monitor_CO2level ," <b>", Lib.HumanReadablePerc(vd.Poisoning), "</b>");//CO2 level in internal atmosphere:
+			string poisoning_str = Lib.BuildString(Local.Monitor_CO2level ," <b>", HumanReadable.Percentage(vd.Poisoning), "</b>");//CO2 level in internal atmosphere:
 			if (vd.Poisoning >= Settings.PoisoningThreshold)
 			{
 				icons.Add(Textures.recycle_red);
@@ -503,7 +503,7 @@ namespace KERBALISM
 
 				var bd = Lib.IsSun(v.mainBody) ? v.KerbalismData().stormData : DB.Storm(Lib.GetParentPlanet(v.mainBody).name);
 				var tti = bd.storm_time - Planetarium.GetUniversalTime();
-				tooltips.Add(Lib.BuildString(Lib.Color(Local.Monitor_ejectionincoming, Lib.Kolor.Orange), "\n<i>", Local.Monitor_TimetoimpactCoronalmass, Lib.HumanReadableDuration(tti), "</i>"));//"Coronal mass ejection incoming"Time to impact:
+				tooltips.Add(Lib.BuildString(Lib.Color(Local.Monitor_ejectionincoming, Lib.Kolor.Orange), "\n<i>", Local.Monitor_TimetoimpactCoronalmass, HumanReadable.Duration(tti), "</i>"));//"Coronal mass ejection incoming"Time to impact:
 			}
 			if (Storm.InProgress(v))
 			{
@@ -511,7 +511,7 @@ namespace KERBALISM
 
 				var bd = Lib.IsSun(v.mainBody) ? v.KerbalismData().stormData : DB.Storm(Lib.GetParentPlanet(v.mainBody).name);
 				var remainingDuration = bd.storm_time + bd.displayed_duration - Planetarium.GetUniversalTime();
-				tooltips.Add(Lib.BuildString(Lib.Color(Local.Monitor_Solarstorminprogress, Lib.Kolor.Red), "\n<i>", Local.Monitor_SolarstormRemaining, Lib.HumanReadableDuration(remainingDuration), "</i>"));//"Solar storm in progress"Remaining duration:
+				tooltips.Add(Lib.BuildString(Lib.Color(Local.Monitor_Solarstorminprogress, Lib.Kolor.Red), "\n<i>", Local.Monitor_SolarstormRemaining, HumanReadable.Duration(remainingDuration), "</i>"));//"Solar storm in progress"Remaining duration:
 			}
 		}
 
@@ -555,7 +555,7 @@ namespace KERBALISM
 			string tooltip = Lib.BuildString
 			(
 			  "<align=left /><b>", Local.Monitor_name, "\t", Local.Monitor_level, "\t" + Local.Monitor_duration, "</b>\n",//name"level"duration
-			  Lib.Color(Lib.BuildString("EC\t", Lib.HumanReadablePerc(ec.Level), "\t", depletion <= double.Epsilon ? Local.Monitor_depleted : Lib.HumanReadableDuration(depletion)),//"depleted"
+			  Lib.Color(Lib.BuildString("EC\t", HumanReadable.Percentage(ec.Level), "\t", depletion <= double.Epsilon ? Local.Monitor_depleted : HumanReadable.Duration(depletion)),//"depleted"
 			  ec.Level <= 0.005 ? Lib.Kolor.Red : ec.Level <= low_threshold ? Lib.Kolor.Orange : Lib.Kolor.None)
 			);
 
@@ -583,7 +583,7 @@ namespace KERBALISM
 					{
 						if (tooltips.Count == 0) tooltips.Add(String.Format("<align=left /><b>{0,-18}\t" + Local.Monitor_level + "\t" + Local.Monitor_duration + "</b>", Local.Monitor_name));//level"duration"name"
 						tooltips.Add(Lib.Color(
-							String.Format("{0,-18}\t{1}\t{2}", supply.resource, Lib.HumanReadablePerc(res.Level), depletion <= double.Epsilon ? Local.Monitor_depleted : Lib.HumanReadableDuration(depletion)),//"depleted"
+							String.Format("{0,-18}\t{1}\t{2}", supply.resource, HumanReadable.Percentage(res.Level), depletion <= double.Epsilon ? Local.Monitor_depleted : HumanReadable.Duration(depletion)),//"depleted"
 							res.Level <= 0.005 ? Lib.Kolor.Red : res.Level <= supply.low_threshold ? Lib.Kolor.Orange : Lib.Kolor.None
 						));
 
@@ -631,7 +631,7 @@ namespace KERBALISM
 
 			// signal strength
 			var strength = System.Math.Ceiling(conn.strength * 10000) / 10000;
-			string signal_str = strength > 0.001 ? Lib.HumanReadablePerc(strength, "F2") : Lib.Color(Lib.Italic(Local.Generic_NO), Lib.Kolor.Orange);
+			string signal_str = strength > 0.001 ? HumanReadable.Percentage(strength, "F2") : Lib.Color(Lib.Italic(Local.Generic_NO), Lib.Kolor.Orange);
 
 			// target name
 			string target_str = conn.linked ? conn.target_name : Local.Generic_NONE;
@@ -651,7 +651,7 @@ namespace KERBALISM
 			  "<align=left />",
 			  String.Format("{0,-14}\t<b>{1}</b>\n", Local.UI_DSNconnected, conn.linked ?
 					Lib.Color(Local.Generic_YES, Lib.Kolor.Green) : Lib.Color(Lib.Italic(Local.Generic_NO), Lib.Kolor.Orange)),
-			  String.Format("{0,-14}\t<b>{1}</b>\n", Local.UI_sciencerate, Lib.HumanReadableDataRate(conn.rate)),
+			  String.Format("{0,-14}\t<b>{1}</b>\n", Local.UI_sciencerate, HumanReadable.DataRate(conn.rate)),
 			  String.Format("{0,-14}\t<b>{1}</b>\n", Local.UI_strength, signal_str),
 			  String.Format("{0,-14}\t<b>{1}</b>\n", Local.UI_target, target_str),
 			  String.Format("{0,-14}\t<b>{1}</b>", Local.UI_transmitting, comms_str)
