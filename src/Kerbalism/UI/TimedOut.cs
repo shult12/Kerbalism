@@ -10,7 +10,7 @@ namespace KERBALISM
 		{
 			if (!vd.Connection.linked && vd.CrewCount == 0 && !vd.Vessel.isEVA)
 			{ 
-				p.AddHeader(msg[((int)Time.realtimeSinceStartup) % msg.Length]);
+				p.AddHeader(msg[((int)UnityEngine.Time.realtimeSinceStartup) % msg.Length]);
 				return true;
 			}
 			return false;

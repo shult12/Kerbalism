@@ -54,7 +54,7 @@ namespace KERBALISM
 		Dictionary<string, Entry> entries = new Dictionary<string, Entry>();
 
 		// display update timer
-		static double update_timer = Lib.Clocks();
+		static double update_timer = Time.Clocks();
 		readonly static double timeout = Stopwatch.Frequency / update_fps;
 		const double update_fps = 5.0;      // Frames per second the entry value display will update.
 		static long tot_frames = 0;         // total physics frames used for avg calculation
@@ -117,9 +117,9 @@ namespace KERBALISM
 			}
 
 			// skip updates for a smoother display
-			if (((Lib.Clocks() - update_timer) > timeout) && visible)
+			if (((Time.Clocks() - update_timer) > timeout) && visible)
 			{
-				update_timer = Lib.Clocks();
+				update_timer = Time.Clocks();
 				Calculate();
 			}
 		}
@@ -132,7 +132,7 @@ namespace KERBALISM
 
 				if (e.prev_calls > 0L)
 				{
-					e.last_txt = Lib.Microseconds((ulong)(e.prev_time / e.prev_calls)).ToString("F2") + "ms";
+					e.last_txt = Time.Microseconds((ulong)(e.prev_time / e.prev_calls)).ToString("F2") + "ms";
 					e.calls_txt = e.prev_calls.ToString();
 				}
 				else if (show_zero)
@@ -141,7 +141,7 @@ namespace KERBALISM
 					e.calls_txt = "0";
 				}
 
-				e.avg_txt = (e.tot_calls > 0L ? Lib.Microseconds((ulong)(e.tot_time / e.tot_calls)).ToString("F2") : "") + "ms";
+				e.avg_txt = (e.tot_calls > 0L ? Time.Microseconds((ulong)(e.tot_time / e.tot_calls)).ToString("F2") : "") + "ms";
 				e.avg_calls_txt = tot_frames > 0L ? ((float)e.tot_calls / (float)tot_frames).ToString("F3") : "0";
 			}
 
@@ -248,7 +248,7 @@ namespace KERBALISM
 				Fetch.AddDialogItem(e_name);
 			}
 
-			Fetch.entries[e_name].start = Lib.Clocks();
+			Fetch.entries[e_name].start = Time.Clocks();
 #endif
 		}
 
@@ -263,7 +263,7 @@ namespace KERBALISM
 			Entry e = Fetch.entries[e_name];
 
 			++e.calls;
-			e.time += Lib.Clocks() - e.start;
+			e.time += Time.Clocks() - e.start;
 #endif
 		}
 

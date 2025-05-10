@@ -618,7 +618,7 @@ namespace KERBALISM
 					"<i>Unload the vessel before warping</i>"
 				  )
 				);
-				Lib.StopWarp(1000.0);
+				Time.StopWarp(1000.0);
 			}
 
 			// reset brokers

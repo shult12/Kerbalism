@@ -128,7 +128,7 @@ namespace KERBALISM
 		internal static Texture2D KsmGuiTexHeaderRnD;
 
 		// timer controller
-		static float nextFlashing = Time.time;
+		static float nextFlashing = UnityEngine.Time.time;
 		static bool lastIcon = false;
 
 		static Sprite Get9SlicesSprite(string textureName, int width, int height, int borderSize)
@@ -290,9 +290,9 @@ namespace KERBALISM
 		/// <returns></returns>
 		internal static Texture2D iconSwitch(Texture2D icon1, Texture2D icon2, float interval = 1f)
 		{
-			if (Time.time > nextFlashing)
+			if (UnityEngine.Time.time > nextFlashing)
 			{
-				nextFlashing = Time.time + interval;
+				nextFlashing = UnityEngine.Time.time + interval;
 				lastIcon ^= true;
 			}
 			if (lastIcon) return icon1;

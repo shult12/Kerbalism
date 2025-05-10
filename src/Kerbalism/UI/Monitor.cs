@@ -534,7 +534,7 @@ namespace KERBALISM
 			Texture2D problem_icon = Textures.empty;
 			if (problem_icons.Count > 0)
 			{
-				UInt64 problem_index = ((UInt64)Time.realtimeSinceStartup / problem_icon_time) % (UInt64)(problem_icons.Count);
+				UInt64 problem_index = ((UInt64)UnityEngine.Time.realtimeSinceStartup / problem_icon_time) % (UInt64)(problem_icons.Count);
 				problem_icon = problem_icons[(int)problem_index];
 			}
 

@@ -219,7 +219,7 @@ namespace KERBALISM
 				savegame_uid = DB.uid;
 			}
 
-			Kerbalism.gameLoadTime = Time.time;
+			Kerbalism.gameLoadTime = UnityEngine.Time.time;
 		}
 
 		public override void OnSave(ConfigNode node)

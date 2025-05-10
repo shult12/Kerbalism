@@ -57,7 +57,7 @@ namespace KERBALISM
 			if (entries.Count == 0) return;
 
 			// get current time
-			float time = Time.realtimeSinceStartup;
+			float time = UnityEngine.Time.realtimeSinceStartup;
 
 			// get first entry in the queue
 			Entry e = entries.Peek();
@@ -140,10 +140,10 @@ namespace KERBALISM
 			switch (severity)
 			{
 				case Severity.relax: title = Lib.BuildString(Lib.Color(Local.Message_RELAX, Lib.Kolor.Green, true), "\n"); break;//"RELAX"
-				case Severity.warning: title = Lib.BuildString(Lib.Color(Local.Message_WARNING, Lib.Kolor.Yellow, true), "\n"); Lib.StopWarp(); break; //"WARNING"
-				case Severity.danger: title = Lib.BuildString(Lib.Color(Local.Message_DANGER, Lib.Kolor.Red, true), "\n"); Lib.StopWarp(); break; //"DANGER"
-				case Severity.fatality: title = Lib.BuildString(Lib.Color(Local.Message_FATALITY, Lib.Kolor.Red, true), "\n"); Lib.StopWarp(); break; //"FATALITY"
-				case Severity.breakdown: title = Lib.BuildString(Lib.Color(Local.Message_BREAKDOWN, Lib.Kolor.Orange, true), "\n"); Lib.StopWarp(); break; //"BREAKDOWN"
+				case Severity.warning: title = Lib.BuildString(Lib.Color(Local.Message_WARNING, Lib.Kolor.Yellow, true), "\n"); Time.StopWarp(); break; //"WARNING"
+				case Severity.danger: title = Lib.BuildString(Lib.Color(Local.Message_DANGER, Lib.Kolor.Red, true), "\n"); Time.StopWarp(); break; //"DANGER"
+				case Severity.fatality: title = Lib.BuildString(Lib.Color(Local.Message_FATALITY, Lib.Kolor.Red, true), "\n"); Time.StopWarp(); break; //"FATALITY"
+				case Severity.breakdown: title = Lib.BuildString(Lib.Color(Local.Message_BREAKDOWN, Lib.Kolor.Orange, true), "\n"); Time.StopWarp(); break; //"BREAKDOWN"
 			}
 			if (subtext.Length == 0) Post(Lib.BuildString(title, text));
 			else Post(Lib.BuildString(title, text, "\n<i>", subtext, "</i>"));

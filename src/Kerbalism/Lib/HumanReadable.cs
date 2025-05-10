@@ -17,9 +17,9 @@
 			if (rate >= 0.01) return Lib.BuildString(rate.ToString(precision), unit, Local.Generic_perMinute);//"/m"
 			rate *= 60.0; // per-hour
 			if (rate >= 0.01) return Lib.BuildString(rate.ToString(precision), unit, Local.Generic_perHour);//"/h"
-			rate *= Lib.HoursInDay;  // per-day
+			rate *= Time.HoursInDay;  // per-day
 			if (rate >= 0.01) return Lib.BuildString(rate.ToString(precision), unit, Local.Generic_perDay);//"/d"
-			return Lib.BuildString((rate * Lib.DaysInYear).ToString(precision), unit, Local.Generic_perYear);//"/y"
+			return Lib.BuildString((rate * Time.DaysInYear).ToString(precision), unit, Local.Generic_perYear);//"/y"
 		}
 
 		///<summary> Pretty-print a duration (duration is in seconds, must be positive) </summary>
@@ -31,8 +31,8 @@
 				d = System.Math.Round(d);
 				if (d <= 0.0) return Local.Generic_NONE;//"none"
 
-				ulong hours_in_day = (ulong)Lib.HoursInDay;
-				ulong days_in_year = (ulong)Lib.DaysInYear;
+				ulong hours_in_day = (ulong)Time.HoursInDay;
+				ulong days_in_year = (ulong)Time.DaysInYear;
 				ulong duration_seconds = (ulong)d;
 
 				// seconds
@@ -49,7 +49,7 @@
 					return Lib.BuildString(minutes.ToString(), "m ", seconds.ToString("00"), "s");
 				}
 				// hours + minutes
-				if (d < 3600.0 * Lib.HoursInDay)
+				if (d < 3600.0 * Time.HoursInDay)
 				{
 					ulong minutes = (duration_seconds / 60ul) % 60ul;
 					ulong hours = (duration_seconds / 3600ul) % hours_in_day;
@@ -57,7 +57,7 @@
 				}
 				ulong days = (duration_seconds / (3600ul * hours_in_day)) % days_in_year;
 				// days + hours
-				if (d < 3600.0 * Lib.HoursInDay * Lib.DaysInYear)
+				if (d < 3600.0 * Time.HoursInDay * Time.DaysInYear)
 				{
 					ulong hours = (duration_seconds / 3600ul) % hours_in_day;
 					return Lib.BuildString(days.ToString(), "d ", hours.ToString(), "h");
@@ -72,8 +72,8 @@
 				d = System.Math.Round(d);
 				if (d <= 0.0) return Local.Generic_NONE;//"none"
 
-				double hours_in_day = Lib.HoursInDay;
-				double days_in_year = Lib.DaysInYear;
+				double hours_in_day = Time.HoursInDay;
+				double days_in_year = Time.DaysInYear;
 
 				long duration = (long)d;
 				long seconds = duration % 60;
