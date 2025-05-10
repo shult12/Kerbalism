@@ -115,7 +115,7 @@ namespace KERBALISM
 			GUILayout.Label(Textures.empty, Styles.left_icon);
 			GUILayout.Label(panel.Title().ToUpper(), Styles.title_text);
 			GUILayout.Label(Textures.close, Styles.right_icon);
-			bool b = Lib.IsClicked();
+			bool b = UI.IsClicked();
 			GUILayout.EndHorizontal();
 			if (b) { Close(); return; }
 

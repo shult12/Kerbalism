@@ -171,7 +171,7 @@ namespace KERBALISM
 		void UpdateActions()
 		{
 			Events["Toggle"].active = slots > 0 || cureEverybody;
-			Events["Toggle"].guiName = Lib.StatusToggle(title, running ? Local.Sickbay_running : Local.Sickbay_stopped);//"running""stopped"
+			Events["Toggle"].guiName = UI.StatusToggle(title, running ? Local.Sickbay_running : Local.Sickbay_stopped);//"running""stopped"
 
 			if (!GameLogic.IsFlight())
 				return;

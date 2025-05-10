@@ -280,7 +280,7 @@ namespace KERBALISM
 				// update ui
 				if (part.IsPAWVisible())
 				{
-					Events["Quality"].guiName = Lib.StatusToggle(Local.Reliability_qualityinfo.Format("<b>" + title + "</b>"), quality ? Local.Reliability_qualityhigh : Local.Reliability_qualitystandard);//Lib.BuildString(<<1>> quality")"high""standard"
+					Events["Quality"].guiName = UI.StatusToggle(Local.Reliability_qualityinfo.Format("<b>" + title + "</b>"), quality ? Local.Reliability_qualityhigh : Local.Reliability_qualitystandard);//Lib.BuildString(<<1>> quality")"high""standard"
 
 					Status = string.Empty;
 					if (mtbf > 0 && PreferencesReliability.Instance.mtbfFailures)

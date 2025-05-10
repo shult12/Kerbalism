@@ -135,7 +135,7 @@ namespace KERBALISM
 				return;
 
 			Status = running ? HumanReadable.Radiation(System.Math.Abs(radiation)) : Local.Emitter_none;//"none"
-			Events["Toggle"].guiName = Lib.StatusToggle(part.partInfo.title, running ? Local.Generic_ACTIVE : Local.Generic_DISABLED);
+			Events["Toggle"].guiName = UI.StatusToggle(part.partInfo.title, running ? Local.Generic_ACTIVE : Local.Generic_DISABLED);
 		}
 
 		void FixedUpdate()

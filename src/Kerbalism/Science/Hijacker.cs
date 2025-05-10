@@ -159,7 +159,7 @@ namespace KERBALISM
 			// hijack the dialog
 			if (!meta.is_rerunnable)
 			{
-				popup = Lib.Popup
+				popup = UI.Popup
 				(
 				  "Warning!",
 				  "Recording the data will render this module inoperable.\n\nRestoring functionality will require a scientist.",

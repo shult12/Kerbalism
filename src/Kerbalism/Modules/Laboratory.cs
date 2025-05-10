@@ -72,13 +72,13 @@ namespace KERBALISM
 			{
 				// get status text
 				SetStatusText();
-				Events["Toggle"].guiName = Lib.StatusToggle(localized_toggle, status_txt);
+				Events["Toggle"].guiName = UI.StatusToggle(localized_toggle, status_txt);
 
 				// if a cleaner and either a researcher is not required, or the researcher is present
 				if (cleaner && (!researcher_cs || researcher_cs.Check(part.protoModuleCrew))) Events["CleanExperiments"].active = true;
 				else Events["CleanExperiments"].active = false;
 			}
-			else Events["Toggle"].guiName = Lib.StatusToggle(localized_toggle, running ? localized_enabled : localized_disabled);
+			else Events["Toggle"].guiName = UI.StatusToggle(localized_toggle, running ? localized_enabled : localized_disabled);
 		}
 
 		void FixedUpdate()

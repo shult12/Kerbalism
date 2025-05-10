@@ -226,13 +226,13 @@ namespace KERBALISM.Planner
 
 				// body selector
 				GUILayout.Label(new GUIContent(FlightGlobals.Bodies[body_index].name, Local.Planner_Targetbody), leftmenu_style);//"Target body"
-				if (Lib.IsClicked())
+				if (UI.IsClicked())
 				{
 					var sorted_index = sorted_body_indices.IndexOf(body_index);
 					body_index = sorted_body_indices[(sorted_index + 1) % sorted_body_indices.Count];
 					enforceUpdate = true;
 				}
-				else if (Lib.IsClicked(1))
+				else if (UI.IsClicked(1))
 				{
 					var sorted_index = sorted_body_indices.IndexOf(body_index);
 					body_index = sorted_body_indices[(sorted_index - 1) % sorted_body_indices.Count];
@@ -246,14 +246,14 @@ namespace KERBALISM.Planner
 					case SunlightState.SunlightSimulated: GUILayout.Label(new GUIContent(Textures.solar_panel, Local.Planner_SunlightSimulated), icon_style); break;//"In sunlight\n<b>Estimated</b> solar panel output\n<i>Sunlight direction : look at the shadows !</i>"
 					case SunlightState.Shadow: GUILayout.Label(new GUIContent(Textures.sun_black, Local.Planner_Shadow), icon_style); break;//"In shadow"
 				}
-				if (Lib.IsClicked())
+				if (UI.IsClicked())
 				{ sunlight = (SunlightState)(((int)sunlight + 1) % Enum.GetValues(typeof(SunlightState)).Length); enforceUpdate = true; }
 
 				// situation selector
 				GUILayout.Label(new GUIContent(situations[situation_index], Local.Planner_Targetsituation), rightmenu_style);//"Target situation"
-				if (Lib.IsClicked())
+				if (UI.IsClicked())
 				{ situation_index = (situation_index + 1) % situations.Length; enforceUpdate = true; }
-				else if (Lib.IsClicked(1))
+				else if (UI.IsClicked(1))
 				{ situation_index = (situation_index == 0 ? situations.Length : situation_index) - 1; enforceUpdate = true; }
 
 				// end header

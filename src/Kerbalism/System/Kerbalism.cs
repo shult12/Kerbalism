@@ -239,7 +239,7 @@ namespace KERBALISM
 			popupMsg += "Please provide a screenshot of this message, and your ksp.log file found in your KSP install folder\n\n";
 			popupMsg += error;
 
-			Lib.Popup("Kerbalism fatal error", popupMsg, 600f);
+			UI.Popup("Kerbalism fatal error", popupMsg, 600f);
 		}
 
 		#endregion

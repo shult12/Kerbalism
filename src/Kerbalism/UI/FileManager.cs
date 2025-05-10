@@ -159,7 +159,7 @@ namespace KERBALISM
 			p.AddRightIcon(send ? Textures.send_cyan : Textures.send_black, Local.FILEMANAGER_send, () => { drive.Send(file.subjectData.Id, !send); });//"Flag the file for transmission to <b>DSN</b>"
 			p.AddRightIcon(Textures.toggle_red, Local.FILEMANAGER_Delete, () =>//"Delete the file"
 				{
-					Lib.Popup(Local.FILEMANAGER_Warning_title,//"Warning!"
+					UI.Popup(Local.FILEMANAGER_Warning_title,//"Warning!"
 						Local.FILEMANAGER_DeleteConfirm.Format(file.subjectData.FullTitle),//Lib.BuildString(, "?"),//"Do you really want to delete <<1>>", 
 				        new DialogGUIButton(Local.FILEMANAGER_DeleteConfirm_button1, () => drive.Delete_file(file.subjectData)),//"Delete it"
 						new DialogGUIButton(Local.FILEMANAGER_DeleteConfirm_button2, () => { }));//"Keep it"
@@ -193,7 +193,7 @@ namespace KERBALISM
 			p.AddRightIcon(sample.analyze ? Textures.lab_cyan : Textures.lab_black, Local.FILEMANAGER_analysis, () => { sample.analyze = !sample.analyze; });//"Flag the file for analysis in a <b>laboratory</b>"
 			p.AddRightIcon(Textures.toggle_red, Local.FILEMANAGER_Dumpsample, () =>//"Dump the sample"
 				{
-					Lib.Popup(Local.FILEMANAGER_Warning_title,//"Warning!"
+					UI.Popup(Local.FILEMANAGER_Warning_title,//"Warning!"
 						Local.FILEMANAGER_DumpConfirm.Format(sample.subjectData.FullTitle),//"Do you really want to dump <<1>>?", 
 						new DialogGUIButton(Local.FILEMANAGER_DumpConfirm_button1, () => drive.Delete_sample(sample.subjectData)),//"Dump it"
 							  new DialogGUIButton(Local.FILEMANAGER_DumpConfirm_button2, () => { }));//"Keep it"

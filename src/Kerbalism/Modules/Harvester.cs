@@ -57,7 +57,7 @@ namespace KERBALISM
 			// in editor, merely update ui button label
 			if (GameLogic.IsEditor())
 			{
-				Events["Toggle"].guiName = Lib.StatusToggle(title, running ? Local.Harvester_running : Local.Harvester_stopped);//"running""stopped"
+				Events["Toggle"].guiName = UI.StatusToggle(title, running ? Local.Harvester_running : Local.Harvester_stopped);//"running""stopped"
 			}
 
 			// if in flight, and the stock planet resource system is online
@@ -82,7 +82,7 @@ namespace KERBALISM
 								? Local.Harvester_running//"running"
 								: Lib.BuildString("<color=yellow>", issue, "</color>");
 
-						Events["Toggle"].guiName = Lib.StatusToggle(title, status);
+						Events["Toggle"].guiName = UI.StatusToggle(title, status);
 						Abundance = abundance > double.Epsilon ? HumanReadable.Percentage(abundance, "F2") : Local.Harvester_none;//"none"
 					}
 				}

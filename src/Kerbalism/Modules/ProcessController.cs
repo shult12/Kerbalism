@@ -142,8 +142,8 @@ namespace KERBALISM
 				return;
 
 			// update rmb ui
-			Events["Toggle"].guiName = Lib.StatusToggle(title, broken ? Local.ProcessController_broken : running ? Local.ProcessController_running : Local.ProcessController_stopped);//"broken""running""stopped"
-			Events["DumpValve"].guiName = Lib.StatusToggle(Local.ProcessController_Dump, dumpValve.ValveTitle);//"Dump"
+			Events["Toggle"].guiName = UI.StatusToggle(title, broken ? Local.ProcessController_broken : running ? Local.ProcessController_running : Local.ProcessController_stopped);//"broken""running""stopped"
+			Events["DumpValve"].guiName = UI.StatusToggle(Local.ProcessController_Dump, dumpValve.ValveTitle);//"Dump"
 		}
 
 		[KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "_", active = true, groupName = "Processes", groupDisplayName = "#KERBALISM_Group_Processes")]//Processes

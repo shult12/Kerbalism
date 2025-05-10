@@ -275,13 +275,13 @@ namespace KERBALISM
 
 					if (subject != null)
 					{
-						Events["ToggleEvent"].guiName = Lib.StatusToggle(Lib.Ellipsis(ExpInfo.Title, Styles.ScaleStringLength(25)), StatusInfo(status, issue));
-						Events["ShowPopup"].guiName = Lib.StatusToggle(Local.StatuToggle_info, Lib.BuildString(ScienceValue(Subject), " ", State == RunningState.Forced ? subject.PercentCollectedTotal.ToString("P0") : RunningCountdown(ExpInfo, Subject, data_rate, prodFactor)));//"info"
+						Events["ToggleEvent"].guiName = UI.StatusToggle(Lib.Ellipsis(ExpInfo.Title, Styles.ScaleStringLength(25)), StatusInfo(status, issue));
+						Events["ShowPopup"].guiName = UI.StatusToggle(Local.StatuToggle_info, Lib.BuildString(ScienceValue(Subject), " ", State == RunningState.Forced ? subject.PercentCollectedTotal.ToString("P0") : RunningCountdown(ExpInfo, Subject, data_rate, prodFactor)));//"info"
 					}
 					else
 					{
-						Events["ToggleEvent"].guiName = Lib.StatusToggle(Lib.Ellipsis(ExpInfo.Title, Styles.ScaleStringLength(25)), StatusInfo(status, issue));
-						Events["ShowPopup"].guiName = Lib.StatusToggle(Local.StatuToggle_info, vd.VesselSituations.FirstSituationTitle);//"info"
+						Events["ToggleEvent"].guiName = UI.StatusToggle(Lib.Ellipsis(ExpInfo.Title, Styles.ScaleStringLength(25)), StatusInfo(status, issue));
+						Events["ShowPopup"].guiName = UI.StatusToggle(Local.StatuToggle_info, vd.VesselSituations.FirstSituationTitle);//"info"
 					}
 				}
 				else
@@ -302,7 +302,7 @@ namespace KERBALISM
 			else if (GameLogic.IsEditor())
 			{
 				// update ui
-				Events["ToggleEvent"].guiName = Lib.StatusToggle(ExpInfo.Title, StatusInfo(status, issue));
+				Events["ToggleEvent"].guiName = UI.StatusToggle(ExpInfo.Title, StatusInfo(status, issue));
 				Events["Reset"].active = false;
 				Events["Prepare"].active = false;
 			}

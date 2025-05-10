@@ -136,15 +136,15 @@ namespace KERBALISM
 				if (h.leftIcon != null)
 				{
 					GUILayout.Label(new GUIContent(h.leftIcon.texture, h.leftIcon.tooltip), Styles.left_icon);
-					if (h.leftIcon.click != null && Lib.IsClicked())
+					if (h.leftIcon.click != null && UI.IsClicked())
 						callbacks.Add(h.leftIcon.click);
 				}
 				GUILayout.Label(new GUIContent(h.label, h.tooltip), Styles.entry_label_nowrap);
-				if (h.click != null && Lib.IsClicked()) callbacks.Add(h.click);
+				if (h.click != null && UI.IsClicked()) callbacks.Add(h.click);
 				foreach (Icon i in h.icons)
 				{
 					GUILayout.Label(new GUIContent(i.texture, i.tooltip), Styles.right_icon);
-					if (i.click != null && Lib.IsClicked()) callbacks.Add(i.click);
+					if (i.click != null && UI.IsClicked()) callbacks.Add(i.click);
 				}
 				GUILayout.EndHorizontal();
 				GUILayout.Space(Styles.ScaleFloat(10.0f));
@@ -158,13 +158,13 @@ namespace KERBALISM
 				if (p.left != null)
 				{
 					GUILayout.Label(Textures.left_arrow, Styles.left_icon);
-					if (Lib.IsClicked()) callbacks.Add(p.left);
+					if (UI.IsClicked()) callbacks.Add(p.left);
 				}
 				GUILayout.Label(p.title, Styles.section_text);
 				if (p.right != null)
 				{
 					GUILayout.Label(Textures.right_arrow, Styles.right_icon);
-					if (Lib.IsClicked()) callbacks.Add(p.right);
+					if (UI.IsClicked()) callbacks.Add(p.right);
 				}
 				GUILayout.EndHorizontal();
 
@@ -187,18 +187,18 @@ namespace KERBALISM
 					if (e.leftIcon != null)
 					{
 						GUILayout.Label(new GUIContent(e.leftIcon.texture, e.leftIcon.tooltip), Styles.left_icon);
-						if (e.leftIcon.click != null && Lib.IsClicked())
+						if (e.leftIcon.click != null && UI.IsClicked())
 							callbacks.Add(e.leftIcon.click);
 					}
 					GUILayout.Label(new GUIContent(e.label, e.tooltip), Styles.entry_label, GUILayout.Height(Styles.entry_label.fontSize));
-					if (e.hover != null && Lib.IsHover()) callbacks.Add(e.hover);
+					if (e.hover != null && UI.IsHover()) callbacks.Add(e.hover);
 					GUILayout.Label(new GUIContent(e.value, e.tooltip), Styles.entry_value, GUILayout.Height(Styles.entry_value.fontSize));
-					if (e.click != null && Lib.IsClicked()) callbacks.Add(e.click);
-					if (e.hover != null && Lib.IsHover()) callbacks.Add(e.hover);
+					if (e.click != null && UI.IsClicked()) callbacks.Add(e.click);
+					if (e.hover != null && UI.IsHover()) callbacks.Add(e.hover);
 					foreach (Icon i in e.icons)
 					{
 						GUILayout.Label(new GUIContent(i.texture, i.tooltip), Styles.right_icon);
-						if (i.click != null && Lib.IsClicked()) callbacks.Add(i.click);
+						if (i.click != null && UI.IsClicked()) callbacks.Add(i.click);
 					}
 					GUILayout.EndHorizontal();
 				}

@@ -106,7 +106,7 @@ namespace KERBALISM
 				if (part.IsPAWVisible())
 				{
 					string status = issue.Length > 0 ? Lib.BuildString("<color=yellow>", issue, "</color>") : growth > 0.99 ? Local.TELEMETRY_readytoharvest : Local.TELEMETRY_growing;//"ready to harvest""growing"
-					Events["Toggle"].guiName = Lib.StatusToggle(Local.Greenhouse_Greenhouse, active ? status : Local.Greenhouse_disabled);//"Greenhouse""disabled"
+					Events["Toggle"].guiName = UI.StatusToggle(Local.Greenhouse_Greenhouse, active ? status : Local.Greenhouse_disabled);//"Greenhouse""disabled"
 					Fields["status_natural"].guiActive = active && growth < 0.99;
 					Fields["status_artificial"].guiActive = active && growth < 0.99;
 					Fields["status_tta"].guiActive = active && growth < 0.99;
@@ -124,7 +124,7 @@ namespace KERBALISM
 			else if (part.IsPAWVisible())
 			{
 				// update ui
-				Events["Toggle"].guiName = Lib.StatusToggle(Local.Greenhouse_Greenhouse, active ? Local.Greenhouse_enabled : Local.Greenhouse_disabled);//"Greenhouse""enabled""disabled"
+				Events["Toggle"].guiName = UI.StatusToggle(Local.Greenhouse_Greenhouse, active ? Local.Greenhouse_enabled : Local.Greenhouse_disabled);//"Greenhouse""enabled""disabled"
 			}
 		}
 

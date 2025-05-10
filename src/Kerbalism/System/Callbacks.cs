@@ -427,7 +427,7 @@ namespace KERBALISM
 		void VesselCreated(Vessel v)
 		{
 			if (Serenity.GetModuleGroundExpControl(v) != null)
-				v.vesselName = Lib.BuildString(v.mainBody.name, " Site ", Lib.Greek());
+				v.vesselName = Lib.BuildString(v.mainBody.name, " Site ", UI.Greek());
 		}
 
 		void VesselDestroyed(Vessel v)

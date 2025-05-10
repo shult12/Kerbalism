@@ -389,7 +389,7 @@ namespace KERBALISM
 			{
 				state = newState;
 				if (GameLogic.IsEditor() && (newState == PanelState.Extended || newState == PanelState.ExtendedFixed || newState == PanelState.Retracted))
-					Lib.RefreshPlanner();
+					UI.RefreshPlanner();
 			}
 
 			if (!(state == PanelState.Extended || state == PanelState.ExtendedFixed || state == PanelState.Static))
