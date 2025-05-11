@@ -11,7 +11,7 @@ namespace KERBALISM
 			get
 			{
 				if (module.AlwaysActive) return Local.Generic_ALWAYSON;
-				return Lib.Color(module.IsActivated, Local.Generic_ON, Lib.Kolor.Green, Local.Generic_OFF, Lib.Kolor.Yellow);
+				return String.Color(module.IsActivated, Local.Generic_ON, String.Kolor.Green, Local.Generic_OFF, String.Kolor.Yellow);
 			}
 		}
 
@@ -42,7 +42,7 @@ namespace KERBALISM
 			{
 				if (prefab.AlwaysActive) return Local.Generic_ALWAYSON;
 				bool is_on = Lib.Proto.GetBool(protoModule, "IsActivated");
-				return Lib.Color(is_on, Local.Generic_ON, Lib.Kolor.Green, Local.Generic_OFF, Lib.Kolor.Yellow);
+				return String.Color(is_on, Local.Generic_ON, String.Kolor.Green, Local.Generic_OFF, String.Kolor.Yellow);
 			}
 		}
 

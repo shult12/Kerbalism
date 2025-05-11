@@ -164,6 +164,7 @@
     <Compile Include="Lib\Reflection.cs" />
     <Compile Include="Lib\ResourceUnitInfo.cs" />
     <Compile Include="Lib\SI.cs" />
+    <Compile Include="Lib\String.cs" />
     <Compile Include="Lib\Time.cs" />
     <Compile Include="LocalizationCache.cs" />
     <Compile Include="Lib\Logging.cs" />

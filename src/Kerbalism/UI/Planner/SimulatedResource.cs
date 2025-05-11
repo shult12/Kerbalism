@@ -222,7 +222,7 @@ namespace KERBALISM.Planner
 			{
 				if (sb.Length > 0)
 					sb.Append("\n");
-				sb.Append(Lib.Color(SI.HumanOrSIRate(pair.Value.value, id), Lib.Kolor.PosRate, true));
+				sb.Append(String.Color(SI.HumanOrSIRate(pair.Value.value, id), String.Kolor.PosRate, true));
 				sb.Append("\t");
 				sb.Append(pair.Key);
 			}
@@ -230,7 +230,7 @@ namespace KERBALISM.Planner
 			{
 				if (sb.Length > 0)
 					sb.Append("\n");
-				sb.Append(Lib.Color(SI.HumanOrSIRate(pair.Value.value, id), Lib.Kolor.NegRate, true));
+				sb.Append(String.Color(SI.HumanOrSIRate(pair.Value.value, id), String.Kolor.NegRate, true));
 				sb.Append("\t");
 				sb.Append(pair.Key);
 			}
@@ -245,7 +245,7 @@ namespace KERBALISM.Planner
 					sb.Append(s);
 				}
 			}
-			return Lib.BuildString("<align=left />", sb.ToString());
+			return String.BuildString("<align=left />", sb.ToString());
 		}
 
 		// Enforce that modification happens through official accessor functions

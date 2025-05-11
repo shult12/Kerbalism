@@ -261,7 +261,7 @@ namespace KERBALISM
 			if (result == null) result = string.Empty;
 			if (result == string.Empty && useGenericIfNotFound)
 			{
-				result = Lib.TextVariant(
+				result = String.TextVariant(
 					  Local.SciencresultText1,//"Our researchers will jump on it right now"
 					  Local.SciencresultText2,//"This cause some excitement"
 					  Local.SciencresultText3,//"These results are causing a brouhaha in R&D"

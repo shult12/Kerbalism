@@ -109,7 +109,7 @@ namespace KERBALISM
 		static void ShowPopup(string modName)
 		{
 			string title = "Kerbalism compatibility notice";
-			string msg = Lib.Color($"{modName} has been detected in your game.\n\nFor it to be compatible with Kerbalism, the \"Unloaded Vessel Processing\" {modName} difficulty setting option has been automatically disabled.", Lib.Kolor.Yellow, true);
+			string msg = String.Color($"{modName} has been detected in your game.\n\nFor it to be compatible with Kerbalism, the \"Unloaded Vessel Processing\" {modName} difficulty setting option has been automatically disabled.", String.Kolor.Yellow, true);
 			PopupDialog.SpawnPopupDialog
 			(
 				new Vector2(0.5f, 0.5f),

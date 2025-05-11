@@ -593,7 +593,7 @@ namespace KERBALISM
 
 			//Logging.Log("RESOURCE UPDATE : " + v);
 			//foreach (var rb in vd.Supply(ResourceName).ResourceBrokers)
-			//	Logging.Log(Lib.BuildString(ResourceName, " : ", rb.rate.ToString("+0.000000;-0.000000;+0.000000"), "/s (", rb.name, ")"));
+			//	Logging.Log(String.BuildString(ResourceName, " : ", rb.rate.ToString("+0.000000;-0.000000;+0.000000"), "/s (", rb.name, ")"));
 			//Logging.Log("RESOURCE UPDATE END");
 
 			// reset amount added/removed from interval-based rules
@@ -610,9 +610,9 @@ namespace KERBALISM
 				Message.Post
 				(
 				  Severity.warning,
-				  Lib.BuildString
+				  String.BuildString
 				  (
-					!v.isActiveVessel ? Lib.BuildString("On <b>", v.vesselName, "</b>\na ") : "A ",
+					!v.isActiveVessel ? String.BuildString("On <b>", v.vesselName, "</b>\na ") : "A ",
 					"producer of <b>", ResourceName, "</b> has\n",
 					"incoherent behavior at high warp speed.\n",
 					"<i>Unload the vessel before warping</i>"

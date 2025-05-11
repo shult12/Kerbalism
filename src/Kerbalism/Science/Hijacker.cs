@@ -73,7 +73,7 @@ namespace KERBALISM
 
 						// inform the user
 						Message.Post(
-							Lib.BuildString("<b>", meta.subjectData.FullTitle, "</b> recorded"),
+							String.BuildString("<b>", meta.subjectData.FullTitle, "</b> recorded"),
 							!meta.is_rerunnable ? Local.Science_inoperable : string.Empty
 						);
 					}
@@ -84,7 +84,7 @@ namespace KERBALISM
 				else
 				{
 					Message.Post(
-						Lib.Color(Lib.BuildString(meta.subjectData.FullTitle, " can not be stored"), Lib.Kolor.Red),
+						String.Color(String.BuildString(meta.subjectData.FullTitle, " can not be stored"), String.Kolor.Red),
 						"Not enough space on hard drive"
 					);
 				}
@@ -111,7 +111,7 @@ namespace KERBALISM
 			if (remaining > 0)
 			{
 				Message.Post(
-					Lib.Color(Lib.BuildString(meta.subjectData.FullTitle, " stored partially"), Lib.Kolor.Orange),
+					String.Color(String.BuildString(meta.subjectData.FullTitle, " stored partially"), String.Kolor.Orange),
 					"Not enough space on hard drive"
 				);
 			}
@@ -229,7 +229,7 @@ namespace KERBALISM
 				{
 					// inform the user
 					Message.Post(
-						Lib.BuildString("<b>", meta.subjectData.FullTitle, "</b> recorded"),
+						String.BuildString("<b>", meta.subjectData.FullTitle, "</b> recorded"),
 						!meta.is_rerunnable ? Local.Science_inoperable : string.Empty
 					);
 				}
@@ -237,7 +237,7 @@ namespace KERBALISM
 			else
 			{
 				Message.Post(
-					Lib.Color(Lib.BuildString(meta.subjectData.FullTitle, " can not be stored"), Lib.Kolor.Red),
+					String.Color(String.BuildString(meta.subjectData.FullTitle, " can not be stored"), String.Kolor.Red),
 					"Not enough space on hard drive"
 				);
 			}

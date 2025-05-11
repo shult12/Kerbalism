@@ -19,7 +19,7 @@ namespace KERBALISM
 
 		internal ReliabilityInfo(Reliability module)
 		{
-			title = Lib.BuildString(module.part.partInfo.title, Lib.Color(" " + module.title, Lib.Kolor.LightGrey));
+			title = String.BuildString(module.part.partInfo.title, String.Color(" " + module.title, String.Kolor.LightGrey));
 			group = module.redundancy;
 			broken = module.broken;
 			critical = module.critical;
@@ -47,7 +47,7 @@ namespace KERBALISM
 
 		internal ReliabilityInfo(ProtoPartSnapshot p, ProtoPartModuleSnapshot m, Reliability module_prefab)
 		{
-			title = Lib.BuildString(p.partInfo.title, Lib.Color(" " + module_prefab.title, Lib.Kolor.LightGrey));
+			title = String.BuildString(p.partInfo.title, String.Color(" " + module_prefab.title, String.Kolor.LightGrey));
 			group = module_prefab.redundancy;
 			broken = Lib.Proto.GetBool(m, "broken", false);
 			critical = Lib.Proto.GetBool(m, "critical", false);

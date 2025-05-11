@@ -68,7 +68,7 @@ namespace KERBALISM
 			if (slots > MAX_SLOTS)
 				slots = MAX_SLOTS;
 
-			Actions["Action"].guiName = Lib.BuildString(Local.Sickbay_Start_Stop ," ", title);//"Start/Stop"
+			Actions["Action"].guiName = String.BuildString(Local.Sickbay_Start_Stop ," ", title);//"Start/Stop"
 
 			foreach (string s in patients.Split(','))
 			{
@@ -188,7 +188,7 @@ namespace KERBALISM
 				{
 					BaseEvent e = Events["Toggle" + i++];
 					e.active = true;
-					e.guiName = Local.Sickbay_cureEverybody.Format(title,patientName);//Lib.BuildString(, ": dismiss ", )
+					e.guiName = Local.Sickbay_cureEverybody.Format(title,patientName);//String.BuildString(, ": dismiss ", )
 					slotsAvailable--;
 					if (slotsAvailable == 0)
 						break;
@@ -203,7 +203,7 @@ namespace KERBALISM
 
 						BaseEvent e = Events["Toggle" + i++];
 						e.active = true;
-						e.guiName = Local.Sickbay_cureEverybody2.Format(title,crew.name);//Lib.BuildString(, ": cure ", )
+						e.guiName = Local.Sickbay_cureEverybody2.Format(title,crew.name);//String.BuildString(, ": cure ", )
 						if (i > MAX_SLOTS)
 							break;
 					}
@@ -248,14 +248,14 @@ namespace KERBALISM
 		// module info support
 		public string GetModuleTitle()
 		{
-			if (slots == 0 && !cureEverybody) return String.Empty;
-			return Lib.BuildString("<size=1><color=#00000000>01</color></size>", title);
+			if (slots == 0 && !cureEverybody) return string.Empty;
+			return String.BuildString("<size=1><color=#00000000>01</color></size>", title);
 		}
 
 		public override string GetModuleDisplayName()
 		{
-			if(slots == 0 && !cureEverybody) return String.Empty;
-			return Lib.BuildString("<size=1><color=#00000000>01</color></size>", title);
+			if(slots == 0 && !cureEverybody) return string.Empty;
+			return String.BuildString("<size=1><color=#00000000>01</color></size>", title);
 		}
 
 		public string GetPrimaryField() { return string.Empty; }

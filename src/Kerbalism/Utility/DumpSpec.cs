@@ -22,9 +22,9 @@ namespace KERBALISM
 					dumpValves.Add(new List<string>());
 					dumpValvesTitles.Add("Nothing");
 
-					foreach (string dumpValve in Lib.Tokenize(dump_valves, ','))
+					foreach (string dumpValve in String.Tokenize(dump_valves, ','))
 					{
-						List<string> resources = Lib.Tokenize(dumpValve, '&');
+						List<string> resources = String.Tokenize(dumpValve, '&');
 						dumpValves.Add(resources);
 						dumpValvesTitles.Add(string.Join(", ", resources));
 					}
@@ -39,7 +39,7 @@ namespace KERBALISM
 			else
 			{
 				dumpType = DumpType.DumpValve;
-				dumpValves.Add(Lib.Tokenize(always_dump, ','));
+				dumpValves.Add(String.Tokenize(always_dump, ','));
 				dumpValvesTitles.Add(always_dump);
 			}
 		}

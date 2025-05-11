@@ -93,7 +93,7 @@ namespace KERBALISM
 
 			// top header
 			KsmGuiHeader topHeader = new KsmGuiHeader(window, expInfo.Title, default, 120);
-			topHeader.TextObject.SetTooltipText(Lib.BuildString(Local.SCIENCEARCHIVE_onvessel ," ", Lib.Bold(v.vesselName), "\n", Local.SCIENCEARCHIVE_onpart , " ", Lib.Bold(partName)));//"on vessel :"on part :
+			topHeader.TextObject.SetTooltipText(String.BuildString(Local.SCIENCEARCHIVE_onvessel ," ", String.Bold(v.vesselName), "\n", Local.SCIENCEARCHIVE_onpart , " ", String.Bold(partName)));//"on vessel :"on part :
 			rndVisibilityButton = new KsmGuiIconButton(topHeader, Textures.KsmGuiTexHeaderRnD, ToggleArchivePanel, Local.SCIENCEARCHIVE_showarchive);//"show science archive"
 			rndVisibilityButton.MoveAsFirstChild();
 			expInfoVisibilityButton = new KsmGuiIconButton(topHeader, Textures.KsmGuiTexHeaderInfo, ToggleExpInfo, Local.SCIENCEARCHIVE_showexperimentinfo);//"show experiment info"
@@ -189,11 +189,11 @@ namespace KERBALISM
 
 			sb.Append(Local.SCIENCEARCHIVE_state);//state
 			sb.Append(" :<pos=20em>");
-			sb.Append(Lib.Bold(RunningStateInfo(expState)));
+			sb.Append(String.Bold(RunningStateInfo(expState)));
 			sb.Append("\n");
 			sb.Append(Local.SCIENCEARCHIVE_status);//status
 			sb.Append(" :<pos=20em>");
-			sb.Append(Lib.Bold(StatusInfo(status, issue)));
+			sb.Append(String.Bold(StatusInfo(status, issue)));
 
 			if (status == ExpStatus.Running)
 			{
@@ -203,7 +203,7 @@ namespace KERBALISM
 			else if (status == ExpStatus.Forced && subjectData != null)
 			{
 				sb.Append(", ");
-				sb.Append(Lib.Color(subjectData.PercentCollectedTotal.ToString("P1"), Lib.Kolor.Yellow, true));
+				sb.Append(String.Color(subjectData.PercentCollectedTotal.ToString("P1"), String.Kolor.Yellow, true));
 				sb.Append(" ");
 				sb.Append(Local.SCIENCEARCHIVE_collected);//collected
 			}
@@ -213,33 +213,33 @@ namespace KERBALISM
 				sb.Append("\n");
 				sb.Append(Local.SCIENCEARCHIVE_samples);//samples
 				sb.Append(" :<pos=20em>");
-				sb.Append(Lib.Color((remainingSampleMass / expInfo.SampleMass).ToString("F1"), Lib.Kolor.Yellow, true));
+				sb.Append(String.Color((remainingSampleMass / expInfo.SampleMass).ToString("F1"), String.Kolor.Yellow, true));
 				sb.Append(" (");
-				sb.Append(Lib.Color(HumanReadable.Mass(remainingSampleMass), Lib.Kolor.Yellow, true));
+				sb.Append(String.Color(HumanReadable.Mass(remainingSampleMass), String.Kolor.Yellow, true));
 				sb.Append(")");
 			}
 
 			sb.Append("\n");
 			sb.Append(Local.SCIENCEARCHIVE_situation);//situation
 			sb.Append(" :<pos=20em>");
-			sb.Append(Lib.Color(vd.VesselSituations.GetExperimentSituation(expInfo).GetTitleForExperiment(expInfo), Lib.Kolor.Yellow, true));
+			sb.Append(String.Color(vd.VesselSituations.GetExperimentSituation(expInfo).GetTitleForExperiment(expInfo), String.Kolor.Yellow, true));
 
 			if (subjectData == null)
 			{
 				sb.Append("\n");
 				sb.Append(Local.SCIENCEARCHIVE_retrieved);//retrieved
 				sb.Append(" :<pos=20em>");
-				sb.Append(Lib.Color(Local.SCIENCEARCHIVE_invalidsituation, Lib.Kolor.Yellow, true));//"invalid situation"
+				sb.Append(String.Color(Local.SCIENCEARCHIVE_invalidsituation, String.Kolor.Yellow, true));//"invalid situation"
 
 				sb.Append("\n");
 				sb.Append(Local.SCIENCEARCHIVE_collected);//collected
 				sb.Append(" :<pos=20em>");
-				sb.Append(Lib.Color(Local.SCIENCEARCHIVE_invalidsituation, Lib.Kolor.Yellow, true));//"invalid situation"
+				sb.Append(String.Color(Local.SCIENCEARCHIVE_invalidsituation, String.Kolor.Yellow, true));//"invalid situation"
 
 				sb.Append("\n");
 				sb.Append(Local.SCIENCEARCHIVE_value);//value
 				sb.Append(" :<pos=20em>");
-				sb.Append(Lib.Color(Local.SCIENCEARCHIVE_invalidsituation, Lib.Kolor.Yellow, true));//"invalid situation"
+				sb.Append(String.Color(Local.SCIENCEARCHIVE_invalidsituation, String.Kolor.Yellow, true));//"invalid situation"
 			}
 			else
 			{
@@ -247,28 +247,28 @@ namespace KERBALISM
 				sb.Append(Local.SCIENCEARCHIVE_retrieved);//retrieved
 				sb.Append(" :<pos=20em>");
 				if (subjectData.TimesCompleted > 0)
-					sb.Append(Lib.Color(Lib.BuildString(subjectData.TimesCompleted.ToString(), subjectData.TimesCompleted > 1 ? " times" : " time"), Lib.Kolor.Yellow));
+					sb.Append(String.Color(String.BuildString(subjectData.TimesCompleted.ToString(), subjectData.TimesCompleted > 1 ? " times" : " time"), String.Kolor.Yellow));
 				else
-					sb.Append(Lib.Color(Local.SCIENCEARCHIVE_never, Lib.Kolor.Yellow));//"never"
+					sb.Append(String.Color(Local.SCIENCEARCHIVE_never, String.Kolor.Yellow));//"never"
 
 				if (subjectData.PercentRetrieved > 0.0)
 				{
 					sb.Append(" (");
-					sb.Append(Lib.Color(subjectData.PercentRetrieved.ToString("P0"), Lib.Kolor.Yellow, true));
+					sb.Append(String.Color(subjectData.PercentRetrieved.ToString("P0"), String.Kolor.Yellow, true));
 					sb.Append(")");
 				}
 
 				sb.Append("\n");
 				sb.Append(Local.SCIENCEARCHIVE_collected);//collected
 				sb.Append(" :<pos=20em>");
-				sb.Append(Lib.Color(subjectData.ScienceRetrievedInKSC.ToString("F1"), Lib.Kolor.Science, true));
+				sb.Append(String.Color(subjectData.ScienceRetrievedInKSC.ToString("F1"), String.Kolor.Science, true));
 				sb.Append(HumanReadable.InlineSpriteScience);
 				sb.Append(" ");
 				sb.Append(Local.SCIENCEARCHIVE_inRnD);//in RnD
 				if (subjectData.ScienceCollectedInFlight > 0.05)
 				{
 					sb.Append(" (");
-					sb.Append(Lib.Color(Lib.BuildString("+", subjectData.ScienceCollectedInFlight.ToString("F1")), Lib.Kolor.Science, true));
+					sb.Append(String.Color(String.BuildString("+", subjectData.ScienceCollectedInFlight.ToString("F1")), String.Kolor.Science, true));
 					sb.Append(HumanReadable.InlineSpriteScience);
 					sb.Append(" ");
 					sb.Append(Local.SCIENCEARCHIVE_inflight);//in flight)
@@ -277,7 +277,7 @@ namespace KERBALISM
 				sb.Append("\n");
 				sb.Append(Local.SCIENCEARCHIVE_value);//value
 				sb.Append(" :<pos=20em>");
-				sb.Append(Lib.Color(subjectData.ScienceMaxValue.ToString("F1"), Lib.Kolor.Science, true));
+				sb.Append(String.Color(subjectData.ScienceMaxValue.ToString("F1"), String.Kolor.Science, true));
 				sb.Append(HumanReadable.InlineSpriteScience);
 			}
 
@@ -297,20 +297,20 @@ namespace KERBALISM
 				if (!first)
 					sb.Append("\n");
 				first = false;
-				sb.Append(Lib.Checkbox(req.result > 0.0));
+				sb.Append(String.Checkbox(req.result > 0.0));
 				//sb.Append(" ");
-				sb.Append(Lib.Bold(ReqName(req.requireDef.require)));
+				sb.Append(String.Bold(ReqName(req.requireDef.require)));
 				if (req.value != null)
 				{
 					if (req.requireDef.value != null)
 					{
 						sb.Append(" : ");
-						sb.Append(Lib.Color(ReqValueFormat(req.requireDef.require, req.requireDef.value), Lib.Kolor.Yellow, true));
+						sb.Append(String.Color(ReqValueFormat(req.requireDef.require, req.requireDef.value), String.Kolor.Yellow, true));
 					}
 					sb.Append("\n<indent=5em>"); // match the checkbox indentation
 					sb.Append(Local.SCIENCEARCHIVE_current);//"current"
 					sb.Append(" : ");
-					sb.Append(Lib.Color(req.result > 0.0, ReqValueFormat(req.requireDef.require, req.value), Lib.Kolor.Green, Lib.Kolor.Orange, true));
+					sb.Append(String.Color(req.result > 0.0, ReqValueFormat(req.requireDef.require, req.value), String.Kolor.Green, String.Kolor.Orange, true));
 					sb.Append("</indent>");
 				}
 			}
@@ -368,7 +368,7 @@ namespace KERBALISM
 				}
 				rndArchiveHeader.Enabled = true;
 				rndArchiveView.Enabled = true;
-				rndVisibilityButton.SetIconColor(Lib.Kolor.Yellow);
+				rndVisibilityButton.SetIconColor(String.Kolor.Yellow);
 				rndVisibilityButton.SetTooltipText(Local.SCIENCEARCHIVE_hidearchive);//"hide science archive"
 			}
 			else
@@ -392,7 +392,7 @@ namespace KERBALISM
 			else
 			{
 				leftPanel.Enabled = true;
-				expInfoVisibilityButton.SetIconColor(Lib.Kolor.Yellow);
+				expInfoVisibilityButton.SetIconColor(String.Kolor.Yellow);
 				expInfoVisibilityButton.SetTooltipText(Local.SCIENCEARCHIVE_hideexperimentinfo);//"hide experiment info"
 				expInfoHeader.TextObject.TextComponent.alignment = TMPro.TextAlignmentOptions.Center; // strange bug
 			}

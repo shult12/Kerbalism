@@ -41,7 +41,7 @@ namespace KERBALISM
 
 			foreach (KeyValuePair<ResourceBroker, double> p in ruleBrokersRate)
 			{
-				ResourceBroker broker = ResourceBroker.GetOrCreate(p.Key.Id + "Avg", p.Key.Category, Lib.BuildString(p.Key.Title, " (", Local.Generic_AVERAGE, ")"));
+				ResourceBroker broker = ResourceBroker.GetOrCreate(p.Key.Id + "Avg", p.Key.Category, String.BuildString(p.Key.Title, " (", Local.Generic_AVERAGE, ")"));
 				ResourceBrokers.Add(new ResourceBrokerRate(broker, p.Value));
 			}
 			foreach (KeyValuePair<ResourceBroker, double> p in brokersResAmount)

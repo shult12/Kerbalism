@@ -45,7 +45,7 @@ namespace KERBALISM
 			deployed |= part.FindModuleImplementing<ModuleAnimationGroup>() == null;
 
 			// setup ui
-			Fields["Abundance"].guiName = Lib.BuildString(resource, " abundance");
+			Fields["Abundance"].guiName = String.BuildString(resource, " abundance");
 
 			// get drill head transform only once
 			if (drill.Length > 0) drill_head = part.FindModelTransform(drill);
@@ -80,7 +80,7 @@ namespace KERBALISM
 							? Local.Harvester_stopped//"stopped"
 							: issue.Length == 0
 								? Local.Harvester_running//"running"
-								: Lib.BuildString("<color=yellow>", issue, "</color>");
+								: String.BuildString("<color=yellow>", issue, "</color>");
 
 						Events["Toggle"].guiName = UI.StatusToggle(title, status);
 						Abundance = abundance > double.Epsilon ? HumanReadable.Percentage(abundance, "F2") : Local.Harvester_none;//"none"
@@ -235,7 +235,7 @@ namespace KERBALISM
 				case 2: source = Local.Harvester_source3; break;//"the atmosphere"
 				case 3: source = Local.Harvester_source4; break;//"space"
 			}
-			string desc = Local.Harvester_generatedescription.Format(resource,source);//Lib.BuildString("Extract ", , " from ", )
+			string desc = Local.Harvester_generatedescription.Format(resource,source);//String.BuildString("Extract ", , " from ", )
 
 			// generate tooltip info
 			return Specs().Info(desc);

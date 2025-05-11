@@ -39,7 +39,7 @@ namespace KERBALISM
 				// surface panel
 				string temperature_str = body.atmosphere
 				  ? HumanReadable.Temp(temperature)
-				  : Lib.BuildString(HumanReadable.Temp(temperature_min), " / ", HumanReadable.Temp(temperature));
+				  : String.BuildString(HumanReadable.Temp(temperature_min), " / ", HumanReadable.Temp(temperature));
 				p.AddSection(Local.BodyInfo_SURFACE);//"SURFACE"
 				p.AddContent(Local.BodyInfo_temperature, temperature_str);//"temperature"
 				p.AddContent(Local.BodyInfo_solarflux, HumanReadable.Flux(solar_flux));//"solar flux"
@@ -70,7 +70,7 @@ namespace KERBALISM
 
 					if(Storm.sun_observation_quality > 0.7)
 					{
-						title = Lib.BuildString(title, ": ", Lib.Color(Local.BodyInfo_stormcycle.Format(HumanReadable.Duration(cycle)), Lib.Kolor.LightGrey));// <<1>> cycle
+						title = String.BuildString(title, ": ", String.Color(Local.BodyInfo_stormcycle.Format(HumanReadable.Duration(cycle)), String.Kolor.LightGrey));// <<1>> cycle
 					}
 
 					p.AddContent(title, HumanReadable.Percentage(activity));
@@ -81,12 +81,12 @@ namespace KERBALISM
 					p.AddContent(Local.BodyInfo_radiationonsurface, HumanReadable.Radiation(surfaceRadiation));//"radiation on surface:"
 				}
 
-				p.AddContent(Lib.BuildString(Local.BodyInfo_innerbelt , " ", Lib.Color(inner, Lib.Kolor.LightGrey)),//"inner belt: "
-					Radiation.show_inner ? Lib.Color(Local.BodyInfo_show, Lib.Kolor.Green) : Lib.Color(Local.BodyInfo_hide, Lib.Kolor.Red), string.Empty, () => p.Toggle(ref Radiation.show_inner));//"show""hide"
-				p.AddContent(Lib.BuildString(Local.BodyInfo_outerbelt , " ", Lib.Color(outer, Lib.Kolor.LightGrey)),//"outer belt: "
-					Radiation.show_outer ? Lib.Color(Local.BodyInfo_show, Lib.Kolor.Green) : Lib.Color(Local.BodyInfo_hide, Lib.Kolor.Red), string.Empty, () => p.Toggle(ref Radiation.show_outer));//"show""hide"
-				p.AddContent(Lib.BuildString(Local.BodyInfo_magnetopause , " ", Lib.Color(pause, Lib.Kolor.LightGrey)),//"magnetopause: "
-					Radiation.show_pause ? Lib.Color(Local.BodyInfo_show, Lib.Kolor.Green) : Lib.Color(Local.BodyInfo_hide, Lib.Kolor.Red), string.Empty, () => p.Toggle(ref Radiation.show_pause));//"show""hide"
+				p.AddContent(String.BuildString(Local.BodyInfo_innerbelt , " ", String.Color(inner, String.Kolor.LightGrey)),//"inner belt: "
+					Radiation.show_inner ? String.Color(Local.BodyInfo_show, String.Kolor.Green) : String.Color(Local.BodyInfo_hide, String.Kolor.Red), string.Empty, () => p.Toggle(ref Radiation.show_inner));//"show""hide"
+				p.AddContent(String.BuildString(Local.BodyInfo_outerbelt , " ", String.Color(outer, String.Kolor.LightGrey)),//"outer belt: "
+					Radiation.show_outer ? String.Color(Local.BodyInfo_show, String.Kolor.Green) : String.Color(Local.BodyInfo_hide, String.Kolor.Red), string.Empty, () => p.Toggle(ref Radiation.show_outer));//"show""hide"
+				p.AddContent(String.BuildString(Local.BodyInfo_magnetopause , " ", String.Color(pause, String.Kolor.LightGrey)),//"magnetopause: "
+					Radiation.show_pause ? String.Color(Local.BodyInfo_show, String.Kolor.Green) : String.Color(Local.BodyInfo_hide, String.Kolor.Red), string.Empty, () => p.Toggle(ref Radiation.show_pause));//"show""hide"
 			}
 
 			// explain the user how to toggle the BodyInfo window
@@ -94,7 +94,7 @@ namespace KERBALISM
 			p.AddContent("<i>" + Local.BodyInfo_BodyInfoToggleHelp.Format("<b>B</b>") + "</i>");//"Press <<1>> to open this window again"
 
 			// set metadata
-			p.Title(Lib.BuildString(Lib.Ellipsis(body.bodyName, Styles.ScaleStringLength(24)), " ", Lib.Color(Local.BodyInfo_title, Lib.Kolor.LightGrey)));//"BODY INFO"
+			p.Title(String.BuildString(String.Ellipsis(body.bodyName, Styles.ScaleStringLength(24)), " ", String.Color(Local.BodyInfo_title, String.Kolor.LightGrey)));//"BODY INFO"
 		}
 
 		static void RadiationLevels(CelestialBody body, out string inner, out string outer, out string pause, out double activity, out double cycle)

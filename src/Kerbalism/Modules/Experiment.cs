@@ -239,10 +239,10 @@ namespace KERBALISM
 			List<ObjectPair<string, double>> defs = new List<ObjectPair<string, double>>();
 			var reslib = PartResourceLibrary.Instance.resourceDefinitions;
 
-			foreach (string s in Lib.Tokenize(resources, ','))
+			foreach (string s in String.Tokenize(resources, ','))
 			{
 				// definitions are Resource@rate
-				var p = Lib.Tokenize(s, '@');
+				var p = String.Tokenize(s, '@');
 				if (p.Count != 2) continue;             // malformed definition
 				string res = p[0];
 				if (!reslib.Contains(res)) continue;    // unknown resource
@@ -275,12 +275,12 @@ namespace KERBALISM
 
 					if (subject != null)
 					{
-						Events["ToggleEvent"].guiName = UI.StatusToggle(Lib.Ellipsis(ExpInfo.Title, Styles.ScaleStringLength(25)), StatusInfo(status, issue));
-						Events["ShowPopup"].guiName = UI.StatusToggle(Local.StatuToggle_info, Lib.BuildString(ScienceValue(Subject), " ", State == RunningState.Forced ? subject.PercentCollectedTotal.ToString("P0") : RunningCountdown(ExpInfo, Subject, data_rate, prodFactor)));//"info"
+						Events["ToggleEvent"].guiName = UI.StatusToggle(String.Ellipsis(ExpInfo.Title, Styles.ScaleStringLength(25)), StatusInfo(status, issue));
+						Events["ShowPopup"].guiName = UI.StatusToggle(Local.StatuToggle_info, String.BuildString(ScienceValue(Subject), " ", State == RunningState.Forced ? subject.PercentCollectedTotal.ToString("P0") : RunningCountdown(ExpInfo, Subject, data_rate, prodFactor)));//"info"
 					}
 					else
 					{
-						Events["ToggleEvent"].guiName = UI.StatusToggle(Lib.Ellipsis(ExpInfo.Title, Styles.ScaleStringLength(25)), StatusInfo(status, issue));
+						Events["ToggleEvent"].guiName = UI.StatusToggle(String.Ellipsis(ExpInfo.Title, Styles.ScaleStringLength(25)), StatusInfo(status, issue));
 						Events["ShowPopup"].guiName = UI.StatusToggle(Local.StatuToggle_info, vd.VesselSituations.FirstSituationTitle);//"info"
 					}
 				}
@@ -290,10 +290,10 @@ namespace KERBALISM
 					Events["ShowPopup"].active = false;
 				}
 
-				Events["Prepare"].guiName = Lib.BuildString(Local.Module_Experiment_Prepare +" <b>", ExpInfo.Title, "</b>");//Prepare
+				Events["Prepare"].guiName = String.BuildString(Local.Module_Experiment_Prepare +" <b>", ExpInfo.Title, "</b>");//Prepare
 				Events["Prepare"].active = !didPrepare && prepare_cs != null && subject == null;
 
-				Events["Reset"].guiName = Lib.BuildString(Local.Module_Experiment_Reset +" <b>", ExpInfo.Title, "</b>");//Reset
+				Events["Reset"].guiName = String.BuildString(Local.Module_Experiment_Reset +" <b>", ExpInfo.Title, "</b>");//Reset
 				// we need a reset either if we have recorded data or did a setup
 				bool resetActive = (reset_cs != null || prepare_cs != null) && subject != null;
 				Events["Reset"].active = resetActive;
@@ -897,7 +897,7 @@ namespace KERBALISM
 			if (!prepare_cs.Check(v))
 			{
 				Message.Post(
-				  Lib.TextVariant
+				  String.TextVariant
 				  (
 					Local.Module_Experiment_Message1,//"I'm not qualified for this"
 					Local.Module_Experiment_Message2,//"I will not even know where to start"
@@ -911,7 +911,7 @@ namespace KERBALISM
 
 			Message.Post(
 			  Local.Module_Experiment_Message4,//"Preparation Complete"
-			  Lib.TextVariant
+			  String.TextVariant
 			  (
 				Local.Module_Experiment_Message5,//"Ready to go"
 				Local.Module_Experiment_Message6//"Let's start doing some science!"
@@ -941,7 +941,7 @@ namespace KERBALISM
 				if (showMessage)
 				{
 					Message.Post(
-					  Lib.TextVariant
+					  String.TextVariant
 					  (
 						Local.Module_Experiment_Message1,//"I'm not qualified for this"
 						Local.Module_Experiment_Message2,//"I will not even know where to start"
@@ -960,7 +960,7 @@ namespace KERBALISM
 			{
 				Message.Post(
 				  Local.Module_Experiment_Message7,//"Reset Done"
-				  Lib.TextVariant
+				  String.TextVariant
 				  (
 					Local.Module_Experiment_Message8,//"It's good to go again"
 					Local.Module_Experiment_Message9//"Ready for the next bit of science"
@@ -990,10 +990,10 @@ namespace KERBALISM
 		{
 			switch (state)
 			{
-				case RunningState.Stopped: return Lib.Color(Local.Module_Experiment_runningstate1, Lib.Kolor.Yellow);//"stopped"
-				case RunningState.Running: return Lib.Color(Local.Module_Experiment_runningstate2, Lib.Kolor.Green);//"started"
-				case RunningState.Forced: return Lib.Color(Local.Module_Experiment_runningstate3, Lib.Kolor.Red);//"forced run"
-				case RunningState.Broken: return Lib.Color(Local.Module_Experiment_runningstate4, Lib.Kolor.Red);//"broken"
+				case RunningState.Stopped: return String.Color(Local.Module_Experiment_runningstate1, String.Kolor.Yellow);//"stopped"
+				case RunningState.Running: return String.Color(Local.Module_Experiment_runningstate2, String.Kolor.Green);//"started"
+				case RunningState.Forced: return String.Color(Local.Module_Experiment_runningstate3, String.Kolor.Red);//"forced run"
+				case RunningState.Broken: return String.Color(Local.Module_Experiment_runningstate4, String.Kolor.Red);//"broken"
 				default: return string.Empty;
 			}
 
@@ -1003,12 +1003,12 @@ namespace KERBALISM
 		{
 			switch (status)
 			{
-				case ExpStatus.Stopped: return Lib.Color(Local.Module_Experiment_runningstate1, Lib.Kolor.Yellow);//"stopped"
-				case ExpStatus.Running: return Lib.Color(Local.Module_Experiment_runningstate5, Lib.Kolor.Green);//"running"
-				case ExpStatus.Forced: return Lib.Color(Local.Module_Experiment_runningstate3, Lib.Kolor.Red);//"forced run"
-				case ExpStatus.Waiting: return Lib.Color(Local.Module_Experiment_runningstate6, Lib.Kolor.Science);//"waiting"
-				case ExpStatus.Broken: return Lib.Color(Local.Module_Experiment_runningstate4, Lib.Kolor.Red);//"broken"
-				case ExpStatus.Issue: return Lib.Color(string.IsNullOrEmpty(issue) ? Local.Module_Experiment_issue_title : issue, Lib.Kolor.Orange);//"issue"
+				case ExpStatus.Stopped: return String.Color(Local.Module_Experiment_runningstate1, String.Kolor.Yellow);//"stopped"
+				case ExpStatus.Running: return String.Color(Local.Module_Experiment_runningstate5, String.Kolor.Green);//"running"
+				case ExpStatus.Forced: return String.Color(Local.Module_Experiment_runningstate3, String.Kolor.Red);//"forced run"
+				case ExpStatus.Waiting: return String.Color(Local.Module_Experiment_runningstate6, String.Kolor.Science);//"waiting"
+				case ExpStatus.Broken: return String.Color(Local.Module_Experiment_runningstate4, String.Kolor.Red);//"broken"
+				case ExpStatus.Issue: return String.Color(string.IsNullOrEmpty(issue) ? Local.Module_Experiment_issue_title : issue, String.Kolor.Orange);//"issue"
 				default: return string.Empty;
 			}
 		}
@@ -1030,9 +1030,9 @@ namespace KERBALISM
 		internal static string ScienceValue(SubjectData subjectData)
 		{
 			if (subjectData != null)
-				return Lib.BuildString(HumanReadable.Science(subjectData.ScienceCollectedTotal), " / ", HumanReadable.Science(subjectData.ScienceMaxValue));
+				return String.BuildString(HumanReadable.Science(subjectData.ScienceCollectedTotal), " / ", HumanReadable.Science(subjectData.ScienceMaxValue));
 			else
-				return Lib.Color(Local.Module_Experiment_ScienceValuenone, Lib.Kolor.Science, true);//"none"
+				return String.Color(Local.Module_Experiment_ScienceValuenone, String.Kolor.Science, true);//"none"
 		}
 
 		// specifics support
@@ -1043,9 +1043,9 @@ namespace KERBALISM
 			if (Requirements.Requires.Length > 0)
 			{
 				specs.Add(string.Empty);
-				specs.Add(Lib.Color(Local.Module_Experiment_Requires, Lib.Kolor.Cyan, true));//"Requires:"
+				specs.Add(String.Color(Local.Module_Experiment_Requires, String.Kolor.Cyan, true));//"Requires:"
 				foreach (RequireDef req in Requirements.Requires)
-					specs.Add(Lib.BuildString("• <b>", ReqName(req.require), "</b>"), ReqValueFormat(req.require, req.value));
+					specs.Add(String.BuildString("• <b>", ReqName(req.require), "</b>"), ReqValueFormat(req.require, req.value));
 			}
 
 			return specs;
@@ -1062,7 +1062,7 @@ namespace KERBALISM
 
 			if (!string.IsNullOrEmpty(prefab.experiment_desc))
 			{
-				specs.Add(Lib.BuildString("<i>", prefab.experiment_desc, "</i>"));
+				specs.Add(String.BuildString("<i>", prefab.experiment_desc, "</i>"));
 				specs.Add(string.Empty);
 			}
 
@@ -1085,7 +1085,7 @@ namespace KERBALISM
 			if (expInfo.IncludedExperiments.Count > 0)
 			{
 				specs.Add(string.Empty);
-				specs.Add(Lib.Color("Included experiments:", Lib.Kolor.Cyan, true));
+				specs.Add(String.Color("Included experiments:", String.Kolor.Cyan, true));
 				List<string> includedExpInfos = new List<string>();
 				ExperimentInfo.GetIncludedExperimentTitles(expInfo, includedExpInfos);
 				foreach (string includedExp in includedExpInfos)
@@ -1098,8 +1098,8 @@ namespace KERBALISM
 			if (situations.Count > 0)
 			{
 				specs.Add(string.Empty);
-				specs.Add(Lib.Color(Local.Module_Experiment_Specifics_Situations, Lib.Kolor.Cyan, true));//"Situations:"
-				foreach (string s in situations) specs.Add(Lib.BuildString("• <b>", s, "</b>"));
+				specs.Add(String.Color(Local.Module_Experiment_Specifics_Situations, String.Kolor.Cyan, true));//"Situations:"
+				foreach (string s in situations) specs.Add(String.BuildString("• <b>", s, "</b>"));
 			}
 
 			if (expInfo.ExpBodyConditions.HasConditions)
@@ -1109,7 +1109,7 @@ namespace KERBALISM
 			}
 
 			specs.Add(string.Empty);
-			specs.Add(Lib.Color(Local.Module_Experiment_Specifics_info8, Lib.Kolor.Cyan, true));//"Needs:"
+			specs.Add(String.Color(Local.Module_Experiment_Specifics_info8, String.Kolor.Cyan, true));//"Needs:"
 
 			specs.Add(Local.Module_Experiment_Specifics_info9, SI.HumanOrSIRate(prefab.ec_rate, ResourceUnitInfo.ECResID));//"EC"
 			foreach (var p in ParseResources(prefab.resources))
@@ -1161,7 +1161,7 @@ namespace KERBALISM
 
 		static void PostMultipleRunsMessage(string title, string vesselName)
 		{
-			Message.Post(Lib.Color(Local.Module_Experiment_MultipleRunsMessage_title, Lib.Kolor.Orange, true), Local.Module_Experiment_MultipleRunsMessage.Format(title,vesselName));//"ALREADY RUNNING""Can't start " +  + " a second time on vessel " + 
+			Message.Post(String.Color(Local.Module_Experiment_MultipleRunsMessage_title, String.Kolor.Orange, true), Local.Module_Experiment_MultipleRunsMessage.Format(title,vesselName));//"ALREADY RUNNING""Can't start " +  + " a second time on vessel " + 
 		}
 
 		#endregion

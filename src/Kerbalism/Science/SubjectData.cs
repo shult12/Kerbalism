@@ -29,7 +29,7 @@ namespace KERBALISM
 		public virtual string StockSubjectId { get; protected set; }
 
 		/// <summary> full description of the subject </summary>
-		internal virtual string FullTitle => Lib.BuildString(ExpInfo.Title, " (", SituationTitle, ")");
+		internal virtual string FullTitle => String.BuildString(ExpInfo.Title, " (", SituationTitle, ")");
 
 		internal virtual string ExperimentTitle => ExpInfo.Title;
 
@@ -81,8 +81,8 @@ namespace KERBALISM
 		{
 			ExpInfo = expInfo;
 			Situation = situation;
-			Id = Lib.BuildString(ExpInfo.ExperimentId, "@", Situation.Id.ToString());
-			StockSubjectId = Lib.BuildString(ExpInfo.ExperimentId, "@", Situation.GetStockIdForExperiment(ExpInfo));
+			Id = String.BuildString(ExpInfo.ExperimentId, "@", Situation.Id.ToString());
+			StockSubjectId = String.BuildString(ExpInfo.ExperimentId, "@", Situation.GetStockIdForExperiment(ExpInfo));
 			IncludedSubjects = new List<SubjectData>();
 		}
 
@@ -307,7 +307,7 @@ namespace KERBALISM
 			string subjectResultText;
 			if (file == null || string.IsNullOrEmpty(file.resultText))
 			{
-				subjectResultText = Lib.TextVariant(
+				subjectResultText = String.TextVariant(
 					Local.SciencresultText1,//"Our researchers will jump on it right now"
 					Local.SciencresultText2,//"This cause some excitement"
 					Local.SciencresultText3,//"These results are causing a brouhaha in R&D"
@@ -318,11 +318,11 @@ namespace KERBALISM
 			{
 				subjectResultText = file.resultText;
 			}
-			subjectResultText = Lib.WordWrapAtLength(subjectResultText, 70);
-			Message.Post(Lib.BuildString(
+			subjectResultText = String.WordWrapAtLength(subjectResultText, 70);
+			Message.Post(String.BuildString(
 				FullTitle,
 				" ", Local.Scienctransmitted_title, "\n",//transmitted
-				TimesCompleted == 1 ? HumanReadable.Science(ScienceMaxValue, false) : Lib.Color(Local.Nosciencegain, Lib.Kolor.Orange, true)),//"no science gain : we already had this data"
+				TimesCompleted == 1 ? HumanReadable.Science(ScienceMaxValue, false) : String.Color(Local.Nosciencegain, String.Kolor.Orange, true)),//"no science gain : we already had this data"
 				subjectResultText);
 		}
 	}
@@ -354,18 +354,18 @@ namespace KERBALISM
 		internal override string FullTitle =>
 			ExistsInRnD
 			? RnDSubject.title
-			: Lib.BuildString(ExpInfo.Title, " (", SituationTitle, ")");
+			: String.BuildString(ExpInfo.Title, " (", SituationTitle, ")");
 
 		internal override string SituationTitle =>
 			string.IsNullOrEmpty(extraSituationInfo)
 			? base.SituationTitle
-			: Lib.BuildString(base.SituationTitle, " from ", extraSituationInfo);
+			: String.BuildString(base.SituationTitle, " from ", extraSituationInfo);
 
 		internal override string BiomeTitle =>
 			string.IsNullOrEmpty(Situation.BiomeTitle)
 			? extraSituationInfo
 			: string.IsNullOrEmpty(extraSituationInfo)
 			? Situation.BiomeTitle
-			: Lib.BuildString(Situation.BiomeTitle, " - ", extraSituationInfo);
+			: String.BuildString(Situation.BiomeTitle, " - ", extraSituationInfo);
 	}
 }

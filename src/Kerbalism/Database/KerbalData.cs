@@ -13,7 +13,7 @@ namespace KERBALISM
 			rescue = true;
 			disabled = false;
 			eva_dead = false;
-			sickbay = String.Empty;
+			sickbay = string.Empty;
 			rules = new Dictionary<string, RuleData>();
 		}
 
@@ -22,7 +22,7 @@ namespace KERBALISM
 			rescue = Lib.ConfigValue(node, "rescue", Lib.ConfigValue(node, "resque", true)); //< support pre 1.1.9 typo
 			disabled = Lib.ConfigValue(node, "disabled", false);
 			eva_dead = Lib.ConfigValue(node, "eva_dead", false);
-			sickbay = Lib.ConfigValue(node, "sickbay", String.Empty);
+			sickbay = Lib.ConfigValue(node, "sickbay", string.Empty);
 			rules = new Dictionary<string, RuleData>();
 
 			foreach (var rule_node in node.GetNode("rules").GetNodes())

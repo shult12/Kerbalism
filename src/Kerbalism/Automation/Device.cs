@@ -60,7 +60,7 @@ namespace KERBALISM
 		internal abstract string Status { get; }
 
 		// return tooltip string
-		internal virtual string Tooltip => Lib.BuildString(Lib.Bold(DisplayName), "\non ", PartName);
+		internal virtual string Tooltip => String.BuildString(String.Bold(DisplayName), "\non ", PartName);
 
 		// return icon/button
 		internal virtual DeviceIcon Icon => null;
@@ -121,7 +121,7 @@ namespace KERBALISM
 
 		internal override uint PartId => 0u;
 		internal override string PartName => string.Empty;
-		internal override string Tooltip => Lib.Bold(DisplayName);
+		internal override string Tooltip => String.Bold(DisplayName);
 	}
 
 

@@ -158,7 +158,7 @@ namespace KERBALISM
 		public override string GetInfo()
 		{
 			Specifics specs = new Specifics();
-			specs.Add(Lib.Color(Local.Module_Experiment_Specifics_info8, Lib.Kolor.Cyan, true));//"Needs:"
+			specs.Add(String.Color(Local.Module_Experiment_Specifics_info8, String.Kolor.Cyan, true));//"Needs:"
 			if (ec_rate > 0.0) specs.Add(Local.Module_Experiment_Specifics_info9, SI.HumanOrSIRate(ec_rate, ResourceUnitInfo.ECResID));//"EC"
 			if (comms_rate > 0.0) specs.Add(Local.Module_Experiment_Specifics_info2, HumanReadable.DataRate(comms_rate)); // "Data rate"
 

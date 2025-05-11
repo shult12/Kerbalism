@@ -11,8 +11,8 @@ namespace KERBALISM
 			get
 			{
 				return Reflection.ReflectionValue<bool>(module, "IsRTActive")
-					? Lib.Color(Local.Generic_ACTIVE, Lib.Kolor.Green)
-					: Lib.Color(Local.Generic_INACTIVE, Lib.Kolor.Yellow);
+					? String.Color(Local.Generic_ACTIVE, String.Kolor.Green)
+					: String.Color(Local.Generic_INACTIVE, String.Kolor.Yellow);
 			}
 		}
 
@@ -33,8 +33,8 @@ namespace KERBALISM
 			get
 			{
 				return Lib.Proto.GetBool(protoModule, "IsRTActive")
-						  ? Lib.Color(Local.Generic_ACTIVE, Lib.Kolor.Green)
-						  : Lib.Color(Local.Generic_INACTIVE, Lib.Kolor.Yellow);
+						  ? String.Color(Local.Generic_ACTIVE, String.Kolor.Green)
+						  : String.Color(Local.Generic_INACTIVE, String.Kolor.Yellow);
 			}
 		}
 

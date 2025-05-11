@@ -26,7 +26,7 @@ namespace KERBALISM
 			pin_anim = new Animator(part, pin);
 
 			// setup ui
-			Fields["Status"].guiName = Lib.SpacesOnCaps(Lib.SpacesOnUnderscore(type));
+			Fields["Status"].guiName = String.SpacesOnCaps(String.SpacesOnUnderscore(type));
 		}
 
 
@@ -123,30 +123,30 @@ namespace KERBALISM
 			switch (type)
 			{
 				case "temperature":
-					return Lib.BuildString
+					return String.BuildString
 					(
 						"<align=left />",
-						String.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_solarflux, HumanReadable.Flux(vd.EnvSolarFluxTotal)),//"solar flux"
-						String.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_albedoflux, HumanReadable.Flux(vd.EnvAlbedoFlux)),//"albedo flux"
-						String.Format("{0,-14}\t<b>{1}</b>", Local.Sensor_bodyflux, HumanReadable.Flux(vd.EnvBodyFlux))//"body flux"
+						string.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_solarflux, HumanReadable.Flux(vd.EnvSolarFluxTotal)),//"solar flux"
+						string.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_albedoflux, HumanReadable.Flux(vd.EnvAlbedoFlux)),//"albedo flux"
+						string.Format("{0,-14}\t<b>{1}</b>", Local.Sensor_bodyflux, HumanReadable.Flux(vd.EnvBodyFlux))//"body flux"
 					);
 
 				case "radiation":
 					return string.Empty;
 
 				case "habitat_radiation":
-					return Lib.BuildString
+					return String.BuildString
 					(
 						"<align=left />",
-						String.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_environment, HumanReadable.Radiation(vd.EnvRadiation, false)),//"environment"
-						String.Format("{0,-14}\t<b>{1}</b>", Local.Sensor_habitats, HumanReadable.Radiation(HabitatRadiation(vd), false))//"habitats"
+						string.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_environment, HumanReadable.Radiation(vd.EnvRadiation, false)),//"environment"
+						string.Format("{0,-14}\t<b>{1}</b>", Local.Sensor_habitats, HumanReadable.Radiation(HabitatRadiation(vd), false))//"habitats"
 					);
 
 				case "pressure":
 					return vd.EnvUnderwater
 					  ? Local.Sensor_insideocean//"inside <b>ocean</b>"
 					  : vd.EnvInAtmosphere
-					  ? Local.Sensor_insideatmosphere.Format(vd.EnvBreathable ? Local.Sensor_breathable : Local.Sensor_notbreathable)//"breathable""not breathable"                  //Lib.BuildString("inside <b>atmosphere</b> (", vd.EnvBreathable ? "breathable" : "not breathable", ")")
+					  ? Local.Sensor_insideatmosphere.Format(vd.EnvBreathable ? Local.Sensor_breathable : Local.Sensor_notbreathable)//"breathable""not breathable"                  //String.BuildString("inside <b>atmosphere</b> (", vd.EnvBreathable ? "breathable" : "not breathable", ")")
 					  : Sim.InsideThermosphere(v)
 					  ? Local.Sensor_insidethermosphere//"inside <b>thermosphere</b>""
 					  : Sim.InsideExosphere(v)
@@ -154,7 +154,7 @@ namespace KERBALISM
 					  : string.Empty;
 
 				case "gravioli":
-					return Lib.BuildString
+					return String.BuildString
 					(
 						Local.Sensor_Graviolidetection + " <b>" + vd.EnvGravioli.ToString("F2") + "</b>\n\n",//"Gravioli detection events per-year: 
 						"<i>", Local.Sensor_info1, "\n",//The elusive negative gravioli particle\nseems to be much harder to detect than expected.

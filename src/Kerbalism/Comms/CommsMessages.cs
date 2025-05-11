@@ -47,7 +47,7 @@
 								break;
 						}
 
-						Message.Post(Severity.warning, Lib.BuildString(Local.UI_signallost, " <b>", v.vesselName, "</b>"), subtext);
+						Message.Post(Severity.warning, String.BuildString(Local.UI_signallost, " <b>", v.vesselName, "</b>"), subtext);
 					}
 				}
 				else if (vd.msg_signal && vd.Connection.linked)
@@ -55,9 +55,9 @@
 					vd.msg_signal = false;
 					if (vd.cfg_signal)
 					{
-						Message.Post(Severity.relax, Lib.BuildString("<b>", v.vesselName, "</b> ", Local.UI_signalback),
+						Message.Post(Severity.relax, String.BuildString("<b>", v.vesselName, "</b> ", Local.UI_signalback),
 						  vd.Connection.Status == (int)LinkStatus.direct_link ? Local.UI_directlink :
-							Lib.BuildString(Local.UI_relayby, " <b>", vd.Connection.target_name, "</b>"));
+							String.BuildString(Local.UI_relayby, " <b>", vd.Connection.target_name, "</b>"));
 					}
 				}
 			}

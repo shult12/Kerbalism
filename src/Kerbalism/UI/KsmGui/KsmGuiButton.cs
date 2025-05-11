@@ -95,7 +95,7 @@ namespace KERBALISM.KsmGui
 			IconObject.SetIconColor(color);
 		}
 
-		public void SetIconColor(Lib.Kolor kColor)
+		public void SetIconColor(String.Kolor kColor)
 		{
 			IconObject.SetIconColor(kColor);
 		}

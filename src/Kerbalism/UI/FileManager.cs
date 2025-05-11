@@ -28,7 +28,7 @@ namespace KERBALISM
 			if (!vd.IsSimulated) return;
 
 			// set metadata
-			p.Title(Lib.BuildString(Lib.Ellipsis(v.vesselName, Styles.ScaleStringLength(40)), " ", Lib.Color(Local.FILEMANAGER_title, Lib.Kolor.LightGrey)));//"FILE MANAGER"
+			p.Title(String.BuildString(String.Ellipsis(v.vesselName, Styles.ScaleStringLength(40)), " ", String.Color(Local.FILEMANAGER_title, String.Kolor.LightGrey)));//"FILE MANAGER"
 			p.Width(Styles.ScaleWidthFloat(465.0f));
 			p.paneltype = Panel.PanelType.data;
 
@@ -76,7 +76,7 @@ namespace KERBALISM
 			if(filesCount > 0 || totalDataCapacity > 0)
 			{
 				var title = Local.FILEMANAGER_DataCapacity + " " + HumanReadable.DataSize(usedDataCapacity);//"DATA " 
-				if (!unlimitedData) title += Local.FILEMANAGER_DataAvailable.Format(HumanReadable.Percentage((totalDataCapacity - usedDataCapacity) / totalDataCapacity));//Lib.BuildString(" (", HumanReadable.Percentage((totalDataCapacity - usedDataCapacity) / totalDataCapacity), " available)");
+				if (!unlimitedData) title += Local.FILEMANAGER_DataAvailable.Format(HumanReadable.Percentage((totalDataCapacity - usedDataCapacity) / totalDataCapacity));//String.BuildString(" (", HumanReadable.Percentage((totalDataCapacity - usedDataCapacity) / totalDataCapacity), " available)");
 				p.AddSection(title);
 
 				foreach (var drive in drives)
@@ -111,42 +111,42 @@ namespace KERBALISM
 		static void Render_file(Panel p, uint partId, File file, Drive drive, bool short_strings, Vessel v)
 		{
 			// render experiment name
-			string exp_label = Lib.BuildString
+			string exp_label = String.BuildString
 			(
 			  "<b>",
-			  Lib.Ellipsis(file.subjectData.ExperimentTitle, Styles.ScaleStringLength(short_strings ? 24 : 38)),
+			  String.Ellipsis(file.subjectData.ExperimentTitle, Styles.ScaleStringLength(short_strings ? 24 : 38)),
 			  "</b> <size=", Styles.ScaleInteger(10).ToString(), ">",
-			  Lib.Ellipsis(file.subjectData.SituationTitle, Styles.ScaleStringLength((short_strings ? 32 : 62) - Lib.Ellipsis(file.subjectData.ExperimentTitle, Styles.ScaleStringLength(short_strings ? 24 : 38)).Length)),
+			  String.Ellipsis(file.subjectData.SituationTitle, Styles.ScaleStringLength((short_strings ? 32 : 62) - String.Ellipsis(file.subjectData.ExperimentTitle, Styles.ScaleStringLength(short_strings ? 24 : 38)).Length)),
 			  "</size>"
 			);
-			string exp_tooltip = Lib.BuildString
+			string exp_tooltip = String.BuildString
 			(
 			  file.subjectData.ExperimentTitle, "\n",
-			  Lib.Color(file.subjectData.SituationTitle, Lib.Kolor.LightGrey)
+			  String.Color(file.subjectData.SituationTitle, String.Kolor.LightGrey)
 			);
 
 			double exp_value = file.size * file.subjectData.SciencePerMB;
 			if (file.subjectData.ScienceRemainingToRetrieve > 0f && file.size > 0.0)
-				exp_tooltip = Lib.BuildString(exp_tooltip, "\n<b>", HumanReadable.Science(exp_value, false), "</b>");
+				exp_tooltip = String.BuildString(exp_tooltip, "\n<b>", HumanReadable.Science(exp_value, false), "</b>");
 			if (file.transmitRate > 0.0)
 			{
 				if (file.size > 0.0)
-					exp_tooltip = Lib.Color(Lib.BuildString(exp_tooltip, "\n", Local.FILEMANAGER_TransmittingRate.Format(HumanReadable.DataRate(file.transmitRate)), " : <i>", HumanReadable.Countdown(file.size / file.transmitRate), "</i>"), Lib.Kolor.Cyan);//Transmitting at <<1>>
+					exp_tooltip = String.Color(String.BuildString(exp_tooltip, "\n", Local.FILEMANAGER_TransmittingRate.Format(HumanReadable.DataRate(file.transmitRate)), " : <i>", HumanReadable.Countdown(file.size / file.transmitRate), "</i>"), String.Kolor.Cyan);//Transmitting at <<1>>
 				else
-					exp_tooltip = Lib.Color(Lib.BuildString(exp_tooltip, "\n", Local.FILEMANAGER_TransmittingRate.Format(HumanReadable.DataRate(file.transmitRate))), Lib.Kolor.Cyan);//Transmitting at <<1>>
+					exp_tooltip = String.Color(String.BuildString(exp_tooltip, "\n", Local.FILEMANAGER_TransmittingRate.Format(HumanReadable.DataRate(file.transmitRate))), String.Kolor.Cyan);//Transmitting at <<1>>
 			}
 			else if (v.KerbalismData().Connection.rate > 0.0)
-				exp_tooltip = Lib.BuildString(exp_tooltip, "\n", Local.FILEMANAGER_Transmitduration, "<i>", HumanReadable.Duration(file.size / v.KerbalismData().Connection.rate), "</i>");//Transmit duration : 
+				exp_tooltip = String.BuildString(exp_tooltip, "\n", Local.FILEMANAGER_Transmitduration, "<i>", HumanReadable.Duration(file.size / v.KerbalismData().Connection.rate), "</i>");//Transmit duration : 
 			if (!string.IsNullOrEmpty(file.resultText))
-				exp_tooltip = Lib.BuildString(exp_tooltip, "\n", Lib.WordWrapAtLength(file.resultText, 50));
+				exp_tooltip = String.BuildString(exp_tooltip, "\n", String.WordWrapAtLength(file.resultText, 50));
 
 			string size;
 			if (file.transmitRate > 0.0 )
 			{
 				if (file.size == 0.0)
-					size = Lib.Color(Lib.BuildString("↑ ", HumanReadable.DataRate(file.transmitRate)), Lib.Kolor.Cyan);
+					size = String.Color(String.BuildString("↑ ", HumanReadable.DataRate(file.transmitRate)), String.Kolor.Cyan);
 				else
-					size = Lib.Color(Lib.BuildString("↑ ", HumanReadable.DataSize(file.size)), Lib.Kolor.Cyan);
+					size = String.Color(String.BuildString("↑ ", HumanReadable.DataSize(file.size)), String.Kolor.Cyan);
 			}
 			else
 			{
@@ -160,7 +160,7 @@ namespace KERBALISM
 			p.AddRightIcon(Textures.toggle_red, Local.FILEMANAGER_Delete, () =>//"Delete the file"
 				{
 					UI.Popup(Local.FILEMANAGER_Warning_title,//"Warning!"
-						Local.FILEMANAGER_DeleteConfirm.Format(file.subjectData.FullTitle),//Lib.BuildString(, "?"),//"Do you really want to delete <<1>>", 
+						Local.FILEMANAGER_DeleteConfirm.Format(file.subjectData.FullTitle),//String.BuildString(, "?"),//"Do you really want to delete <<1>>", 
 				        new DialogGUIButton(Local.FILEMANAGER_DeleteConfirm_button1, () => drive.Delete_file(file.subjectData)),//"Delete it"
 						new DialogGUIButton(Local.FILEMANAGER_DeleteConfirm_button2, () => { }));//"Keep it"
 				}
@@ -170,24 +170,24 @@ namespace KERBALISM
 		static void Render_sample(Panel p, uint partId, Sample sample, Drive drive, bool short_strings)
 		{
 			// render experiment name
-			string exp_label = Lib.BuildString
+			string exp_label = String.BuildString
 			(
 			  "<b>",
-			  Lib.Ellipsis(sample.subjectData.ExperimentTitle, Styles.ScaleStringLength(short_strings ? 24 : 38)),
+			  String.Ellipsis(sample.subjectData.ExperimentTitle, Styles.ScaleStringLength(short_strings ? 24 : 38)),
 			  "</b> <size=", Styles.ScaleInteger(10).ToString(), ">",
-			  Lib.Ellipsis(sample.subjectData.SituationTitle, Styles.ScaleStringLength((short_strings ? 32 : 62) - Lib.Ellipsis(sample.subjectData.ExperimentTitle, Styles.ScaleStringLength(short_strings ? 24 : 38)).Length)),
+			  String.Ellipsis(sample.subjectData.SituationTitle, Styles.ScaleStringLength((short_strings ? 32 : 62) - String.Ellipsis(sample.subjectData.ExperimentTitle, Styles.ScaleStringLength(short_strings ? 24 : 38)).Length)),
 			  "</size>"
 			);
-			string exp_tooltip = Lib.BuildString
+			string exp_tooltip = String.BuildString
 			(
 			  sample.subjectData.ExperimentTitle, "\n",
-			  Lib.Color(sample.subjectData.SituationTitle, Lib.Kolor.LightGrey)
+			  String.Color(sample.subjectData.SituationTitle, String.Kolor.LightGrey)
 			);
 
 			double exp_value = sample.size * sample.subjectData.SciencePerMB;
-			if (exp_value >= 0.1) exp_tooltip = Lib.BuildString(exp_tooltip, "\n<b>", HumanReadable.Science(exp_value, false), "</b>");
-			if (sample.mass > Double.Epsilon) exp_tooltip = Lib.BuildString(exp_tooltip, "\n<b>", HumanReadable.Mass(sample.mass), "</b>");
-			if (!string.IsNullOrEmpty(sample.resultText)) exp_tooltip = Lib.BuildString(exp_tooltip, "\n", Lib.WordWrapAtLength(sample.resultText, 50));
+			if (exp_value >= 0.1) exp_tooltip = String.BuildString(exp_tooltip, "\n<b>", HumanReadable.Science(exp_value, false), "</b>");
+			if (sample.mass > Double.Epsilon) exp_tooltip = String.BuildString(exp_tooltip, "\n<b>", HumanReadable.Mass(sample.mass), "</b>");
+			if (!string.IsNullOrEmpty(sample.resultText)) exp_tooltip = String.BuildString(exp_tooltip, "\n", String.WordWrapAtLength(sample.resultText, 50));
 
 			p.AddContent(exp_label, HumanReadable.SampleSize(sample.size), exp_tooltip, (Action)null, () => Highlighter.Set(partId, Color.cyan));
 			p.AddRightIcon(sample.analyze ? Textures.lab_cyan : Textures.lab_black, Local.FILEMANAGER_analysis, () => { sample.analyze = !sample.analyze; });//"Flag the file for analysis in a <b>laboratory</b>"

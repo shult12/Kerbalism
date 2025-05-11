@@ -656,7 +656,7 @@ namespace KERBALISM
 					kd.rescue = false;
 
 					// show a message
-					Message.Post(Lib.BuildString(Local.Rescuemission_msg1," <b>", c.name, "</b>"), Lib.BuildString((c.gender == ProtoCrewMember.Gender.Male ? Local.Kerbal_Male : Local.Kerbal_Female), Local.Rescuemission_msg2));//We found xx  "He"/"She"'s still alive!"
+					Message.Post(String.BuildString(Local.Rescuemission_msg1," <b>", c.name, "</b>"), String.BuildString((c.gender == ProtoCrewMember.Gender.Male ? Local.Kerbal_Male : Local.Kerbal_Female), Local.Rescuemission_msg2));//We found xx  "He"/"She"'s still alive!"
 				}
 			}
 
@@ -715,7 +715,7 @@ namespace KERBALISM
 						{
 							if (setup.tech == selected.tech.techID)
 							{
-								labels.Add(Lib.BuildString(setup.name, " to ", cfg.title));
+								labels.Add(String.BuildString(setup.name, " to ", cfg.title));
 							}
 						}
 					}
@@ -726,11 +726,11 @@ namespace KERBALISM
 				int i = 0;
 				foreach (string label in labels)
 				{
-					rnd.node_description.text += Lib.BuildString("\n• <color=#00ffff>", label, "</color>");
+					rnd.node_description.text += String.BuildString("\n• <color=#00ffff>", label, "</color>");
 					i++;
 					if(i >= 5 && labels.Count > i + 1)
 					{
-						rnd.node_description.text += Lib.BuildString("\n• <color=#00ffff>(+", (labels.Count - i).ToString(), " more)</color>");
+						rnd.node_description.text += String.BuildString("\n• <color=#00ffff>(+", (labels.Count - i).ToString(), " more)</color>");
 						break;
 					}
 				}
@@ -809,7 +809,7 @@ namespace KERBALISM
 				if (partSequence.Contains(ap.name))
 				{
 					int index = partSequence.IndexOf(ap.name);
-					ap.title = Lib.BuildString("<size=1><color=#00000000>" + index.ToString("00") + "</color></size>", ap.title);
+					ap.title = String.BuildString("<size=1><color=#00000000>" + index.ToString("00") + "</color></size>", ap.title);
 				}
 
 				// recompile some part infos (this is normally done by KSP on loading, after each part prefab is compiled)
@@ -1043,7 +1043,7 @@ namespace KERBALISM
 			}
 
 			// post message first so this one is shown before malfunction message
-			Message.Post(Severity.breakdown, Lib.ExpandMsg(text, v, c), subtext);
+			Message.Post(Severity.breakdown, String.ExpandMsg(text, v, c), subtext);
 
 			// trigger the event
 			switch (breakdown)

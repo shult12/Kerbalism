@@ -86,12 +86,12 @@ namespace KERBALISM
 					{
 						scienceToCredit += file.subjectData.RetrieveScience(subjectValue, false, pv);
 
-						labels.Add(new DialogGUILabel(Lib.BuildString(
-							Lib.Color("+ " + subjectValue.ToString("F1"), Lib.Kolor.Science),
+						labels.Add(new DialogGUILabel(String.BuildString(
+							String.Color("+ " + subjectValue.ToString("F1"), String.Kolor.Science),
 							" (",
-							Lib.Color(file.subjectData.ScienceRetrievedInKSC.ToString("F1"), Lib.Kolor.Science, true),
+							String.Color(file.subjectData.ScienceRetrievedInKSC.ToString("F1"), String.Kolor.Science, true),
 							" / ",
-							Lib.Color(file.subjectData.ScienceMaxValue.ToString("F1"), Lib.Kolor.Science, true),
+							String.Color(file.subjectData.ScienceMaxValue.ToString("F1"), String.Kolor.Science, true),
 							") : ",
 							file.subjectData.FullTitle
 							)));
@@ -117,12 +117,12 @@ namespace KERBALISM
 					{
 						scienceToCredit += sample.subjectData.RetrieveScience(subjectValue, false, pv);
 
-						labels.Add(new DialogGUILabel(Lib.BuildString(
-							Lib.Color("+ " + subjectValue.ToString("F1"), Lib.Kolor.Science),
+						labels.Add(new DialogGUILabel(String.BuildString(
+							String.Color("+ " + subjectValue.ToString("F1"), String.Kolor.Science),
 							" (",
-							Lib.Color(sample.subjectData.ScienceRetrievedInKSC.ToString("F1"), Lib.Kolor.Science, true),
+							String.Color(sample.subjectData.ScienceRetrievedInKSC.ToString("F1"), String.Kolor.Science, true),
 							" / ",
-							Lib.Color(sample.subjectData.ScienceMaxValue.ToString("F1"), Lib.Kolor.Science, true),
+							String.Color(sample.subjectData.ScienceMaxValue.ToString("F1"), String.Kolor.Science, true),
 							") : ",
 							sample.subjectData.FullTitle
 							)));
@@ -143,7 +143,7 @@ namespace KERBALISM
 						"scienceResults", "", pv.vesselName + " "+Local.VesselRecovery_title, HighLogic.UISkin, new Rect(0.3f, 0.5f, 350f, 100f),//" recovery"
 						new DialogGUIVerticalLayout
 						(
-							new DialogGUIBox(Local.VesselRecovery_info + " : " + Lib.Color(scienceToCredit.ToString("F1") + " " + Local.VesselRecovery_CREDITS, Lib.Kolor.Science, true), 340f, 30f),//"SCIENCE RECOVERED"" CREDITS"
+							new DialogGUIBox(Local.VesselRecovery_info + " : " + String.Color(scienceToCredit.ToString("F1") + " " + Local.VesselRecovery_CREDITS, String.Kolor.Science, true), 340f, 30f),//"SCIENCE RECOVERED"" CREDITS"
 							new DialogGUIScrollList
 							(
 								new Vector2(340f, 250f), false, true,

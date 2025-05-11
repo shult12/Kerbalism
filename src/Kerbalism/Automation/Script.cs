@@ -18,7 +18,7 @@ namespace KERBALISM
 			states = new Dictionary<uint, bool>();
 			foreach (string s in node.GetValues("state"))
 			{
-				var tokens = Lib.Tokenize(s, '@');
+				var tokens = String.Tokenize(s, '@');
 				if (tokens.Count != 2) continue;
 				states.Add(Parse.ToUInt(tokens[0]), Parse.ToBool(tokens[1]));
 			}
@@ -29,7 +29,7 @@ namespace KERBALISM
 		{
 			foreach (var p in states)
 			{
-				node.AddValue("state", Lib.BuildString(p.Key.ToString(), "@", p.Value.ToString()));
+				node.AddValue("state", String.BuildString(p.Key.ToString(), "@", p.Value.ToString()));
 			}
 			node.AddValue("prev", prev);
 		}

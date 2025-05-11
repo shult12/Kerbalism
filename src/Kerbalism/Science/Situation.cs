@@ -103,8 +103,8 @@ namespace KERBALISM
 
 		string Title =>
 			Biome != null
-			? Lib.BuildString(BodyTitle, " ", ScienceSituationTitle, " ", BiomeTitle)
-			: Lib.BuildString(BodyTitle, " ", ScienceSituationTitle);
+			? String.BuildString(BodyTitle, " ", ScienceSituationTitle, " ", BiomeTitle)
+			: String.BuildString(BodyTitle, " ", ScienceSituationTitle);
 
 		internal string BodyTitle => Body.name;
 		internal string BiomeTitle => Biome != null ? Biome.displayname : VirtualBiome != VirtualBiome.None ? VirtualBiome.Title() : string.Empty;
@@ -117,7 +117,7 @@ namespace KERBALISM
 
 		public override string ToString()
 		{
-			return Lib.BuildString(BodyName, ScienceSituationName, BiomeName);
+			return String.BuildString(BodyName, ScienceSituationName, BiomeName);
 		}
 
 		internal double SituationMultiplier => ScienceSituation.BodyMultiplier(Body);
@@ -125,17 +125,17 @@ namespace KERBALISM
 		internal string GetTitleForExperiment(ExperimentInfo expInfo)
 		{
 			if (ScienceSituation.IsBiomesRelevantForExperiment(expInfo))
-				return Lib.BuildString(BodyTitle, " ", ScienceSituationTitle, " ", BiomeTitle);
+				return String.BuildString(BodyTitle, " ", ScienceSituationTitle, " ", BiomeTitle);
 			else
-				return Lib.BuildString(BodyTitle, " ", ScienceSituationTitle);
+				return String.BuildString(BodyTitle, " ", ScienceSituationTitle);
 		}
 
 		internal string GetStockIdForExperiment(ExperimentInfo expInfo)
 		{
 			if (ScienceSituation.IsBiomesRelevantForExperiment(expInfo))
-				return Lib.BuildString(BodyName, StockScienceSituationName, BiomeName);
+				return String.BuildString(BodyName, StockScienceSituationName, BiomeName);
 			else
-				return Lib.BuildString(BodyName, StockScienceSituationName);
+				return String.BuildString(BodyName, StockScienceSituationName);
 		}
 
 		internal bool AtmosphericFlight()

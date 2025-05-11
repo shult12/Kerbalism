@@ -35,7 +35,7 @@ namespace KERBALISM
 
 		static bool TryParseColor(string s, out UnityEngine.Color c)
 		{
-			string[] split = s.Replace(" ", String.Empty).Split(',');
+			string[] split = s.Replace(" ", string.Empty).Split(',');
 			if (split.Length < 3)
 			{
 				c = new UnityEngine.Color(0, 0, 0);

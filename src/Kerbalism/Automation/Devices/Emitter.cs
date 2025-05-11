@@ -6,7 +6,7 @@ namespace KERBALISM
 
 		internal override string Name => "emitter";
 
-		internal override string Status => Lib.Color(module.running, Local.Generic_ON, Lib.Kolor.Green, Local.Generic_OFF, Lib.Kolor.Yellow);
+		internal override string Status => String.Color(module.running, Local.Generic_ON, String.Kolor.Green, Local.Generic_OFF, String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{
@@ -29,7 +29,7 @@ namespace KERBALISM
 
 		internal override string Name => "emitter";
 
-		internal override string Status => Lib.Color(Lib.Proto.GetBool(protoModule, "running"), Local.Generic_ACTIVE, Lib.Kolor.Green, Local.Generic_DISABLED, Lib.Kolor.Yellow);
+		internal override string Status => String.Color(Lib.Proto.GetBool(protoModule, "running"), Local.Generic_ACTIVE, String.Kolor.Green, Local.Generic_DISABLED, String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{

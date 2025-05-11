@@ -6,7 +6,7 @@ namespace KERBALISM
 
 		internal override string Name => "data transmission";
 
-		internal override string Status => Lib.Color(vesselData.deviceTransmit, Local.Generic_ENABLED, Lib.Kolor.Green, Local.Generic_DISABLED, Lib.Kolor.Yellow);
+		internal override string Status => String.Color(vesselData.deviceTransmit, Local.Generic_ENABLED, String.Kolor.Green, Local.Generic_DISABLED, String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value) => vesselData.deviceTransmit = value;
 

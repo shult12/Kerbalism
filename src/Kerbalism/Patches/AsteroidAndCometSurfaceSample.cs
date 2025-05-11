@@ -65,7 +65,7 @@ namespace KERBALISM
 				double mass = size * Settings.AsteroidSampleMassPerMB;
 				SubjectData subjectData = ScienceDB.GetSubjectDataFromStockId(subject.id, null, __instance.part.partInfo.title);
 				drive.Record_sample(subjectData, size, mass, true);
-				Message.Post(Lib.BuildString("<b><color=ffffff>", subject.title, "</color></b>\n", (mass * 1000.0).ToString("F1"), "<b><i> Kg of sample stored</i></b>"));
+				Message.Post(String.BuildString("<b><color=ffffff>", subject.title, "</color></b>\n", (mass * 1000.0).ToString("F1"), "<b><i> Kg of sample stored</i></b>"));
 			}
 			else
 			{
@@ -115,7 +115,7 @@ namespace KERBALISM
 				double mass = size * Settings.AsteroidSampleMassPerMB;
 				SubjectData subjectData = ScienceDB.GetSubjectDataFromStockId(subject.id, null, __instance.part.partInfo.title);
 				drive.Record_sample(subjectData, size, mass, true);
-				Message.Post(Lib.BuildString("<b><color=ffffff>", subject.title, "</color></b>\n", (mass * 1000.0).ToString("F1"), "<b><i> Kg of sample stored</i></b>"));
+				Message.Post(String.BuildString("<b><color=ffffff>", subject.title, "</color></b>\n", (mass * 1000.0).ToString("F1"), "<b><i> Kg of sample stored</i></b>"));
 			}
 			else
 			{

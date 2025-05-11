@@ -19,7 +19,7 @@ namespace KERBALISM
 			if (!vd.IsSimulated) return;
 
 			// set metadata
-			p.Title(Lib.BuildString(Lib.Ellipsis(v.vesselName, Styles.ScaleStringLength(40)), " ", Lib.Color(Local.ConnManager_title, Lib.Kolor.LightGrey)));//"CONNECTION MANAGER"
+			p.Title(String.BuildString(String.Ellipsis(v.vesselName, Styles.ScaleStringLength(40)), " ", String.Color(Local.ConnManager_title, String.Kolor.LightGrey)));//"CONNECTION MANAGER"
 			p.Width(Styles.ScaleWidthFloat(365.0f));
 			p.paneltype = Panel.PanelType.connection;
 

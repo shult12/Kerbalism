@@ -49,7 +49,7 @@ namespace KERBALISM
 
 			connection.rate = baseRate * System.Math.Pow(firstLink.signalStrength, Sim.DataRateDampingExponent);
 
-			connection.target_name = Lib.Ellipsis(Localizer.Format(v.connection.ControlPath.First.end.displayName).Replace("Kerbin", "DSN"), 20);
+			connection.target_name = String.Ellipsis(Localizer.Format(v.connection.ControlPath.First.end.displayName).Replace("Kerbin", "DSN"), 20);
 
 			if (connection.Status != LinkStatus.direct_link)
 			{
@@ -77,13 +77,13 @@ namespace KERBALISM
 				controlPoint[0] = Localizer.Format(link.end.displayName);
 				if (link.end.isHome)
 					controlPoint[0] = controlPoint[0].Replace("Kerbin", "DSN");
-				controlPoint[0] = Lib.Ellipsis(controlPoint[0], 35);
+				controlPoint[0] = String.Ellipsis(controlPoint[0], 35);
 
 				// signal strength
 				controlPoint[1] = HumanReadable.Percentage(System.Math.Ceiling(signalStrength * 10000) / 10000, "F2");
 
 				// extra info
-				controlPoint[2] = Lib.BuildString(
+				controlPoint[2] = String.BuildString(
 					"Distance: ", HumanReadable.Distance(linkDistance),
 					" (Max: ", HumanReadable.Distance(linkMaxDistance), ")");
 

@@ -23,7 +23,7 @@ namespace KERBALISM
 			if (!vd.IsSimulated) return;
 
 			// set metadata
-			p.Title(Lib.BuildString(Lib.Ellipsis(v.vesselName, Styles.ScaleStringLength(20)), " ", Lib.Color(Local.TELEMETRY_title, Lib.Kolor.LightGrey)));//"TELEMETRY"
+			p.Title(String.BuildString(String.Ellipsis(v.vesselName, Styles.ScaleStringLength(20)), " ", String.Color(Local.TELEMETRY_title, String.Kolor.LightGrey)));//"TELEMETRY"
 			p.Width(Styles.ScaleWidthFloat(355.0f));
 			p.paneltype = Panel.PanelType.telemetry;
 
@@ -77,7 +77,7 @@ namespace KERBALISM
 			if (vd.SolarPanelsAverageExposure >= 0.0)
 			{
 				var exposureString = vd.SolarPanelsAverageExposure.ToString("P1");
-				if (vd.SolarPanelsAverageExposure < 0.2) exposureString = Lib.Color(exposureString, Lib.Kolor.Orange);
+				if (vd.SolarPanelsAverageExposure < 0.2) exposureString = String.Color(exposureString, String.Kolor.Orange);
 				p.AddContent(Local.TELEMETRY_SolarPanelsAverageExposure, exposureString, "<b>"+Local.TELEMETRY_Exposureignoringbodiesocclusion +"</b>\n<i>"+Local.TELEMETRY_Exposureignoringbodiesocclusion_desc +"</i>");//"solar panels average exposure""Exposure ignoring bodies occlusion""Won't change on unloaded vessels\nMake sure to optimize it before switching
 			}
 
@@ -98,7 +98,7 @@ namespace KERBALISM
 
 			// render panel, add some content based on enabled features
 			p.AddSection(Local.TELEMETRY_HABITAT);//"HABITAT"
-			if (Features.Poisoning) p.AddContent(Local.TELEMETRY_co2level, Lib.Color(vd.Poisoning > Settings.PoisoningThreshold, HumanReadable.Percentage(vd.Poisoning, "F2"), Lib.Kolor.Yellow));//"co2 level"
+			if (Features.Poisoning) p.AddContent(Local.TELEMETRY_co2level, String.Color(vd.Poisoning > Settings.PoisoningThreshold, HumanReadable.Percentage(vd.Poisoning, "F2"), String.Kolor.Yellow));//"co2 level"
 			if (Features.Radiation && v.isEVA) p.AddContent(Local.TELEMETRY_radiation, HumanReadable.Radiation(vd.EnvHabitatRadiation));//"radiation"
 
 			if (!v.isEVA)
@@ -127,11 +127,11 @@ namespace KERBALISM
 				for (int i = 0; i < vd.filesTransmitted.Count; i++)
 				{
 					transmitRate += vd.filesTransmitted[i].transmitRate;
-					tooltip.Append(string.Format("{0,-15}\t{1}", HumanReadable.DataRate(vd.filesTransmitted[i].transmitRate), Lib.Ellipsis(vd.filesTransmitted[i].subjectData.FullTitle, 40u)));
+					tooltip.Append(string.Format("{0,-15}\t{1}", HumanReadable.DataRate(vd.filesTransmitted[i].transmitRate), String.Ellipsis(vd.filesTransmitted[i].subjectData.FullTitle, 40u)));
 					if (i < vd.filesTransmitted.Count - 1) tooltip.Append("\n");
 				}
 				
-				p.AddContent(Local.TELEMETRY_transmitting, Lib.BuildString(vd.filesTransmitted.Count.ToString(), vd.filesTransmitted.Count > 1 ? " files at " : " file at ",  HumanReadable.DataRate(transmitRate)), tooltip.ToString());//"transmitting"
+				p.AddContent(Local.TELEMETRY_transmitting, String.BuildString(vd.filesTransmitted.Count.ToString(), vd.filesTransmitted.Count > 1 ? " files at " : " file at ",  HumanReadable.DataRate(transmitRate)), tooltip.ToString());//"transmitting"
 			}
 			else
 			{
@@ -161,16 +161,16 @@ namespace KERBALISM
 
 				// determine label
 				var resource = PartResourceLibrary.Instance.resourceDefinitions[supply.resource];
-				string label = Lib.SpacesOnCaps(resource.displayName).ToLower();
+				string label = String.SpacesOnCaps(resource.displayName).ToLower();
 
 				StringBuilder sb = new StringBuilder();
 				
 				sb.Append("<align=left />");
 				if (res.AverageRate != 0.0)
 				{
-					sb.Append(Lib.Color(res.AverageRate > 0.0,
-						Lib.BuildString("+", SI.HumanOrSIRate(System.Math.Abs(res.AverageRate), resource.id)), Lib.Kolor.PosRate,
-						Lib.BuildString("-", SI.HumanOrSIRate(System.Math.Abs(res.AverageRate), resource.id)), Lib.Kolor.NegRate,
+					sb.Append(String.Color(res.AverageRate > 0.0,
+						String.BuildString("+", SI.HumanOrSIRate(System.Math.Abs(res.AverageRate), resource.id)), String.Kolor.PosRate,
+						String.BuildString("-", SI.HumanOrSIRate(System.Math.Abs(res.AverageRate), resource.id)), String.Kolor.NegRate,
 						true));
 				}
 				else
@@ -210,9 +210,9 @@ namespace KERBALISM
 					foreach (SupplyData.ResourceBrokerRate rb in brokers)
 					{
 						sb.Append("\n");
-						sb.Append(Lib.Color(rb.rate > 0.0,
-							Lib.BuildString("+", SI.HumanOrSIRate(System.Math.Abs(rb.rate), resource.id), "   "), Lib.Kolor.PosRate, // spaces to mitigate alignement issues
-							Lib.BuildString("-", SI.HumanOrSIRate(System.Math.Abs(rb.rate), resource.id), "   "), Lib.Kolor.NegRate, // spaces to mitigate alignement issues
+						sb.Append(String.Color(rb.rate > 0.0,
+							String.BuildString("+", SI.HumanOrSIRate(System.Math.Abs(rb.rate), resource.id), "   "), String.Kolor.PosRate, // spaces to mitigate alignement issues
+							String.BuildString("-", SI.HumanOrSIRate(System.Math.Abs(rb.rate), resource.id), "   "), String.Kolor.NegRate, // spaces to mitigate alignement issues
 							true)); 
 						sb.Append("\t");
 						sb.Append(rb.broker.Title);
@@ -254,7 +254,7 @@ namespace KERBALISM
 					RuleData rd = kd.Rule(r.name);
 
 					// add to the tooltip
-					tooltips.Add(Lib.BuildString("<b>", HumanReadable.Percentage(rd.problem / r.fatal_threshold), "</b>\t", r.title));
+					tooltips.Add(String.BuildString("<b>", HumanReadable.Percentage(rd.problem / r.fatal_threshold), "</b>\t", r.title));
 
 					// analyze issue
 					if (rd.problem > r.danger_threshold)
@@ -268,13 +268,13 @@ namespace KERBALISM
 						else stress_severity = System.Math.Max(stress_severity, 1);
 					}
 				}
-				string tooltip = Lib.BuildString("<align=left />", String.Join("\n", tooltips.ToArray()));
+				string tooltip = String.BuildString("<align=left />", string.Join("\n", tooltips.ToArray()));
 
 				// generate kerbal name
 				string name = kerbal.name.ToLower().Replace(" kerman", string.Empty);
 
 				// render selectable title
-				p.AddContent(Lib.Ellipsis(name, Styles.ScaleStringLength(30)), kd.disabled ? Lib.Color(Local.TELEMETRY_HYBERNATED, Lib.Kolor.Cyan) : string.Empty);//"HYBERNATED"
+				p.AddContent(String.Ellipsis(name, Styles.ScaleStringLength(30)), kd.disabled ? String.Color(Local.TELEMETRY_HYBERNATED, String.Kolor.Cyan) : string.Empty);//"HYBERNATED"
 				p.AddRightIcon(health_severity == 0 ? Textures.health_white : health_severity == 1 ? Textures.health_yellow : Textures.health_red, tooltip);
 				p.AddRightIcon(stress_severity == 0 ? Textures.brain_white : stress_severity == 1 ? Textures.brain_yellow : Textures.brain_red, tooltip);
 			}
@@ -295,13 +295,13 @@ namespace KERBALISM
 
 				// state string
 				string state = greenhouse.issue.Length > 0
-				  ? Lib.Color(greenhouse.issue, Lib.Kolor.Yellow)
+				  ? String.Color(greenhouse.issue, String.Kolor.Yellow)
 				  : greenhouse.growth >= 0.99
-				  ? Lib.Color(Local.TELEMETRY_readytoharvest, Lib.Kolor.Green)//"ready to harvest"
+				  ? String.Color(Local.TELEMETRY_readytoharvest, String.Kolor.Green)//"ready to harvest"
 				  : Local.TELEMETRY_growing;//"growing"
 
 				// tooltip with summary
-				string tooltip = greenhouse.growth < 0.99 ? Lib.BuildString
+				string tooltip = greenhouse.growth < 0.99 ? String.BuildString
 				(
 				  "<align=left />",
 				  Local.TELEMETRY_timetoharvest, "\t<b>", HumanReadable.Duration(greenhouse.tta), "</b>\n",//"time to harvest"
@@ -311,7 +311,7 @@ namespace KERBALISM
 				) : string.Empty;
 
 				// render it
-				p.AddContent(Lib.BuildString(Local.TELEMETRY_crop, " #", (i + 1).ToString()), state, tooltip);//"crop"
+				p.AddContent(String.BuildString(Local.TELEMETRY_crop, " #", (i + 1).ToString()), state, tooltip);//"crop"
 
 				// issues too, why not
 				p.AddRightIcon(greenhouse.issue.Length == 0 ? Textures.plant_white : Textures.plant_yellow, tooltip);

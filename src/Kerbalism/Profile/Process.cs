@@ -13,7 +13,7 @@ namespace KERBALISM
 			name = Lib.ConfigValue(node, "name", string.Empty);
 			title = Lib.ConfigValue(node, "title", name);
 			broker = ResourceBroker.GetOrCreate(name, ResourceBroker.BrokerCategory.Converter, title);
-			modifiers = Lib.Tokenize(Lib.ConfigValue(node, "modifier", string.Empty), ',');
+			modifiers = String.Tokenize(Lib.ConfigValue(node, "modifier", string.Empty), ',');
 
 			// check that name is specified
 			if (name.Length == 0) throw new Exception("skipping unnamed process");
@@ -25,7 +25,7 @@ namespace KERBALISM
 			foreach (string input in node.GetValues("input"))
 			{
 				// get parameters
-				List<string> tok = Lib.Tokenize(input, '@');
+				List<string> tok = String.Tokenize(input, '@');
 				if (tok.Count != 2) throw new Exception("malformed input on process " + name);
 				string input_res = tok[0];
 				double input_rate = Parse.ToDouble(tok[1]);
@@ -46,7 +46,7 @@ namespace KERBALISM
 			foreach (string output in node.GetValues("output"))
 			{
 				// get parameters
-				List<string> tok = Lib.Tokenize(output, '@');
+				List<string> tok = String.Tokenize(output, '@');
 				if (tok.Count != 2) throw new Exception("malformed output on process " + name);
 				string output_res = tok[0];
 				double output_rate = Parse.ToDouble(tok[1]);
@@ -67,7 +67,7 @@ namespace KERBALISM
 			foreach (string output in node.GetValues("cures"))
 			{
 				// get parameters
-				List<string> tok = Lib.Tokenize(output, '@');
+				List<string> tok = String.Tokenize(output, '@');
 				if (tok.Count != 2) throw new Exception("malformed cure on process " + name);
 				string cure = tok[0];
 				double cure_rate = Parse.ToDouble(tok[1]);

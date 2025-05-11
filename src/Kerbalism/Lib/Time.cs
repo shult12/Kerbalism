@@ -120,7 +120,7 @@ namespace KERBALISM
 			t -= hour * len_hour;
 			double min = System.Math.Floor(t / len_min);
 
-			return Lib.BuildString
+			return String.BuildString
 			(
 			  "[",
 			  ((uint)year + 1).ToString("D4"),

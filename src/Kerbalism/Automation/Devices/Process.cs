@@ -8,9 +8,9 @@ namespace KERBALISM
 
 		internal override string DisplayName => module.title;
 
-		internal override string Tooltip => Lib.BuildString(base.Tooltip, "\n", Lib.Bold("Process capacity :"),"\n", module.ModuleInfo);
+		internal override string Tooltip => String.BuildString(base.Tooltip, "\n", String.Bold("Process capacity :"),"\n", module.ModuleInfo);
 
-		internal override string Status => Lib.Color(module.IsRunning(), Local.Generic_RUNNING, Lib.Kolor.Green, Local.Generic_STOPPED, Lib.Kolor.Yellow);
+		internal override string Status => String.Color(module.IsRunning(), Local.Generic_RUNNING, String.Kolor.Green, Local.Generic_STOPPED, String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{
@@ -32,9 +32,9 @@ namespace KERBALISM
 
 		internal override string DisplayName => prefab.title;
 
-		internal override string Tooltip => Lib.BuildString(base.Tooltip, "\n", Lib.Bold("Process capacity :"), "\n", prefab.ModuleInfo);
+		internal override string Tooltip => String.BuildString(base.Tooltip, "\n", String.Bold("Process capacity :"), "\n", prefab.ModuleInfo);
 
-		internal override string Status => Lib.Color(Lib.Proto.GetBool(protoModule, "running"), Local.Generic_RUNNING, Lib.Kolor.Green, Local.Generic_STOPPED, Lib.Kolor.Yellow);
+		internal override string Status => String.Color(Lib.Proto.GetBool(protoModule, "running"), Local.Generic_RUNNING, String.Kolor.Green, Local.Generic_STOPPED, String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{

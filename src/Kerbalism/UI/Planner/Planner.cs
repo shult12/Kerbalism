@@ -277,23 +277,23 @@ namespace KERBALISM.Planner
 		///<summary> Add environment sub-panel, including tooltips </summary>
 		static void AddSubPanelEnvironment(Panel p)
 		{
-			string flux_tooltip = Lib.BuildString
+			string flux_tooltip = String.BuildString
 			(
 				"<align=left />" +
-				String.Format("<b>{0,-14}\t{1,-15}\t{2}</b>\n", Local.Planner_Source, Local.Planner_Flux, Local.Planner_Temp),//"Source""Flux""Temp"
-				String.Format("{0,-14}\t{1,-15}\t{2}\n", Local.Planner_solar, env_analyzer.solar_flux > 0.0 ? HumanReadable.Flux(env_analyzer.solar_flux) : Local.Generic_NONE, HumanReadable.Temp(Sim.BlackBodyTemperature(env_analyzer.solar_flux))),//"solar""none"
-				String.Format("{0,-14}\t{1,-15}\t{2}\n", Local.Planner_albedo, env_analyzer.albedo_flux > 0.0 ? HumanReadable.Flux(env_analyzer.albedo_flux) : Local.Generic_NONE, HumanReadable.Temp(Sim.BlackBodyTemperature(env_analyzer.albedo_flux))),//"albedo""none"
-				String.Format("{0,-14}\t{1,-15}\t{2}\n", Local.Planner_body, env_analyzer.body_flux > 0.0 ? HumanReadable.Flux(env_analyzer.body_flux) : Local.Generic_NONE, HumanReadable.Temp(Sim.BlackBodyTemperature(env_analyzer.body_flux))),//"body""none"
-				String.Format("{0,-14}\t{1,-15}\t{2}\n", Local.Planner_background, HumanReadable.Flux(Sim.BackgroundFlux()), HumanReadable.Temp(Sim.BlackBodyTemperature(Sim.BackgroundFlux()))),//"background"
-				String.Format("{0,-14}\t\t{1,-15}\t{2}", Local.Planner_total, HumanReadable.Flux(env_analyzer.total_flux), HumanReadable.Temp(Sim.BlackBodyTemperature(env_analyzer.total_flux)))//"total"
+				string.Format("<b>{0,-14}\t{1,-15}\t{2}</b>\n", Local.Planner_Source, Local.Planner_Flux, Local.Planner_Temp),//"Source""Flux""Temp"
+				string.Format("{0,-14}\t{1,-15}\t{2}\n", Local.Planner_solar, env_analyzer.solar_flux > 0.0 ? HumanReadable.Flux(env_analyzer.solar_flux) : Local.Generic_NONE, HumanReadable.Temp(Sim.BlackBodyTemperature(env_analyzer.solar_flux))),//"solar""none"
+				string.Format("{0,-14}\t{1,-15}\t{2}\n", Local.Planner_albedo, env_analyzer.albedo_flux > 0.0 ? HumanReadable.Flux(env_analyzer.albedo_flux) : Local.Generic_NONE, HumanReadable.Temp(Sim.BlackBodyTemperature(env_analyzer.albedo_flux))),//"albedo""none"
+				string.Format("{0,-14}\t{1,-15}\t{2}\n", Local.Planner_body, env_analyzer.body_flux > 0.0 ? HumanReadable.Flux(env_analyzer.body_flux) : Local.Generic_NONE, HumanReadable.Temp(Sim.BlackBodyTemperature(env_analyzer.body_flux))),//"body""none"
+				string.Format("{0,-14}\t{1,-15}\t{2}\n", Local.Planner_background, HumanReadable.Flux(Sim.BackgroundFlux()), HumanReadable.Temp(Sim.BlackBodyTemperature(Sim.BackgroundFlux()))),//"background"
+				string.Format("{0,-14}\t\t{1,-15}\t{2}", Local.Planner_total, HumanReadable.Flux(env_analyzer.total_flux), HumanReadable.Temp(Sim.BlackBodyTemperature(env_analyzer.total_flux)))//"total"
 			);
-			string atmosphere_tooltip = Lib.BuildString
+			string atmosphere_tooltip = String.BuildString
 			(
 				"<align=left />",
-				String.Format("{0,-14}\t<b>{1}</b>\n", Local.BodyInfo_breathable, Sim.Breathable(env_analyzer.body) ? Local.BodyInfo_breathable_yes : Local.BodyInfo_breathable_no),//"breathable""yes""no"
-				String.Format("{0,-14}\t<b>{1}</b>\n", Local.Planner_pressure, HumanReadable.Pressure(env_analyzer.body.atmospherePressureSeaLevel)),//"pressure"
-				String.Format("{0,-14}\t<b>{1}</b>\n", Local.BodyInfo_lightabsorption, HumanReadable.Percentage(1.0 - env_analyzer.atmo_factor)),//"light absorption"
-				String.Format("{0,-14}\t<b>{1}</b>", Local.BodyInfo_gammaabsorption, HumanReadable.Percentage(1.0 - Sim.GammaTransparency(env_analyzer.body, 0.0)))//"gamma absorption"
+				string.Format("{0,-14}\t<b>{1}</b>\n", Local.BodyInfo_breathable, Sim.Breathable(env_analyzer.body) ? Local.BodyInfo_breathable_yes : Local.BodyInfo_breathable_no),//"breathable""yes""no"
+				string.Format("{0,-14}\t<b>{1}</b>\n", Local.Planner_pressure, HumanReadable.Pressure(env_analyzer.body.atmospherePressureSeaLevel)),//"pressure"
+				string.Format("{0,-14}\t<b>{1}</b>\n", Local.BodyInfo_lightabsorption, HumanReadable.Percentage(1.0 - env_analyzer.atmo_factor)),//"light absorption"
+				string.Format("{0,-14}\t<b>{1}</b>", Local.BodyInfo_gammaabsorption, HumanReadable.Percentage(1.0 - Sim.GammaTransparency(env_analyzer.body, 0.0)))//"gamma absorption"
 			);
 			string shadowtime_str = HumanReadable.Duration(env_analyzer.shadow_period) + " (" + (env_analyzer.shadow_time * 100.0).ToString("F0") + "%)";
 
@@ -340,7 +340,7 @@ namespace KERBALISM.Planner
 			var resource = PartResourceLibrary.Instance.resourceDefinitions[res_name];
 
 			// render the panel section
-			p.AddSection(Lib.SpacesOnCaps(resource.displayName).ToUpper(), string.Empty,
+			p.AddSection(String.SpacesOnCaps(resource.displayName).ToUpper(), string.Empty,
 				() => { p.Prev(ref resource_index, panel_resource.Count); enforceUpdate = true; },
 				() => { p.Next(ref resource_index, panel_resource.Count); enforceUpdate = true; });
 			p.AddContent(Local.Planner_storage, SI.HumanOrSIAmount(res.storage, resource.id), tooltip);//"storage"
@@ -364,7 +364,7 @@ namespace KERBALISM.Planner
 
 			// render living space data
 			// generate details tooltips
-			string living_space_tooltip = Lib.BuildString
+			string living_space_tooltip = String.BuildString
 			(
 				Local.Planner_volumepercapita ,"<b>\t", HumanReadable.Volume(vessel_analyzer.volume / System.Math.Max(vessel_analyzer.crew_count, 1)), "</b>\n",//"volume per-capita:
 				Local.Planner_ideallivingspace ,"<b>\t", HumanReadable.Volume(PreferencesComfort.Instance.livingSpace), "</b>"//"ideal living space:
@@ -437,16 +437,16 @@ namespace KERBALISM.Planner
 
 			// generate tooltip
 			RadiationModel mf = Radiation.Info(env_analyzer.body).model;
-			string tooltip = Lib.BuildString
+			string tooltip = String.BuildString
 			(
 				"<align=left />",
-				String.Format("{0,-20}\t<b>{1}</b>\n", Local.Planner_surface, HumanReadable.Duration(estimates[0])),//"surface"
-				mf.has_pause ? String.Format("{0,-20}\t<b>{1}</b>\n", Local.Planner_magnetopause, HumanReadable.Duration(estimates[1])) : "",//"magnetopause"
-				mf.has_inner ? String.Format("{0,-20}\t<b>{1}</b>\n", Local.Planner_innerbelt, HumanReadable.Duration(estimates[2])) : "",//"inner belt"
-				mf.has_outer ? String.Format("{0,-20}\t<b>{1}</b>\n", Local.Planner_outerbelt, HumanReadable.Duration(estimates[3])) : "",//"outer belt"
-				String.Format("{0,-20}\t<b>{1}</b>\n", Local.Planner_interplanetary, HumanReadable.Duration(estimates[4])),//"interplanetary"
-				String.Format("{0,-20}\t<b>{1}</b>\n", Local.Planner_interstellar, HumanReadable.Duration(estimates[5])),//"interstellar"
-				String.Format("{0,-20}\t<b>{1}</b>", Local.Planner_storm, HumanReadable.Duration(estimates[6]))//"storm"
+				string.Format("{0,-20}\t<b>{1}</b>\n", Local.Planner_surface, HumanReadable.Duration(estimates[0])),//"surface"
+				mf.has_pause ? string.Format("{0,-20}\t<b>{1}</b>\n", Local.Planner_magnetopause, HumanReadable.Duration(estimates[1])) : "",//"magnetopause"
+				mf.has_inner ? string.Format("{0,-20}\t<b>{1}</b>\n", Local.Planner_innerbelt, HumanReadable.Duration(estimates[2])) : "",//"inner belt"
+				mf.has_outer ? string.Format("{0,-20}\t<b>{1}</b>\n", Local.Planner_outerbelt, HumanReadable.Duration(estimates[3])) : "",//"outer belt"
+				string.Format("{0,-20}\t<b>{1}</b>\n", Local.Planner_interplanetary, HumanReadable.Duration(estimates[4])),//"interplanetary"
+				string.Format("{0,-20}\t<b>{1}</b>\n", Local.Planner_interstellar, HumanReadable.Duration(estimates[5])),//"interstellar"
+				string.Format("{0,-20}\t<b>{1}</b>", Local.Planner_storm, HumanReadable.Duration(estimates[6]))//"storm"
 			);
 
 			// render the panel
@@ -505,11 +505,11 @@ namespace KERBALISM.Planner
 				{
 					if (sb.Length > 0)
 						sb.Append("\n");
-					sb.Append(Lib.Color(pair.Value.ToString(), pair.Value == 1 ? Lib.Kolor.Red : pair.Value == 2 ? Lib.Kolor.Yellow : Lib.Kolor.Green, true));
+					sb.Append(String.Color(pair.Value.ToString(), pair.Value == 1 ? String.Kolor.Red : pair.Value == 2 ? String.Kolor.Yellow : String.Kolor.Green, true));
 					sb.Append("\t");
 					sb.Append(pair.Key);
 				}
-				redundancy_tooltip = Lib.BuildString("<align=left />", sb.ToString());
+				redundancy_tooltip = String.BuildString("<align=left />", sb.ToString());
 			}
 
 			// generate repair string and tooltip
@@ -552,10 +552,10 @@ namespace KERBALISM.Planner
 			  : waste_res.produced <= double.Epsilon                    //< unnecessary
 			  ? Local.Planner_scrubbingunnecessary//"not required"
 			  : waste_res.consumed <= double.Epsilon                    //< no scrubbing
-			  ? Lib.Color(Local.Planner_noscrubbing, Lib.Kolor.Orange)//"none"
+			  ? String.Color(Local.Planner_noscrubbing, String.Kolor.Orange)//"none"
 			  : waste_res.produced > waste_res.consumed * 1.001         //< insufficient scrubbing
-			  ? Lib.Color(Local.Planner_insufficientscrubbing, Lib.Kolor.Yellow)//"inadequate"
-			  : Lib.Color(Local.Planner_sufficientscrubbing, Lib.Kolor.Green);//"good"                    //< sufficient scrubbing
+			  ? String.Color(Local.Planner_insufficientscrubbing, String.Kolor.Yellow)//"inadequate"
+			  : String.Color(Local.Planner_sufficientscrubbing, String.Kolor.Green);//"good"                    //< sufficient scrubbing
 
 			// generate status string for pressurization
 			string atmo_status = !Features.Pressure                     //< feature disabled
@@ -563,10 +563,10 @@ namespace KERBALISM.Planner
 			  : atmo_res.consumed <= double.Epsilon                     //< unnecessary
 			  ? Local.Planner_pressurizationunnecessary//"not required"
 			  : atmo_res.produced <= double.Epsilon                     //< no pressure control
-			  ? Lib.Color(Local.Planner_nopressurecontrol, Lib.Kolor.Orange)//"none"
+			  ? String.Color(Local.Planner_nopressurecontrol, String.Kolor.Orange)//"none"
 			  : atmo_res.consumed > atmo_res.produced * 1.001           //< insufficient pressure control
-			  ? Lib.Color(Local.Planner_insufficientpressurecontrol, Lib.Kolor.Yellow)//"inadequate"
-			  : Lib.Color(Local.Planner_sufficientpressurecontrol, Lib.Kolor.Green);//"good"                    //< sufficient pressure control
+			  ? String.Color(Local.Planner_insufficientpressurecontrol, String.Kolor.Yellow)//"inadequate"
+			  : String.Color(Local.Planner_sufficientpressurecontrol, String.Kolor.Green);//"good"                    //< sufficient pressure control
 
 			p.AddSection(Local.Planner_HABITAT, string.Empty,//"HABITAT"
 				() => { p.Prev(ref environment_index, panel_environment.Count); enforceUpdate = true; },

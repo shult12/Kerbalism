@@ -25,9 +25,9 @@ namespace KERBALISM
 			{
 				switch (module.antennaType)
 				{
-					case AntennaType.INTERNAL: return Lib.BuildString(Local.AntennaUI_type1, ", ", module.powerText);//internal antenna
-					case AntennaType.DIRECT: return Lib.BuildString(Local.AntennaUI_type2,", ", module.powerText);//direct antenna
-					case AntennaType.RELAY: return Lib.BuildString(Local.AntennaUI_type3, ", ", module.powerText);//relay antenna
+					case AntennaType.INTERNAL: return String.BuildString(Local.AntennaUI_type1, ", ", module.powerText);//internal antenna
+					case AntennaType.DIRECT: return String.BuildString(Local.AntennaUI_type2,", ", module.powerText);//direct antenna
+					case AntennaType.RELAY: return String.BuildString(Local.AntennaUI_type3, ", ", module.powerText);//relay antenna
 					default: return string.Empty;
 				}
 			}
@@ -38,13 +38,13 @@ namespace KERBALISM
 			get
 			{
 				if (!deployFxModule.CanMove)
-					return Lib.Color(Local.AntennaUI_unavailable, Lib.Kolor.Orange);//"unavailable"
+					return String.Color(Local.AntennaUI_unavailable, String.Kolor.Orange);//"unavailable"
 				else if (deployFxModule.IsMoving())
 					return Local.AntennaUI_deploying;//"deploying"
 				else if (deployFxModule.GetScalar == 1f)
-					return Lib.Color(Local.Generic_EXTENDED, Lib.Kolor.Green);
+					return String.Color(Local.Generic_EXTENDED, String.Kolor.Green);
 				else if (deployFxModule.GetScalar < 1f)
-					return Lib.Color(Local.Generic_RETRACTED, Lib.Kolor.Yellow);
+					return String.Color(Local.Generic_RETRACTED, String.Kolor.Yellow);
 
 				return Local.Antenna_statu_unknown;
 			}
@@ -96,9 +96,9 @@ namespace KERBALISM
 			{
 				switch (prefab.antennaType)
 				{
-					case AntennaType.INTERNAL: return Lib.BuildString(Local.AntennaUI_type1, ", ", prefab.powerText);//internal antenna
-					case AntennaType.DIRECT: return Lib.BuildString(Local.AntennaUI_type2, ", ", prefab.powerText);//direct antenna
-					case AntennaType.RELAY: return Lib.BuildString(Local.AntennaUI_type3, ", ", prefab.powerText);//relay antenna
+					case AntennaType.INTERNAL: return String.BuildString(Local.AntennaUI_type1, ", ", prefab.powerText);//internal antenna
+					case AntennaType.DIRECT: return String.BuildString(Local.AntennaUI_type2, ", ", prefab.powerText);//direct antenna
+					case AntennaType.RELAY: return String.BuildString(Local.AntennaUI_type3, ", ", prefab.powerText);//relay antenna
 					default: return string.Empty;
 				}
 			}
@@ -109,7 +109,7 @@ namespace KERBALISM
 			get
 			{
 				if (protoPart.shielded)
-					return Lib.Color(Local.AntennaUI_unavailable, Lib.Kolor.Orange);//"unavailable"
+					return String.Color(Local.AntennaUI_unavailable, String.Kolor.Orange);//"unavailable"
 
 				switch (scalarModuleSnapshot.moduleName)
 				{
@@ -117,15 +117,15 @@ namespace KERBALISM
 					case "ModuleDeployablePart":
 						switch (Lib.Proto.GetString(scalarModuleSnapshot, "deployState"))
 						{
-							case "EXTENDED": return Lib.Color(Local.Generic_EXTENDED, Lib.Kolor.Green);
-							case "RETRACTED": return Lib.Color(Local.Generic_RETRACTED, Lib.Kolor.Yellow);
-							case "BROKEN": return Lib.Color(Local.Generic_BROKEN, Lib.Kolor.Red);
+							case "EXTENDED": return String.Color(Local.Generic_EXTENDED, String.Kolor.Green);
+							case "RETRACTED": return String.Color(Local.Generic_RETRACTED, String.Kolor.Yellow);
+							case "BROKEN": return String.Color(Local.Generic_BROKEN, String.Kolor.Red);
 						}
 						break;
 					case "ModuleAnimateGeneric":
 						return Lib.Proto.GetFloat(scalarModuleSnapshot, "animTime") > 0f ?
-							Lib.Color(Local.Generic_EXTENDED, Lib.Kolor.Green) :
-							Lib.Color(Local.Generic_RETRACTED, Lib.Kolor.Yellow);
+							String.Color(Local.Generic_EXTENDED, String.Kolor.Green) :
+							String.Color(Local.Generic_RETRACTED, String.Kolor.Yellow);
 				}
 				return Local.Antenna_statu_unknown;//"unknown"
 			}

@@ -5,7 +5,7 @@ namespace KERBALISM
 	{
 		internal ScannerDevice(PartModule module) : base(module) { }
 
-		internal override string Status => Lib.Color(Reflection.ReflectionValue<bool>(module, "scanning"), Local.Generic_ENABLED, Lib.Kolor.Green, Local.Generic_DISABLED, Lib.Kolor.Yellow);
+		internal override string Status => String.Color(Reflection.ReflectionValue<bool>(module, "scanning"), Local.Generic_ENABLED, String.Kolor.Green, Local.Generic_DISABLED, String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{
@@ -30,7 +30,7 @@ namespace KERBALISM
 			this.vessel = v;
 		}
 
-		internal override string Status => Lib.Color(Lib.Proto.GetBool(protoModule, "scanning"), Local.Generic_ENABLED, Lib.Kolor.Green, Local.Generic_DISABLED, Lib.Kolor.Yellow);
+		internal override string Status => String.Color(Lib.Proto.GetBool(protoModule, "scanning"), Local.Generic_ENABLED, String.Kolor.Green, Local.Generic_DISABLED, String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{

@@ -42,7 +42,7 @@ namespace KERBALISM
 				if (value.IndexOf(separator) < 0)
 					separator = '@';
 
-				var tokens = Lib.Tokenize(value, separator);
+				var tokens = String.Tokenize(value, separator);
 				trait = tokens.Count > 0 ? tokens[0] : string.Empty;
 				level = tokens.Count > 1 ? Parse.ToUInt(tokens[1]) : 0;
 				enabled = true;
@@ -127,7 +127,7 @@ namespace KERBALISM
 		/// </summary>
 		internal string Warning()
 		{
-			return Lib.BuildString
+			return String.BuildString
 			(
 			  "<b>",
 			  (trait.Length == 0 ? Local.SCIENCEARCHIVE_info_Crew : trait),//"Crew"
@@ -144,7 +144,7 @@ namespace KERBALISM
 		{
 			if (!enabled) return Local.SCIENCEARCHIVE_info_no;//"no"
 			else if (trait.Length == 0) return Local.SCIENCEARCHIVE_info_anyone;//"anyone"
-			else return Lib.BuildString(trait, (level == 0 ? string.Empty : " (" + Local.SCIENCEARCHIVE_info_level + " " + level + ")"));//"level:"
+			else return String.BuildString(trait, (level == 0 ? string.Empty : " (" + Local.SCIENCEARCHIVE_info_level + " " + level + ")"));//"level:"
 		}
 
 		// can check if enabled by bool comparison

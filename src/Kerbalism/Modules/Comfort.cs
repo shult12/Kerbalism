@@ -161,18 +161,18 @@ namespace KERBALISM
 
 		internal string Tooltip()
 		{
-			string yes = Lib.BuildString("<b><color=#00ff00>", Local.Generic_YES, " </color></b>");
-			string no = Lib.BuildString("<b><color=#ffaa00>", Local.Generic_NO, " </color></b>");
-			return Lib.BuildString
+			string yes = String.BuildString("<b><color=#00ff00>", Local.Generic_YES, " </color></b>");
+			string no = String.BuildString("<b><color=#ffaa00>", Local.Generic_NO, " </color></b>");
+			return String.BuildString
 			(
 				"<align=left />",
-				String.Format("{0,-14}\t{1}\n", Local.Comfort_firmground, firm_ground ? yes : no),
-				String.Format("{0,-14}\t{1}\n", Local.Comfort_exercise, exercise ? yes : no),
-				String.Format("{0,-14}\t{1}\n", Local.Comfort_notalone, not_alone ? yes : no),
-				String.Format("{0,-14}\t{1}\n", Local.Comfort_callhome, call_home ? yes : no),
-				String.Format("{0,-14}\t{1}\n", Local.Comfort_panorama, panorama ? yes : no),
-				String.Format("{0,-14}\t{1}\n", Local.Comfort_plants, plants ? yes : no),
-				String.Format("<i>{0,-14}</i>\t{1}", Local.Comfort_factor, HumanReadable.Percentage(factor))
+				string.Format("{0,-14}\t{1}\n", Local.Comfort_firmground, firm_ground ? yes : no),
+				string.Format("{0,-14}\t{1}\n", Local.Comfort_exercise, exercise ? yes : no),
+				string.Format("{0,-14}\t{1}\n", Local.Comfort_notalone, not_alone ? yes : no),
+				string.Format("{0,-14}\t{1}\n", Local.Comfort_callhome, call_home ? yes : no),
+				string.Format("{0,-14}\t{1}\n", Local.Comfort_panorama, panorama ? yes : no),
+				string.Format("{0,-14}\t{1}\n", Local.Comfort_plants, plants ? yes : no),
+				string.Format("<i>{0,-14}</i>\t{1}", Local.Comfort_factor, HumanReadable.Percentage(factor))
 			);
 		}
 

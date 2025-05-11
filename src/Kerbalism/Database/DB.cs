@@ -230,7 +230,7 @@ namespace KERBALISM
 		/// <summary>
 		/// Remove a Kerbal and his lifetime data from the database
 		/// </summary>
-		internal static void KillKerbal(String name, bool reallyDead)
+		internal static void KillKerbal(string name, bool reallyDead)
         {
             if (reallyDead)
             {

@@ -23,7 +23,7 @@ namespace KERBALISM
 			if (!vd.IsSimulated) return;
 
 			// set metadata
-			p.Title(Lib.BuildString(Lib.Ellipsis(v.vesselName, Styles.ScaleStringLength(20)), Lib.Color(Local.UI_devman, Lib.Kolor.LightGrey)));
+			p.Title(String.BuildString(String.Ellipsis(v.vesselName, Styles.ScaleStringLength(20)), String.Color(Local.UI_devman, String.Kolor.LightGrey)));
 			p.Width(Styles.ScaleWidthFloat(355.0f));
 			p.paneltype = Panel.PanelType.scripts;
 
@@ -146,7 +146,7 @@ namespace KERBALISM
 					p.AddContent
 					(
 					  dev.DisplayName,
-					  state == -1 ? Lib.Color(Local.UI_dontcare, Lib.Kolor.DarkGrey) : Lib.Color(state == 0, Local.Generic_OFF, Lib.Kolor.Yellow, Local.Generic_ON, Lib.Kolor.Green),
+					  state == -1 ? String.Color(Local.UI_dontcare, String.Kolor.DarkGrey) : String.Color(state == 0, Local.Generic_OFF, String.Kolor.Yellow, Local.Generic_ON, String.Kolor.Green),
 					  string.Empty,
 					  () =>
 					  {

@@ -24,7 +24,7 @@ namespace KERBALISM
 			/*	if (!__instance.TimeToSendStoredData())
 				{
 					__result = true;
-					Logging.Log(Lib.BuildString("BREAKING GROUND bailout 1"));
+					Logging.Log(String.BuildString("BREAKING GROUND bailout 1"));
 					return false;
 				} */
 				
@@ -40,7 +40,7 @@ namespace KERBALISM
 				if(control == null) {
 					//Logging.Log("DeployedScienceExperiment: couldn't find control module");
 					__result = true;
-					Logging.Log(Lib.BuildString("BREAKING GROUND bailout 2"));
+					Logging.Log(String.BuildString("BREAKING GROUND bailout 2"));
 					return false;
 				}
 				*/
@@ -57,7 +57,7 @@ namespace KERBALISM
 				float scienceValue = storedScienceData * subject.subjectValue;
 				double dataSize = scienceValue / subjectData.SciencePerMB;
 				foreach (Drive drive in drives) {
-					//Logging.Log(Lib.BuildString("BREAKING GROUND -- ", subject.id, " | ", storedScienceData.ToString()));
+					//Logging.Log(String.BuildString("BREAKING GROUND -- ", subject.id, " | ", storedScienceData.ToString()));
 					if(drive.Record_file(subjectData, dataSize, true))
 					{
 						//Logging.Log("BREAKING GROUND -- file recorded!");

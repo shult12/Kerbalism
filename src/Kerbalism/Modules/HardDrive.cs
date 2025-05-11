@@ -290,8 +290,8 @@ namespace KERBALISM
 			{
 				Message.Post
 				(
-					Lib.Color(Lib.BuildString(Local.HardDrive_WARNING_title), Lib.Kolor.Red, true),//"WARNING: not evering copied"
-					Lib.BuildString(Local.HardDrive_WARNING)//"Storage is at capacity"
+					String.Color(String.BuildString(Local.HardDrive_WARNING_title), String.Kolor.Red, true),//"WARNING: not evering copied"
+					String.BuildString(Local.HardDrive_WARNING)//"Storage is at capacity"
 				);
 			}
 		}
@@ -308,8 +308,8 @@ namespace KERBALISM
 			{
 				Message.Post
 				(
-					Lib.Color(Lib.BuildString(Local.HardDrive_WARNING_title), Lib.Kolor.Red, true),//"WARNING: not evering copied"
-					Lib.BuildString(Local.HardDrive_WARNING)//"Storage is at capacity"
+					String.Color(String.BuildString(Local.HardDrive_WARNING_title), String.Kolor.Red, true),//"WARNING: not evering copied"
+					String.BuildString(Local.HardDrive_WARNING)//"Storage is at capacity"
 				);
 			}
 		}

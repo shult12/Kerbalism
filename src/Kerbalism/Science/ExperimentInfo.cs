@@ -313,7 +313,7 @@ namespace KERBALISM
 							// get module info for the ExperimentInfo, once
 							if (string.IsNullOrEmpty(ModuleInfo))
 							{
-								ModuleInfo = Lib.Color(Title, Lib.Kolor.Cyan, true);
+								ModuleInfo = String.Color(Title, String.Kolor.Cyan, true);
 								ModuleInfo += "\n";
 								ModuleInfo += expModule.GetInfo();
 							}
@@ -327,7 +327,7 @@ namespace KERBALISM
 					{
 						if (stockExpModule.experimentID == ExperimentId)
 						{
-							ModuleInfo = Lib.Color(Title, Lib.Kolor.Cyan, true);
+							ModuleInfo = String.Color(Title, String.Kolor.Cyan, true);
 							ModuleInfo += "\n"+Local.Experimentinfo_Datasize +": ";//Data size
 							ModuleInfo += HumanReadable.DataSize(DataSize);
 							if (stockExpModule.xmitDataScalar < Science.maxXmitDataScalarForSample)
@@ -337,10 +337,10 @@ namespace KERBALISM
 								ModuleInfo += HumanReadable.SampleSize(DataSize);
 							}
 							ModuleInfo += "\n\n";
-							ModuleInfo += Lib.Color(Local.Experimentinfo_Situations, Lib.Kolor.Cyan, true);//"Situations:\n"
+							ModuleInfo += String.Color(Local.Experimentinfo_Situations, String.Kolor.Cyan, true);//"Situations:\n"
 
 							foreach (string s in AvailableSituations())
-								ModuleInfo += Lib.BuildString("• <b>", s, "</b>\n");
+								ModuleInfo += String.BuildString("• <b>", s, "</b>\n");
 
 							ModuleInfo += "\n";
 							ModuleInfo += stockExpModule.GetInfo();
@@ -350,7 +350,7 @@ namespace KERBALISM
 					{
 						if (groundExpModule.experimentId == ExperimentId)
 						{
-							ModuleInfo = Lib.Color(Title, Lib.Kolor.Cyan, true);
+							ModuleInfo = String.Color(Title, String.Kolor.Cyan, true);
 							ModuleInfo += "\n" + Local.Experimentinfo_Datasize + ": ";//Data size
 							ModuleInfo += HumanReadable.DataSize(DataSize);
 							ModuleInfo += "\n\n";
@@ -383,7 +383,7 @@ namespace KERBALISM
 					ROCDefinition rocDef = ROCManager.Instance.rocDefinitions.Find(p => p.type == rocType);
 					if (rocDef != null)
 					{
-						ModuleInfo = Lib.Color(rocDef.displayName, Lib.Kolor.Cyan, true);
+						ModuleInfo = String.Color(rocDef.displayName, String.Kolor.Cyan, true);
 						ModuleInfo += "\n- " + Local.Experimentinfo_scannerarm;//Analyse with a scanner arm
 						ModuleInfo += "\n  "+Local.Experimentinfo_Datasize +": ";//Data size
 						ModuleInfo += HumanReadable.DataSize(DataSize);
@@ -402,7 +402,7 @@ namespace KERBALISM
 						foreach (RocCBDefinition body in rocDef.myCelestialBodies)
 						{
 							CelestialBody Body = FlightGlobals.GetBodyByName(body.name);
-							ModuleInfo += Lib.Color("\n\n" + Local.Experimentinfo_smallRoc3.Format(Body.displayName.LocalizeRemoveGender()), Lib.Kolor.Cyan, true);//"Found on <<1>>'s :"
+							ModuleInfo += String.Color("\n\n" + Local.Experimentinfo_smallRoc3.Format(Body.displayName.LocalizeRemoveGender()), String.Kolor.Cyan, true);//"Found on <<1>>'s :"
 							foreach (string biome in body.biomes)
 							{
 								ModuleInfo += "\n- ";
@@ -425,13 +425,13 @@ namespace KERBALISM
 				{
 					if (situation.IsBodyBiomesRelevantForExperiment(this))
 					{
-						result.Add(Lib.BuildString(situation.Title(), " ", Local.Situation_biomes));//(biomes)"
+						result.Add(String.BuildString(situation.Title(), " ", Local.Situation_biomes));//(biomes)"
 					}
 					else if (situation.IsVirtualBiomesRelevantForExperiment(this))
 					{
 						foreach (VirtualBiome biome in VirtualBiomes)
 						{
-							result.Add(Lib.BuildString(situation.Title(), " (", biome.Title(),")"));
+							result.Add(String.BuildString(situation.Title(), " (", biome.Title(),")"));
 						}
 					}
 					else
@@ -515,7 +515,7 @@ namespace KERBALISM
 
 				if (bodiesAllowed.Count > 0)
 				{
-					ExpInfoSB.Append(Lib.Color(Local.Experimentinfo_Bodiesallowed + "\n", Lib.Kolor.Cyan, true));//Bodies allowed:
+					ExpInfoSB.Append(String.Color(Local.Experimentinfo_Bodiesallowed + "\n", String.Kolor.Cyan, true));//Bodies allowed:
 					for (int i = bodiesAllowed.Count - 1; i >= 0; i--)
 					{
 						ExpInfoSB.Append(bodiesAllowed[i].Title);
@@ -528,7 +528,7 @@ namespace KERBALISM
 
 				if (bodiesNotAllowed.Count > 0)
 				{
-					ExpInfoSB.Append(Lib.Color(Local.Experimentinfo_Bodiesnotallowed + "\n", Lib.Kolor.Cyan, true));//Bodies not allowed:
+					ExpInfoSB.Append(String.Color(Local.Experimentinfo_Bodiesnotallowed + "\n", String.Kolor.Cyan, true));//Bodies not allowed:
 					for (int i = bodiesNotAllowed.Count - 1; i >= 0; i--)
 					{
 						ExpInfoSB.Append(bodiesNotAllowed[i].Title);

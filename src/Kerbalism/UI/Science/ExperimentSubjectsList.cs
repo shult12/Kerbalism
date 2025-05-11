@@ -23,25 +23,25 @@ namespace KERBALISM
 			listHeader.AddImageComponentWithColor(KsmGuiStyle.boxColor);
 
 			KsmGuiText rndHeaderText = new KsmGuiText(listHeader, Local.SCIENCEARCHIVE_RnD, Local.SCIENCEARCHIVE_RnD_desc, TextAlignmentOptions.Left);//"RnD""Science points\nretrieved in RnD"
-			rndHeaderText.TextComponent.color = Lib.KolorToColor(Lib.Kolor.Science);
+			rndHeaderText.TextComponent.color = String.KolorToColor(String.Kolor.Science);
 			rndHeaderText.TextComponent.fontStyle = FontStyles.Bold;
 			rndHeaderText.TopTransform.SetAnchorsAndPosition(TextAnchor.MiddleLeft, TextAnchor.MiddleLeft, 10, 0);
 			rndHeaderText.TopTransform.SetSizeDelta(50, 16);
 
 			KsmGuiText flightHeaderText = new KsmGuiText(listHeader, Local.SCIENCEARCHIVE_Flight, Local.SCIENCEARCHIVE_Flight_desc, TextAlignmentOptions.Left);//"Flight""Science points\ncollected in all vessels"
-			flightHeaderText.TextComponent.color = Lib.KolorToColor(Lib.Kolor.Science);
+			flightHeaderText.TextComponent.color = String.KolorToColor(String.Kolor.Science);
 			flightHeaderText.TextComponent.fontStyle = FontStyles.Bold;
 			flightHeaderText.TopTransform.SetAnchorsAndPosition(TextAnchor.MiddleLeft, TextAnchor.MiddleLeft, 60, 0);
 			flightHeaderText.TopTransform.SetSizeDelta(50, 16);
 
 			KsmGuiText valueHeaderText = new KsmGuiText(listHeader, Local.SCIENCEARCHIVE_Value, Local.SCIENCEARCHIVE_Value_desc, TextAlignmentOptions.Left);//"Value""Remaining science value\naccounting for data retrieved in RnD\nand collected in flight"
-			valueHeaderText.TextComponent.color = Lib.KolorToColor(Lib.Kolor.Science);
+			valueHeaderText.TextComponent.color = String.KolorToColor(String.Kolor.Science);
 			valueHeaderText.TextComponent.fontStyle = FontStyles.Bold;
 			valueHeaderText.TopTransform.SetAnchorsAndPosition(TextAnchor.MiddleLeft, TextAnchor.MiddleLeft, 110, 0);
 			valueHeaderText.TopTransform.SetSizeDelta(50, 16);
 
 			KsmGuiText completedHeaderText = new KsmGuiText(listHeader, Local.SCIENCEARCHIVE_Completed, Local.SCIENCEARCHIVE_Completed_desc, TextAlignmentOptions.Left);//"Completed""How many times the subject\nhas been retrieved in RnD"
-			completedHeaderText.TextComponent.color = Lib.KolorToColor(Lib.Kolor.Yellow);
+			completedHeaderText.TextComponent.color = String.KolorToColor(String.Kolor.Yellow);
 			completedHeaderText.TextComponent.fontStyle = FontStyles.Bold;
 			completedHeaderText.TopTransform.SetAnchorsAndPosition(TextAnchor.MiddleLeft, TextAnchor.MiddleLeft, 160, 0);
 			completedHeaderText.TopTransform.SetSizeDelta(100, 16);
@@ -154,10 +154,10 @@ namespace KERBALISM
 			{
 				KsmGuiHeader header = new KsmGuiHeader(this, body.name, KsmGuiStyle.boxColor);
 				header.TextObject.TextComponent.fontStyle = FontStyles.Bold;
-				header.TextObject.TextComponent.color = Lib.KolorToColor(Lib.Kolor.Orange);
+				header.TextObject.TextComponent.color = String.KolorToColor(String.Kolor.Orange);
 				header.TextObject.TextComponent.alignment = TextAlignmentOptions.Left;
 				bodyToggle = new KsmGuiIconButton(header, Textures.KsmGuiTexHeaderArrowsUp, ToggleBody);
-				bodyToggle.SetIconColor(Lib.Kolor.Orange);
+				bodyToggle.SetIconColor(String.Kolor.Orange);
 				bodyToggle.MoveAsFirstChild();
 
 				SubjectsContainer = new SubjectsContainer(this, situationsAndSubjects);
@@ -279,7 +279,7 @@ namespace KERBALISM
 				situationText = new KsmGuiText(parent, SubjectLines[0].SubjectData.Situation.ScienceSituationTitle);
 				situationText.TopTransform.SetAnchorsAndPosition(TextAnchor.MiddleLeft, TextAnchor.MiddleLeft, 5);
 				situationText.TopTransform.SetSizeDelta(150, 14);
-				situationText.TextComponent.color = Lib.KolorToColor(Lib.Kolor.Yellow);
+				situationText.TextComponent.color = String.KolorToColor(String.Kolor.Yellow);
 				situationText.TextComponent.fontStyle = FontStyles.Bold;
 
 				foreach (SubjectLine subjectLine in SubjectLines)
@@ -350,16 +350,16 @@ namespace KERBALISM
 
 			string GetText()
 			{
-				return Lib.BuildString
+				return String.BuildString
 				(
 					"<pos=10>",
-					Lib.Color(System.Math.Round(SubjectData.ScienceRetrievedInKSC, 1).ToString("0.0;--;--"), Lib.Kolor.Science, true),
+					String.Color(System.Math.Round(SubjectData.ScienceRetrievedInKSC, 1).ToString("0.0;--;--"), String.Kolor.Science, true),
 					"<pos=60>",
-					Lib.Color(System.Math.Round(SubjectData.ScienceCollectedInFlight, 1).ToString("+0.0;--;--"), Lib.Kolor.Science, true),
+					String.Color(System.Math.Round(SubjectData.ScienceCollectedInFlight, 1).ToString("+0.0;--;--"), String.Kolor.Science, true),
 					"<pos=110>",
-					Lib.Color(System.Math.Round(SubjectData.ScienceRemainingTotal, 1).ToString("0.0;--;--"), Lib.Kolor.Science, true),
+					String.Color(System.Math.Round(SubjectData.ScienceRemainingTotal, 1).ToString("0.0;--;--"), String.Kolor.Science, true),
 					"<pos=160>",
-					Lib.Color(System.Math.Round(SubjectData.PercentRetrieved, 1).ToString("0.0x;--;--"), Lib.Kolor.Yellow, true),
+					String.Color(System.Math.Round(SubjectData.PercentRetrieved, 1).ToString("0.0x;--;--"), String.Kolor.Yellow, true),
 					"<pos=200>",
 					SubjectData.BiomeTitle
 				);

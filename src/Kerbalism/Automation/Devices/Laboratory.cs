@@ -4,7 +4,7 @@ namespace KERBALISM
 	{
 		internal LaboratoryDevice(Laboratory module) : base(module) { }
 
-		internal override string Status => Lib.Color(module.running, Local.Generic_ACTIVE, Lib.Kolor.Green, Local.Generic_DISABLED, Lib.Kolor.Yellow);
+		internal override string Status => String.Color(module.running, Local.Generic_ACTIVE, String.Kolor.Green, Local.Generic_DISABLED, String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{
@@ -23,7 +23,7 @@ namespace KERBALISM
 		internal ProtoLaboratoryDevice(Laboratory prefab, ProtoPartSnapshot protoPart, ProtoPartModuleSnapshot protoModule)
 			: base(prefab, protoPart, protoModule) { }
 
-		internal override string Status => Lib.Color(Lib.Proto.GetBool(protoModule, "running"), Local.Generic_ACTIVE, Lib.Kolor.Green, Local.Generic_DISABLED, Lib.Kolor.Yellow);
+		internal override string Status => String.Color(Lib.Proto.GetBool(protoModule, "running"), Local.Generic_ACTIVE, String.Kolor.Green, Local.Generic_DISABLED, String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{

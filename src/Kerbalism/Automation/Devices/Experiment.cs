@@ -27,7 +27,7 @@ namespace KERBALISM
 			get
 			{
 				sb.Length = 0;
-				sb.Append(Lib.EllipsisMiddle(module.ExpInfo.Title, 28));
+				sb.Append(String.EllipsisMiddle(module.ExpInfo.Title, 28));
 				sb.Append(": ");
 				sb.Append(scienceValue);
 
@@ -70,7 +70,7 @@ namespace KERBALISM
 					sb.Append("\n");
 					sb.Append(Local.Experiment_issue);//issue :
 					sb.Append(" ");
-					sb.Append(Lib.Color(module.issue, Lib.Kolor.Orange));
+					sb.Append(String.Color(module.issue, String.Kolor.Orange));
 				}
 				sb.Append("\n");
 				sb.Append(Local.Experiment_sciencevalue);//science value :
@@ -153,7 +153,7 @@ namespace KERBALISM
 			get
 			{
 				sb.Length = 0;
-				sb.Append(Lib.EllipsisMiddle(expInfo.Title, 28));
+				sb.Append(String.EllipsisMiddle(expInfo.Title, 28));
 				sb.Append(": ");
 				sb.Append(scienceValue);
 
@@ -196,7 +196,7 @@ namespace KERBALISM
 					sb.Append("\n");
 					sb.Append(Local.Experiment_issue);//issue :
 					sb.Append(" ");
-					sb.Append(Lib.Color(issue, Lib.Kolor.Orange));
+					sb.Append(String.Color(issue, String.Kolor.Orange));
 				}
 				sb.Append("\n");
 				sb.Append(Local.Experiment_sciencevalue);//science value :

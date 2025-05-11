@@ -69,7 +69,7 @@ namespace KERBALISM
 				return;
 
 			// update ui
-			Status = deployed ? Lib.BuildString(Local.PassiveShield_absorbing ," ", HumanReadable.Radiation(System.Math.Abs(radiation))) : disabledTitle;//"absorbing
+			Status = deployed ? String.BuildString(Local.PassiveShield_absorbing ," ", HumanReadable.Radiation(System.Math.Abs(radiation))) : disabledTitle;//"absorbing
 			Events["Toggle"].guiName = UI.StatusToggle(title, deployed ? disengageActionTitle : engageActionTitle);
 		}
 
@@ -141,7 +141,7 @@ namespace KERBALISM
 				{
 					Message.Post
 					(
-					  Lib.TextVariant
+					  String.TextVariant
 					  (
 						Local.PassiveShield_MessagePost//"I don't know how this works!"
 					  ),

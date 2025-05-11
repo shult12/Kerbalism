@@ -25,7 +25,7 @@ namespace KERBALISM.KsmGui
 
 		void SetIconColor(Color color);
 
-		void SetIconColor(Lib.Kolor kColor);
+		void SetIconColor(String.Kolor kColor);
 	}
 
 	interface IKsmGuiToggle

@@ -4,7 +4,7 @@ namespace KERBALISM
 	{
 		internal ConverterDevice(ModuleResourceConverter module) : base(module) { }
 
-		internal override string Status => module.AlwaysActive ? Local.Generic_ALWAYSON : Lib.Color(module.IsActivated, Local.Generic_ON, Lib.Kolor.Green, Local.Generic_OFF, Lib.Kolor.Yellow);
+		internal override string Status => module.AlwaysActive ? Local.Generic_ALWAYSON : String.Color(module.IsActivated, Local.Generic_ON, String.Kolor.Green, Local.Generic_OFF, String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{
@@ -31,7 +31,7 @@ namespace KERBALISM
 			{
 				if (prefab.AlwaysActive) return Local.Generic_ALWAYSON;
 				bool is_on = Lib.Proto.GetBool(protoModule, "IsActivated");
-				return Lib.Color(is_on, Local.Generic_ON, Lib.Kolor.Green, Local.Generic_OFF, Lib.Kolor.Yellow);
+				return String.Color(is_on, Local.Generic_ON, String.Kolor.Green, Local.Generic_OFF, String.Kolor.Yellow);
 			}
 		}
 

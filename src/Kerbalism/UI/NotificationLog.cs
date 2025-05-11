@@ -6,7 +6,7 @@ namespace KERBALISM
 	{
 		internal static void Logman(this Panel p, Vessel v)
 		{
-			p.Title(Lib.BuildString(Lib.Ellipsis(v.vesselName, Styles.ScaleStringLength(40)), " ", Lib.Color(Local.LogMan_ALLLOGS, Lib.Kolor.LightGrey)));//"ALL LOGS"
+			p.Title(String.BuildString(String.Ellipsis(v.vesselName, Styles.ScaleStringLength(40)), " ", String.Color(Local.LogMan_ALLLOGS, String.Kolor.LightGrey)));//"ALL LOGS"
 			p.Width(Styles.ScaleWidthFloat(465.0f));
 			p.paneltype = Panel.PanelType.log;
 
@@ -17,7 +17,7 @@ namespace KERBALISM
 			}
 			else
 			{
-				p.AddContent(String.Empty, String.Empty); //keeps it from bumping into the top
+				p.AddContent(string.Empty, string.Empty); //keeps it from bumping into the top
 				for (int i = Message.all_logs.Count - 1; i >= 0; --i) //count backwards so most recent is first
 				{
 					Message.MessageObject log = Message.all_logs[i];
@@ -27,11 +27,11 @@ namespace KERBALISM
 					}
 					else
 					{
-						p.AddContent(Lib.Color(Local.LogMan_ALERT, Lib.Kolor.Yellow), log.msg.Replace("\n", ". "));//"ALERT   "
+						p.AddContent(String.Color(Local.LogMan_ALERT, String.Kolor.Yellow), log.msg.Replace("\n", ". "));//"ALERT   "
 					}
 					if (Message.all_logs.Count > 1)
 					{
-						p.AddContent(String.Empty, String.Empty); //this avoids things flowing into each other.
+						p.AddContent(string.Empty, string.Empty); //this avoids things flowing into each other.
 					}
 				}
 			}

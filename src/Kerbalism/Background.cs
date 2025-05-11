@@ -564,7 +564,7 @@ namespace KERBALISM
 					vd.scansat_id.Add(p.flightID);
 
 					// give the user some feedback
-					if (vd.cfg_ec) Message.Post(Lib.BuildString("SCANsat sensor was disabled on <b>", v.vesselName, "</b>"));
+					if (vd.cfg_ec) Message.Post(String.BuildString("SCANsat sensor was disabled on <b>", v.vesselName, "</b>"));
 				}
 			}
 			// if it was disabled in background
@@ -580,7 +580,7 @@ namespace KERBALISM
 					is_scanning = true;
 
 					// give the user some feedback
-					if (vd.cfg_ec) Message.Post(Lib.BuildString("SCANsat sensor resumed operations on <b>", v.vesselName, "</b>"));
+					if (vd.cfg_ec) Message.Post(String.BuildString("SCANsat sensor resumed operations on <b>", v.vesselName, "</b>"));
 				}
 			}
 

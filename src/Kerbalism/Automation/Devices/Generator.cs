@@ -7,7 +7,7 @@ namespace KERBALISM
 		internal override string Name => "generator";
 
 		internal override string Status
-			=> module.isAlwaysActive ? Local.Generic_ALWAYSON : Lib.Color(module.generatorIsActive, Local.Generic_ON, Lib.Kolor.Green, Local.Generic_OFF,  Lib.Kolor.Yellow);
+			=> module.isAlwaysActive ? Local.Generic_ALWAYSON : String.Color(module.generatorIsActive, Local.Generic_ON, String.Kolor.Green, Local.Generic_OFF,  String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{
@@ -38,7 +38,7 @@ namespace KERBALISM
 			{
 				if (prefab.isAlwaysActive) return Local.Generic_ALWAYSON;
 				bool is_on = Lib.Proto.GetBool(protoModule, "generatorIsActive");
-				return Lib.Color(is_on, Local.Generic_ON, Lib.Kolor.Green, Local.Generic_OFF, Lib.Kolor.Yellow);
+				return String.Color(is_on, Local.Generic_ON, String.Kolor.Green, Local.Generic_OFF, String.Kolor.Yellow);
 			}
 		}
 

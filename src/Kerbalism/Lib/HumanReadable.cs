@@ -12,14 +12,14 @@
 		{
 			if (rate == 0.0) return Local.Generic_NONE;//"none"
 			rate = System.Math.Abs(rate);
-			if (rate >= 0.01) return Lib.BuildString(rate.ToString(precision), unit, Local.Generic_perSecond);//"/s"
+			if (rate >= 0.01) return String.BuildString(rate.ToString(precision), unit, Local.Generic_perSecond);//"/s"
 			rate *= 60.0; // per-minute
-			if (rate >= 0.01) return Lib.BuildString(rate.ToString(precision), unit, Local.Generic_perMinute);//"/m"
+			if (rate >= 0.01) return String.BuildString(rate.ToString(precision), unit, Local.Generic_perMinute);//"/m"
 			rate *= 60.0; // per-hour
-			if (rate >= 0.01) return Lib.BuildString(rate.ToString(precision), unit, Local.Generic_perHour);//"/h"
+			if (rate >= 0.01) return String.BuildString(rate.ToString(precision), unit, Local.Generic_perHour);//"/h"
 			rate *= Time.HoursInDay;  // per-day
-			if (rate >= 0.01) return Lib.BuildString(rate.ToString(precision), unit, Local.Generic_perDay);//"/d"
-			return Lib.BuildString((rate * Time.DaysInYear).ToString(precision), unit, Local.Generic_perYear);//"/y"
+			if (rate >= 0.01) return String.BuildString(rate.ToString(precision), unit, Local.Generic_perDay);//"/d"
+			return String.BuildString((rate * Time.DaysInYear).ToString(precision), unit, Local.Generic_perYear);//"/y"
 		}
 
 		///<summary> Pretty-print a duration (duration is in seconds, must be positive) </summary>
@@ -39,32 +39,32 @@
 				if (d < 60.0)
 				{
 					ulong seconds = duration_seconds % 60ul;
-					return Lib.BuildString(seconds.ToString(), "s");
+					return String.BuildString(seconds.ToString(), "s");
 				}
 				// minutes + seconds
 				if (d < 3600.0)
 				{
 					ulong seconds = duration_seconds % 60ul;
 					ulong minutes = (duration_seconds / 60ul) % 60ul;
-					return Lib.BuildString(minutes.ToString(), "m ", seconds.ToString("00"), "s");
+					return String.BuildString(minutes.ToString(), "m ", seconds.ToString("00"), "s");
 				}
 				// hours + minutes
 				if (d < 3600.0 * Time.HoursInDay)
 				{
 					ulong minutes = (duration_seconds / 60ul) % 60ul;
 					ulong hours = (duration_seconds / 3600ul) % hours_in_day;
-					return Lib.BuildString(hours.ToString(), "h ", minutes.ToString("00"), "m");
+					return String.BuildString(hours.ToString(), "h ", minutes.ToString("00"), "m");
 				}
 				ulong days = (duration_seconds / (3600ul * hours_in_day)) % days_in_year;
 				// days + hours
 				if (d < 3600.0 * Time.HoursInDay * Time.DaysInYear)
 				{
 					ulong hours = (duration_seconds / 3600ul) % hours_in_day;
-					return Lib.BuildString(days.ToString(), "d ", hours.ToString(), "h");
+					return String.BuildString(days.ToString(), "d ", hours.ToString(), "h");
 				}
 				// years + days
 				ulong years = duration_seconds / (3600ul * hours_in_day * days_in_year);
-				return Lib.BuildString(years.ToString(), "y ", days.ToString(), "d");
+				return String.BuildString(years.ToString(), "y ", days.ToString(), "d");
 			}
 			else
 			{
@@ -98,45 +98,45 @@
 
 		internal static string Countdown(double duration, bool compact = false)
 		{
-			return Lib.BuildString("T-", Duration(duration, !compact));
+			return String.BuildString("T-", Duration(duration, !compact));
 		}
 
 		///<summary> Pretty-print a range (range is in meters) </summary>
 		internal static string Distance(double distance)
 		{
 			if (distance == 0.0) return Local.Generic_NONE;//"none"
-			if (distance < 0.0) return Lib.BuildString("-", Distance(-distance));
-			if (distance < 1000.0) return Lib.BuildString(distance.ToString("F1"), " m");
+			if (distance < 0.0) return String.BuildString("-", Distance(-distance));
+			if (distance < 1000.0) return String.BuildString(distance.ToString("F1"), " m");
 			distance /= 1000.0;
-			if (distance < 1000.0) return Lib.BuildString(distance.ToString("F1"), " Km");
+			if (distance < 1000.0) return String.BuildString(distance.ToString("F1"), " Km");
 			distance /= 1000.0;
-			if (distance < 1000.0) return Lib.BuildString(distance.ToString("F1"), " Mm");
+			if (distance < 1000.0) return String.BuildString(distance.ToString("F1"), " Mm");
 			distance /= 1000.0;
-			if (distance < 1000.0) return Lib.BuildString(distance.ToString("F1"), " Gm");
+			if (distance < 1000.0) return String.BuildString(distance.ToString("F1"), " Gm");
 			distance /= 1000.0;
-			if (distance < 1000.0) return Lib.BuildString(distance.ToString("F1"), " Tm");
+			if (distance < 1000.0) return String.BuildString(distance.ToString("F1"), " Tm");
 			distance /= 1000.0;
-			if (distance < 1000.0) return Lib.BuildString(distance.ToString("F1"), " Pm");
+			if (distance < 1000.0) return String.BuildString(distance.ToString("F1"), " Pm");
 			distance /= 1000.0;
-			return Lib.BuildString(distance.ToString("F1"), " Em");
+			return String.BuildString(distance.ToString("F1"), " Em");
 		}
 
 		///<summary> Pretty-print a speed (in meters/sec) </summary>
 		internal static string Speed(double speed)
 		{
-			return Lib.BuildString(Distance(speed), "/s");
+			return String.BuildString(Distance(speed), "/s");
 		}
 
 		///<summary> Pretty-print temperature </summary>
 		internal static string Temp(double temp)
 		{
-			return Lib.BuildString(temp.ToString("F1"), " K");
+			return String.BuildString(temp.ToString("F1"), " K");
 		}
 
 		///<summary> Pretty-print angle </summary>
 		internal static string Angle(double angle)
 		{
-			return Lib.BuildString(angle >= 0.0001 ? angle.ToString("F1") : "0", " °");
+			return String.BuildString(angle >= 0.0001 ? angle.ToString("F1") : "0", " °");
 		}
 
 		///<summary> Pretty-print flux </summary>
@@ -145,7 +145,7 @@
 			if (Settings.UseSIUnits)
 				return SI.SIFlux(flux);
 
-			return Lib.BuildString(flux >= 0.0001 ? flux.ToString("F1") : flux.ToString(), " W/m²");
+			return String.BuildString(flux >= 0.0001 ? flux.ToString("F1") : flux.ToString(), " W/m²");
 		}
 
 		///<summary> Pretty-print magnetic strength </summary>
@@ -154,7 +154,7 @@
 			if (Settings.UseSIUnits)
 				return SI.SIField(strength);
 
-			return Lib.BuildString(strength.ToString("F1"), " uT"); //< micro-tesla
+			return String.BuildString(strength.ToString("F1"), " uT"); //< micro-tesla
 		}
 
 		///<summary> Pretty-print radiation rate </summary>
@@ -186,13 +186,13 @@
 				prefix = "m";
 			}
 
-			return Lib.BuildString((rad).ToString("F3"), " ", prefix, unit);
+			return String.BuildString((rad).ToString("F3"), " ", prefix, unit);
 		}
 
 		///<summary> Pretty-print percentage </summary>
 		internal static string Percentage(double v, string format = "F0")
 		{
-			return Lib.BuildString((v * 100.0).ToString(format), "%");
+			return String.BuildString((v * 100.0).ToString(format), "%");
 		}
 
 		///<summary> Pretty-print pressure (value is in kPa) </summary>
@@ -201,48 +201,48 @@
 			if (Settings.UseSIUnits)
 				return SI.SIPressure(v);
 
-			return Lib.BuildString(v.ToString("F1"), " kPa");
+			return String.BuildString(v.ToString("F1"), " kPa");
 		}
 
 		///<summary> Pretty-print volume (value is in m^3) </summary>
 		internal static string Volume(double v)
 		{
-			return Lib.BuildString(v.ToString("F2"), " m³");
+			return String.BuildString(v.ToString("F2"), " m³");
 		}
 
 		///<summary> Pretty-print surface (value is in m^2) </summary>
 		internal static string Surface(double v)
 		{
-			return Lib.BuildString(v.ToString("F2"), " m²");
+			return String.BuildString(v.ToString("F2"), " m²");
 		}
 
 		///<summary> Pretty-print mass </summary>
 		internal static string Mass(double v)
 		{
 			if (v <= double.Epsilon) return "0 kg";
-			if (v > 1) return Lib.BuildString(v.ToString("F3"), " t");
+			if (v > 1) return String.BuildString(v.ToString("F3"), " t");
 			v *= 1000;
-			if (v > 1) return Lib.BuildString(v.ToString("F2"), " kg");
+			if (v > 1) return String.BuildString(v.ToString("F2"), " kg");
 			v *= 1000;
-			return Lib.BuildString(v.ToString("F2"), " g");
+			return String.BuildString(v.ToString("F2"), " g");
 		}
 
 		///<summary> Pretty-print cost </summary>
 		internal static string Cost(double v)
 		{
-			return Lib.BuildString(v.ToString("F0"), " $");
+			return String.BuildString(v.ToString("F0"), " $");
 		}
 
 		///<summary> Format a value to 2 decimal places, or return 'none' </summary>
 		internal static string Amount(double value, string append = "")
 		{
-			return (System.Math.Abs(value) <= double.Epsilon ? Local.Generic_NONE : Lib.BuildString(value.ToString("F2"), append));//"none"
+			return (System.Math.Abs(value) <= double.Epsilon ? Local.Generic_NONE : String.BuildString(value.ToString("F2"), append));//"none"
 		}
 
 		///<summary> Format an integer value, or return 'none' </summary>
 		internal static string Integer(uint value, string append = "")
 		{
-			return (System.Math.Abs(value) <= 0 ? Local.Generic_NONE : Lib.BuildString(value.ToString("F0"), append));//"none"
+			return (System.Math.Abs(value) <= 0 ? Local.Generic_NONE : String.BuildString(value.ToString("F0"), append));//"none"
 		}
 		// Note : config / code base unit for data rate / size is in megabyte (1000^2 bytes)
 		// For UI purposes we use the decimal units (B/kB/MB...), not the binary (1024^2 bytes) units
@@ -306,9 +306,9 @@
 
 		internal static string SampleSize(int slots)
 		{
-			if (slots <= 0) return Lib.BuildString(Local.Generic_NO, Local.Generic_SLOT);//"no "
+			if (slots <= 0) return String.BuildString(Local.Generic_NO, Local.Generic_SLOT);//"no "
 
-			return Lib.BuildString(slots.ToString(), " ", slots > 1 ? Local.Generic_SLOTS : Local.Generic_SLOT);
+			return String.BuildString(slots.ToString(), " ", slots > 1 ? Local.Generic_SLOTS : Local.Generic_SLOT);
 		}
 
 		internal static int SampleSizeToSlots(double size)
@@ -327,9 +327,9 @@
 		internal static string Science(double value, bool compact = true)
 		{
 			if (compact)
-				return Lib.Color(value.ToString("F1"), Lib.Kolor.Science, true);
+				return String.Color(value.ToString("F1"), String.Kolor.Science, true);
 			else
-				return Lib.Color(Lib.BuildString(value.ToString("F1"), " ", Local.SCIENCEARCHIVE_CREDITS), Lib.Kolor.Science);//CREDITS
+				return String.Color(String.BuildString(value.ToString("F1"), " ", Local.SCIENCEARCHIVE_CREDITS), String.Kolor.Science);//CREDITS
 		}
 	}
 }

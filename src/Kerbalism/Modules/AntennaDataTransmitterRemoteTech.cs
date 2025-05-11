@@ -51,8 +51,8 @@
 						double transmissionEnergyCost = this.packetResourceCost * dataRate;
 						double idleEnergyCost = this.energyCost;
 
-						specs.Add(Local.DataTransmitter_ECidle, Lib.Color(SI.HumanOrSIRate(idleEnergyCost, ResourceUnitInfo.ECResID), Lib.Kolor.Orange));//"EC (idle)"
-						specs.Add(Local.DataTransmitter_ECTX + " Max", Lib.Color(SI.HumanOrSIRate(transmissionEnergyCost + idleEnergyCost, ResourceUnitInfo.ECResID), Lib.Kolor.Orange));//"EC (transmitting)"
+						specs.Add(Local.DataTransmitter_ECidle, String.Color(SI.HumanOrSIRate(idleEnergyCost, ResourceUnitInfo.ECResID), String.Kolor.Orange));//"EC (idle)"
+						specs.Add(Local.DataTransmitter_ECTX + " Max", String.Color(SI.HumanOrSIRate(transmissionEnergyCost + idleEnergyCost, ResourceUnitInfo.ECResID), String.Kolor.Orange));//"EC (transmitting)"
 						specs.Add("");
 						specs.Add(Local.DataTransmitter_Maxspeed, HumanReadable.DataRate(dataRate));//"Max. speed"
 						break;

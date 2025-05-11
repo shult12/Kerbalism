@@ -28,23 +28,23 @@ namespace KERBALISM
 			var dsn1 = CommNet.CommNetScenario.RangeModel.GetMaximumRange(__instance.antennaPower, GameVariables.Instance.GetDSNRange(0f));
 			var dsn2 = CommNet.CommNetScenario.RangeModel.GetMaximumRange(__instance.antennaPower, GameVariables.Instance.GetDSNRange(0.5f));
 			var dsn3 = CommNet.CommNetScenario.RangeModel.GetMaximumRange(__instance.antennaPower, GameVariables.Instance.GetDSNRange(1f));
-			result += Lib.BuildString(Localizer.Format("#autoLOC_236834"), " ", HumanReadable.Distance(dsn1));
-			result += Lib.BuildString(Localizer.Format("#autoLOC_236835"), " ", HumanReadable.Distance(dsn2));
-			result += Lib.BuildString(Localizer.Format("#autoLOC_236836"), " ", HumanReadable.Distance(dsn3));
+			result += String.BuildString(Localizer.Format("#autoLOC_236834"), " ", HumanReadable.Distance(dsn1));
+			result += String.BuildString(Localizer.Format("#autoLOC_236835"), " ", HumanReadable.Distance(dsn2));
+			result += String.BuildString(Localizer.Format("#autoLOC_236836"), " ", HumanReadable.Distance(dsn3));
 
 			double ec = __instance.DataResourceCost * __instance.DataRate;
 
 			Specifics specs = new Specifics();
-			specs.Add(Local.DataTransmitter_ECidle, Lib.Color(SI.HumanOrSIRate(ec * Settings.TransmitterPassiveEcFactor, ResourceUnitInfo.ECResID), Lib.Kolor.Orange));//"EC (idle)"
+			specs.Add(Local.DataTransmitter_ECidle, String.Color(SI.HumanOrSIRate(ec * Settings.TransmitterPassiveEcFactor, ResourceUnitInfo.ECResID), String.Kolor.Orange));//"EC (idle)"
 
 			if (__instance.antennaType != AntennaType.INTERNAL) 
 			{
-				specs.Add(Local.DataTransmitter_ECTX, Lib.Color(SI.HumanOrSIRate(ec * Settings.TransmitterActiveEcFactor, ResourceUnitInfo.ECResID), Lib.Kolor.Orange));//"EC (transmitting)"
+				specs.Add(Local.DataTransmitter_ECTX, String.Color(SI.HumanOrSIRate(ec * Settings.TransmitterActiveEcFactor, ResourceUnitInfo.ECResID), String.Kolor.Orange));//"EC (transmitting)"
 				specs.Add("");
 				specs.Add(Local.DataTransmitter_Maxspeed, HumanReadable.DataRate(__instance.DataRate));//"Max. speed"
 			}
 
-			__result = Lib.BuildString(result, "\n\n", specs.Info());
+			__result = String.BuildString(result, "\n\n", specs.Info());
 
 			// don't call default implementation
 			return false;

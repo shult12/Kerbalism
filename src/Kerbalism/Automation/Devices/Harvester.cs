@@ -9,7 +9,7 @@ namespace KERBALISM
 			animator = module.part.FindModuleImplementing<ModuleAnimationGroup>();
 		}
 
-		internal override string Name => Lib.BuildString(module.resource, " harvester").ToLower();
+		internal override string Name => String.BuildString(module.resource, " harvester").ToLower();
 
 		internal override string Status
 		{
@@ -18,10 +18,10 @@ namespace KERBALISM
 			return animator != null && !module.deployed
 			  ? Local.Generic_notdeployed//"not deployed"
 			  : !module.running
-			  ? Lib.Color(Local.Generic_STOPPED, Lib.Kolor.Yellow)
+			  ? String.Color(Local.Generic_STOPPED, String.Kolor.Yellow)
 			  : module.issue.Length == 0
-			  ? Lib.Color(Local.Generic_RUNNING, Lib.Kolor.Green)
-			  : Lib.Color(module.issue, Lib.Kolor.Red);
+			  ? String.Color(Local.Generic_RUNNING, String.Kolor.Green)
+			  : String.Color(module.issue, String.Kolor.Red);
 			}
 		}
 
@@ -49,7 +49,7 @@ namespace KERBALISM
 			this.animator = protoPart.FindModule("ModuleAnimationGroup");
 		}
 
-		internal override string Name => Lib.BuildString(prefab.resource, " harvester").ToLower();
+		internal override string Name => String.BuildString(prefab.resource, " harvester").ToLower();
 
 		internal override string Status
 		{
@@ -62,10 +62,10 @@ namespace KERBALISM
 				return animator != null && !deployed
 				  ? Local.Generic_notdeployed//"not deployed"
 				  : !running
-				  ? Lib.Color(Local.Generic_STOPPED, Lib.Kolor.Yellow)
+				  ? String.Color(Local.Generic_STOPPED, String.Kolor.Yellow)
 				  : issue.Length == 0
-				  ? Lib.Color(Local.Generic_RUNNING, Lib.Kolor.Green)
-				  : Lib.Color(issue, Lib.Kolor.Red);
+				  ? String.Color(Local.Generic_RUNNING, String.Kolor.Green)
+				  : String.Color(issue, String.Kolor.Red);
 			}
 		}
 

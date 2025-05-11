@@ -118,7 +118,7 @@ namespace KERBALISM
 		///<summary>used to make rmb ui status toggles look all the same</summary>
 		internal static string StatusToggle(string title, string status)
 		{
-			return Lib.BuildString("<b>", title, "</b>: ", status);
+			return String.BuildString("<b>", title, "</b>: ", status);
 		}
 
 

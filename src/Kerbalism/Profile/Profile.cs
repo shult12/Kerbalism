@@ -96,7 +96,7 @@ namespace KERBALISM
 					if (Lib.GameDirectoryExist(moddir))
 					{
 						// log profile and mod name
-						Logging.Log(Lib.BuildString("importing Kerbalism Support profile for mod: ", modname));
+						Logging.Log(String.BuildString("importing Kerbalism Support profile for mod: ", modname));
 
 						// parse nodes
 						Nodeparse(profile_node);
@@ -126,7 +126,7 @@ namespace KERBALISM
 					if (name == Settings.Profile)
 					{
 						// log profile name
-						Logging.Log(Lib.BuildString("using profile: ", Settings.Profile));
+						Logging.Log(String.BuildString("using profile: ", Settings.Profile));
 
 						// parse nodes
 						Nodeparse(profile_node);
@@ -136,13 +136,13 @@ namespace KERBALISM
 
 						// log info
 						Logging.Log("supplies:");
-						foreach (Supply supply in supplies) Logging.Log(Lib.BuildString("- ", supply.resource));
+						foreach (Supply supply in supplies) Logging.Log(String.BuildString("- ", supply.resource));
 						if (supplies.Count == 0) Logging.Log("- none");
 						Logging.Log("rules:");
-						foreach (Rule rule in rules) Logging.Log(Lib.BuildString("- ", rule.name));
+						foreach (Rule rule in rules) Logging.Log(String.BuildString("- ", rule.name));
 						if (rules.Count == 0) Logging.Log("- none");
 						Logging.Log("processes:");
-						foreach (Process process in processes) Logging.Log(Lib.BuildString("- ", process.name));
+						foreach (Process process in processes) Logging.Log(String.BuildString("- ", process.name));
 						if (processes.Count == 0) Logging.Log("- none");
 
 						// we are done here
@@ -150,7 +150,7 @@ namespace KERBALISM
 					}
 				}
 				// if we reach this point, the profile was not found
-				Logging.Log(Lib.BuildString("profile '", Settings.Profile, "' was not found"), Logging.LogLevel.Warning);
+				Logging.Log(String.BuildString("profile '", Settings.Profile, "' was not found"), Logging.LogLevel.Warning);
 			}
 		}
 

@@ -96,7 +96,7 @@ namespace KERBALISM
 
 			fileSendFlags = new Dictionary<string, bool>();
 			string fileNames = Lib.ConfigValue(node, "sendFileNames", string.Empty);
-			foreach (string fileName in Lib.Tokenize(fileNames, ','))
+			foreach (string fileName in String.Tokenize(fileNames, ','))
 			{
 				Send(fileName, true);
 			}
@@ -514,13 +514,13 @@ namespace KERBALISM
 				Message.Post
 				(
 					HumanReadable.DataSize(dataAmount) + " " + Local.Science_ofdatatransfer,
-				 	Lib.BuildString(Local.Generic_FROM, " <b>", src.vesselName, "</b> ", Local.Generic_TO, " <b>", dst.vesselName, "</b>")
+				 	String.BuildString(Local.Generic_FROM, " <b>", src.vesselName, "</b> ", Local.Generic_TO, " <b>", dst.vesselName, "</b>")
 				);
 			else
 				Message.Post
 				(
-					Lib.Color(Lib.BuildString("WARNING: not evering copied"), Lib.Kolor.Red, true),
-					Lib.BuildString(Local.Generic_FROM, " <b>", src.vesselName, "</b> ", Local.Generic_TO, " <b>", dst.vesselName, "</b>")
+					String.Color(String.BuildString("WARNING: not evering copied"), String.Kolor.Red, true),
+					String.BuildString(Local.Generic_FROM, " <b>", src.vesselName, "</b> ", Local.Generic_TO, " <b>", dst.vesselName, "</b>")
 				);
 		}
 
@@ -657,7 +657,7 @@ namespace KERBALISM
 		Dictionary<string, bool> fileSendFlags; // file send flags
 		internal double dataCapacity;
 		internal int sampleCapacity;
-		string name = String.Empty;
+		string name = string.Empty;
 		internal bool is_private = false;
 	}
 

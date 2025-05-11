@@ -19,8 +19,8 @@ namespace KERBALISM
 
 		internal string FirstSituationTitle =>
 			biome != null
-			? Lib.BuildString(BodyTitle, " ", situations[0].Title(), " ", BiomeTitle)
-			: Lib.BuildString(BodyTitle, " ", situations[0].Title());
+			? String.BuildString(BodyTitle, " ", situations[0].Title(), " ", BiomeTitle)
+			: String.BuildString(BodyTitle, " ", situations[0].Title());
 
 		internal Situation FirstSituation => new Situation(body.flightGlobalsIndex, situations[0], biomeIndex);
 

@@ -296,7 +296,7 @@ namespace KERBALISM
 			if (hasJetPack && evaPropQuantity <= 0.05 && !Lib.Landed(vesselHatch.vessel))
 			{
 				Message.Post(Severity.danger,
-					Local.CallBackMsg_EvaNoMP.Format("<b>" + evaPropName + "</b>"), Local.CallBackMsg_EvaNoMP2);//Lib.BuildString("There isn't any <<1>> in the EVA JetPack")"Don't let the ladder go!"
+					Local.CallBackMsg_EvaNoMP.Format("<b>" + evaPropName + "</b>"), Local.CallBackMsg_EvaNoMP2);//String.BuildString("There isn't any <<1>> in the EVA JetPack")"Don't let the ladder go!"
 			}
 
 		}
@@ -427,7 +427,7 @@ namespace KERBALISM
 		void VesselCreated(Vessel v)
 		{
 			if (Serenity.GetModuleGroundExpControl(v) != null)
-				v.vesselName = Lib.BuildString(v.mainBody.name, " Site ", UI.Greek());
+				v.vesselName = String.BuildString(v.mainBody.name, " Site ", UI.Greek());
 		}
 
 		void VesselDestroyed(Vessel v)
@@ -499,7 +499,7 @@ namespace KERBALISM
 					{
 						if (setup.tech == data.host.techID)
 						{
-							labels.Add(Lib.BuildString(setup.name, " in ", cfg.title));
+							labels.Add(String.BuildString(setup.name, " in ", cfg.title));
 						}
 					}
 				}
@@ -510,7 +510,7 @@ namespace KERBALISM
 					Message.Post
 					(
 					  "<color=#00ffff><b>" + Local.CallBackMsg_PROGRESS + "</b></color>\n" + Local.CallBackMsg_PROGRESS2,//PROGRESS""Our scientists just made a breakthrough
-					  Lib.BuildString("We now have access to \n<b>", label, "</b>")
+					  String.BuildString("We now have access to \n<b>", label, "</b>")
 					);
 				}
 			}

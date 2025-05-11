@@ -21,12 +21,12 @@ namespace KERBALISM
 				if (!crewRules.ContainsKey(rule.name)) continue;
 
 				var level = crewRules[rule.name].problem / rule.fatal_threshold;
-				sb.Append(Lib.BuildString("<b>Career ", rule.title, "</b>: ", HumanReadable.Percentage(level), "\n"));
+				sb.Append(String.BuildString("<b>Career ", rule.title, "</b>: ", HumanReadable.Percentage(level), "\n"));
 			}
 
 			if(sb.Length > 0)
 			{
-				__instance.descriptionString += Lib.BuildString("\n\n", sb.ToString());
+				__instance.descriptionString += String.BuildString("\n\n", sb.ToString());
 			}
 		}
 	}

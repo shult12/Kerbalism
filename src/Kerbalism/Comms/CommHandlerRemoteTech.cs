@@ -48,8 +48,8 @@ namespace KERBALISM
 
 			connection.linked = RemoteTech.ConnectedToKSC(vd.VesselId);
 			connection.Status = RemoteTech.TargetsKSC(vd.VesselId) ? LinkStatus.direct_link : LinkStatus.indirect_link;
-			connection.target_name = connection.Status == LinkStatus.direct_link ? Lib.Ellipsis("DSN: " + (RemoteTech.NameTargetsKSC(vd.VesselId) ?? ""), 20) :
-				Lib.Ellipsis(RemoteTech.NameFirstHopToKSC(vd.VesselId) ?? "", 20);
+			connection.target_name = connection.Status == LinkStatus.direct_link ? String.Ellipsis("DSN: " + (RemoteTech.NameTargetsKSC(vd.VesselId) ?? ""), 20) :
+				String.Ellipsis(RemoteTech.NameFirstHopToKSC(vd.VesselId) ?? "", 20);
 
 			Guid[] controlPath = null;
 			if (connection.linked) controlPath = RemoteTech.GetCommsControlPath(vd.VesselId);
@@ -97,11 +97,11 @@ namespace KERBALISM
 					string[] controlPoint = new string[3];
 
 					// satellite name
-					controlPoint[0] = Lib.Ellipsis(RemoteTech.GetSatelliteName(i) + " \\ " + RemoteTech.GetSatelliteName(id), 50);
+					controlPoint[0] = String.Ellipsis(RemoteTech.GetSatelliteName(i) + " \\ " + RemoteTech.GetSatelliteName(id), 50);
 					// signal strength
 					controlPoint[1] = HumanReadable.Percentage(System.Math.Ceiling(signalStrength * 10000) / 10000, "F2");
 					// tooltip info
-					controlPoint[2] = Lib.BuildString("Distance: ", HumanReadable.Distance(linkDistance),
+					controlPoint[2] = String.BuildString("Distance: ", HumanReadable.Distance(linkDistance),
 						" (Max: ", HumanReadable.Distance(linkMaxDistance), ")");
 					
 					connection.control_path.Add(controlPoint);

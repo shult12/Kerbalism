@@ -56,17 +56,17 @@ namespace KERBALISM
 				// manage messages
 				if (res.Level <= double.Epsilon && sd.message < 2)
 				{
-					if (empty_message.Length > 0 && show_msg) Message.Post(Severity.danger, Lib.ExpandMsg(empty_message, v, null, variant));
+					if (empty_message.Length > 0 && show_msg) Message.Post(Severity.danger, String.ExpandMsg(empty_message, v, null, variant));
 					sd.message = 2;
 				}
 				else if (res.Level < low_threshold && sd.message < 1)
 				{
-					if (low_message.Length > 0 && show_msg) Message.Post(Severity.warning, Lib.ExpandMsg(low_message, v, null, variant));
+					if (low_message.Length > 0 && show_msg) Message.Post(Severity.warning, String.ExpandMsg(low_message, v, null, variant));
 					sd.message = 1;
 				}
 				else if (res.Level > low_threshold && sd.message > 0)
 				{
-					if (refill_message.Length > 0 && show_msg) Message.Post(Severity.relax, Lib.ExpandMsg(refill_message, v, null, variant));
+					if (refill_message.Length > 0 && show_msg) Message.Post(Severity.relax, String.ExpandMsg(refill_message, v, null, variant));
 					sd.message = 0;
 				}
 			}

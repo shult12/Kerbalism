@@ -20,7 +20,7 @@ namespace KERBALISM
 			degeneration = Lib.ConfigValue(node, "degeneration", 0.0);
 			variance = Lib.ConfigValue(node, "variance", 0.0);
 			individuality = Lib.ConfigValue(node, "individuality", 0.0);
-			modifiers = Lib.Tokenize(Lib.ConfigValue(node, "modifier", string.Empty), ',');
+			modifiers = String.Tokenize(Lib.ConfigValue(node, "modifier", string.Empty), ',');
 			breakdown = Lib.ConfigValue(node, "breakdown", false);
 			lifetime = Lib.ConfigValue(node, "lifetime", false);
 			warning_threshold = Lib.ConfigValue(node, "warning_threshold", 0.33);
@@ -206,7 +206,7 @@ namespace KERBALISM
 					Logging.Log("Rule " + name + " kills " + c.name + " at " + rd.problem + " " + degeneration + "/" + k + "/" + step + "/" + Variance(name, c, variance));
 #endif
 					if (fatal_message.Length > 0)
-						Message.Post(breakdown ? Severity.breakdown : Severity.fatality, Lib.ExpandMsg(fatal_message, v, c, variant));
+						Message.Post(breakdown ? Severity.breakdown : Severity.fatality, String.ExpandMsg(fatal_message, v, c, variant));
 
 					if (breakdown)
 					{
@@ -226,17 +226,17 @@ namespace KERBALISM
 				// show messages
 				else if (rd.problem >= danger_threshold && rd.message < 2)
 				{
-					if (danger_message.Length > 0) Message.Post(Severity.danger, Lib.ExpandMsg(danger_message, v, c, variant));
+					if (danger_message.Length > 0) Message.Post(Severity.danger, String.ExpandMsg(danger_message, v, c, variant));
 					rd.message = 2;
 				}
 				else if (rd.problem >= warning_threshold && rd.message < 1)
 				{
-					if (warning_message.Length > 0) Message.Post(Severity.warning, Lib.ExpandMsg(warning_message, v, c, variant));
+					if (warning_message.Length > 0) Message.Post(Severity.warning, String.ExpandMsg(warning_message, v, c, variant));
 					rd.message = 1;
 				}
 				else if (rd.problem < warning_threshold && rd.message > 0)
 				{
-					if (relax_message.Length > 0) Message.Post(Severity.relax, Lib.ExpandMsg(relax_message, v, c, variant));
+					if (relax_message.Length > 0) Message.Post(Severity.relax, String.ExpandMsg(relax_message, v, c, variant));
 					rd.message = 0;
 				}
 
@@ -255,7 +255,7 @@ namespace KERBALISM
 
 
 		// return per-kerbal variance, in the range [1-variance,1+variance]
-		static double Variance(String name, ProtoCrewMember c, double variance)
+		static double Variance(string name, ProtoCrewMember c, double variance)
 		{
 			if (variance < Double.Epsilon)
 				return 1.0;

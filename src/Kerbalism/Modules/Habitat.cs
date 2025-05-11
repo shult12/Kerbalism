@@ -494,7 +494,7 @@ namespace KERBALISM
             // if manned, we can't depressurize
             if (Lib.IsCrewed(part) && (state == State.enabled || state == State.pressurizing))
             {
-                Message.Post(Local.Habitat_postmsg.Format(Lib.PartName(part)));//"Can't disable <b><<1>> habitat</b> while crew is inside"//Lib.BuildString("Can't disable <b>", , " habitat</b> while crew is inside"
+                Message.Post(Local.Habitat_postmsg.Format(Lib.PartName(part)));//"Can't disable <b><<1>> habitat</b> while crew is inside"//String.BuildString("Can't disable <b>", , " habitat</b> while crew is inside"
 				return;
             }
 
@@ -601,7 +601,7 @@ namespace KERBALISM
 		// return a verbose description of shielding capability
 		internal static string Shielding_to_string(double v)
         {
-            return v <= double.Epsilon ? Local.Habitat_none : Lib.BuildString((20.0 * v / PreferencesRadiation.Instance.shieldingEfficiency).ToString("F2"), " mm");//"none"
+            return v <= double.Epsilon ? Local.Habitat_none : String.BuildString((20.0 * v / PreferencesRadiation.Instance.shieldingEfficiency).ToString("F2"), " mm");//"none"
         }
 
 		// traduce living space value to string
@@ -706,8 +706,8 @@ namespace KERBALISM
 		public Callback<Rect> GetDrawModulePanelCallback() => null;
 		public string GetPrimaryField()
 		{
-			return Lib.BuildString(
-				Lib.Bold(Local.Habitat + " " + Local.Habitat_info1), // "Habitat" + "Volume"
+			return String.BuildString(
+				String.Bold(Local.Habitat + " " + Local.Habitat_info1), // "Habitat" + "Volume"
 				" : ",
 				HumanReadable.Volume(volume > 0.0 ? volume : PartBoundsVolume(part)),
 				volume > 0.0 ? "" : " (bounds)");

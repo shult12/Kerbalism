@@ -437,7 +437,7 @@ namespace KERBALISM.Planner
 				res.Produce(g.crop_size * g.crop_rate, "greenhouse");
 
 				// add harvest info
-				res.harvests.Add(Lib.BuildString(g.crop_size.ToString("F0"), " in ", HumanReadable.Duration(1.0 / g.crop_rate)));
+				res.harvests.Add(String.BuildString(g.crop_size.ToString("F0"), " in ", HumanReadable.Duration(1.0 / g.crop_rate)));
 			}
 		}
 
@@ -518,7 +518,7 @@ namespace KERBALISM.Planner
 
 			// use part name as recipe name
 			// - include crew bonus in the recipe name
-			string recipe_name = Lib.BuildString(converter.part.partInfo.title, " (efficiency: ", HumanReadable.Percentage(exp_bonus), ")");
+			string recipe_name = String.BuildString(converter.part.partInfo.title, " (efficiency: ", HumanReadable.Percentage(exp_bonus), ")");
 
 			// generate recipe
 			SimulatedRecipe recipe = new SimulatedRecipe(converter.part, recipe_name);
@@ -543,7 +543,7 @@ namespace KERBALISM.Planner
 
 			// use part name as recipe name
 			// - include crew bonus in the recipe name
-			string recipe_name = Lib.BuildString(harvester.part.partInfo.title, " (efficiency: ", HumanReadable.Percentage(exp_bonus), ")");
+			string recipe_name = String.BuildString(harvester.part.partInfo.title, " (efficiency: ", HumanReadable.Percentage(exp_bonus), ")");
 
 			// generate recipe
 			SimulatedRecipe recipe = new SimulatedRecipe(harvester.part, recipe_name);

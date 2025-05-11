@@ -8,7 +8,7 @@ namespace KERBALISM
 
 		internal override string Name => "gravity ring";
 
-		internal override string Status => Lib.Color(module.deployed, Local.Generic_DEPLOYED, Lib.Kolor.Green, Local.Generic_RETRACTED, Lib.Kolor.Yellow);
+		internal override string Status => String.Color(module.deployed, Local.Generic_DEPLOYED, String.Kolor.Green, Local.Generic_RETRACTED, String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{
@@ -32,7 +32,7 @@ namespace KERBALISM
 
 		internal override string Name => "gravity ring";
 
-		internal override string Status => Lib.Color(Lib.Proto.GetBool(protoModule, "deployed"), Local.Generic_DEPLOYED, Lib.Kolor.Green, Local.Generic_RETRACTED, Lib.Kolor.Yellow);
+		internal override string Status => String.Color(Lib.Proto.GetBool(protoModule, "deployed"), Local.Generic_DEPLOYED, String.Kolor.Green, Local.Generic_RETRACTED, String.Kolor.Yellow);
 
 		internal override void Ctrl(bool value)
 		{

@@ -270,7 +270,7 @@ namespace KERBALISM
 			if (Events["ManualTracking"].active && (state == PanelState.Extended || state == PanelState.ExtendedFixed || state == PanelState.Static))
 			{
 				Events["ManualTracking"].guiActive = true;
-				Events["ManualTracking"].guiName = Lib.BuildString(Local.SolarPanelFixer_Trackedstar +" ", manualTracking ? ": " : Local.SolarPanelFixer_AutoTrack, FlightGlobals.Bodies[trackedSunIndex].bodyDisplayName.Replace("^N", ""));//"Tracked star"[Auto] : "
+				Events["ManualTracking"].guiName = String.BuildString(Local.SolarPanelFixer_Trackedstar +" ", manualTracking ? ": " : Local.SolarPanelFixer_AutoTrack, FlightGlobals.Bodies[trackedSunIndex].bodyDisplayName.Replace("^N", ""));//"Tracked star"[Auto] : "
 			}
 			else
 			{
@@ -296,7 +296,7 @@ namespace KERBALISM
 					addRate = true;
 					break;
 				case ExposureState.OccludedPart:
-					panelStatus = Lib.BuildString("<color=#ff2222>", Local.SolarPanelFixer_occludedby.Format(mainOccludingPart), "</color>");//occluded by 
+					panelStatus = String.BuildString("<color=#ff2222>", Local.SolarPanelFixer_occludedby.Format(mainOccludingPart), "</color>");//occluded by 
 					addRate = true;
 					break;
 				case ExposureState.BadOrientation:
@@ -358,13 +358,13 @@ namespace KERBALISM
 				if (Settings.UseSIUnits)
 				{
 					if (hasRUI)
-						Lib.BuildString(SI.SIRate(currentOutput, ResourceUnitInfo.ECResID), ", ", panelStatus);
+						String.BuildString(SI.SIRate(currentOutput, ResourceUnitInfo.ECResID), ", ", panelStatus);
 					else
-						Lib.BuildString(SI.SIRate(currentOutput, EcUIUnit), ", ", panelStatus);
+						String.BuildString(SI.SIRate(currentOutput, EcUIUnit), ", ", panelStatus);
 				}
 				else
 				{
-					Lib.BuildString(currentOutput.ToString(rateFormat), " ", EcUIUnit, ", ", panelStatus);
+					String.BuildString(currentOutput.ToString(rateFormat), " ", EcUIUnit, ", ", panelStatus);
 				}
 			}
 		}
@@ -506,7 +506,7 @@ namespace KERBALISM
 							if (occludingPart != null)
 							{
 								exposureState = ExposureState.OccludedPart;
-								mainOccludingPart = Lib.EllipsisMiddle(occludingPart, 15);
+								mainOccludingPart = String.EllipsisMiddle(occludingPart, 15);
 							}
 							else
 							{

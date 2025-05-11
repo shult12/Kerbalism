@@ -34,7 +34,7 @@ namespace KERBALISM
 
 			Events["Toggle"].guiName = UI.StatusToggle
 			(
-			  Local.StatuToggle_Simulate.Format(title),//String.Format("Simulate {0} in planner", title)
+			  Local.StatuToggle_Simulate.Format(title),//string.Format("Simulate {0} in planner", title)
 			  considered ? "<b><color=#00ff00>"+ Local.PlannerController_yes + "</color></b>" : "<b><color=#ffff00>"+ Local.PlannerController_no + "</color></b>"//yes  no
 			);
 		}

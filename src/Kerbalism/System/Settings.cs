@@ -119,14 +119,14 @@ namespace KERBALISM
 
 		internal static List<string> IncompatibleMods()
 		{
-			var result = Lib.Tokenize(ModsIncompatible.ToLower(), ',');
+			var result = String.Tokenize(ModsIncompatible.ToLower(), ',');
 			return result;
 		}
 
 		internal static List<string> WarningMods()
 		{
-			var result = Lib.Tokenize(ModsWarning.ToLower(), ',');
-			if (Features.Science) result.AddRange(Lib.Tokenize(ModsScience.ToLower(), ','));
+			var result = String.Tokenize(ModsWarning.ToLower(), ',');
+			if (Features.Science) result.AddRange(String.Tokenize(ModsScience.ToLower(), ','));
 			return result;
 		}
 

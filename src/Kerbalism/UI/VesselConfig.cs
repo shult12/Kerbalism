@@ -17,7 +17,7 @@ namespace KERBALISM
 			if (!vd.IsSimulated) return;
 
 			// set metadata
-			p.Title(Lib.BuildString(Lib.Ellipsis(v.vesselName, Styles.ScaleStringLength(20)), " ", Lib.Color(Local.VESSELCONFIG_title, Lib.Kolor.LightGrey)));//"VESSEL CONFIG"
+			p.Title(String.BuildString(String.Ellipsis(v.vesselName, Styles.ScaleStringLength(20)), " ", String.Color(Local.VESSELCONFIG_title, String.Kolor.LightGrey)));//"VESSEL CONFIG"
 			p.Width(Styles.ScaleWidthFloat(355.0f));
 			p.paneltype = Panel.PanelType.config;
 

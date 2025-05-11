@@ -57,7 +57,7 @@ namespace KERBALISM
 			foreach (UrlDir.UrlConfig url in GameDatabase.Instance.root.AllConfigs) { root = url.parent; break; }
 
 			// inject MM patches on-the-fly, so that profile/features can be queried with NEEDS[]
-			Inject(root, "Profile", Lib.UppercaseFirst(Settings.Profile));
+			Inject(root, "Profile", String.UppercaseFirst(Settings.Profile));
 			if (Features.Reliability) Inject(root, "Feature", "Reliability");
 			if (Features.Deploy) Inject(root, "Feature", "Deploy");
 			if (Features.SpaceWeather) Inject(root, "Feature", "SpaceWeather");
@@ -93,14 +93,14 @@ namespace KERBALISM
 		// inject an MM patch on-the-fly, so that NEEDS[TypeId] can be used in MM patches
 		static void Inject(UrlDir.UrlFile root, string type, string id)
 		{
-			Logging.Log(Lib.BuildString("Injecting ", type, id));
+			Logging.Log(String.BuildString("Injecting ", type, id));
 			if (ModuleManager.MM_major >= 4)
 			{
 				MM40Injector.AddInjector(type, id);
 			}
 			else
 			{
-				root.configs.Add(new UrlDir.UrlConfig(root, new ConfigNode(Lib.BuildString("@Kerbalism:FOR[", type, id, "]"))));
+				root.configs.Add(new UrlDir.UrlConfig(root, new ConfigNode(String.BuildString("@Kerbalism:FOR[", type, id, "]"))));
 			}
 		}
 

@@ -94,7 +94,7 @@ namespace KERBALISM
 			Events["DumpValve"].active = dumpValve.CanSwitchValves;
 
 			// set action group ui
-			Actions["Action"].guiName = Lib.BuildString(Local.ProcessController_Start_Stop, " ", title);//"Start/Stop
+			Actions["Action"].guiName = String.BuildString(Local.ProcessController_Start_Stop, " ", title);//"Start/Stop
 
 			// hide toggle if specified
 			Events["Toggle"].active = toggle;
@@ -197,21 +197,21 @@ namespace KERBALISM
 				foreach (KeyValuePair<string, double> pair in process.inputs)
 				{
 					if (!process.modifiers.Contains(pair.Key))
-						specs.Add(Lib.GetResourceDisplayName(pair.Key), Lib.BuildString(" <color=#ffaa00>", SI.HumanOrSIRate(pair.Value * capacity, pair.Key.GetHashCode()), "</color>"));
+						specs.Add(Lib.GetResourceDisplayName(pair.Key), String.BuildString(" <color=#ffaa00>", SI.HumanOrSIRate(pair.Value * capacity, pair.Key.GetHashCode()), "</color>"));
 					else
 						specs.Add(Local.ProcessController_info1, HumanReadable.Duration(0.5 / pair.Value));//"Half-life"
 				}
 				foreach (KeyValuePair<string, double> pair in process.outputs)
 				{
-					specs.Add(Lib.GetResourceDisplayName(pair.Key), Lib.BuildString(" <color=#00ff00>", SI.HumanOrSIRate(pair.Value * capacity, pair.Key.GetHashCode()), "</color>"));
+					specs.Add(Lib.GetResourceDisplayName(pair.Key), String.BuildString(" <color=#00ff00>", SI.HumanOrSIRate(pair.Value * capacity, pair.Key.GetHashCode()), "</color>"));
 				}
 			}
 			return specs;
 		}
 
 		// module info support
-		public string GetModuleTitle() { return Lib.BuildString("<size=1><color=#00000000>01</color></size>", title); }  // Display after config widget
-		public override string GetModuleDisplayName() { return Lib.BuildString("<size=1><color=#00000000>01</color></size>", title); }  // Display after config widget
+		public string GetModuleTitle() { return String.BuildString("<size=1><color=#00000000>01</color></size>", title); }  // Display after config widget
+		public override string GetModuleDisplayName() { return String.BuildString("<size=1><color=#00000000>01</color></size>", title); }  // Display after config widget
 		public string GetPrimaryField() { return string.Empty; }
 		public Callback<Rect> GetDrawModulePanelCallback() { return null; }
 

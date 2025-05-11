@@ -37,11 +37,11 @@ namespace KERBALISM
 		ResourceInfo ec = null;                            // resource info for EC
 
 		// localized strings
-		static readonly string localized_title = Lib.BuildString("<size=1><color=#00000000>00</color></size>", Local.Laboratory_Title);
+		static readonly string localized_title = String.BuildString("<size=1><color=#00000000>00</color></size>", Local.Laboratory_Title);
 		static readonly string localized_toggle = Local.Laboratory_Toggle;
 		static readonly string localized_enabled = Local.Generic_ENABLED;
 		static readonly string localized_disabled = Local.Generic_DISABLED;
-		static readonly string localized_noEC = Lib.Color(Local.Laboratory_NoEC, Lib.Kolor.Orange);
+		static readonly string localized_noEC = String.Color(Local.Laboratory_NoEC, String.Kolor.Orange);
 		static readonly string localized_noSample = Local.Laboratory_NoSample;
 		static readonly string localized_cleaned = Local.Laboratory_Cleaned;
 		static readonly string localized_results = Local.Laboratory_Results;
@@ -284,7 +284,7 @@ namespace KERBALISM
 				else
 				{
 					Message.Post(
-						Lib.Color(Lib.BuildString(Local.Laboratory_Analysis, " ", Local.Laboratory_stopped), Lib.Kolor.Red),//"stopped"
+						String.Color(String.BuildString(Local.Laboratory_Analysis, " ", Local.Laboratory_stopped), String.Kolor.Red),//"stopped"
 						Local.Laboratory_Notspace//"Not enough space on hard drive"
 					);
 
@@ -302,8 +302,8 @@ namespace KERBALISM
 				{
 					// only inform the user if auto-analyze is turned off
 					// otherwise we could be spamming "Analysis complete" messages
-					Message.Post(Lib.BuildString(Lib.Color(Local.Laboratory_Analysis, Lib.Kolor.Science, true), "\n",
-						Local.Laboratory_Analyzed.Format(Lib.Bold(v.vesselName), Lib.Bold(subject.FullTitle))), localized_results);
+					Message.Post(String.BuildString(String.Color(Local.Laboratory_Analysis, String.Kolor.Science, true), "\n",
+						Local.Laboratory_Analyzed.Format(String.Bold(v.vesselName), String.Bold(subject.FullTitle))), localized_results);
 				}
 
 				if (PreferencesScience.Instance.transmitScience)
@@ -349,13 +349,13 @@ namespace KERBALISM
 					status_txt = localized_noStorage;
 					break;
 				case Status.NO_RESEARCHER:
-					status_txt = Lib.Color(researcher_cs.Warning(), Lib.Kolor.Orange);
+					status_txt = String.Color(researcher_cs.Warning(), String.Kolor.Orange);
 					break;
 				case Status.NO_SAMPLE:
 					status_txt = localized_noSample;
 					break;
 				case Status.RUNNING:
-					status_txt = Lib.Color(current_sample.FullTitle, Lib.Kolor.Green);
+					status_txt = String.Color(current_sample.FullTitle, String.Kolor.Green);
 					break;
 			}
 		}
@@ -363,7 +363,7 @@ namespace KERBALISM
 		// module info support
 		public string GetModuleTitle() { return localized_title; } // attempt to display at the top
 		public override string GetModuleDisplayName() { return localized_title; } // Attempt to display at top of tooltip
-		public string GetPrimaryField() { return String.Empty; }
+		public string GetPrimaryField() { return string.Empty; }
 		public Callback<Rect> GetDrawModulePanelCallback() { return null; }
 	}
 

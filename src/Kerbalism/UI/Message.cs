@@ -121,10 +121,10 @@ namespace KERBALISM
 			if (instance.muted) return;
 
 			if (subtext.Length == 0) Post(text);
-			else Post(Lib.BuildString(text, "\n<i>", subtext, "</i>"));
+			else Post(String.BuildString(text, "\n<i>", subtext, "</i>"));
 			all_logs.Add(new MessageObject
 			{
-				msg = Lib.BuildString(text, "\n<i>", subtext, "</i>"),
+				msg = String.BuildString(text, "\n<i>", subtext, "</i>"),
 			});
 			TruncateLogs();
 		}
@@ -139,18 +139,18 @@ namespace KERBALISM
 			string title = "";
 			switch (severity)
 			{
-				case Severity.relax: title = Lib.BuildString(Lib.Color(Local.Message_RELAX, Lib.Kolor.Green, true), "\n"); break;//"RELAX"
-				case Severity.warning: title = Lib.BuildString(Lib.Color(Local.Message_WARNING, Lib.Kolor.Yellow, true), "\n"); Time.StopWarp(); break; //"WARNING"
-				case Severity.danger: title = Lib.BuildString(Lib.Color(Local.Message_DANGER, Lib.Kolor.Red, true), "\n"); Time.StopWarp(); break; //"DANGER"
-				case Severity.fatality: title = Lib.BuildString(Lib.Color(Local.Message_FATALITY, Lib.Kolor.Red, true), "\n"); Time.StopWarp(); break; //"FATALITY"
-				case Severity.breakdown: title = Lib.BuildString(Lib.Color(Local.Message_BREAKDOWN, Lib.Kolor.Orange, true), "\n"); Time.StopWarp(); break; //"BREAKDOWN"
+				case Severity.relax: title = String.BuildString(String.Color(Local.Message_RELAX, String.Kolor.Green, true), "\n"); break;//"RELAX"
+				case Severity.warning: title = String.BuildString(String.Color(Local.Message_WARNING, String.Kolor.Yellow, true), "\n"); Time.StopWarp(); break; //"WARNING"
+				case Severity.danger: title = String.BuildString(String.Color(Local.Message_DANGER, String.Kolor.Red, true), "\n"); Time.StopWarp(); break; //"DANGER"
+				case Severity.fatality: title = String.BuildString(String.Color(Local.Message_FATALITY, String.Kolor.Red, true), "\n"); Time.StopWarp(); break; //"FATALITY"
+				case Severity.breakdown: title = String.BuildString(String.Color(Local.Message_BREAKDOWN, String.Kolor.Orange, true), "\n"); Time.StopWarp(); break; //"BREAKDOWN"
 			}
-			if (subtext.Length == 0) Post(Lib.BuildString(title, text));
-			else Post(Lib.BuildString(title, text, "\n<i>", subtext, "</i>"));
+			if (subtext.Length == 0) Post(String.BuildString(title, text));
+			else Post(String.BuildString(title, text, "\n<i>", subtext, "</i>"));
 			all_logs.Add(new MessageObject
 			{
 				title = title,
-				msg = Lib.BuildString(text, "\n<i>", subtext, "</i>"),
+				msg = String.BuildString(text, "\n<i>", subtext, "</i>"),
 			});
 			TruncateLogs();
 		}

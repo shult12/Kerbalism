@@ -93,7 +93,7 @@ namespace KERBALISM
 			reconfigure_cs = new CrewSpecs(reconfigure);
 
 			// set toggle window button label
-			Events["ToggleWindow"].guiName = Lib.BuildString(Local.Module_Configure, " <b>", title, "</b>");//"Configure"
+			Events["ToggleWindow"].guiName = String.BuildString(Local.Module_Configure, " <b>", title, "</b>");//"Configure"
 
 			// only show toggle in flight if this is reconfigurable
 			Events["ToggleWindow"].active = GameLogic.IsEditor() || reconfigure_cs;
@@ -358,7 +358,7 @@ namespace KERBALISM
 			if (!res.isVisible && !res.isTweakable) return;
 
 			Lib.EditorClearSymmetry(part);
-			Message.Post(Local.RemoveSymmetry_msg.Format(part.partInfo.title, res.displayName));//Lib.BuildString("Symmetry on <<1>>\nhas been removed because of switching the <<2>> capacity.")
+			Message.Post(Local.RemoveSymmetry_msg.Format(part.partInfo.title, res.displayName));//String.BuildString("Symmetry on <<1>>\nhas been removed because of switching the <<2>> capacity.")
 		}
 
 		void OnGUI()
@@ -462,7 +462,7 @@ namespace KERBALISM
 				}
 				else
 				{
-					specs.Add(Lib.BuildString("• <b>", setup.title, "</b>"));
+					specs.Add(String.BuildString("• <b>", setup.title, "</b>"));
 				}
 			}
 
@@ -489,12 +489,12 @@ namespace KERBALISM
 
 				// add tech name
 				//specs.Add(string.Empty);
-				//specs.Add(Lib.BuildString("<color=#00ffff>", tech_title, ":</color>"));
+				//specs.Add(String.BuildString("<color=#00ffff>", tech_title, ":</color>"));
 
 				// add setup titles
 				foreach (string setup_title in setup_titles)
 				{
-					specs.Add(Lib.BuildString("• <b>", setup_title, "</b>\n   at ", Lib.Color(tech_title, Lib.Kolor.Science)));
+					specs.Add(String.BuildString("• <b>", setup_title, "</b>\n   at ", String.Color(tech_title, String.Kolor.Science)));
 				}
 			}
 
@@ -569,7 +569,7 @@ namespace KERBALISM
 			}
 
 			// set metadata
-			p.Title(Lib.BuildString(Local.Module_Configure , " " , "<color=#cccccc>", Lib.Ellipsis(title, Styles.ScaleStringLength(40)), "</color>"));//Configure
+			p.Title(String.BuildString(Local.Module_Configure , " " , "<color=#cccccc>", String.Ellipsis(title, Styles.ScaleStringLength(40)), "</color>"));//Configure
 			p.Width(Styles.ScaleWidthFloat(300.0f));
 		}
 
@@ -584,11 +584,11 @@ namespace KERBALISM
 			// only allow reconfiguration if there are more setups than slots
 			if (unlocked.Count <= selected.Count)
 			{
-				p.AddSection(Lib.Ellipsis(setup.title, Styles.ScaleStringLength(70)), setup.desc);
+				p.AddSection(String.Ellipsis(setup.title, Styles.ScaleStringLength(70)), setup.desc);
 			}
 			else
 			{
-				p.AddSection(Lib.Ellipsis(setup.title, Styles.ScaleStringLength(70)), setup.desc, () => Change_setup(-1, selected_i, ref setup_i), () => Change_setup(1, selected_i, ref setup_i));
+				p.AddSection(String.Ellipsis(setup.title, Styles.ScaleStringLength(70)), setup.desc, () => Change_setup(-1, selected_i, ref setup_i), () => Change_setup(1, selected_i, ref setup_i));
 			}
 
 			// render details
@@ -627,8 +627,8 @@ namespace KERBALISM
 		public ModifierChangeWhen GetModuleMassChangeWhen() { return ModifierChangeWhen.CONSTANTLY; }
 
 		// module info support
-		public string GetModuleTitle() { return Lib.BuildString("<size=1><color=#00000000>00</color></size>", Local.Module_Configurable, " ", title); } // attempt to display at the top//Configurable
-		public override string GetModuleDisplayName() { return Lib.BuildString("<size=1><color=#00000000>00</color></size>", Local.Module_Configurable, " ", title); } // attempt to display at the top//Configurable
+		public string GetModuleTitle() { return String.BuildString("<size=1><color=#00000000>00</color></size>", Local.Module_Configurable, " ", title); } // attempt to display at the top//Configurable
+		public override string GetModuleDisplayName() { return String.BuildString("<size=1><color=#00000000>00</color></size>", Local.Module_Configurable, " ", title); } // attempt to display at the top//Configurable
 		public string GetPrimaryField() { return string.Empty; }
 		public Callback<Rect> GetDrawModulePanelCallback() { return null; }
 
@@ -733,7 +733,7 @@ namespace KERBALISM
 				if (specs.entries.Count == 0) continue;
 
 				// add title to details
-				details.Add(new Detail(Lib.BuildString("<b><color=#00ffff>", title, "</color></b>")));
+				details.Add(new Detail(String.BuildString("<b><color=#00ffff>", title, "</color></b>")));
 
 				// add specs to details
 				foreach (Specifics.Entry e in specs.entries)

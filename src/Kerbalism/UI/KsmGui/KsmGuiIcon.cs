@@ -53,9 +53,9 @@ namespace KERBALISM.KsmGui
 			Image.color = color;
 		}
 
-		public void SetIconColor(Lib.Kolor kolor)
+		public void SetIconColor(String.Kolor kolor)
 		{
-			Image.color = Lib.KolorToColor(kolor);
+			Image.color = String.KolorToColor(kolor);
 		}
 	}
 }
