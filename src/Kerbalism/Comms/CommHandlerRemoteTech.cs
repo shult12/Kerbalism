@@ -68,7 +68,7 @@ namespace KERBALISM
 					double dist = RemoteTech.GetCommsDistance(vd.VesselId, controlPath[0]);
 					double maxDist = RemoteTech.GetCommsMaxDistance(vd.VesselId, controlPath[0]);
 					connection.strength = maxDist > 0.0 ? 1.0 - (dist / System.Math.Max(maxDist, 1.0)) : 0.0;
-					connection.strength = System.Math.Pow(connection.strength, Sim.DataRateDampingExponentRT);
+					connection.strength = System.Math.Pow(connection.strength, DataRateDampingExponentRT);
 
 					connection.rate = baseRate * connection.strength;
 
@@ -92,7 +92,7 @@ namespace KERBALISM
 					double linkDistance = RemoteTech.GetCommsDistance(i, id);
 					double linkMaxDistance = RemoteTech.GetCommsMaxDistance(i, id);
 					double signalStrength = 1 - (linkDistance / linkMaxDistance);
-					signalStrength = System.Math.Pow(signalStrength, Sim.DataRateDampingExponentRT);
+					signalStrength = System.Math.Pow(signalStrength, DataRateDampingExponentRT);
 
 					string[] controlPoint = new string[3];
 
@@ -112,6 +112,62 @@ namespace KERBALISM
 			// set minimal data rate to what is defined in Settings (1 bit/s by default) 
 			if (connection.rate > 0.0 && connection.rate * bitsPerMB < Settings.DataRateMinimumBitsPerSecond)
 				connection.rate = Settings.DataRateMinimumBitsPerSecond / bitsPerMB;
+		}
+
+		static double dampingExponent = 0;
+		static double DataRateDampingExponentRT
+		{
+			get
+			{
+				if (dampingExponent != 0)
+					return dampingExponent;
+
+				if (Settings.DampingExponentOverride != 0)
+					return Settings.DampingExponentOverride;
+
+				// Since RemoteTech Mission Control KSC maximum range never exceeds 75Mm we can't use exactly the same logic as CommNet.
+				// What we do here is take Duna as a reference and pretend that it is Mars.
+
+				// Lets take a look at some real world examples
+				// https://www.researchgate.net/figure/Calculation-of-Received-Power-from-space-probes-based-on-online-DSN-data-given-on-May_tbl1_308019760	
+
+				// [ Satellite ]	[ Power output ]	[ Distance from Earth ]		[ Data rate ]
+				//	Voyager 1			20W, 47 dBi			134 au						159 bps
+				//	Voyager 2			20W, 47 dBi			111 au						160 bps
+				//	New Horizons		12W, 42 dBi			35 au						4.21 kbps
+				//	Cassini				20W, 46.6 dBi		9 au						22.12 kbps
+				//	Dawn				100W, 39.6 dBi		3.5 au						125 kbps
+				//	Rosetta				28W, 42.5 dBi		2.8 au						52.42 kbps
+				//	SOHO (omni ant)		10W					4.4 Moon distance			245.76 kbps
+
+				// https://mars.nasa.gov/mro/mission/communications/
+				// Also, the Mars Reconnaissance Orbiter sends data to Earth, the data rate is about 500 to 4000 kilobits per second.
+				// ie. between 62.5 kB/s - 500 kB/s
+				// https://en.wikipedia.org/wiki/Mars_Reconnaissance_Orbiter
+				// The spacecraft carries two 100-watt X-band amplifiers (one of which is a backup), one 35-watt Ka-band amplifier
+				// so, 135 W to transmit?
+
+				// For our estimation, we assume a base reach similar to the Reflectron KR-14 that has
+				// similar specs to Mars Reconnaissance Orbiter
+				double testRange = 60000000000.0; // 60Gm
+
+				// signal strength at ~ farthest earth - mars distance, Duna is at 2.53 au with stock ksp solar sytem
+				double strengthAt2AU = SignalStrength(testRange, 2.53 * Sim.AU);    // 34.4 Gm w stock solar system
+
+				// For our estimation, we assume a base rate similar to the Reflectron KR-14
+				double baseRate = 0.4815;
+
+				// At 2 AU, this is the rate we want to get out of it
+				double desiredRateAt2AU = 0.05;
+
+				// dataRate = baseRate * (strengthAt2AU ^ exponent)
+				// so...
+				// exponent = log_strengthAt2AU(dataRate / baseRate)
+				dampingExponent = System.Math.Log(desiredRateAt2AU / baseRate, strengthAt2AU);
+
+				// 2.4 seems good for RemoteTech
+				return dampingExponent;
+			}
 		}
 
 		protected override void UpdateTransmitters(ConnectionInfo connection, bool searchTransmitters)

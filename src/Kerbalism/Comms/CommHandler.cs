@@ -137,5 +137,19 @@ namespace KERBALISM
 		protected virtual void UpdateNetwork(ConnectionInfo connection) { }
 
 		protected virtual void UpdateTransmitters(ConnectionInfo connection, bool searchTransmitters) { }
+
+		protected static double SignalStrength(double maxRange, double distance)
+		{
+			if (distance > maxRange)
+				return 0.0;
+
+			double relativeDistance = 1.0 - (distance / maxRange);
+			double strength = (3.0 - (2.0 * relativeDistance)) * (relativeDistance * relativeDistance);
+
+			if (strength < 0)
+				return 0.0;
+
+			return strength;
+		}
 	}
 }
