@@ -1,29 +1,25 @@
 using System;
 using System.Collections.Generic;
 
-
 namespace KERBALISM
 {
-	internal static class Cache
+	static class Cache
 	{
-		internal static void Init()
-		{
-			vesselObjects = new Dictionary<Guid, Dictionary<string, object>>();
-		}
+		// caches
+		static Dictionary<Guid, Dictionary<string, object>> vesselObjects;
 
 
-		internal static void Clear()
-		{
-			vesselObjects.Clear();
-		}
+		internal static void Init() => vesselObjects = new Dictionary<Guid, Dictionary<string, object>>();
+
+        internal static void Clear() => vesselObjects.Clear();
 
 		/// <summary>
 		/// Called whenever a vessel changes and/or should be updated for various reasons.
 		/// Purge the anonymous cache and science transmission cache
 		/// </summary>
-		internal static void PurgeVesselCaches(Vessel v)
+        internal static void PurgeVesselCaches(Vessel vessel)
 		{
-			var id = Lib.VesselID(v);
+			Guid id = Lib.VesselID(vessel);
 			vesselObjects.Remove(id);
 		}
 
@@ -31,9 +27,9 @@ namespace KERBALISM
 		/// Called whenever a vessel changes and/or should be updated for various reasons.
 		/// Purge the anonymous cache and science transmission cache
 		/// </summary>
-		internal static void PurgeVesselCaches(ProtoVessel v)
+		internal static void PurgeVesselCaches(ProtoVessel protoVessel)
 		{
-			var id = Lib.VesselID(v);
+			Guid id = Lib.VesselID(protoVessel);
 			vesselObjects.Remove(id);
 		}
 
@@ -47,91 +43,63 @@ namespace KERBALISM
 			Message.all_logs.Clear();
 		}
 
-		internal static T VesselObjectsCache<T>(Vessel vessel, string key)
-		{
-			return VesselObjectsCache<T>(Lib.VesselID(vessel), key);
-		}
+        internal static T VesselObjectsCache<T>(Vessel vessel, string key) => VesselObjectsCache<T>(Lib.VesselID(vessel), key);
 
-		internal static T VesselObjectsCache<T>(ProtoVessel vessel, string key)
-		{
-			return VesselObjectsCache<T>(Lib.VesselID(vessel), key);
-		}
+        internal static T VesselObjectsCache<T>(ProtoVessel vessel, string key) => VesselObjectsCache<T>(Lib.VesselID(vessel), key);
 
 		static T VesselObjectsCache<T>(Guid id, string key)
 		{
 			if (!vesselObjects.ContainsKey(id))
-				return default(T);
+				return default;
 
-			var dict = vesselObjects[id];
-			if(dict == null)
-				return default(T);
+			Dictionary<string, object> dictionary = vesselObjects[id];
+			if (dictionary == null)
+				return default;
 
-			if (!dict.ContainsKey(key))
-				return default(T);
+			if (!dictionary.ContainsKey(key))
+				return default;
 
-			return (T)dict[key];
+			return (T)dictionary[key];
 		}
 
-		internal static void SetVesselObjectsCache<T>(Vessel vessel, string key, T value)
-		{
-			SetVesselObjectsCache(Lib.VesselID(vessel), key, value);
-		}
+        internal static void SetVesselObjectsCache<TValue>(Vessel vessel, string key, TValue value) => SetVesselObjectsCache(Lib.VesselID(vessel), key, value);
 
-		internal static void SetVesselObjectsCache<T>(ProtoVessel pv, string key, T value)
-		{
-			SetVesselObjectsCache(Lib.VesselID(pv), key, value);
-		}
+        internal static void SetVesselObjectsCache<TValue>(ProtoVessel protoVessel, string key, TValue value) => SetVesselObjectsCache(Lib.VesselID(protoVessel), key, value);
 
-		static void SetVesselObjectsCache<T>(Guid id, string key, T value)
+        static void SetVesselObjectsCache<TValue>(Guid id, string key, TValue value)
 		{
 			if (!vesselObjects.ContainsKey(id))
 				vesselObjects.Add(id, new Dictionary<string, object>());
 
-			var dict = vesselObjects[id];
-			dict.Remove(key);
-			dict.Add(key, value);
+			Dictionary<string, object> dictionary = vesselObjects[id];
+			dictionary.Remove(key);
+			dictionary.Add(key, value);
 		}
 
-		internal static bool HasVesselObjectsCache(Vessel vessel, string key)
-		{
-			return HasVesselObjectsCache(Lib.VesselID(vessel), key);
-		}
+        internal static bool HasVesselObjectsCache(Vessel vessel, string key) => HasVesselObjectsCache(Lib.VesselID(vessel), key);
 
-		internal static bool HasVesselObjectsCache(ProtoVessel pv, string key)
-		{
-			return HasVesselObjectsCache(Lib.VesselID(pv), key);
-		}
+        internal static bool HasVesselObjectsCache(ProtoVessel protoVessel, string key) => HasVesselObjectsCache(Lib.VesselID(protoVessel), key);
 
 		static bool HasVesselObjectsCache(Guid id, string key)
 		{
 			if (!vesselObjects.ContainsKey(id))
 				return false;
 
-			var dict = vesselObjects[id];
-			return dict.ContainsKey(key);
+			Dictionary<string, object> dictionary = vesselObjects[id];
+			return dictionary.ContainsKey(key);
 		}
 
-		internal static void RemoveVesselObjectsCache(Vessel vessel, string key)
-		{
-			RemoveVesselObjectsCache(Lib.VesselID(vessel), key);
-		}
+        internal static void RemoveVesselObjectsCache(Vessel vessel, string key) => RemoveVesselObjectsCache(Lib.VesselID(vessel), key);
 
-		internal static void RemoveVesselObjectsCache<T>(ProtoVessel pv, string key)
-		{
-			RemoveVesselObjectsCache(Lib.VesselID(pv), key);
-		}
+        internal static void RemoveVesselObjectsCache(ProtoVessel protoVessel, string key) => RemoveVesselObjectsCache(Lib.VesselID(protoVessel), key);
 
 		static void RemoveVesselObjectsCache(Guid id, string key)
 		{
 			if (!vesselObjects.ContainsKey(id))
 				return;
-			var dict = vesselObjects[id];
-			dict.Remove(key);
+
+			Dictionary<string, object> dictionary = vesselObjects[id];
+			dictionary.Remove(key);
 		}
-
-		// caches
-		static Dictionary<Guid, Dictionary<string, System.Object>> vesselObjects;
 	}
-
-
 } // KERBALISM
