@@ -78,7 +78,7 @@ namespace KERBALISM
 
 				// show message to the user
 				// - unless the script is empty (can happen when being edited)
-				if (script.states.Count > 0 && v.KerbalismData().cfg_script)
+				if (script.states.Count > 0 && v.KerbalismData().configScripts)
 				{
 					Message.Post(String.BuildString(Local.UI_scriptvessel, " <b>", v.vesselName, "</b>"));
 				}
@@ -93,11 +93,11 @@ namespace KERBALISM
 
 			// get current states
 			ResourceInfo ec = resources.GetResource(v, "ElectricCharge");
-			bool sunlight = !vd.EnvInFullShadow;
+			bool sunlight = !vd.EnvironmentInFullShadow;
 			bool power_low = ec.Level < 0.2;
 			bool power_high = ec.Level > 0.8;
-			bool radiation_low = vd.EnvRadiation < 0.000005552; //< 0.02 rad/h
-			bool radiation_high = vd.EnvRadiation > 0.00001388; //< 0.05 rad/h
+			bool radiation_low = vd.EnvironmentRadiation < 0.000005552; //< 0.02 rad/h
+			bool radiation_high = vd.EnvironmentRadiation > 0.00001388; //< 0.05 rad/h
 			bool signal = vd.Connection.linked;
 			bool drive_full = vd.DrivesFreeSpace < double.MaxValue && (vd.DrivesFreeSpace / vd.DrivesCapacity < 0.15);
 			bool drive_empty = vd.DrivesFreeSpace >= double.MaxValue || (vd.DrivesFreeSpace / vd.DrivesCapacity > 0.9);
@@ -216,7 +216,7 @@ namespace KERBALISM
 				}
 
 				// show message to the user
-				if (v.KerbalismData().cfg_script)
+				if (v.KerbalismData().configScripts)
 				{
 					Message.Post(String.BuildString("Script called on vessel <b>", v.vesselName, "</b>"));
 				}

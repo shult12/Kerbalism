@@ -255,7 +255,7 @@ namespace KERBALISM
 			var now = Planetarium.GetUniversalTime();
 
 			var vd = v.KerbalismData();
-			List<CelestialBody> occluders = vd.EnvVisibleBodies;
+			List<CelestialBody> occluders = vd.EnvironmentVisibleBodies;
 
 			// set up CB position caches
 			bodyCache.SetForOccluders(occluders);

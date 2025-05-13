@@ -99,7 +99,7 @@ namespace KERBALISM
 			// render panel, add some content based on enabled features
 			p.AddSection(Local.TELEMETRY_HABITAT);//"HABITAT"
 			if (Features.Poisoning) p.AddContent(Local.TELEMETRY_co2level, String.Color(vd.Poisoning > Settings.PoisoningThreshold, HumanReadable.Percentage(vd.Poisoning, "F2"), String.Kolor.Yellow));//"co2 level"
-			if (Features.Radiation && v.isEVA) p.AddContent(Local.TELEMETRY_radiation, HumanReadable.Radiation(vd.EnvHabitatRadiation));//"radiation"
+			if (Features.Radiation && v.isEVA) p.AddContent(Local.TELEMETRY_radiation, HumanReadable.Radiation(vd.EnvironmentHabitatRadiation));//"radiation"
 
 			if (!v.isEVA)
 			{
@@ -107,7 +107,7 @@ namespace KERBALISM
 				if (Features.Shielding) p.AddContent(Local.TELEMETRY_shielding, Habitat.Shielding_to_string(vd.Shielding));//"shielding"
 				if (Features.LivingSpace) p.AddContent(Local.TELEMETRY_livingspace, Habitat.Living_space_to_string(vd.LivingSpace));//"living space"
 				if (Features.Comfort) p.AddContent(Local.TELEMETRY_comfort, vd.Comforts.Summary(), vd.Comforts.Tooltip());//"comfort"
-				if (Features.Pressure) p.AddContent(Local.TELEMETRY_EVAsavailable, vd.EnvBreathable ? Local.TELEMETRY_EnvBreathable : HumanReadable.Integer(vd.Evas), vd.EnvBreathable ? Local.TELEMETRY_Breathableatm : Local.TELEMETRY_approx);//"EVA's available""infinite""breathable atmosphere""approx (derived from stored N2)"
+				if (Features.Pressure) p.AddContent(Local.TELEMETRY_EVAsavailable, vd.EnvironmentBreathable ? Local.TELEMETRY_EnvBreathable : HumanReadable.Integer(vd.Evas), vd.EnvironmentBreathable ? Local.TELEMETRY_Breathableatm : Local.TELEMETRY_approx);//"EVA's available""infinite""breathable atmosphere""approx (derived from stored N2)"
 			}
 		}
 

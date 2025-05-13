@@ -131,13 +131,13 @@ namespace KERBALISM
 		// return true if the vessel specified is in sunlight
 		public static bool InSunlight(Vessel v)
 		{
-			return !v.KerbalismData().EnvInFullShadow;
+			return !v.KerbalismData().EnvironmentInFullShadow;
 		}
 
 		// return true if the vessel specified is inside a breathable atmosphere
 		public static bool Breathable(Vessel v)
 		{
-			return v.KerbalismData().EnvBreathable;
+			return v.KerbalismData().EnvironmentBreathable;
 		}
 
 
@@ -153,35 +153,35 @@ namespace KERBALISM
 		public static double Radiation(Vessel v)
 		{
 			if (!Features.Radiation) return 0.0;
-			return v.KerbalismData().EnvRadiation;
+			return v.KerbalismData().EnvironmentRadiation;
 		}
 
 		/// <summary>return amount of environment effective in the habitats of the given vessel</summary>
 		public static double HabitatRadiation(Vessel v)
 		{
 			if (!Features.Radiation) return 0.0;
-			return v.KerbalismData().EnvHabitatRadiation;
+			return v.KerbalismData().EnvironmentHabitatRadiation;
 		}
 
 		/// <summary>return true if the vessel is inside the magnetopause of some body (except the sun)</summary>
 		public static bool Magnetosphere(Vessel v)
 		{
 			if (!Features.Radiation) return false;
-			return v.KerbalismData().EnvMagnetosphere;
+			return v.KerbalismData().EnvironmentMagnetosphere;
 		}
 
 		/// <summary>return true if the vessel is inside the radiation belt of some body</summary>
 		public static bool InnerBelt(Vessel v)
 		{
 			if (!Features.Radiation) return false;
-			return v.KerbalismData().EnvInnerBelt;
+			return v.KerbalismData().EnvironmentInnerBelt;
 		}
 
 		/// <summary>return true if the vessel is inside the radiation belt of some body</summary>
 		public static bool OuterBelt(Vessel v)
 		{
 			if (!Features.Radiation) return false;
-			return v.KerbalismData().EnvOuterBelt;
+			return v.KerbalismData().EnvironmentOuterBelt;
 		}
 
 		/// <summary>return true if the given body has an inner radiation belt (doesn't matter if visible or not)</summary>
@@ -310,14 +310,14 @@ namespace KERBALISM
 		{
 			if (!Features.SpaceWeather) return false;
 			VesselData vd = v.KerbalismData();
-			return vd.IsSimulated && vd.EnvStorm;
+			return vd.IsSimulated && vd.EnvironmentStorm;
 		}
 
 		// return true if the vessel is subject to a signal blackout
 		public static bool Blackout(Vessel v)
 		{
 			if (!RemoteTech.Enabled) return false;
-			return v.KerbalismData().EnvBlackout;
+			return v.KerbalismData().EnvironmentBlackout;
 		}
 
 		/// <summary>

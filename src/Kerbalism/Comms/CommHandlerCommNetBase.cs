@@ -205,10 +205,10 @@ namespace KERBALISM
 			if (!__instance.CanComm || !__instance.Vessel.TryGetVesselData(out VesselData vd))
 				return;
 
-			if (vd.EnvStormRadiation > 0.0)
+			if (vd.EnvironmentStormRadiation > 0.0)
 			{
 				___inPlasma = true;
-				___plasmaMult = vd.EnvStormRadiation * 2.0 / PreferencesRadiation.Instance.StormRadiation; // We should probably have a threshold setting instead of this hardcoded formula
+				___plasmaMult = vd.EnvironmentStormRadiation * 2.0 / PreferencesRadiation.Instance.StormRadiation; // We should probably have a threshold setting instead of this hardcoded formula
 				___plasmaMult = System.Math.Max(1.0 - ___plasmaMult, 0.0);
 			}
 		}
@@ -228,7 +228,7 @@ namespace KERBALISM
 				return false;
 			}
 
-			if (__instance.Vessel.TryGetVesselData(out VesselData vd) && vd.EnvStormRadiation > 0.0)
+			if (__instance.Vessel.TryGetVesselData(out VesselData vd) && vd.EnvironmentStormRadiation > 0.0)
 			{
 				__result = ___plasmaMult;
 				return false;

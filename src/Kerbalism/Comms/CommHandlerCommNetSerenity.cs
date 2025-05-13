@@ -9,7 +9,7 @@ namespace KERBALISM
 		protected override void UpdateInputs(ConnectionInfo connection)
 		{
 			connection.transmitting = vd.filesTransmitted.Count > 0;
-			connection.storm = vd.EnvStorm;
+			connection.storm = vd.EnvironmentStorm;
 
 			if (cluster == null)
 				cluster = Serenity.GetScienceCluster(vd.Vessel);

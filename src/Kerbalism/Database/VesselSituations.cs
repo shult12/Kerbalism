@@ -91,7 +91,7 @@ namespace KERBALISM
 			situations.Clear();
 			virtualBiomes.Clear();
 
-			if (vd.EnvLanded)
+			if (vd.EnvironmentLanded)
 			{
 				switch (vd.Vessel.situation)
 				{
@@ -102,7 +102,7 @@ namespace KERBALISM
 				situations.Add(ScienceSituation.Surface);
 				situations.Add(ScienceSituation.BodyGlobal);
 
-				if (vd.EnvStorm)
+				if (vd.EnvironmentStorm)
 					virtualBiomes.Add(VirtualBiome.Storm);
 
 				if ((vd.Vessel.latitude + 270.0) % 90.0 > 0.0)
@@ -133,7 +133,7 @@ namespace KERBALISM
 				situations.Add(ScienceSituation.Flying);
 				situations.Add(ScienceSituation.BodyGlobal);
 
-				if (vd.EnvStorm)
+				if (vd.EnvironmentStorm)
 					virtualBiomes.Add(VirtualBiome.Storm);
 
 				if ((vd.Vessel.latitude + 270.0) % 90.0 > 0.0)
@@ -145,18 +145,18 @@ namespace KERBALISM
 				return;
 			}
 
-			if (vd.EnvStorm)
+			if (vd.EnvironmentStorm)
 				virtualBiomes.Add(VirtualBiome.Storm);
 
-			if (vd.EnvInterstellar)
+			if (vd.EnvironmentInterstellar)
 				virtualBiomes.Add(VirtualBiome.Interstellar);
 
-			if (vd.EnvInnerBelt)
+			if (vd.EnvironmentInnerBelt)
 				virtualBiomes.Add(VirtualBiome.InnerBelt);
-			else if (vd.EnvOuterBelt)
+			else if (vd.EnvironmentOuterBelt)
 				virtualBiomes.Add(VirtualBiome.OuterBelt);
 
-			if (vd.EnvMagnetosphere)
+			if (vd.EnvironmentMagnetosphere)
 				virtualBiomes.Add(VirtualBiome.Magnetosphere);
 
 			if (vd.Vessel.latitude > 0.0)

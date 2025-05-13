@@ -79,7 +79,7 @@ namespace KERBALISM
 			var vd = habitat.vessel.KerbalismData();
 			List<SunShieldingPartData> sunShieldingParts = new List<SunShieldingPartData>();
 
-			Ray r = new Ray(habitatPosition, vd.EnvMainSun.Direction);
+			Ray r = new Ray(habitatPosition, vd.EnvironmentMainSun.Direction);
 			var hits = Physics.RaycastAll(r, 200);
 
 			foreach (var hit in hits)

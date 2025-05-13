@@ -128,7 +128,7 @@ namespace KERBALISM
 		protected virtual void UpdateInputs(ConnectionInfo connection)
 		{
 			connection.transmitting = vd.filesTransmitted.Count > 0;
-			connection.storm = vd.EnvStorm;
+			connection.storm = vd.EnvironmentStorm;
 			connection.powered = vd.Powered;
 		}
 

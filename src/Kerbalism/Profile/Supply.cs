@@ -44,7 +44,7 @@ namespace KERBALISM
 			SupplyData sd = v.KerbalismData().Supply(resource);
 
 			// message obey user config
-			bool show_msg = resource == "ElectricCharge" ? vd.cfg_ec : vd.cfg_supply;
+			bool show_msg = resource == "ElectricCharge" ? vd.configElectricCharge : vd.configSupplies;
 
 			// messages are shown only if there is some capacity and the vessel is manned
 			// special case: ElectricCharge related messages are shown for unmanned vessels too

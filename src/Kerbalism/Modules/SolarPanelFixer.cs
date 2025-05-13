@@ -418,13 +418,13 @@ namespace KERBALISM
 			}
 
 			// Update tracked sun in auto mode
-			if (!manualTracking && trackedSunIndex != vd.EnvMainSun.SunData.bodyIndex)
+			if (!manualTracking && trackedSunIndex != vd.EnvironmentMainSun.SunData.bodyIndex)
 			{
-				trackedSunIndex = vd.EnvMainSun.SunData.bodyIndex;
-				SolarPanel.SetTrackedBody(vd.EnvMainSun.SunData.body);
+				trackedSunIndex = vd.EnvironmentMainSun.SunData.bodyIndex;
+				SolarPanel.SetTrackedBody(vd.EnvironmentMainSun.SunData.body);
 			}
 
-			VesselData.SunInfo trackedSunInfo = vd.EnvSunsInfo.Find(p => p.SunData.bodyIndex == trackedSunIndex);
+			VesselData.SunInfo trackedSunInfo = vd.EnvironmentSunsInfo.Find(p => p.SunData.bodyIndex == trackedSunIndex);
 
 			if (trackedSunInfo.SunlightFactor == 0.0)
 				exposureState = ExposureState.InShadow;
@@ -449,7 +449,7 @@ namespace KERBALISM
 			}
 #endif
 
-			if (vd.EnvIsAnalytic)
+			if (vd.EnvironmentIsAnalytic)
 			{
 				// if we are switching to analytic mode and the vessel is landed, get an average exposure over a day
 				// TODO : maybe check the rotation speed of the body, this might be inaccurate for tidally-locked bodies (test on the mun ?)
@@ -476,7 +476,7 @@ namespace KERBALISM
 				exposureFactor = 0.0;
 
 				// iterate over all stars, compute the exposure factor
-				foreach (VesselData.SunInfo sunInfo in vd.EnvSunsInfo)
+				foreach (VesselData.SunInfo sunInfo in vd.EnvironmentSunsInfo)
 				{
 					// ignore insignifiant flux from distant stars
 					if (sunInfo != trackedSunInfo && sunInfo.SolarFlux < 1e-6)
@@ -536,7 +536,7 @@ namespace KERBALISM
 			// get solar flux and deduce a scalar based on nominal flux at 1AU
 			// - this include atmospheric absorption if inside an atmosphere
 			// - at high timewarps speeds, atmospheric absorption is analytical (integrated over a full revolution)
-			double distanceFactor = vd.EnvSolarFluxTotal / Sim.SolarFluxAtHome;
+			double distanceFactor = vd.EnvironmentSolarFluxTotal / Sim.SolarFluxAtHome;
 
 			// get wear factor (time based output degradation)
 			wearFactor = 1.0;
@@ -586,7 +586,7 @@ namespace KERBALISM
 			// - this include atmospheric absorption if inside an atmosphere
 			// - this is zero when the vessel is in shadow when evaluation is non-analytic (low timewarp rates)
 			// - if integrated over orbit (analytic evaluation), this include fractional sunlight / atmo absorbtion
-			efficiencyFactor *= vd.EnvSolarFluxTotal / Sim.SolarFluxAtHome;
+			efficiencyFactor *= vd.EnvironmentSolarFluxTotal / Sim.SolarFluxAtHome;
 
 			// get wear factor (output degradation with time)
 			if (m.moduleValues.HasNode("timeEfficCurve"))
@@ -694,7 +694,7 @@ namespace KERBALISM
 		double GetAnalyticalCosineFactorLanded(VesselData vd)
 		{
 			double finalFactor = 0.0;
-			foreach (VesselData.SunInfo sun in vd.EnvSunsInfo)
+			foreach (VesselData.SunInfo sun in vd.EnvironmentSunsInfo)
 			{
 				Vector3d sunDir = sun.Direction;
 				// get a rotation of 45° perpendicular to the sun direction

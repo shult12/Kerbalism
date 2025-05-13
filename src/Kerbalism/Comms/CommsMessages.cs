@@ -16,10 +16,10 @@
 			// - do not send messages for EVA kerbals
 			if (!v.isEVA && v.situation != Vessel.Situations.PRELAUNCH)
 			{
-				if (!vd.msg_signal && !vd.Connection.linked)
+				if (!vd.messageSignal && !vd.Connection.linked)
 				{
-					vd.msg_signal = true;
-					if (vd.cfg_signal)
+					vd.messageSignal = true;
+					if (vd.configSignal)
 					{
 						string subtext = Local.UI_transmissiondisabled;
 
@@ -50,10 +50,10 @@
 						Message.Post(Severity.warning, String.BuildString(Local.UI_signallost, " <b>", v.vesselName, "</b>"), subtext);
 					}
 				}
-				else if (vd.msg_signal && vd.Connection.linked)
+				else if (vd.messageSignal && vd.Connection.linked)
 				{
-					vd.msg_signal = false;
-					if (vd.cfg_signal)
+					vd.messageSignal = false;
+					if (vd.configSignal)
 					{
 						Message.Post(Severity.relax, String.BuildString("<b>", v.vesselName, "</b> ", Local.UI_signalback),
 						  vd.Connection.Status == (int)LinkStatus.direct_link ? Local.UI_directlink :

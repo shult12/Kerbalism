@@ -75,11 +75,11 @@ namespace KERBALISM
 		{
 			switch (type)
 			{
-				case "temperature": return System.Math.Min(vd.EnvTemperature / 11000.0, 1.0);
-				case "radiation": return System.Math.Min(vd.EnvRadiation * 3600.0 / 11.0, 1.0);
+				case "temperature": return System.Math.Min(vd.EnvironmentTemperature / 11000.0, 1.0);
+				case "radiation": return System.Math.Min(vd.EnvironmentRadiation * 3600.0 / 11.0, 1.0);
 				case "habitat_radiation": return System.Math.Min(HabitatRadiation(vd) * 3600.0 / 11.0, 1.0);
 				case "pressure": return System.Math.Min(v.mainBody.GetPressure(v.altitude) / Sim.PressureAtSeaLevel() / 11.0, 1.0);
-				case "gravioli": return System.Math.Min(vd.EnvGravioli, 1.0);
+				case "gravioli": return System.Math.Min(vd.EnvironmentGravioli, 1.0);
 			}
 			return 0.0;
 		}
@@ -89,11 +89,11 @@ namespace KERBALISM
 		{
 			switch (type)
 			{
-				case "temperature": return vd.EnvTemperature;
-				case "radiation": return vd.EnvRadiation;
+				case "temperature": return vd.EnvironmentTemperature;
+				case "radiation": return vd.EnvironmentRadiation;
 				case "habitat_radiation": return HabitatRadiation(vd);
 				case "pressure": return v.mainBody.GetPressure(v.altitude);
-				case "gravioli": return vd.EnvGravioli;
+				case "gravioli": return vd.EnvironmentGravioli;
 			}
 			return 0.0;
 		}
@@ -103,18 +103,18 @@ namespace KERBALISM
 		{
 			switch (type)
 			{
-				case "temperature": return HumanReadable.Temp(vd.EnvTemperature);
-				case "radiation": return HumanReadable.Radiation(vd.EnvRadiation);
+				case "temperature": return HumanReadable.Temp(vd.EnvironmentTemperature);
+				case "radiation": return HumanReadable.Radiation(vd.EnvironmentRadiation);
 				case "habitat_radiation": return HumanReadable.Radiation(HabitatRadiation(vd));
 				case "pressure": return HumanReadable.Pressure(v.mainBody.GetPressure(v.altitude));
-				case "gravioli": return vd.EnvGravioli < 0.33 ? Local.Sensor_shorttextinfo1 : vd.EnvGravioli < 0.66 ? Local.Sensor_shorttextinfo2 : Local.Sensor_shorttextinfo3;//"nothing here""almost one""WOW!"
+				case "gravioli": return vd.EnvironmentGravioli < 0.33 ? Local.Sensor_shorttextinfo1 : vd.EnvironmentGravioli < 0.66 ? Local.Sensor_shorttextinfo2 : Local.Sensor_shorttextinfo3;//"nothing here""almost one""WOW!"
 			}
 			return string.Empty;
 		}
 
 		static double HabitatRadiation(VesselData vd)
 		{
-			return (1.0 - vd.Shielding) * vd.EnvHabitatRadiation;
+			return (1.0 - vd.Shielding) * vd.EnvironmentHabitatRadiation;
 		}
 
 		// get readings tooltip
@@ -126,9 +126,9 @@ namespace KERBALISM
 					return String.BuildString
 					(
 						"<align=left />",
-						string.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_solarflux, HumanReadable.Flux(vd.EnvSolarFluxTotal)),//"solar flux"
-						string.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_albedoflux, HumanReadable.Flux(vd.EnvAlbedoFlux)),//"albedo flux"
-						string.Format("{0,-14}\t<b>{1}</b>", Local.Sensor_bodyflux, HumanReadable.Flux(vd.EnvBodyFlux))//"body flux"
+						string.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_solarflux, HumanReadable.Flux(vd.EnvironmentSolarFluxTotal)),//"solar flux"
+						string.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_albedoflux, HumanReadable.Flux(vd.EnvironmentAlbedoFlux)),//"albedo flux"
+						string.Format("{0,-14}\t<b>{1}</b>", Local.Sensor_bodyflux, HumanReadable.Flux(vd.EnvironmentBodyFlux))//"body flux"
 					);
 
 				case "radiation":
@@ -138,15 +138,15 @@ namespace KERBALISM
 					return String.BuildString
 					(
 						"<align=left />",
-						string.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_environment, HumanReadable.Radiation(vd.EnvRadiation, false)),//"environment"
+						string.Format("{0,-14}\t<b>{1}</b>\n", Local.Sensor_environment, HumanReadable.Radiation(vd.EnvironmentRadiation, false)),//"environment"
 						string.Format("{0,-14}\t<b>{1}</b>", Local.Sensor_habitats, HumanReadable.Radiation(HabitatRadiation(vd), false))//"habitats"
 					);
 
 				case "pressure":
-					return vd.EnvUnderwater
+					return vd.EnvironmentUnderwater
 					  ? Local.Sensor_insideocean//"inside <b>ocean</b>"
-					  : vd.EnvInAtmosphere
-					  ? Local.Sensor_insideatmosphere.Format(vd.EnvBreathable ? Local.Sensor_breathable : Local.Sensor_notbreathable)//"breathable""not breathable"                  //String.BuildString("inside <b>atmosphere</b> (", vd.EnvBreathable ? "breathable" : "not breathable", ")")
+					  : vd.EnvironmentInAtmosphere
+					  ? Local.Sensor_insideatmosphere.Format(vd.EnvironmentBreathable ? Local.Sensor_breathable : Local.Sensor_notbreathable)//"breathable""not breathable"                  //String.BuildString("inside <b>atmosphere</b> (", vd.EnvBreathable ? "breathable" : "not breathable", ")")
 					  : Sim.InsideThermosphere(v)
 					  ? Local.Sensor_insidethermosphere//"inside <b>thermosphere</b>""
 					  : Sim.InsideExosphere(v)
@@ -156,7 +156,7 @@ namespace KERBALISM
 				case "gravioli":
 					return String.BuildString
 					(
-						Local.Sensor_Graviolidetection + " <b>" + vd.EnvGravioli.ToString("F2") + "</b>\n\n",//"Gravioli detection events per-year: 
+						Local.Sensor_Graviolidetection + " <b>" + vd.EnvironmentGravioli.ToString("F2") + "</b>\n\n",//"Gravioli detection events per-year: 
 						"<i>", Local.Sensor_info1, "\n",//The elusive negative gravioli particle\nseems to be much harder to detect than expected.
 						Local.Sensor_info2, "</i>"//" On the other\nhand there seems to be plenty\nof useless positive graviolis around."
 					);

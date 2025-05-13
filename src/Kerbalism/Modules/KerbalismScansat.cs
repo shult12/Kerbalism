@@ -97,19 +97,19 @@ namespace KERBALISM
 						{
 							warp_buffer = 0;
 							StopScan();
-							vd.scansat_id.Add(part.flightID);
+							vd.scansatID.Add(part.flightID);
 							Message.Post(String.Color(Local.Scansat_Scannerhalted, String.Kolor.Red, true), Local.Scansat_Scannerhalted_text.Format("<b>" + vessel.vesselName + "</b>"));//"Scanner halted""Scanner halted on <<1>>. No storage left on vessel."
 						}
 					}
 				}
-				else if(vd.scansat_id.Contains(part.flightID))
+				else if(vd.scansatID.Contains(part.flightID))
 				{
 					
 					if (vd.DrivesFreeSpace / vd.DrivesCapacity > 0.9) // restart when 90% of capacity is available 
 					{
 						StartScan();
-						vd.scansat_id.Remove(part.flightID);
-						if (vd.cfg_ec) Message.Post(Local.Scansat_sensorresumed.Format("<b>" + vessel.vesselName + "</b>"));//String.BuildString("SCANsat sensor resumed operations on <<1>>)
+						vd.scansatID.Remove(part.flightID);
+						if (vd.configElectricCharge) Message.Post(Local.Scansat_sensorresumed.Format("<b>" + vessel.vesselName + "</b>"));//String.BuildString("SCANsat sensor resumed operations on <<1>>)
 					}
 				}
 			}
@@ -155,12 +155,12 @@ namespace KERBALISM
 					is_scanning = false;
 
 					// remember disabled scanner
-					vd.scansat_id.Add(p.flightID);
+					vd.scansatID.Add(p.flightID);
 
 					// give the user some feedback
-					if (vd.cfg_ec) Message.Post(Local.Scansat_sensordisabled.Format("<b>"+vessel.vesselName+"</b>"));//String.BuildString("SCANsat sensor was disabled on <<1>>)
+					if (vd.configElectricCharge) Message.Post(Local.Scansat_sensordisabled.Format("<b>"+vessel.vesselName+"</b>"));//String.BuildString("SCANsat sensor was disabled on <<1>>)
 				}
-				else if (vd.scansat_id.Contains(p.flightID))
+				else if (vd.scansatID.Contains(p.flightID))
 				{
 					// if there is enough ec
 					// note: comparing against amount in previous simulation step
@@ -172,12 +172,12 @@ namespace KERBALISM
 						is_scanning = true;
 
 						// give the user some feedback
-						if (vd.cfg_ec) Message.Post(Local.Scansat_sensorresumed.Format("<b>"+vessel.vesselName+"</b>"));//String.BuildString("SCANsat sensor resumed operations on <<1>>)
+						if (vd.configElectricCharge) Message.Post(Local.Scansat_sensorresumed.Format("<b>"+vessel.vesselName+"</b>"));//String.BuildString("SCANsat sensor resumed operations on <<1>>)
 					}
 				}
 
 				// forget active scanners
-				if (is_scanning) vd.scansat_id.Remove(p.flightID);
+				if (is_scanning) vd.scansatID.Remove(p.flightID);
 
 				return;
 			} // if(!Feature.Science)
@@ -257,17 +257,17 @@ namespace KERBALISM
 					{
 						warp_buffer = 0;
 						SCANsat.StopScanner(vessel, scanner, part_prefab);
-						vd.scansat_id.Add(p.flightID);
-						if (vd.cfg_ec) Message.Post(Local.Scansat_sensordisabled.Format("<b>"+vessel.vesselName+"</b>"));//String.BuildString("SCANsat sensor was disabled on <<1>>)
+						vd.scansatID.Add(p.flightID);
+						if (vd.configElectricCharge) Message.Post(Local.Scansat_sensordisabled.Format("<b>"+vessel.vesselName+"</b>"));//String.BuildString("SCANsat sensor was disabled on <<1>>)
 					}
 				}
-				else if (vd.scansat_id.Contains(p.flightID))
+				else if (vd.scansatID.Contains(p.flightID))
 				{
 					if (ec.Level >= 0.25 && (vd.DrivesFreeSpace / vd.DrivesCapacity > 0.9))
 					{
 						SCANsat.ResumeScanner(vessel, scanner, part_prefab);
-						vd.scansat_id.Remove(p.flightID);
-						if (vd.cfg_ec) Message.Post(Local.Scansat_sensorresumed.Format("<b>"+vessel.vesselName+"</b>"));//String.BuildString("SCANsat sensor resumed operations on <<1>>)
+						vd.scansatID.Remove(p.flightID);
+						if (vd.configElectricCharge) Message.Post(Local.Scansat_sensorresumed.Format("<b>"+vessel.vesselName+"</b>"));//String.BuildString("SCANsat sensor resumed operations on <<1>>)
 					}
 				}
 			}

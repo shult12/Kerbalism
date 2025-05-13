@@ -722,7 +722,7 @@ namespace KERBALISM
                 {
                     Vector3d direction;
                     double distance;
-					if (Sim.IsBodyVisible(v, position, body, v.KerbalismData().EnvVisibleBodies, out direction, out distance))
+					if (Sim.IsBodyVisible(v, position, body, v.KerbalismData().EnvironmentVisibleBodies, out direction, out distance))
 					{
 						var r0 = RadiationR0(rb);
 						var r1 = DistanceRadiation(r0, distance);
@@ -776,11 +776,11 @@ namespace KERBALISM
                 {
                     var vd = v.KerbalismData();
 
-                    var activity = Info(vd.EnvMainSun.SunData.body).SolarActivity(false) / 2.0;
+                    var activity = Info(vd.EnvironmentMainSun.SunData.body).SolarActivity(false) / 2.0;
                     var strength = PreferencesRadiation.Instance.StormRadiation * sunlight * (activity + 0.5);
 
                     radiation += strength;
-                    shieldedRadiation += vd.EnvHabitatInfo.AverageHabitatRadiation(strength);
+                    shieldedRadiation += vd.EnvironmentHabitatInfo.AverageHabitatRadiation(strength);
                 }
             }
 
@@ -946,25 +946,25 @@ namespace KERBALISM
                 bool must_warn = vd.CrewCount > 0 || !DB.landmarks.belt_crossing;
 
                 // are we inside a belt
-                bool inside_belt = vd.EnvInnerBelt || vd.EnvOuterBelt;
+                bool inside_belt = vd.EnvironmentInnerBelt || vd.EnvironmentOuterBelt;
 
                 // show the message
-                if (inside_belt && !vd.msg_belt && must_warn)
+                if (inside_belt && !vd.messageBelt && must_warn)
                 {
 					Message.Post(Local.BeltWarnings_msg.Format("<b>" + v.vesselName + "</b>", "<i>" + v.mainBody.bodyName + "</i>"), Local.BeltWarnings_msgSubtext);//<<1>> is crossing <<2>> radiation belt"Exposed to extreme radiation"
-                    vd.msg_belt = true;
+                    vd.messageBelt = true;
                 }
-                else if (!inside_belt && vd.msg_belt)
+                else if (!inside_belt && vd.messageBelt)
                 {
                     // no message after crossing the belt
-                    vd.msg_belt = false;
+                    vd.messageBelt = false;
                 }
 
                 // record first belt crossing
                 if (inside_belt) DB.landmarks.belt_crossing = true;
 
                 // record first heliopause crossing
-                if (vd.EnvInterstellar) DB.landmarks.heliopause_crossing = true;
+                if (vd.EnvironmentInterstellar) DB.landmarks.heliopause_crossing = true;
             }
         }
 

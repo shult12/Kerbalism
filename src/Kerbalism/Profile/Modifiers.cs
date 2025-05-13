@@ -18,27 +18,27 @@ namespace KERBALISM
 				switch (mod)
 				{
 					case "zerog":
-						k *= vd.EnvZeroG ? 1.0 : 0.0;
+						k *= vd.EnvironmentZeroG ? 1.0 : 0.0;
 						break;
 
 					case "landed":
-						k *= vd.EnvLanded ? 1.0 : 0.0;
+						k *= vd.EnvironmentLanded ? 1.0 : 0.0;
 						break;
 
 					case "breathable":
-						k *= vd.EnvBreathable ? 1.0 : 0.0;
+						k *= vd.EnvironmentBreathable ? 1.0 : 0.0;
 						break;
 
 					case "non_breathable":
-						k *= vd.EnvBreathable ? 0.0 : 1.0;
+						k *= vd.EnvironmentBreathable ? 0.0 : 1.0;
 						break;
 
 					case "temperature":
-						k *= vd.EnvTempDiff;
+						k *= vd.EnvironmentTemperatureDifference;
 						break;
 
 					case "radiation":
-						k *= vd.EnvHabitatRadiation;
+						k *= vd.EnvironmentHabitatRadiation;
 						break;
 
 					case "shielding":

@@ -29,12 +29,12 @@ namespace KERBALISM
 		protected override void UpdateNetwork(ConnectionInfo connection)
 		{
 			// if we're NOT connected
-			if (!RemoteTech.Connected(vd.VesselId))
+			if (!RemoteTech.Connected(vd.VesselID))
 			{
 				connection.linked = false;
 
 				// is loss of connection due to a blackout
-				if (RemoteTech.GetCommsBlackout(vd.VesselId))
+				if (RemoteTech.GetCommsBlackout(vd.VesselID))
 					connection.Status = connection.storm ? LinkStatus.storm : LinkStatus.plasma;
 				else
 					connection.Status = LinkStatus.no_link;
@@ -46,13 +46,13 @@ namespace KERBALISM
 				return;
 			}
 
-			connection.linked = RemoteTech.ConnectedToKSC(vd.VesselId);
-			connection.Status = RemoteTech.TargetsKSC(vd.VesselId) ? LinkStatus.direct_link : LinkStatus.indirect_link;
-			connection.target_name = connection.Status == LinkStatus.direct_link ? String.Ellipsis("DSN: " + (RemoteTech.NameTargetsKSC(vd.VesselId) ?? ""), 20) :
-				String.Ellipsis(RemoteTech.NameFirstHopToKSC(vd.VesselId) ?? "", 20);
+			connection.linked = RemoteTech.ConnectedToKSC(vd.VesselID);
+			connection.Status = RemoteTech.TargetsKSC(vd.VesselID) ? LinkStatus.direct_link : LinkStatus.indirect_link;
+			connection.target_name = connection.Status == LinkStatus.direct_link ? String.Ellipsis("DSN: " + (RemoteTech.NameTargetsKSC(vd.VesselID) ?? ""), 20) :
+				String.Ellipsis(RemoteTech.NameFirstHopToKSC(vd.VesselID) ?? "", 20);
 
 			Guid[] controlPath = null;
-			if (connection.linked) controlPath = RemoteTech.GetCommsControlPath(vd.VesselId);
+			if (connection.linked) controlPath = RemoteTech.GetCommsControlPath(vd.VesselID);
 
 			// Get the lowest rate in ControlPath
 			if (controlPath == null)
@@ -65,8 +65,8 @@ namespace KERBALISM
 			{
 				if (controlPath.Length > 0)
 				{
-					double dist = RemoteTech.GetCommsDistance(vd.VesselId, controlPath[0]);
-					double maxDist = RemoteTech.GetCommsMaxDistance(vd.VesselId, controlPath[0]);
+					double dist = RemoteTech.GetCommsDistance(vd.VesselID, controlPath[0]);
+					double maxDist = RemoteTech.GetCommsMaxDistance(vd.VesselID, controlPath[0]);
 					connection.strength = maxDist > 0.0 ? 1.0 - (dist / System.Math.Max(maxDist, 1.0)) : 0.0;
 					connection.strength = System.Math.Pow(connection.strength, DataRateDampingExponentRT);
 
@@ -86,7 +86,7 @@ namespace KERBALISM
 				}
 
 				connection.control_path.Clear();
-				Guid i = vd.VesselId;
+				Guid i = vd.VesselID;
 				foreach (Guid id in controlPath)
 				{
 					double linkDistance = RemoteTech.GetCommsDistance(i, id);

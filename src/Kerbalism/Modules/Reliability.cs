@@ -241,7 +241,7 @@ namespace KERBALISM
 						if (rated_radiation > 0)
 						{
 							var rated = quality ? rated_radiation * Settings.QualityScale : rated_radiation;
-							var current = vessel.KerbalismData().EnvRadiation * 3600.0;
+							var current = vessel.KerbalismData().EnvironmentRadiation * 3600.0;
 							if (rated < current)
 							{
 								Status = String.BuildString(Status, (string.IsNullOrEmpty(Status) ? "" : ", "), String.Color(Local.Reliability_takingradiationdamage, String.Kolor.Orange));//"taking radiation damage"
@@ -341,7 +341,7 @@ namespace KERBALISM
 #endif
 				}
 
-				var decay = RadiationDecay(quality, vessel.KerbalismData().EnvRadiation, Kerbalism.elapsed_s, rated_radiation, radiation_decay_rate);
+				var decay = RadiationDecay(quality, vessel.KerbalismData().EnvironmentRadiation, Kerbalism.elapsed_s, rated_radiation, radiation_decay_rate);
 				next -= decay;
 			}
 		}
@@ -467,7 +467,7 @@ namespace KERBALISM
 #endif
 			}
 
-			var rad = v.KerbalismData().EnvRadiation;
+			var rad = v.KerbalismData().EnvironmentRadiation;
 			var decay = RadiationDecay(quality, rad, elapsed_s, reliability.rated_radiation, reliability.radiation_decay_rate);
 			if (decay > 0)
 			{
@@ -1008,7 +1008,7 @@ namespace KERBALISM
 		// set highlighting
 		static void Highlight(Part p)
 		{
-			if (p.vessel.KerbalismData().cfg_highlights)
+			if (p.vessel.KerbalismData().configHighlights)
 			{
 				// get state among all reliability components in the part
 				bool broken = false;
@@ -1029,7 +1029,7 @@ namespace KERBALISM
 
 		static void Broken_msg(Vessel v, string title, bool critical)
 		{
-			if (v.KerbalismData().cfg_malfunction)
+			if (v.KerbalismData().configMalfunctions)
 			{
 				if (!critical)
 				{

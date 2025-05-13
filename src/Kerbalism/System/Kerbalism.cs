@@ -304,7 +304,7 @@ namespace KERBALISM
 				}
 
 				// keep track of rescue mission kerbals, and gift resources to their vessels on discovery
-				if (v.loaded && vd.is_vessel)
+				if (v.loaded && vd.IsVessel)
 				{
 					// manage rescue mission mechanics
 					Misc.ManageRescueMission(v);
@@ -367,17 +367,17 @@ namespace KERBALISM
 					vd.computer.Automate(v, vd, resources);
 
 					// remove from unloaded data container
-					unloaded.Remove(vd.VesselId);
+					unloaded.Remove(vd.VesselID);
 				}
 				// if unloaded
 				else
 				{
 					// get unloaded data, or create an empty one
 					Unloaded_data ud;
-					if (!unloaded.TryGetValue(vd.VesselId, out ud))
+					if (!unloaded.TryGetValue(vd.VesselID, out ud))
 					{
 						ud = new Unloaded_data();
-						unloaded.Add(vd.VesselId, ud);
+						unloaded.Add(vd.VesselID, ud);
 					}
 
 					// accumulate time
@@ -443,7 +443,7 @@ namespace KERBALISM
 				last_vd.computer.Automate(last_v, last_vd, last_resources);
 
 				// remove from unloaded data container
-				unloaded.Remove(last_vd.VesselId);
+				unloaded.Remove(last_vd.VesselID);
 			}
 
 			// update storm data for one body per-step

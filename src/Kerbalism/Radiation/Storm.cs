@@ -127,9 +127,9 @@ namespace KERBALISM
 			if (v.isEVA) return;
 
             var bd = vd.stormData;
-            CreateStorm(bd, v.mainBody, vd.EnvMainSun.Distance);
+            CreateStorm(bd, v.mainBody, vd.EnvironmentMainSun.Distance);
 
-            if (vd.cfg_storm)
+            if (vd.configStorms)
             {
                 switch (bd.storm_state)
                 {
@@ -138,7 +138,7 @@ namespace KERBALISM
                         {
 							// send message
 							Message.Post(Severity.relax, Local.Storm_msg4.Format("<b>" + v.vesselName + "</b>"));//String.BuildString("The solar storm around <<1>> is over")
-                            vd.msg_signal = false; // used to avoid sending 'signal is back' messages en-masse after the storm is over
+                            vd.messageSignal = false; // used to avoid sending 'signal is back' messages en-masse after the storm is over
                         }
                         break;
 
@@ -200,7 +200,7 @@ namespace KERBALISM
                     if (!vd.IsSimulated) continue;
 
                     // obey message config
-                    if (!v.KerbalismData().cfg_storm) continue;
+                    if (!v.KerbalismData().configStorms) continue;
 
                     // body is relevant
                     return true;
